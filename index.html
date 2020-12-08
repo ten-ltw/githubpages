@@ -1,0 +1,779 @@
+<html>
+
+<head>
+	<base href="http://bss.design/" bs-system-element="" bs-hidden="">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+	<title>Home - Brand</title>
+	<link rel="stylesheet" href="https://bootstrapstudio.io/demo//embed//bootstrap/4/agency/bootstrap.min.css">
+	<style bs-system-element="" bs-hidden="">
+		html::-webkit-scrollbar {
+			height: 7px;
+			width: 7px;
+			background: #2f363a;
+		}
+
+		html::-webkit-scrollbar-thumb {
+			background: rgb(137, 143, 146);
+		}
+
+		html::-webkit-scrollbar-thumb:hover {
+			background: #767F82;
+		}
+
+		html::-webkit-scrollbar-corner {
+			display: none;
+		}
+
+		html {
+			-webkit-user-select: none;
+			user-select: none;
+			overflow: auto !important;
+		}
+
+		body {
+			min-height: 650px;
+		}
+
+		* {
+			cursor: default !important;
+			pointer-events: all !important;
+		}
+
+		a {
+			cursor: text;
+		}
+
+		img:not([src]):not([srcset]) {
+			background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIg0KCXhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIg0KCXdpZHRoPSIxNjVweCIgaGVpZ2h0PSIxNjVweCIgdmlld0JveD0iMCAwIDE2NSAxNjUiPg0KPHBhdGggZmlsbFJ1bGU9ImV2ZW5vZGQiIGQ9Ik0gMC43OSAyLjIxQyAwLjc5IDIuMjEgMi4yMSAwLjc5IDIuMjEgMC43OSAyLjIxIDAuNzkgMTY0LjIxIDE2Mi43OSAxNjQuMjEgMTYyLjc5IDE2NC4yMSAxNjIuNzkgMTYyLjc5IDE2NC4yMSAxNjIuNzkgMTY0LjIxIDE2Mi43OSAxNjQuMjEgMC43OSAyLjIxIDAuNzkgMi4yMVoiIGZpbGw9InJnYigxOTMsMTk1LDE5NSkiLz48cGF0aCBmaWxsUnVsZT0iZXZlbm9kZCIgZD0iTSAxNjIuNzkgMC43OUMgMTYyLjc5IDAuNzkgMTY0LjIxIDIuMjEgMTY0LjIxIDIuMjEgMTY0LjIxIDIuMjEgMi4yMSAxNjQuMjEgMi4yMSAxNjQuMjEgMi4yMSAxNjQuMjEgMC43OSAxNjIuNzkgMC43OSAxNjIuNzkgMC43OSAxNjIuNzkgMTYyLjc5IDAuNzkgMTYyLjc5IDAuNzlaIiBmaWxsPSJyZ2IoMTkyLDE5NCwxOTUpIi8+PC9zdmc+');
+			width: 80px;
+			height: 80px;
+			background-size: 100%;
+			background-repeat: no-repeat;
+			text-indent: -1000px;
+		}
+
+		/* Stopping css animations on the stage */
+
+		*:not([bs-anim-preview]) {
+			transition: none !important;
+			transition-duration: 0s !important;
+		}
+
+		[bs-dragged] {
+			opacity: 0.3 !important;
+		}
+
+		/* Inline editing */
+
+		[contenteditable=true] {
+			box-shadow: -1px -1px 1px rgba(17, 142, 232, 0.85),
+				1px 1px 1px rgba(17, 142, 232, 0.85),
+				0 0 11px rgba(17, 142, 232, 0.85) !important;
+			outline: none !important;
+			min-height: 1em;
+			cursor: initial !important;
+		}
+
+		[contenteditable=true] *:not([contenteditable=false]) {
+			cursor: initial !important;
+		}
+
+		[contenteditable=true]:empty:before {
+			content: "\00a0\00a0" !important;
+		}
+
+		[contenteditable=true] [contenteditable=false] {
+			box-shadow: 0 0 0 1px rgba(17, 142, 232, 0.85);
+		}
+
+		/* Preventing mouse events for embeds */
+
+		iframe,
+		embed,
+		object,
+		audio {
+			pointer-events: none !important;
+		}
+
+		html.hit-testing iframe,
+		html.hit-testing embed,
+		html.hit-testing object,
+		html.hit-testing audio {
+			pointer-events: all !important;
+		}
+
+
+
+		/* Giving sizes to some elements. */
+
+		div[class*="col-"]:empty:before,
+		form:empty:before,
+		.row:empty:before,
+		.form-row:empty:before,
+		.form-group:empty:before,
+		.container:empty:before,
+		div[class*="container-"]:empty:before {
+			background-color: #eee;
+			content: 'Empty Row';
+			font-size: 20px;
+			color: #aaa;
+			font-weight: bold;
+			height: 100%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			min-height: 80px;
+			padding: 0 10px;
+			line-height: 26px;
+		}
+
+		div[class*="col-"]:empty:before {
+			content: 'Empty Column';
+		}
+
+		form:empty:before {
+			content: 'Empty Form';
+		}
+
+		.form-group:empty:before {
+			content: 'Empty Form Group';
+		}
+
+		form.navbar-form:empty:before {
+			display: inline-block;
+			padding: 0 40px;
+			font-size: 16px;
+			line-height: 36px;
+		}
+
+		.container:empty:before,
+		div[class*="container-"]:empty:before {
+			content: 'Empty Container';
+		}
+
+		.thumbnail img:not([src]) {
+			background-repeat: no-repeat;
+			background-size: 100% 85%;
+			background-position-y: 50%;
+			width: 100%;
+			height: 180px;
+		}
+
+		/* Making the dropdown menus have a white background when they're edited */
+
+		.dropdown-item:active,
+		.dropdown-menu>li>a:focus {
+			background: unset;
+			color: unset;
+		}
+
+		/* This is needed because the li items are 0x0px by default,
+		and bootstrap studio can't select them */
+
+		.pagination>li {
+			float: left;
+		}
+
+		/* Iframes without src are colored in gray */
+		.embed-responsive iframe:not([src]) {
+			background-color: #ddd;
+		}
+
+		/* This is needed, otherwise split buttons in input groups break into two lines. */
+
+		.input-group-btn .btn-group>.btn {
+			float: none;
+		}
+
+
+
+		div[class*="col-"]:empty,
+		div.col:empty {
+			display: flex;
+		}
+
+		div[class*="col-"]:empty:before,
+		form:empty:before,
+		.row:empty:before,
+		.form-row:empty:before,
+		.container:empty:before,
+		div[class*="container-"]:empty:before {
+			width: 100%;
+		}
+
+		div.col:empty:before {
+			background-color: #eee;
+			content: 'Empty Column';
+			line-height: 40px;
+			text-align: center;
+			display: block;
+			line-height: 80px;
+			font-size: 24px;
+			color: #aaa;
+			font-weight: bold;
+			width: 100%;
+		}
+
+		.toast-header img:not([src]):not([srcset]) {
+			width: 30px;
+			height: 30px;
+		}
+
+		/* Stopping css spinner animations */
+
+		.spinner-grow:not([bs-spinner-animation]),
+		.spinner-border:not([bs-spinner-animation]) {
+			animation: none;
+		}
+
+		.spinner-grow:not([bs-spinner-animation]) {
+			opacity: 1;
+			transform: scale(.8);
+		}
+
+		.custom-range::-webkit-slider-runnable-track {
+			cursor: inherit;
+		}
+
+		/* Prevent stretched links from capturing all page clicks */
+		a.stretched-link:after {
+			pointer-events: none;
+		}
+	</style>
+	<link rel="stylesheet" href="https://bootstrapstudio.io/demo//embed/animation/animate.min.css" bs-system-element=""
+		bs-hidden="">
+	<link rel="stylesheet" href="https://bootstrapstudio.io/demo//embed/animation/aos.min.css" bs-system-element=""
+		bs-hidden="">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Kaushan+Script">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700">
+	<link rel="stylesheet" bs-hidden="1" bs-system-element="1"
+		href="https://bootstrapstudio.io/demo//embed/fonts/fontawesome-all.min.css">
+	<link rel="stylesheet" bs-hidden="1" bs-system-element="1"
+		href="https://bootstrapstudio.io/demo//embed/fonts/font-awesome.min.css">
+	<link rel="stylesheet" bs-hidden="1" bs-system-element="1"
+		href="https://bootstrapstudio.io/demo//embed/fonts/ionicons.min.css">
+	<link rel="stylesheet" bs-hidden="1" bs-system-element="1"
+		href="https://bootstrapstudio.io/demo//embed/fonts/line-awesome.min.css">
+	<link rel="stylesheet" bs-hidden="1" bs-system-element="1"
+		href="https://bootstrapstudio.io/demo//embed/fonts/material-icons.min.css">
+	<link rel="stylesheet" bs-hidden="1" bs-system-element="1"
+		href="https://bootstrapstudio.io/demo//embed/fonts/simple-line-icons.min.css">
+	<link rel="stylesheet" bs-hidden="1" bs-system-element="1"
+		href="https://bootstrapstudio.io/demo//embed/fonts/typicons.min.css">
+	<link rel="stylesheet" href="https://bootstrapstudio.io/demo//embed/fonts/fontawesome5-overrides.min.css"
+		bs-system-element="" bs-hidden="">
+	<style bs-system-element="" bs-hidden=""></style>
+</head>
+
+<body id="page-top">
+	<nav class="navbar navbar-dark navbar-expand-lg fixed-top bg-dark" id="mainNav">
+		<div class="container"><a class="navbar-brand" href="#page-top">Brand</a><button data-toggle="collapse"
+				data-target="#navbarResponsive" class="navbar-toggler navbar-toggler-right" type="button" data-toogle="collapse"
+				aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><i
+					class="fa fa-bars"></i></button>
+			<div class="collapse navbar-collapse" id="navbarResponsive">
+				<ul class="nav navbar-nav ml-auto text-uppercase">
+					<li class="nav-item"><a class="nav-link js-scroll-trigger" href="#services">Services</a></li>
+					<li class="nav-item"><a class="nav-link js-scroll-trigger" href="#portfolio">Portfolio</a></li>
+					<li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">About</a></li>
+					<li class="nav-item"><a class="nav-link js-scroll-trigger" href="#team">Team</a></li>
+					<li class="nav-item"><a class="nav-link js-scroll-trigger" href="#contact">Contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<header class="masthead" style="  background-image: url('blob:https://bootstrapstudio.io/4ca3b9eb-f033-4097-b04a-dd228b989595');
+">
+		<div class="container">
+			<div class="intro-text">
+				<div class="intro-lead-in"><span>Welcome To Our Studio!</span></div>
+				<div class="intro-heading text-uppercase"><span>It's Nice To Meet You</span></div><a
+					class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" role="button" href="#services">Tell me
+					more</a>
+			</div>
+		</div>
+	</header>
+	<section id="services">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 text-center">
+					<h2 class="text-uppercase section-heading">Services</h2>
+					<h3 class="text-muted section-subheading">Lorem ipsum dolor sit amet consectetur</h3>
+				</div>
+			</div>
+			<div class="row text-center">
+				<div class="col-md-4"><span class="fa-stack fa-4x"><i class="fa fa-circle fa-stack-2x text-primary"></i><i
+							class="fa fa-shopping-cart fa-stack-1x fa-inverse"></i></span>
+					<h4 class="section-heading">E-Commerce</h4>
+					<p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto
+						quo inventore harum ex magni, dicta impedit.</p>
+				</div>
+				<div class="col-md-4"><span class="fa-stack fa-4x"><i class="fa fa-circle fa-stack-2x text-primary"></i><i
+							class="fa fa-laptop fa-stack-1x fa-inverse"></i></span>
+					<h4 class="section-heading">Responsive Design</h4>
+					<p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto
+						quo inventore harum ex magni, dicta impedit.</p>
+				</div>
+				<div class="col-md-4"><span class="fa-stack fa-4x"><i class="fa fa-circle fa-stack-2x text-primary"></i><i
+							class="fa fa-lock fa-stack-1x fa-inverse"></i></span>
+					<h4 class="section-heading">Web Security</h4>
+					<p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto
+						quo inventore harum ex magni, dicta impedit.</p>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section id="portfolio" class="bg-light">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 text-center">
+					<h2 class="text-uppercase section-heading">Portfolio</h2>
+					<h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-6 col-md-4 portfolio-item"><a class="portfolio-link" data-toggle="modal"
+						href="#portfolioModal1">
+						<div class="portfolio-hover">
+							<div class="portfolio-hover-content"><i class="fa fa-plus fa-3x"></i></div>
+						</div><img class="img-fluid" src="blob:https://bootstrapstudio.io/1fb469d5-0027-4216-8871-d0b3d6b0b866">
+					</a>
+					<div class="portfolio-caption">
+						<h4>Threads</h4>
+						<p class="text-muted">Illustration</p>
+					</div>
+				</div>
+				<div class="col-sm-6 col-md-4 portfolio-item"><a class="portfolio-link" data-toggle="modal"
+						href="#portfolioModal2">
+						<div class="portfolio-hover">
+							<div class="portfolio-hover-content"><i class="fa fa-plus fa-3x"></i></div>
+						</div><img class="img-fluid" src="blob:https://bootstrapstudio.io/a0ce38f1-40a2-448e-9a9b-86df67270ea5">
+					</a>
+					<div class="portfolio-caption">
+						<h4>Explore</h4>
+						<p class="text-muted">Graphic Design</p>
+					</div>
+				</div>
+				<div class="col-sm-6 col-md-4 portfolio-item"><a class="portfolio-link" data-toggle="modal"
+						href="#portfolioModal3">
+						<div class="portfolio-hover">
+							<div class="portfolio-hover-content"><i class="fa fa-plus fa-3x"></i></div>
+						</div><img class="img-fluid" src="blob:https://bootstrapstudio.io/d0580639-b92a-42f2-bc5e-a9f80d86b7a5">
+					</a>
+					<div class="portfolio-caption">
+						<h4>Finish</h4>
+						<p class="text-muted">Identity</p>
+					</div>
+				</div>
+				<div class="col-sm-6 col-md-4 portfolio-item"><a class="portfolio-link" data-toggle="modal"
+						href="#portfolioModal4">
+						<div class="portfolio-hover">
+							<div class="portfolio-hover-content"><i class="fa fa-plus fa-3x"></i></div>
+						</div><img class="img-fluid" src="blob:https://bootstrapstudio.io/6fa08093-5c20-4f23-af46-bf7cc9928e23">
+					</a>
+					<div class="portfolio-caption">
+						<h4>Lines</h4>
+						<p class="text-muted">Branding</p>
+					</div>
+				</div>
+				<div class="col-sm-6 col-md-4 portfolio-item"><a class="portfolio-link" data-toggle="modal"
+						href="#portfolioModal5">
+						<div class="portfolio-hover">
+							<div class="portfolio-hover-content"><i class="fa fa-plus fa-3x"></i></div>
+						</div><img class="img-fluid img-fluid"
+							src="blob:https://bootstrapstudio.io/977d9562-5d84-4098-9b43-a5e4cbfc87e6">
+					</a>
+					<div class="portfolio-caption">
+						<h4>Southwest</h4>
+						<p class="text-muted">Website Design</p>
+					</div>
+				</div>
+				<div class="col-sm-6 col-md-4 portfolio-item"><a class="portfolio-link" data-toggle="modal"
+						href="#portfolioModal6">
+						<div class="portfolio-hover">
+							<div class="portfolio-hover-content"><i class="fa fa-plus fa-3x"></i></div>
+						</div><img class="img-fluid" src="blob:https://bootstrapstudio.io/583268c0-8a89-427b-b0f9-b6a09619ddbf">
+					</a>
+					<div class="portfolio-caption">
+						<h4>Window</h4>
+						<p class="text-muted">Photography</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section id="about">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 text-center">
+					<h2 class="text-uppercase">About</h2>
+					<h3 class="text-muted section-subheading">Lorem ipsum dolor sit amet consectetur.</h3>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-12">
+					<ul class="list-group timeline">
+						<li class="list-group-item">
+							<div class="timeline-image"><img class="rounded-circle img-fluid"
+									src="blob:https://bootstrapstudio.io/a9f1ad7c-9528-4785-9b48-555caf0fe5b5"></div>
+							<div class="timeline-panel">
+								<div class="timeline-heading">
+									<h4>2009-2011</h4>
+									<h4 class="subheading">Our Humble Beginnings</h4>
+								</div>
+								<div class="timeline-body">
+									<p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum
+										eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et
+										ea quo dolore laudantium consectetur!</p>
+								</div>
+							</div>
+						</li>
+						<li class="list-group-item timeline-inverted">
+							<div class="timeline-image"><img class="rounded-circle img-fluid"
+									src="blob:https://bootstrapstudio.io/3a363359-f0f5-4bc8-bfda-e64009eb35a7"></div>
+							<div class="timeline-panel">
+								<div class="timeline-heading">
+									<h4>March 2011</h4>
+									<h4 class="subheading">An Agency is Born</h4>
+								</div>
+								<div class="timeline-body">
+									<p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum
+										eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et
+										ea quo dolore laudantium consectetur!</p>
+								</div>
+							</div>
+						</li>
+						<li class="list-group-item">
+							<div class="timeline-image"><img class="rounded-circle img-fluid"
+									src="blob:https://bootstrapstudio.io/a802a37a-19cc-48a4-a797-d9a6a4d2b97e"></div>
+							<div class="timeline-panel">
+								<div class="timeline-heading">
+									<h4>December 2012</h4>
+									<h4 class="subheading">Transition to Full Service</h4>
+								</div>
+								<div class="timeline-body">
+									<p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum
+										eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et
+										ea quo dolore laudantium consectetur!</p>
+								</div>
+							</div>
+						</li>
+						<li class="list-group-item timeline-inverted">
+							<div class="timeline-image"><img class="rounded-circle img-fluid"
+									src="blob:https://bootstrapstudio.io/28de4496-9ed2-4332-80f0-7c6a4135cd73"></div>
+							<div class="timeline-panel">
+								<div class="timeline-heading">
+									<h4>July 2014</h4>
+									<h4 class="subheading">Phase Two Expansion</h4>
+								</div>
+								<div class="timeline-body">
+									<p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum
+										eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et
+										ea quo dolore laudantium consectetur!</p>
+								</div>
+							</div>
+						</li>
+						<li class="list-group-item timeline-inverted">
+							<div class="timeline-image">
+								<h4>Be Part<br>&nbsp;Of Our<br>&nbsp;Story!</h4>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section id="team" class="bg-light">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-4">
+					<div class="team-member"><img class="rounded-circle mx-auto"
+							src="blob:https://bootstrapstudio.io/408ae03f-305e-4e22-98ea-8f1f3b0bf0eb">
+						<h4>Kay Garland</h4>
+						<p class="text-muted">Lead Designer</p>
+						<ul class="list-inline social-buttons">
+							<li class="list-inline-item"><a href="#"><i class="fa fa-twitter"></i></a></li>
+							<li class="list-inline-item"><a href="#"><i class="fa fa-facebook"></i></a></li>
+							<li class="list-inline-item"><a href="#"><i class="fa fa-linkedin"></i></a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="team-member"><img class="rounded-circle mx-auto"
+							src="blob:https://bootstrapstudio.io/3077c521-76a3-4f66-b99b-2c8c69a0c013">
+						<h4>Larry Parker</h4>
+						<p class="text-muted">Lead Marketer</p>
+						<ul class="list-inline social-buttons">
+							<li class="list-inline-item"><a href="#"><i class="fa fa-twitter"></i></a></li>
+							<li class="list-inline-item"><a href="#"><i class="fa fa-facebook"></i></a></li>
+							<li class="list-inline-item"><a href="#"><i class="fa fa-linkedin"></i></a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="team-member"><img class="rounded-circle mx-auto"
+							src="blob:https://bootstrapstudio.io/83678e08-c039-401c-bd7b-e7397fa41bb3">
+						<h4>Diana Pertersen</h4>
+						<p class="text-muted">Lead Developer</p>
+						<ul class="list-inline social-buttons">
+							<li class="list-inline-item"><a href="#"><i class="fa fa-twitter"></i></a></li>
+							<li class="list-inline-item"><a href="#"><i class="fa fa-facebook"></i></a></li>
+							<li class="list-inline-item"><a href="#"><i class="fa fa-linkedin"></i></a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section class="py-5">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-6 col-md-3"><a href="#"><img class="img-fluid d-block mx-auto"
+							src="blob:https://bootstrapstudio.io/d58aa21d-beb0-4b7e-9dcd-3476fd52714a"></a></div>
+				<div class="col-sm-6 col-md-3"><a href="#"><img class="img-fluid d-block mx-auto"
+							src="blob:https://bootstrapstudio.io/0b0a4d2f-6d67-428b-8d97-7fb94b4a21b3"></a></div>
+				<div class="col-sm-6 col-md-3"><a href="#"><img class="img-fluid d-block mx-auto"
+							src="blob:https://bootstrapstudio.io/cda5c1a0-f44d-4b21-a2ae-6119e3a89713"></a></div>
+				<div class="col-sm-6 col-md-3"><a href="#"><img class="img-fluid d-block mx-auto"
+							src="blob:https://bootstrapstudio.io/8390b032-4a2b-4011-b492-9f4fb524adea"></a></div>
+			</div>
+		</div>
+	</section>
+	<section id="contact" style="  background-image: url('blob:https://bootstrapstudio.io/d6c87117-a02b-4bff-9c30-4a37b57916a3');
+">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 text-center">
+					<h2 class="text-uppercase section-heading">Contact Us</h2>
+					<h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-12">
+					<form id="contactForm" name="contactForm" novalidate="novalidate">
+						<div class="form-row">
+							<div class="col col-md-6">
+								<div class="form-group"><input type="text" class="form-control" id="name" placeholder="Your Name *"
+										required=""><small class="form-text text-danger flex-grow-1 help-block lead"></small></div>
+								<div class="form-group"><input type="email" class="form-control" id="email" placeholder="Your Email *"
+										required=""><small class="form-text text-danger help-block lead"></small></div>
+								<div class="form-group"><input type="tel" class="form-control" placeholder="Your Phone *"
+										required=""><small class="form-text text-danger help-block lead"></small></div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group"><textarea class="form-control" id="message" placeholder="Your Message *"
+										required=""></textarea><small class="form-text text-danger help-block lead"></small></div>
+							</div>
+							<div class="col">
+								<div class="clearfix"></div>
+							</div>
+							<div class="col-lg-12 text-center">
+								<div id="success"></div><button class="btn btn-primary btn-xl text-uppercase" id="sendMessageButton"
+									type="submit">Send Message</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+	<footer>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-4"><span class="copyright">Copyright&nbsp;© Brand 2020</span></div>
+				<div class="col-md-4">
+					<ul class="list-inline social-buttons">
+						<li class="list-inline-item"><a href="#"><i class="fa fa-twitter"></i></a></li>
+						<li class="list-inline-item"><a href="#"><i class="fa fa-facebook"></i></a></li>
+						<li class="list-inline-item"><a href="#"><i class="fa fa-linkedin"></i></a></li>
+					</ul>
+				</div>
+				<div class="col-md-4">
+					<ul class="list-inline quicklinks">
+						<li class="list-inline-item"><a href="#">Privacy Policy</a></li>
+						<li class="list-inline-item"><a href="#">Terms of Use</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</footer>
+	<div role="dialog" tabindex="-1" class="modal fade portfolio-modal text-center" id="portfolioModal1">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-body">
+					<div class="container">
+						<div class="row">
+							<div class="col-lg-8 mx-auto">
+								<div class="modal-body">
+									<h2 class="text-uppercase">Project Name</h2>
+									<p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p><img
+										class="img-fluid d-block mx-auto"
+										src="blob:https://bootstrapstudio.io/ce893ee0-8d2c-4356-90e0-ce16d3197a3e">
+									<p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+										Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia
+										expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
+									<ul class="list-unstyled">
+										<li>Date: January 2017</li>
+										<li>Client: Threads</li>
+										<li>Category: Illustration</li>
+									</ul><button class="btn btn-primary" data-dismiss="modal" type="button"><i
+											class="fa fa-times"></i><span>&nbsp;Close Project</span></button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div role="dialog" tabindex="-1" class="modal fade portfolio-modal text-center" id="portfolioModal2">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-body">
+					<div class="container">
+						<div class="row">
+							<div class="col-lg-8 mx-auto">
+								<div class="modal-body">
+									<h2 class="text-uppercase">Project Name</h2>
+									<p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p><img
+										class="img-fluid d-block mx-auto"
+										src="blob:https://bootstrapstudio.io/d4deca8e-3692-46ef-973c-a2fcda4cf036">
+									<p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+										Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia
+										expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
+									<ul class="list-unstyled">
+										<li>Date: January 2017</li>
+										<li>Client: Threads</li>
+										<li>Category: Illustration</li>
+									</ul><button class="btn btn-primary" data-dismiss="modal" type="button"><i
+											class="fa fa-times"></i><span>&nbsp;Close Project</span></button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div role="dialog" tabindex="-1" class="modal fade portfolio-modal text-center" id="portfolioModal3">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-body">
+					<div class="container">
+						<div class="row">
+							<div class="col-lg-8 mx-auto">
+								<div class="modal-body">
+									<h2 class="text-uppercase">Project Name</h2>
+									<p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p><img
+										class="img-fluid d-block mx-auto"
+										src="blob:https://bootstrapstudio.io/e320dda4-2193-472b-8a1e-36e9a4b58b90">
+									<p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+										Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia
+										expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
+									<ul class="list-unstyled">
+										<li>Date: January 2017</li>
+										<li>Client: Threads</li>
+										<li>Category: Illustration</li>
+									</ul><button class="btn btn-primary" data-dismiss="modal" type="button"><i
+											class="fa fa-times"></i><span>&nbsp;Close Project</span></button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div role="dialog" tabindex="-1" class="modal fade portfolio-modal text-center" id="portfolioModal4">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-body">
+					<div class="container">
+						<div class="row">
+							<div class="col-lg-8 mx-auto">
+								<div class="modal-body">
+									<h2 class="text-uppercase">Project Name</h2>
+									<p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p><img
+										class="img-fluid d-block mx-auto"
+										src="blob:https://bootstrapstudio.io/82c1b505-7c7d-4544-8a71-676263f4fbde">
+									<p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+										Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia
+										expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
+									<ul class="list-unstyled">
+										<li>Date: January 2017</li>
+										<li>Client: Threads</li>
+										<li>Category: Illustration</li>
+									</ul><button class="btn btn-primary" data-dismiss="modal" type="button"><i
+											class="fa fa-times"></i><span>&nbsp;Close Project</span></button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div role="dialog" tabindex="-1" class="modal fade portfolio-modal text-center" id="portfolioModal5">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-body">
+					<div class="container">
+						<div class="row">
+							<div class="col-lg-8 mx-auto">
+								<div class="modal-body">
+									<h2 class="text-uppercase">Project Name</h2>
+									<p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p><img
+										class="img-fluid d-block mx-auto"
+										src="blob:https://bootstrapstudio.io/d5ddaf37-d54b-4c2d-abba-d456b274cccd">
+									<p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+										Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia
+										expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
+									<ul class="list-unstyled">
+										<li>Date: January 2017</li>
+										<li>Client: Threads</li>
+										<li>Category: Illustration</li>
+									</ul><button class="btn btn-primary" data-dismiss="modal" type="button"><i
+											class="fa fa-times"></i><span>&nbsp;Close Project</span></button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div role="dialog" tabindex="-1" class="modal fade portfolio-modal text-center" id="portfolioModal6">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-body">
+					<div class="container">
+						<div class="row">
+							<div class="col-lg-8 mx-auto">
+								<div class="modal-body">
+									<h2 class="text-uppercase">Project Name</h2>
+									<p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p><img
+										class="img-fluid d-block mx-auto"
+										src="blob:https://bootstrapstudio.io/88119d7e-61e8-4290-ace0-17503d1b987a">
+									<p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+										Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia
+										expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
+									<ul class="list-unstyled">
+										<li>Date: January 2017</li>
+										<li>Client: Threads</li>
+										<li>Category: Illustration</li>
+									</ul><button class="btn btn-primary" data-dismiss="modal" type="button"><i
+											class="fa fa-times"></i><span>&nbsp;Close Project</span></button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
