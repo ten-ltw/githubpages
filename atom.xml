@@ -4,7 +4,7 @@
   <title><![CDATA[十]]></title>
   <link href="blog.2019919.top/atom.xml" rel="self"/>
   <link href="blog.2019919.top/"/>
-  <updated>2020-12-10T22:14:45+08:00</updated>
+  <updated>2020-12-11T21:45:47+08:00</updated>
   <id>blog.2019919.top/</id>
   <author>
     <name><![CDATA[]]></name>
@@ -15,10 +15,23 @@
   
   <entry>
     <title type="html"><![CDATA[关于我]]></title>
-    <link href="blog.2019919.top/16075995033294.html"/>
-    <updated>2020-12-10T19:25:03+08:00</updated>
-    <id>blog.2019919.top/16075995033294.html</id>
+    <link href="blog.2019919.top/16076943300197.html"/>
+    <updated>2020-12-11T21:45:30+08:00</updated>
+    <id>blog.2019919.top/16076943300197.html</id>
     <content type="html"><![CDATA[
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[JS事件执行过程]]></title>
+    <link href="blog.2019919.top/16076922632055.html"/>
+    <updated>2020-12-11T21:11:03+08:00</updated>
+    <id>blog.2019919.top/16076922632055.html</id>
+    <content type="html"><![CDATA[
+<h2 id="toc_0">学习执行过程</h2>
+
+<h2 id="toc_1">看</h2>
 
 ]]></content>
   </entry>
@@ -29,75 +42,71 @@
     <updated>2020-12-07T14:48:50+08:00</updated>
     <id>blog.2019919.top/16073237309370.html</id>
     <content type="html"><![CDATA[
-<h2 id="toc_0">前言</h2>
-
 <p>在现在公司中，并没有真的前后端分离，往往是前后端一同疏通测试，美其名曰节省时间全面发展。因此至今没有单独写过mock进行前端自己的单体测试。这一次调查下mock的使用。</p>
 
-<h2 id="toc_1">Angular的environments文件</h2>
+<hr/>
+
+<h2 id="toc_0">Angular的environments文件</h2>
 
 <p><img src="media/16073237309370/16073245939102.jpg" alt="" style="width:746px;"/></p>
 
 <p>environments文件分别是每个环境对应的配置。<br/>
-每个文件与环境的对应关系存放于angular.json中。</p>
+每个文件与环境的对应关系存放于<code>angular.json</code>中。</p>
 
 <p><img src="media/16073237309370/16073266078090.jpg" alt="" style="width:555px;"/></p>
 
-<p>这个设定指定了cli在进行production build的时候将<code>environment.ts</code>替换成<code>environment.prod.ts</code>，即将开发环境的环境配置替换成生产环境的开发配置。<br/>
+<p>这个设定指定了cli在进行<code>production build</code>的时候将<code>environment.ts</code>替换成<code>environment.prod.ts</code>，即将开发环境的环境配置替换成生产环境的开发配置。<br/>
 在这里设置isMock属性，让mock在生产环境中自动启动，开发环境~~~~中自动关闭。</p>
 
-<h2 id="toc_2">Angular的main.ts文件</h2>
+<h2 id="toc_1">Angular的main.ts文件</h2>
 
 <p><img src="media/16073237309370/16073284745167.jpg" alt="" style="width:555px;"/></p>
 
-<p>同样在cli中webpack的入口程序被设置为<code>src/main.ts</code>，也就是说main.ts是我们整个angualr的入口程序。我们在这里判断当前环境是否引入mock服务。</p>
+<p>同样在cli中webpack的入口程序被设置为<code>src/main.ts</code>，也就是说<code>main.ts</code>是我们整个angualr的入口程序。我们在这里判断当前环境是否引入mock服务。</p>
 
 <p><img src="media/16073237309370/16073286403589.jpg" alt="" style="width:566px;"/></p>
 
-<h2 id="toc_3">mock服务的实现</h2>
+<h2 id="toc_2">mock服务的实现</h2>
 
-<h4 id="toc_4">1.选择自己的包管理器添加mock的指令安装mock</h4>
+<h3 id="toc_3">1.选择自己的包管理器添加mock的指令安装mock</h3>
 
-<pre><code class="language-node">npm install mockjs --save
+<pre><code class="language-text">npm install mockjs --save
 </code></pre>
 
-<pre><code class="language-node">yarn add mockjs
+<pre><code class="language-text">yarn add mockjs
 </code></pre>
 
-<h4 id="toc_5">2.创建mock文件，并添加到打包配置文件中</h4>
+<h3 id="toc_4">2.创建mock文件，并添加到打包配置文件中</h3>
 
-<p>又是angualr.json，在scripts中添加自己的mock文件路径，让webpack打包angular时同时打包我们的mock文件。<br/>
+<p>又是<code>angualr.json</code>，在scripts中添加自己的mock文件路径，让webpack打包angular时同时打包我们的mock文件。<br/>
 <img src="media/16073237309370/16073291483432.jpg" alt="" style="width:541px;"/></p>
 
-<h4 id="toc_6">3.编写mock服务</h4>
+<h3 id="toc_5">3.编写mock服务</h3>
 
 <ul>
 <li><p>首先导入mockjs。</p>
-<blockquote>
 <pre><code class="language-typescript">import * as Mock from &#39;mockjs&#39;;
-</code></pre>
-</blockquote></li>
+</code></pre></li>
 <li><p>然后拦截请求，返回假数据</p>
-<blockquote>
 <pre><code class="language-typescript">Mock.mock(&#39;http://localhost:9080/list&#39;, {
 message: &#39;调用成功&#39;,<br/>
 &#39;data|10&#39;: [{<br/>
-    &#39;id|+1&#39;: 1,<br/>
-    title: &#39;This is a title&#39;,<br/>
-    tags: [<br/>
-      {<br/>
-        id: 1,<br/>
-        name: &#39;aaaa&#39;,<br/>
-        color: &#39;red&#39;<br/>
-      }<br/>
-    ],<br/>
-    &#39;note|100&#39;: &#39;There are notes!&#39;<br/>
-  }]<br/>
+&#39;id|+1&#39;: 1,<br/>
+title: &#39;This is a title&#39;,<br/>
+tags: [<br/>
+  {<br/>
+    id: 1,<br/>
+    name: &#39;aaaa&#39;,<br/>
+    color: &#39;red&#39;<br/>
+  }<br/>
+],<br/>
+&#39;note|100&#39;: &#39;There are notes!&#39;<br/>
+}]<br/>
 });
-</code></pre>
-</blockquote></li>
+</code></pre></li>
 </ul>
 
-<h2 id="toc_7">结语</h2>
+<h2 id="toc_6">结语</h2>
 
 <p>angular中如何加载mock服务就到这，mock中的精髓是通过代码来生车给你数据，这些还需要细读一下API。这次记录是通过编译打包时的顺序来记录mock的使用方法，今后需要更深入的理解angular要多多从这个方向调查问题。</p>
 
