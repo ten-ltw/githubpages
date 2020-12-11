@@ -4,11 +4,11 @@
 }
 
 ul.off-canvas-list li label {
-  background-color: #09263c;
+  background-color: #020b13;
 }
 
 .left-off-canvas-menu {
-  background-color: #112E45;
+  background-color: #333;
 }
 
 ul.off-canvas-list li a {
@@ -21,8 +21,16 @@ ul.off-canvas-list li a:hover {
 
 .top-bar,
 .tab-bar {
-  background-color: #112E45;
-  height: 50px;
+  background-color: #2d2d2d;
+  height: 165px;
+}
+
+@media only screen and (max-width: 640px) {
+
+  .top-bar,
+  .tab-bar {
+    height: 90px;
+  }
 }
 
 .tab-bar .menu-icon {
@@ -43,8 +51,16 @@ ul.off-canvas-list li a:hover {
   font-family: Lato, Helvetica Neue, Helvetica, Arial, sans-serif;
   text-align: left;
   padding: 6px 0;
-  font-size: 20px;
+  font-size: 35px;
   color: #cdddeb;
+}
+
+.docs-bar #header h3 {
+  font-family: Lato, Helvetica Neue, Helvetica, Arial, sans-serif;
+  text-align: left;
+  margin-left: 35px;
+  font-size: 18px;
+  color: #acb9c6;
 }
 
 #header h1 a {
@@ -74,24 +90,24 @@ ul.off-canvas-list li a:hover {
   display: inline-block;
   padding: 10px 0;
   margin-top: 40px;
-  color: #0e83cd;
-  border-top: solid 1px #e3e3e3;
+  color: #cc2100;
+  /* border-top: solid 1px #e3e3e3; */
   font-weight: bold;
   font-size: 1.2em;
 }
 
 
 .sidebar .side-nav li a {
-  color: #444;
+  color: #cc2100;
 }
 
 .sidebar .side-nav li a:hover {
-  color: #0e83cd;
+  color: #ff8400;
   background: none;
 }
 
 .sidebar .side-nav li.active>a:first-child {
-  color: #0e83cd;
+  color: #ff8400;
 }
 
 .markdown-toc ul,
@@ -144,7 +160,7 @@ ul.off-canvas-list li a:hover {
 
 .markdown-toc li.side-title span {
   padding: 10px 0;
-  color: #0e83cd;
+  color: #cc2100;
   font-size: 1.0em;
   border-top: solid 1px #e3e3e3;
 }
@@ -154,13 +170,14 @@ ul.off-canvas-list li a:hover {
 }
 
 .markdown-toc li a:hover {
-  color: #0e83cd;
+  color: #ff8400;
   background: none;
 }
 
 
 .markdown-body {
-  margin-top: 54px;
+  margin-top: -45px;
+  padding: 0px 30px 0 50px;
 }
 
 .markdown-toc {
@@ -307,7 +324,7 @@ ul.off-canvas-list li a:hover {
 }
 
 .markdown-body h2 {
-  font-size: 21px;
+  font-size: 25px;
 }
 
 .markdown-body h3 {
@@ -447,17 +464,20 @@ ul.off-canvas-list li a:hover {
 }
 
 .markdown-body h1 {
-  padding-bottom: 0.3em;
   font-size: 2.25em;
-  line-height: 1.2;
-  border-bottom: 1px solid #eee;
+  background: #ff8400;
+  color: #fff;
+  padding: 10px 36px 17px 50px;
+  margin: 0 -30px 16px -50px;
+  border-radius: 30px 0 0 32px;
 }
 
 .markdown-body h2 {
-  padding-bottom: 0.3em;
-  font-size: 1.75em;
-  line-height: 1.225;
-  border-bottom: 1px solid #eee;
+  background: #009d81;
+  color: #fff;
+  padding: 10px 36px 17px 30px;
+  margin: 21px -30px 16px -30px;
+  border-radius: 32px 0 0 32px;
 }
 
 .markdown-body h3 {

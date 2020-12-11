@@ -4,7 +4,7 @@
   <title><![CDATA[十]]></title>
   <link href="blog.2019919.top/atom.xml" rel="self"/>
   <link href="blog.2019919.top/"/>
-  <updated>2020-12-11T21:45:47+08:00</updated>
+  <updated>2020-12-11T23:51:55+08:00</updated>
   <id>blog.2019919.top/</id>
   <author>
     <name><![CDATA[]]></name>
@@ -43,8 +43,6 @@
     <id>blog.2019919.top/16073237309370.html</id>
     <content type="html"><![CDATA[
 <p>在现在公司中，并没有真的前后端分离，往往是前后端一同疏通测试，美其名曰节省时间全面发展。因此至今没有单独写过mock进行前端自己的单体测试。这一次调查下mock的使用。</p>
-
-<hr/>
 
 <h2 id="toc_0">Angular的environments文件</h2>
 
