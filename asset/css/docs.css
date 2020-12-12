@@ -467,8 +467,8 @@ ul.off-canvas-list li a:hover {
   font-size: 2.25em;
   background: #ff8400;
   color: #fff;
-  padding: 10px 36px 17px 50px;
-  margin: 0 -30px 16px -50px;
+  padding: 10px 36px 17px 45px;
+  margin: 0 -15px 16px -60px;
   border-radius: 30px 0 0 32px;
 }
 
@@ -476,7 +476,7 @@ ul.off-canvas-list li a:hover {
   background: #009d81;
   color: #fff;
   padding: 10px 36px 17px 30px;
-  margin: 21px -30px 16px -30px;
+  margin: 21px -15px 16px -43px;
   border-radius: 32px 0 0 32px;
 }
 
@@ -700,4 +700,13 @@ ul.off-canvas-list li a:hover {
   float: left;
   margin: 0.3em 0 0.25em -1.6em;
   vertical-align: middle;
+}
+
+.hide-extras {
+  background-color: #f1f1f1;
+}
+
+.markdown-inside {
+  background-color: #fff;
+  padding: 0 15px;
 }
