@@ -4,7 +4,7 @@
   <title><![CDATA[十]]></title>
   <link href="blog.2019919.top/atom.xml" rel="self"/>
   <link href="blog.2019919.top/"/>
-  <updated>2020-12-13T00:26:57+08:00</updated>
+  <updated>2020-12-13T10:32:49+08:00</updated>
   <id>blog.2019919.top/</id>
   <author>
     <name><![CDATA[]]></name>
@@ -12,17 +12,6 @@
   </author>
   <generator uri="http://www.mweb.im">MWeb</generator>
 
-  
-  <entry>
-    <title type="html"><![CDATA[关于我]]></title>
-    <link href="blog.2019919.top/16076943300197.html"/>
-    <updated>2020-12-11T21:45:30+08:00</updated>
-    <id>blog.2019919.top/16076943300197.html</id>
-    <content type="html"><![CDATA[
-<p>加点内容测试首页样式</p>
-
-]]></content>
-  </entry>
   
   <entry>
     <title type="html"><![CDATA[JS事件执行过程]]></title>
@@ -105,9 +94,9 @@ tags: [<br/>
 </code></pre></li>
 </ul>
 
-<h2 id="toc_6">结语</h2>
+<h2 id="toc_6">最后鼓励下自己</h2>
 
-<p>angular中如何加载mock服务就到这，mock中的精髓是通过代码来生车给你数据，这些还需要细读一下API。这次记录是通过编译打包时的顺序来记录mock的使用方法，今后需要更深入的理解angular要多多从这个方向调查问题。</p>
+<p>angular中如何加载mock服务就到这，mock中的精髓是通过代码来生成数据，一行代码就可以生成千万条带有逻辑的数据，这些还需要细读一下API。这次记录是通过编译打包时的顺序来记录mock的使用方法，今后需要更深入的理解angular要多多从这个方向调查问题。</p>
 
 ]]></content>
   </entry>

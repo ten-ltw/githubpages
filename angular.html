@@ -27,14 +27,16 @@
     <div class="inner-wrap">
       <nav class="top-bar docs-bar hide-for-small" data-topbar>
         <div id="header">
-          <h1><a href="index.html">十</a></h1>
-          <h3>十的对称 十的完美</h1>
+          <h3><a href="index.html">十的对称 十的完美</a></h1>
         </div>
       </nav>
       <nav class="tab-bar show-for-small">
         <a href="javascript:void(0)" class="left-off-canvas-toggle menu-icon">
-          <span> &nbsp; 十</span>
+          <span> &nbsp;</span>
         </a>
+        <div id="header">
+          <h3><a href="index.html">十的对称 十的完美</a></h1>
+        </div>
       </nav>
       <aside class="left-off-canvas-menu">
         <ul class="off-canvas-list">
@@ -58,79 +60,10 @@
       <section id="main-content" role="main" class="scroll-container">
         <div class="row">
           <div class="large-9 medium-9 columns">
-  
-
-<div class="markdown-body">
-  <h1>angular mock的使用</h1>
-  <p>在现在公司中，并没有真的前后端分离，往往是前后端一同疏通测试，美其名曰节省时间全面发展。因此至今没有单独写过mock进行前端自己的单体测试。这一次调查下mock的使用。</p>
-
-<h2 id="toc_0">Angular的environments文件</h2>
-
-<p><img src="media/16073237309370/16073245939102.jpg" alt="" style="width:746px;"/></p>
-
-<p>environments文件分别是每个环境对应的配置。<br/>
-每个文件与环境的对应关系存放于<code>angular.json</code>中。</p>
-
-<p><img src="media/16073237309370/16073266078090.jpg" alt="" style="width:555px;"/></p>
-
-<p>这个设定指定了cli在进行<code>production build</code>的时候将<code>environment.ts</code>替换成<code>environment.prod.ts</code>，即将开发环境的环境配置替换成生产环境的开发配置。<br/>
-在这里设置isMock属性，让mock在生产环境中自动启动，开发环境~~~~中自动关闭。</p>
-
-<h2 id="toc_1">Angular的main.ts文件</h2>
-
-<p><img src="media/16073237309370/16073284745167.jpg" alt="" style="width:555px;"/></p>
-
-<p>同样在cli中webpack的入口程序被设置为<code>src/main.ts</code>，也就是说<code>main.ts</code>是我们整个angualr的入口程序。我们在这里判断当前环境是否引入mock服务。</p>
-
-<p><img src="media/16073237309370/16073286403589.jpg" alt="" style="width:566px;"/></p>
-
-<h2 id="toc_2">mock服务的实现</h2>
-
-<h3 id="toc_3">1.选择自己的包管理器添加mock的指令安装mock</h3>
-
-<pre><code class="language-text">npm install mockjs --save
-</code></pre>
-
-<pre><code class="language-text">yarn add mockjs
-</code></pre>
-
-<h3 id="toc_4">2.创建mock文件，并添加到打包配置文件中</h3>
-
-<p>又是<code>angualr.json</code>，在scripts中添加自己的mock文件路径，让webpack打包angular时同时打包我们的mock文件。<br/>
-<img src="media/16073237309370/16073291483432.jpg" alt="" style="width:541px;"/></p>
-
-<h3 id="toc_5">3.编写mock服务</h3>
-
-<ul>
-<li><p>首先导入mockjs。</p>
-<pre><code class="language-typescript">import * as Mock from &#39;mockjs&#39;;
-</code></pre></li>
-<li><p>然后拦截请求，返回假数据</p>
-<pre><code class="language-typescript">Mock.mock(&#39;http://localhost:9080/list&#39;, {
-message: &#39;调用成功&#39;,<br/>
-&#39;data|10&#39;: [{<br/>
-&#39;id|+1&#39;: 1,<br/>
-title: &#39;This is a title&#39;,<br/>
-tags: [<br/>
-  {<br/>
-    id: 1,<br/>
-    name: &#39;aaaa&#39;,<br/>
-    color: &#39;red&#39;<br/>
-  }<br/>
-],<br/>
-&#39;note|100&#39;: &#39;There are notes!&#39;<br/>
-}]<br/>
-});
-</code></pre></li>
-</ul>
-
-<h2 id="toc_6">结语</h2>
-
-<p>angular中如何加载mock服务就到这，mock中的精髓是通过代码来生车给你数据，这些还需要细读一下API。这次记录是通过编译打包时的顺序来记录mock的使用方法，今后需要更深入的理解angular要多多从这个方向调查问题。</p>
-
-</div>
-
-  
+  <div class="markdown-body">
+  <h1>关于我</h1>
+  <p>自我介绍</p>
+</div>  
           </div>
           <div class="large-3 medium-3 columns">
             <div class="hide-for-small">
@@ -140,12 +73,16 @@ tags: [<br/>
                     
                     <li class="side-title"><span>Angular</span></li>
                     
-                    <li><a title="angular mock的使用" href="16073237309370.html">angular mock的使用</a></li>
+                    <li>
+                      <a title="angular mock的使用" href="16073237309370.html">angular mock的使用</a>
+                    </li>
                     
                     
                     <li class="side-title"><span>JavaScript</span></li>
                     
-                    <li><a title="JS事件执行过程" href="16076922632055.html">JS事件执行过程</a></li>
+                    <li>
+                      <a title="JS事件执行过程" href="16076922632055.html">JS事件执行过程</a>
+                    </li>
                     
                     
                   </ul>
