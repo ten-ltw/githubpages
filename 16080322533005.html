@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>
     
-    十
+    javascript原型和原型链 - 十
     
   </title>
   <meta name="description" content="">
@@ -68,12 +68,101 @@
           <div class="large-9 medium-9 columns">
   <div class="markdown-body">
   <div class="markdown-inside">
-    <h1>关于我</h1>
-    <time class="article-date">发布于明天</time>
-    <p>才知道该学啥，可是不知道自学到底会多走多少弯路！</p>
-    <p>等小有成就，再总结下自己吧。</p>
+    <h1>javascript原型和原型链</h1>
+    <time class="article-date" datetime="2020-12-15T19:37:33+08:00">发布于2020/12/15</time>
+    <p>今天刚开始学习【重学前端】的课程，讲到装箱转换的时候提到了函数的<code>call</code>方法，而<code>call</code>方法在我的印象中就只有<code>call</code>约等于<code>apply</code>，然后就再没有然后了。在我想深入了解下<code>call</code>方法的时候又发现了有人在同时讲解原型，而于此同时我看到了知乎上的一个贴<a href="https://www.zhihu.com/question/60165921">面试一个5年的前端，却连原型链也搞不清楚，满口都是Vue，React之类的实现，这样的人该用吗？</a>，这我不看内容我就惊呆了，这标题不就是在说我吗。带着各种心情赶紧学习下到底什么是原型和原型链。</p>
+
+<h2 id="toc_0">原型</h2>
+
+<pre><code class="language-text">prototype  [ˈproʊtətaɪp]  原型
+</code></pre>
+
+<p>OK完了😊！</p>
+
+<p>下面这个图很多大神都有画过，下面记录下我自己的理解和实验。</p>
+
+<p><img src="media/16080322533005/16080400429560.jpg" alt="" style="width:450px;"/></p>
+
+<h3 id="toc_1">构造函数视角</h3>
+
+<p>函数可以用来做构造器，也就是constructor，而构造器也可以称为类。<br/>
+通过构造器<code>Apple</code>来创建一个对象对象<code>apple</code>。</p>
+
+<p><img src="media/16080322533005/16080397593797.jpg" alt="" style="width:198px;"/></p>
+
+<p><strong>构造函数创建了实例对象</strong>，这是构造函数与实例对象的关系。</p>
+
+<hr/>
+
+<p><strong>构造函数有一个属性叫做propotype,他指向了原型对象。</strong></p>
+
+<p><img src="media/16080322533005/16080405364424.jpg" alt="" style="width:299px;"/></p>
+
+<p>这里的原型对象有些大神也写做<code>[[propotype]]</code>，这里我猜测是为了区分propotype的属性。</p>
+
+<h3 id="toc_2">原型对象视角</h3>
+
+<p><strong>原型对象的constructor属性指向了构造函数</strong>。</p>
+
+<p><img src="media/16080322533005/16080407735350.jpg" alt="" style="width:382px;"/></p>
+
+<p>这里用构造器的原型对象的constructor方法来创建一个<code>badApple</code>，会发现它和<code>apple</code>的类型是相等的。</p>
+
+<h3 id="toc_3">实例对象视角</h3>
+
+<p>对象也有一个属性__propo__，这是一个隐式属性，<strong>对象的__propo__指向了他的构造函数的原型对象。</strong><br/>
+也就是说<code>Apple</code>的propotype属性和<code>apple</code>、<code>badApple</code>的__propo__指向了同一个地址。</p>
+
+<p><img src="media/16080322533005/16080419126552.jpg" alt="" style="width:318px;"/></p>
+
+<h3 id="toc_4">由函数引出原型链</h3>
+
+<p>函数是JS中的第一类对象，在Javascript中，对象所拥有的函数也同样拥有，也就是说构造函数<code>Apple</code>也同样会有__propo__属性去指向他的父类的原型对象，为了理清这乱七八糟的关系，就有了下面【对象-函数-构造函数-实例对象】这样的一个关系图，也就是原型链图。</p>
+
+<h2 id="toc_5">原型链</h2>
+
+<p><img src="media/16080322533005/16080423510561.jpg" alt=""/></p>
+
+<p>这张图理解了上面的内容之后就感觉容易多了，总结一下有以下几点需要注意。</p>
+
+<ul>
+<li>任何函数的父类都是Function函数，也就是任何函数的__proto__指向Function的原型对象,这里同样包含了Function函数自己。</li>
+<li>Object函数的__proto__指向Function的原型对象</li>
+</ul>
+
   </div>
-</div>  
+</div>
+<br /><br />
+<hr />
+<div class="row clearfix">
+  <div class="large-6 columns">
+    <div class="text-left" style="padding:15px 0px;">
+      
+    </div>
+  </div>
+  <div class="large-6 columns">
+    <div class="text-right" style="padding:15px 0px;">
+      
+      <a href="16076922632055.html" title="Next Post: 重新认识下熟悉的浏览器">重新认识下熟悉的浏览器 &raquo;</a>
+      
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div style="padding:0px 0.93em;" class="share-comments">
+    
+  </div>
+</div>
+<script type="text/javascript">
+  $(function () {
+    var currentURL = '16080322533005.html';
+    $('#side-nav a').each(function () {
+      if ($(this).attr('href') == currentURL) {
+        $(this).parent().addClass('active');
+      }
+    });
+  });
+</script>  
           </div>
           <div class="large-3 medium-3 columns">
             <div class="hide-for-small">
