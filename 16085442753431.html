@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>
     
-    Angular - 十
+    JavaScript全部的对象分类 - 十
     
   </title>
   <meta name="description" content="">
@@ -80,12 +80,72 @@
           <div class="large-9 medium-9 columns">
   <div class="markdown-body">
   <div class="markdown-inside">
-    <h1>关于我</h1>
-    <time class="article-date">发布于明天</time>
-    <p>才知道该学啥，可是不知道自学到底会多走多少弯路！</p>
-    <p>等小有成就，再总结下自己吧。</p>
+    <h1>JavaScript全部的对象分类</h1>
+    <time class="article-date" datetime="2020-12-21T17:51:15+08:00">发布于2020/12/21</time>
+    <p>之前讲解的对象只是特定的一部分，并不能涵盖全部的JavaScript对象。<br/>
+比如无论怎样编写代码都没法绕开Array，实现一个跟原生数组行为一模一样的对象，因为原生数组底层实现了一个自动随着下标变化的length属性。并且也无法依靠JavaScript代码实现div对象，需要用document.createElement来创建。这也说明了JavaScript的对象机制并非简单的属性集合+原型。</p>
+
+<h2 id="toc_0"> JavaScript中的对象分类</h2>
+
+<p>* 宿主对象（host Objects）<br/>
+由JavaScript宿主环境提供的对象，他们的行为完全由宿主环境决定。<br/>
+* 内置对象（Built-in Objects）<br/>
+由JavaScript语言提供的对象。<br/>
+    - 固有对象（Intrinsic Objects）<br/>
+    由便准规定，随着JavaScript运行时创建而自动创建的对象实例。<br/>
+    - 原生对象（Native Objects）<br/>
+    可以由用户通过Array、RegExp等内置构造器或者特殊语法创建的对象。<br/>
+    - 普通对象（Ordinary Objects）<br/>
+    由{}语法、Object构造器或者calss关键字定义类创建的对象，它能够被原型继承。</p>
+
+<h2 id="toc_1"> 宿主对象</h2>
+
+<p>前端最熟悉的就是浏览器环境中的宿主。在浏览器环境中全局对象是window，window上又有很多属性，如document。<br/>
+实际上这个全局对象window上的属性一部分来自于JavaScript语言，一部分来自浏览器环境。</p>
+
+<h2 id="toc_2"> 内置对象·固有对象</h2>
+
+<p>固有对象是由标准规定，随着JavaScript运行时创建而自动创建的对象实例，类似基础库的角色。比如window、document等。</p>
+
+<h2 id="toc_3"> 内置对象·原生对象</h2>
+
+<p>能够通过语言本身的构造器创建的对象叫做原生对象。<br/>
+老师将对象分成了如下五类：<br/>
+通过这些构造器可以通过new运算创建新的对象，</p>
+
   </div>
-</div>  
+</div>
+<br /><br />
+<hr />
+<div class="row clearfix">
+  <div class="large-6 columns">
+    <div class="text-left" style="padding:15px 0px;">
+      
+    </div>
+  </div>
+  <div class="large-6 columns">
+    <div class="text-right" style="padding:15px 0px;">
+      
+      <a href="16085441443213.html" title="Next Post: JavaScript的面向对象">JavaScript的面向对象 &raquo;</a>
+      
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div style="padding:0px 0.93em;" class="share-comments">
+    
+  </div>
+</div>
+<script type="text/javascript">
+  $(function () {
+    var currentURL = '16085442753431.html';
+    $('#side-nav a').each(function () {
+      if ($(this).attr('href') == currentURL) {
+        $(this).parent().addClass('active');
+      }
+    });
+  });
+</script>  
           </div>
           <div class="large-3 medium-3 columns">
             <div class="hide-for-small">

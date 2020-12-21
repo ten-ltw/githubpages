@@ -4,7 +4,7 @@
   <title><![CDATA[十]]></title>
   <link href="blog.2019919.top/atom.xml" rel="self"/>
   <link href="blog.2019919.top/"/>
-  <updated>2020-12-20T12:51:56+08:00</updated>
+  <updated>2020-12-21T17:58:03+08:00</updated>
   <id>blog.2019919.top/</id>
   <author>
     <name><![CDATA[]]></name>
@@ -12,6 +12,127 @@
   </author>
   <generator uri="http://www.mweb.im">MWeb</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[JavaScript全部的对象分类]]></title>
+    <link href="blog.2019919.top/16085442753431.html"/>
+    <updated>2020-12-21T17:51:15+08:00</updated>
+    <id>blog.2019919.top/16085442753431.html</id>
+    <content type="html"><![CDATA[
+<p>之前讲解的对象只是特定的一部分，并不能涵盖全部的JavaScript对象。<br/>
+比如无论怎样编写代码都没法绕开Array，实现一个跟原生数组行为一模一样的对象，因为原生数组底层实现了一个自动随着下标变化的length属性。并且也无法依靠JavaScript代码实现div对象，需要用document.createElement来创建。这也说明了JavaScript的对象机制并非简单的属性集合+原型。</p>
+
+<h2 id="toc_0"> JavaScript中的对象分类</h2>
+
+<p>* 宿主对象（host Objects）<br/>
+由JavaScript宿主环境提供的对象，他们的行为完全由宿主环境决定。<br/>
+* 内置对象（Built-in Objects）<br/>
+由JavaScript语言提供的对象。<br/>
+    - 固有对象（Intrinsic Objects）<br/>
+    由便准规定，随着JavaScript运行时创建而自动创建的对象实例。<br/>
+    - 原生对象（Native Objects）<br/>
+    可以由用户通过Array、RegExp等内置构造器或者特殊语法创建的对象。<br/>
+    - 普通对象（Ordinary Objects）<br/>
+    由{}语法、Object构造器或者calss关键字定义类创建的对象，它能够被原型继承。</p>
+
+<h2 id="toc_1"> 宿主对象</h2>
+
+<p>前端最熟悉的就是浏览器环境中的宿主。在浏览器环境中全局对象是window，window上又有很多属性，如document。<br/>
+实际上这个全局对象window上的属性一部分来自于JavaScript语言，一部分来自浏览器环境。</p>
+
+<h2 id="toc_2"> 内置对象·固有对象</h2>
+
+<p>固有对象是由标准规定，随着JavaScript运行时创建而自动创建的对象实例，类似基础库的角色。比如window、document等。</p>
+
+<h2 id="toc_3"> 内置对象·原生对象</h2>
+
+<p>能够通过语言本身的构造器创建的对象叫做原生对象。<br/>
+老师将对象分成了如下五类：<br/>
+通过这些构造器可以通过new运算创建新的对象，</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[JavaScript的面向对象]]></title>
+    <link href="blog.2019919.top/16085441443213.html"/>
+    <updated>2020-12-21T17:49:04+08:00</updated>
+    <id>blog.2019919.top/16085441443213.html</id>
+    <content type="html"><![CDATA[
+<p>在不同的编程语言中，设计者也利用各种不同的语言特性来抽象描述对象，最为成功的流派是使用“类”的方式来描述对象，这诞生了诸如 C++、Java 等流行的编程语言。而 JavaScript 早年却选择了一个更为冷门的方式：原型。<br/>
+这节课了解一下 JavaScript 是如何设计对象模型的。</p>
+
+<h2 id="toc_0"> JavaScript对象的特征</h2>
+
+<p>* 对象具有唯一标识性：即使完全相同的两个对象，也并非同一个对象。<br/>
+* 对象有状态：对象具有状态，同一对象可能处于不同状态之下。<br/>
+* 对象具有行为：即对象的状态，可能因为他的行为产生变迁。<br/>
+一般而言，各语言对象唯一标识性都是用内存地址来体现。</p>
+
+<pre><code class="language-javascript">    var o1 = { a: 1 };
+    var o2 = { a: 1 };
+    console.log(o1 == o2); // false
+</code></pre>
+
+<p>两个一模一样的对象，但是打印结果是false，两个对象并不是同一个对象。<br/>
+“状态和行为”在不同语言中会使用不同的术语来描述他们，C++中是“成员变量和成员函数”，Java中则称为“属性和方法”。在JavaScript中，将状态和行为统一抽象为“属性”。</p>
+
+<pre><code class="language-javascript">    var o = { 
+        d: 1,
+        f() {
+            console.log(this.d);
+            }    
+        };
+</code></pre>
+
+<p>o 是对象，d 是一个属性，而函数 f 也是一个属性，尽管写法不太相同，但是对 JavaScript 来说，d 和 f 就是两个普通属性。<br/>
+JavaScript 中对象独有的特色是：<strong>对象具有高度的动态性</strong>，这是因为 JavaScript 赋予了使用者在运行时为对象添改状态和行为的能力。</p>
+
+<pre><code class="language-javascript">    var o = { a: 1 };
+    o.b = 2;
+    console.log(o.a, o.b); //1 2
+</code></pre>
+
+<h2 id="toc_1"> JavaScript对象的两类属性</h2>
+
+<h3 id="toc_2"> 第一类属性数据属性</h3>
+
+<p>数据属性接近于其他语言的属性概念，具有四个特征：<br/>
+* value：就是属性的值。<br/>
+* writable：决定属性是否能被赋值。<br/>
+* enumerable：决定for in 能否枚举该属性。<br/>
+* configurable：决定该属性能否被删除或者改变特征值。</p>
+
+<h3 id="toc_3"> 第二类属性访问器属性（getter/setter）</h3>
+
+<p>访问器属性也有四个特征：<br/>
+* getter：函数或undefined，在取属性值时被调用。<br/>
+* setter：函数或undefined，在设置属性值时被调用。<br/>
+* enumerable：决定for in 能否枚举该属性。<br/>
+* configurable：决定该属性能否被删除或者改变特征值。</p>
+
+<h2 id="toc_4"> 总结</h2>
+
+<p>实际上 JavaScript 对象的运行时是一个“属性的集合”。</p>
+
+<blockquote>
+<p> 属性key：字符串或者 Symbol<br/>
+ 值value：数据属性特征值或者访问器属性特征值<br/>
+对象是一个属性的索引结构（索引结构是一类常见的数据结构，可以把它理解为一个能够以比较快的速度用 key 来查找 value 的字典）。</p>
+</blockquote>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Chapter Shopping]]></title>
+    <link href="blog.2019919.top/16084764191221.html"/>
+    <updated>2020-12-20T23:00:19+08:00</updated>
+    <id>blog.2019919.top/16084764191221.html</id>
+    <content type="html"><![CDATA[
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[JavaScript中的类型]]></title>
@@ -302,10 +423,49 @@ JavaScript 之父本人也在多个场合表示过，typeof 的设计是有缺�
 
 <ul>
 <li>任何函数的父类都是Function函数，也就是任何函数的__proto__指向Function的原型对象,这里同样包含了Function函数自己。</li>
-<li>Object函数的__proto__指向Function的原型对象</li>
+<li>Object函数的__proto__指向Function的原型对象
+<code>TODO</code></li>
 </ul>
 
-<h2 id="toc_6">最后</h2>
+<h2 id="toc_6"> ES6中的类</h2>
+
+<p>类的写法也是由原型运行时来承载的，逻辑上JavaScript认为每个类是有共同原型的一组对象，类中定义的方法和属性会被卸载原型对象之上。此外最重要的是类提供了继承能力。</p>
+
+<pre><code class="language-javascript">class Animal { 
+  constructor(name) {
+    this.name = name;
+  }
+  
+  speak() {
+    console.log(this.name + &#39; makes a noise.&#39;);
+  }
+}
+class Dog extends Animal {
+  constructor(name) {
+    super(name); // call the super class constructor and pass in the name parameter
+  }
+  speak() {
+    console.log(this.name + &#39; barks.&#39;);
+  }
+}
+let d = new Dog(&#39;Mitzie&#39;);
+d.speak(); // Mitzie barks.
+</code></pre>
+
+<p>以上代码创造了 Animal 类，并且通过 extends 关键字让 Dog 继承了它，展示了最终调用子类的 speak 方法获取了父类的 name。比起早期的原型模拟方式，使用 extends 关键字自动设置了 constructor，并且会自动调用父类的构造函数，这是一种更少坑的设计。所以当我们使用类的思想来设计代码时，应该尽量使用 class 来声明类，而不是用旧语法，拿函数来模拟对象。</p>
+
+<blockquote>
+<p>super关键字用于访问和调用一个对象的父对象上的函数。<br/>
+在构造函数中使用时，super关键字将单独出现，并且必须在使用this关键字之前使用。</p>
+
+<pre><code class="language-javascript">super([arguments]);
+// 调用 父对象/父类 的构造函数
+super.functionOnParent([arguments]);
+// 调用 父对象/父类 上的方法
+</code></pre>
+</blockquote>
+
+<h2 id="toc_7">最后</h2>
 
 <p>在我继续学习这个课程之后，发现老师讲了什么是原型。。。尴尬！先过一遍全部课程，再回过头来自己输出一遍。</p>
 

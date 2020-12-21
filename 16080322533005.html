@@ -57,9 +57,19 @@
           <li class="divider"></li>
           <li><label>重学前端--学习笔记</label></li>
           
+          <li><a title="JavaScript全部的对象分类" href="16085442753431.html">JavaScript全部的对象分类</a></li>
+          
+          <li><a title="JavaScript的面向对象" href="16085441443213.html">JavaScript的面向对象</a></li>
+          
           <li><a title="JavaScript中的类型" href="16083847578374.html">JavaScript中的类型</a></li>
           
           <li><a title="javascript原型和原型链" href="16080322533005.html">javascript原型和原型链</a></li>
+          
+          
+          <li class="divider"></li>
+          <li><label>英语课</label></li>
+          
+          <li><a title="Chapter Shopping" href="16084764191221.html">Chapter Shopping</a></li>
           
           
         </ul>
@@ -129,10 +139,49 @@
 
 <ul>
 <li>任何函数的父类都是Function函数，也就是任何函数的__proto__指向Function的原型对象,这里同样包含了Function函数自己。</li>
-<li>Object函数的__proto__指向Function的原型对象</li>
+<li>Object函数的__proto__指向Function的原型对象
+<code>TODO</code></li>
 </ul>
 
-<h2 id="toc_6">最后</h2>
+<h2 id="toc_6"> ES6中的类</h2>
+
+<p>类的写法也是由原型运行时来承载的，逻辑上JavaScript认为每个类是有共同原型的一组对象，类中定义的方法和属性会被卸载原型对象之上。此外最重要的是类提供了继承能力。</p>
+
+<pre><code class="language-javascript">class Animal { 
+  constructor(name) {
+    this.name = name;
+  }
+  
+  speak() {
+    console.log(this.name + &#39; makes a noise.&#39;);
+  }
+}
+class Dog extends Animal {
+  constructor(name) {
+    super(name); // call the super class constructor and pass in the name parameter
+  }
+  speak() {
+    console.log(this.name + &#39; barks.&#39;);
+  }
+}
+let d = new Dog(&#39;Mitzie&#39;);
+d.speak(); // Mitzie barks.
+</code></pre>
+
+<p>以上代码创造了 Animal 类，并且通过 extends 关键字让 Dog 继承了它，展示了最终调用子类的 speak 方法获取了父类的 name。比起早期的原型模拟方式，使用 extends 关键字自动设置了 constructor，并且会自动调用父类的构造函数，这是一种更少坑的设计。所以当我们使用类的思想来设计代码时，应该尽量使用 class 来声明类，而不是用旧语法，拿函数来模拟对象。</p>
+
+<blockquote>
+<p>super关键字用于访问和调用一个对象的父对象上的函数。<br/>
+在构造函数中使用时，super关键字将单独出现，并且必须在使用this关键字之前使用。</p>
+
+<pre><code class="language-javascript">super([arguments]);
+// 调用 父对象/父类 的构造函数
+super.functionOnParent([arguments]);
+// 调用 父对象/父类 上的方法
+</code></pre>
+</blockquote>
+
+<h2 id="toc_7">最后</h2>
 
 <p>在我继续学习这个课程之后，发现老师讲了什么是原型。。。尴尬！先过一遍全部课程，再回过头来自己输出一遍。</p>
 
@@ -196,11 +245,26 @@
                     <li class="side-title"><span>重学前端--学习笔记</span></li>
                     
                     <li>
+                      <a title="JavaScript全部的对象分类" href="16085442753431.html">JavaScript全部的对象分类</a>
+                    </li>
+                    
+                    <li>
+                      <a title="JavaScript的面向对象" href="16085441443213.html">JavaScript的面向对象</a>
+                    </li>
+                    
+                    <li>
                       <a title="JavaScript中的类型" href="16083847578374.html">JavaScript中的类型</a>
                     </li>
                     
                     <li>
                       <a title="javascript原型和原型链" href="16080322533005.html">javascript原型和原型链</a>
+                    </li>
+                    
+                    
+                    <li class="side-title"><span>英语课</span></li>
+                    
+                    <li>
+                      <a title="Chapter Shopping" href="16084764191221.html">Chapter Shopping</a>
                     </li>
                     
                     
