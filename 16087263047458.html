@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>
     
-    angular mock的使用 - 十
+    JavaScript类型转换 - 十
     
   </title>
   <meta name="description" content="">
@@ -82,73 +82,171 @@
           <div class="large-9 medium-9 columns">
   <div class="markdown-body">
   <div class="markdown-inside">
-    <h1>angular mock的使用</h1>
-    <time class="article-date" datetime="2020-12-07T14:48:50+08:00">发布于2020/12/07</time>
-    <p>在现在公司中，并没有真的前后端分离，往往是前后端一同疏通测试，美其名曰节省时间全面发展。因此至今没有单独写过mock进行前端自己的单体测试。这一次调查下mock的使用。</p>
+    <h1>JavaScript类型转换</h1>
+    <time class="article-date" datetime="2020-12-23T20:25:04+08:00">发布于2020/12/23</time>
+    <p>《JavaScript权威指南》的这一章节就是让我确定了我学习路线的一节，这一节的掌握与老师讲拆包转换的时候内容一致，只是描述名词略有变化，也就是说还是要从基础抓起。</p>
 
-<h2 id="toc_0">Angular的environments文件</h2>
+<h2 id="toc_0"> 不注意会出错的类型转换</h2>
 
-<p><img src="media/16073237309370/16073245939102.jpg" alt="" style="width:746px;"/></p>
+<h3 id="toc_1"> 转数值型</h3>
 
-<p>environments文件分别是每个环境对应的配置。<br/>
-每个文件与环境的对应关系存放于<code>angular.json</code>中。</p>
+<table>
+<thead>
+<tr>
+<th>原类型</th>
+<th>转换后类型</th>
+</tr>
+</thead>
 
-<p><img src="media/16073237309370/16073266078090.jpg" alt="" style="width:555px;"/></p>
+<tbody>
+<tr>
+<td>undefined</td>
+<td>NaN</td>
+</tr>
+<tr>
+<td>null</td>
+<td>0</td>
+</tr>
+<tr>
+<td>&quot;&quot;</td>
+<td>0</td>
+</tr>
+<tr>
+<td>非空非数字字符串</td>
+<td>NaN</td>
+</tr>
+</tbody>
+</table>
 
-<p>这个设定指定了cli在进行<code>production build</code>的时候将<code>environment.ts</code>替换成<code>environment.prod.ts</code>，即将开发环境的环境配置替换成生产环境的开发配置。<br/>
-在这里设置isMock属性，让mock在生产环境中自动启动，开发环境~~~~中自动关闭。</p>
+<blockquote>
+<p>NaN（Not a Number，非数）<br/>
+NaN 属性是代表非数字值的特殊值。该属性用于指示某个值不是数字。可以把 Number 对象设置为该值，来指示其不是数字值。<br/>
+isNaN() 全局函数来判断一个值是否是 NaN 值。</p>
+</blockquote>
 
-<h2 id="toc_1">Angular的main.ts文件</h2>
-
-<p><img src="media/16073237309370/16073284745167.jpg" alt="" style="width:555px;"/></p>
-
-<p>同样在cli中webpack的入口程序被设置为<code>src/main.ts</code>，也就是说<code>main.ts</code>是我们整个angualr的入口程序。我们在这里判断当前环境是否引入mock服务。</p>
-
-<p><img src="media/16073237309370/16073286403589.jpg" alt="" style="width:566px;"/></p>
-
-<h2 id="toc_2">mock服务的实现</h2>
-
-<h3 id="toc_3">1.选择自己的包管理器添加mock的指令安装mock</h3>
-
-<pre><code class="language-text">npm install mockjs --save
+<pre><code class="language-javascript">    Number.NaN === NaN
+    // false
+    Number.NaN == NaN
+    // false
+    isNaN(NaN)
+    // true
 </code></pre>
 
-<pre><code class="language-text">yarn add mockjs
-</code></pre>
+<h3 id="toc_2"> 转布尔型</h3>
 
-<h3 id="toc_4">2.创建mock文件，并添加到打包配置文件中</h3>
+<table>
+<thead>
+<tr>
+<th>原类型</th>
+<th>转换后类型</th>
+</tr>
+</thead>
 
-<p>又是<code>angualr.json</code>，在scripts中添加自己的mock文件路径，让webpack打包angular时同时打包我们的mock文件。<br/>
-<img src="media/16073237309370/16073291483432.jpg" alt="" style="width:541px;"/></p>
+<tbody>
+<tr>
+<td>&quot;&quot;</td>
+<td>false</td>
+</tr>
+<tr>
+<td>0,-0,NaN</td>
+<td>false</td>
+</tr>
+<tr>
+<td>Infinity,-Infinity,非零数</td>
+<td>true</td>
+</tr>
+</tbody>
+</table>
 
-<h3 id="toc_5">3.编写mock服务</h3>
+<p>NaN空串null和undefined都为false，所以常用ture,false判断对象是否可以使用。</p>
+
+<h2 id="toc_3"> 转换</h2>
+
+<p>转换分为两种：</p>
 
 <ul>
-<li><p>首先导入mockjs。</p>
-<pre><code class="language-typescript">import * as Mock from &#39;mockjs&#39;;
-</code></pre></li>
-<li><p>然后拦截请求，返回假数据</p>
-<pre><code class="language-typescript">Mock.mock(&#39;http://localhost:9080/list&#39;, {
-message: &#39;调用成功&#39;,<br/>
-&#39;data|10&#39;: [{<br/>
-&#39;id|+1&#39;: 1,<br/>
-title: &#39;This is a title&#39;,<br/>
-tags: [<br/>
-  {<br/>
-    id: 1,<br/>
-    name: &#39;aaaa&#39;,<br/>
-    color: &#39;red&#39;<br/>
-  }<br/>
-],<br/>
-&#39;note|100&#39;: &#39;There are notes!&#39;<br/>
-}]<br/>
-});
-</code></pre></li>
+<li>显示转换</li>
+<li>隐式转换</li>
 </ul>
 
-<h2 id="toc_6">最后鼓励下自己</h2>
+<h3 id="toc_4"> 显示转换</h3>
 
-<p>angular中如何加载mock服务就到这，mock中的精髓是通过代码来生成数据，一行代码就可以生成千万条带有逻辑的数据，这些还需要细读一下API。这次记录是通过编译打包时的顺序来记录mock的使用方法，今后需要更深入的理解angular要多多从这个方向调查问题。</p>
+<p>最简单的方法就是使用Boolean（）、Number（）、String（）或Object（）函数。当不通过new运算符调用这些函数时，它们会作为类型转换函数。</p>
+
+<p>除了null或undefined之外的任何值都具有toString（）方法，这个方法的执行结果通常和String（）方法的返回结果一致。</p>
+
+<p>把null或undefined转换为对象抛出一个类型错误。</p>
+
+<blockquote>
+<p>为什么123.tostring()报错？</p>
+</blockquote>
+
+<p>JavaScript中还提供了专门的函数和方法来做显示转换。</p>
+
+<ul>
+<li>Number.toString（）方法可以接收表示转换基数（radix）。</li>
+<li>Number.toFixed（）根据小数点后的指定位数将数字转换为字符串。</li>
+<li>Number.toExponential（）使用指数记数法将数字转换为指数形式的字符串，其中小数点位数为参数。</li>
+<li>Number，toPrecision（）根据指定的有效数字位数将数字转换成字符串。</li>
+</ul>
+
+<p>后三个方法都会进行四舍五入或填充0。</p>
+
+<p>Number（）只能进行十进制转换。</p>
+
+<p>全局函数parseInt（）和parseFloat（）会<strong>跳过任意数量的前导空格，结束于空格</strong>，尽可能多的解析数值字符，并忽略后面的内容。如果第一个为非空字符不是数字返回NaN。</p>
+
+<pre><code class="language-javascript">    parseInt(&#39; 112 333&#39;)
+    // 112
+</code></pre>
+
+<p>parseInt（）可以接收第二个可选参数，这个参数指定数字转换的基数，合法的取值范围是2～36。</p>
+
+<blockquote>
+<p>在不传入第二个参数的情况下，parseInt 只支持 16 进制前缀“0x”，而且会忽略非数字字符，也不支持科学计数法。在一些古老的浏览器环境中，parseInt 还支持 0 开头的数字作为 8 进制前缀，这是很多错误的来源。所以在任何环境下，都建议传入 parseInt 的第二个参数，而 parseFloat 则直接把原字符串作为十进制来解析，它不会引入任何的其他进制。<br/>
+Number 是比 parseInt更好的选择。<br/>
+这一段觉得老师说的有问题</p>
+</blockquote>
+
+<pre><code class="language-javascript">    parseInt(&#39;! 112 333&#39;)
+    // NaN
+    parseInt(&#39;0x 112 333&#39;)
+    // NaN
+</code></pre>
+
+<h3 id="toc_5"> 隐式转换</h3>
+
+<p>某些运算符会做隐式的类型转换，有时用于类型转换。</p>
+
+<pre><code class="language-javascript">    x + &quot;&quot; // 等价于String(x)
+    +x   // 等价于Number(x)
+    !!x  // 等价于Boolean(x)
+</code></pre>
+
+<h2 id="toc_6"> 对象转换为原始值（拆箱转换）</h2>
+
+<p>到布尔值转换，所有对象（包括数组和函数）都转换为true。</p>
+
+<pre><code class="language-javascript">    Boolean(Boolean(false))
+    // false
+    Boolean(new Boolean(false))
+    // true
+</code></pre>
+
+<p>对象到字符串和数字是通过两个不同的方法来转换的。<br/>
+所有对象都继承了两个方法toString()和valueOf()。对象转化字符串先tostring()方法，如果不是原始值用valueof()方法，如果还不是原始值 抛类型错误。有任何原始值都用原始值进行toStirng()。<br/>
+反之转数值型转换，先进行valueof()后进行tostring()。<br/>
+案例：空数组转数值型等于0.</p>
+
+<pre><code class="language-javascript">    Number([])
+    // 0
+    [].valueOf()
+    // []
+    [].toString()
+    // &quot;&quot;
+    Number(&quot;&quot;)
+    // 0
+</code></pre>
 
   </div>
 </div>
@@ -158,13 +256,15 @@ tags: [<br/>
   <div class="large-6 columns">
     <div class="text-left" style="padding:15px 0px;">
       
-      <a href="16080322533005.html" title="Previous Post: JavaScript原型和原型链">&laquo;
-        JavaScript原型和原型链</a>
+      <a href="16076922632055.html" title="Previous Post: 重新认识下熟悉的浏览器">&laquo;
+        重新认识下熟悉的浏览器</a>
       
     </div>
   </div>
   <div class="large-6 columns">
     <div class="text-right" style="padding:15px 0px;">
+      
+      <a href="16085442753431.html" title="Next Post: JavaScript全部的对象分类">JavaScript全部的对象分类 &raquo;</a>
       
     </div>
   </div>
@@ -176,7 +276,7 @@ tags: [<br/>
 </div>
 <script type="text/javascript">
   $(function () {
-    var currentURL = '16073237309370.html';
+    var currentURL = '16087263047458.html';
     $('#side-nav a').each(function () {
       if ($(this).attr('href') == currentURL) {
         $(this).parent().addClass('active');
