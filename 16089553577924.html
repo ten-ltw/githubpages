@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>
     
-    英语课 - 十
+    类型转换 - 十
     
   </title>
   <meta name="description" content="">
@@ -102,12 +102,182 @@
           <div class="large-9 medium-9 columns">
   <div class="markdown-body">
   <div class="markdown-inside">
-    <h1>关于我</h1>
-    <time class="article-date">发布于明天</time>
-    <p>才知道该学啥，可是不知道自学到底会多走多少弯路！</p>
-    <p>等小有成就，再总结下自己吧。</p>
+    <h1>类型转换</h1>
+    <time class="article-date" datetime="2020-12-26T12:02:37+08:00">发布于2020/12/26</time>
+    <h2 id="toc_0"> 不注意会出错的类型转换</h2>
+
+<h3 id="toc_1"> 转数值型</h3>
+
+<table>
+<thead>
+<tr>
+<th>原类型</th>
+<th>转换后类型</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>undefined</td>
+<td>NaN</td>
+</tr>
+<tr>
+<td>null</td>
+<td>0</td>
+</tr>
+<tr>
+<td>&quot;&quot;</td>
+<td>0</td>
+</tr>
+<tr>
+<td>非空非数字字符串</td>
+<td>NaN</td>
+</tr>
+</tbody>
+</table>
+
+<blockquote>
+<p> NaN（Not a Number，非数）</p>
+</blockquote>
+
+<p>NaN 属性是代表非数字值的特殊值。该属性用于指示某个值不是数字。可以把 Number 对象设置为该值，来指示其不是数字值。<br/>
+isNaN() 全局函数来判断一个值是否是 NaN 值。</p>
+
+<pre><code class="language-javascript">    Number.NaN === NaN
+    // false
+    Number.NaN == NaN
+    // false
+    isNaN(NaN)
+    // true
+</code></pre>
+
+<h3 id="toc_2"> 转布尔型</h3>
+
+<table>
+<thead>
+<tr>
+<th>原类型</th>
+<th>转换后类型</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>&quot;&quot;</td>
+<td>false</td>
+</tr>
+<tr>
+<td>0,-0,NaN</td>
+<td>false</td>
+</tr>
+<tr>
+<td>Infinity,-Infinity,非零数</td>
+<td>true</td>
+</tr>
+</tbody>
+</table>
+
+<p>NaN空串null和undefined都为false，所以常用ture,false判断对象是否可以使用。</p>
+
+<h2 id="toc_3"> 转换</h2>
+
+<p>转换分为两种：<br/>
+* 显示转换<br/>
+* 隐式转换</p>
+
+<h3 id="toc_4"> 显示转换</h3>
+
+<p>最简单的方法就是使用Boolean（）、Number（）、String（）或Object（）函数。当不通过new运算符调用这些函数时，它们会作为类型转换函数。<br/>
+除了null或undefined之外的任何值都具有toString（）方法，这个方法的执行结果通常和String（）方法的返回结果一致。<br/>
+把null或undefined转换为对象抛出一个类型错误。</p>
+
+<blockquote>
+<p> 为什么123.tostring()报错？</p>
+</blockquote>
+
+<p>JavaScript中还提供了专门的函数和方法来做显示转换。<br/>
+* Number.toString（）方法可以接收表示转换基数（radix）。<br/>
+* Number.toFixed（）根据小数点后的指定位数将数字转换为字符串。<br/>
+* Number.toExponential（）使用指数记数法将数字转换为指数形式的字符串，其中小数点位数为参数。<br/>
+* Number，toPrecision（）根据指定的有效数字位数将数字转换成字符串。<br/>
+后三个方法都会进行四舍五入或填充0。<br/>
+Number（）只能进行十进制转换。<br/>
+全局函数parseInt（）和parseFloat（）会跳过任意数量的前导空格，尽可能多的解析数值字符，并忽略后面的内容。如果第一个为非空字符返回NaN。<br/>
+parseInt（）可以接收第二个可选参数，这个参数指定数字转换的基数，合法的取值范围是2～36。</p>
+
+<blockquote>
+<p> 在不传入第二个参数的情况下，parseInt 只支持 16 进制前缀“0x”，而且会忽略非数字字符，也不支持科学计数法。在一些古老的浏览器环境中，parseInt 还支持 0 开头的数字作为 8 进制前缀，这是很多错误的来源。所以在任何环境下，都建议传入 parseInt 的第二个参数，而 parseFloat 则直接把原字符串作为十进制来解析，它不会引入任何的其他进制。</p>
+</blockquote>
+
+<p>Number 是比 parseInt 和 parseFloat 更好的选择。</p>
+
+<h3 id="toc_5"> 隐式转换</h3>
+
+<p>某些运算符会做隐式的类型转换，有时用于类型转换。</p>
+
+<pre><code class="language-javascript">    x + &quot;&quot; // 等价于String(x)
+    +x   // 等价于Number(x)
+    !!x  // 等价于Boolean(x)
+</code></pre>
+
+<h2 id="toc_6"> 对象转换为原始值（拆箱转换）</h2>
+
+<p>到布尔值转换，所有对象（包括数组和函数）都转换为true。</p>
+
+<pre><code class="language-javascript">    Boolean(Boolean(false))
+    // false
+    Boolean(new Boolean(false))
+    // true
+</code></pre>
+
+<p>对象到字符串和数字是通过两个不同的方法来转换的。<br/>
+所有对象都继承了两个方法toString()和valueOf()。对象转化字符串先tostring()方法，如果不是原始值用valueof()方法，如果还不是原始值 抛类型错误。有任何原始值都用原始值进行toStirng()。<br/>
+反之转数值型转换，先进行valueof()后进行tostring()。<br/>
+案例：空数组转数值型等于0.</p>
+
+<pre><code class="language-javascript">    Number([])
+    0
+    [].valueOf()
+    []
+    [].toString()
+    &quot;&quot;
+    Number(&quot;&quot;)
+    0
+</code></pre>
+
   </div>
-</div>  
+</div>
+<br /><br />
+<hr />
+<div class="row clearfix">
+  <div class="large-6 columns">
+    <div class="text-left" style="padding:15px 0px;">
+      
+    </div>
+  </div>
+  <div class="large-6 columns">
+    <div class="text-right" style="padding:15px 0px;">
+      
+      <a href="16089552578971.html" title="Next Post: chapter 2 Dining">chapter 2 Dining &raquo;</a>
+      
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div style="padding:0px 0.93em;" class="share-comments">
+    
+  </div>
+</div>
+<script type="text/javascript">
+  $(function () {
+    var currentURL = '16089553577924.html';
+    $('#side-nav a').each(function () {
+      if ($(this).attr('href') == currentURL) {
+        $(this).parent().addClass('active');
+      }
+    });
+  });
+</script>  
           </div>
           <div class="large-3 medium-3 columns">
             <div class="hide-for-small">

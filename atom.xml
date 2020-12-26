@@ -4,7 +4,7 @@
   <title><![CDATA[十]]></title>
   <link href="blog.2019919.top/atom.xml" rel="self"/>
   <link href="blog.2019919.top/"/>
-  <updated>2020-12-24T22:40:44+08:00</updated>
+  <updated>2020-12-26T13:05:19+08:00</updated>
   <id>blog.2019919.top/</id>
   <author>
     <name><![CDATA[]]></name>
@@ -12,6 +12,486 @@
   </author>
   <generator uri="http://www.mweb.im">MWeb</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[类型转换]]></title>
+    <link href="blog.2019919.top/16089553577924.html"/>
+    <updated>2020-12-26T12:02:37+08:00</updated>
+    <id>blog.2019919.top/16089553577924.html</id>
+    <content type="html"><![CDATA[
+<h2 id="toc_0"> 不注意会出错的类型转换</h2>
+
+<h3 id="toc_1"> 转数值型</h3>
+
+<table>
+<thead>
+<tr>
+<th>原类型</th>
+<th>转换后类型</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>undefined</td>
+<td>NaN</td>
+</tr>
+<tr>
+<td>null</td>
+<td>0</td>
+</tr>
+<tr>
+<td>&quot;&quot;</td>
+<td>0</td>
+</tr>
+<tr>
+<td>非空非数字字符串</td>
+<td>NaN</td>
+</tr>
+</tbody>
+</table>
+
+<blockquote>
+<p> NaN（Not a Number，非数）</p>
+</blockquote>
+
+<p>NaN 属性是代表非数字值的特殊值。该属性用于指示某个值不是数字。可以把 Number 对象设置为该值，来指示其不是数字值。<br/>
+isNaN() 全局函数来判断一个值是否是 NaN 值。</p>
+
+<pre><code class="language-javascript">    Number.NaN === NaN
+    // false
+    Number.NaN == NaN
+    // false
+    isNaN(NaN)
+    // true
+</code></pre>
+
+<h3 id="toc_2"> 转布尔型</h3>
+
+<table>
+<thead>
+<tr>
+<th>原类型</th>
+<th>转换后类型</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>&quot;&quot;</td>
+<td>false</td>
+</tr>
+<tr>
+<td>0,-0,NaN</td>
+<td>false</td>
+</tr>
+<tr>
+<td>Infinity,-Infinity,非零数</td>
+<td>true</td>
+</tr>
+</tbody>
+</table>
+
+<p>NaN空串null和undefined都为false，所以常用ture,false判断对象是否可以使用。</p>
+
+<h2 id="toc_3"> 转换</h2>
+
+<p>转换分为两种：<br/>
+* 显示转换<br/>
+* 隐式转换</p>
+
+<h3 id="toc_4"> 显示转换</h3>
+
+<p>最简单的方法就是使用Boolean（）、Number（）、String（）或Object（）函数。当不通过new运算符调用这些函数时，它们会作为类型转换函数。<br/>
+除了null或undefined之外的任何值都具有toString（）方法，这个方法的执行结果通常和String（）方法的返回结果一致。<br/>
+把null或undefined转换为对象抛出一个类型错误。</p>
+
+<blockquote>
+<p> 为什么123.tostring()报错？</p>
+</blockquote>
+
+<p>JavaScript中还提供了专门的函数和方法来做显示转换。<br/>
+* Number.toString（）方法可以接收表示转换基数（radix）。<br/>
+* Number.toFixed（）根据小数点后的指定位数将数字转换为字符串。<br/>
+* Number.toExponential（）使用指数记数法将数字转换为指数形式的字符串，其中小数点位数为参数。<br/>
+* Number，toPrecision（）根据指定的有效数字位数将数字转换成字符串。<br/>
+后三个方法都会进行四舍五入或填充0。<br/>
+Number（）只能进行十进制转换。<br/>
+全局函数parseInt（）和parseFloat（）会跳过任意数量的前导空格，尽可能多的解析数值字符，并忽略后面的内容。如果第一个为非空字符返回NaN。<br/>
+parseInt（）可以接收第二个可选参数，这个参数指定数字转换的基数，合法的取值范围是2～36。</p>
+
+<blockquote>
+<p> 在不传入第二个参数的情况下，parseInt 只支持 16 进制前缀“0x”，而且会忽略非数字字符，也不支持科学计数法。在一些古老的浏览器环境中，parseInt 还支持 0 开头的数字作为 8 进制前缀，这是很多错误的来源。所以在任何环境下，都建议传入 parseInt 的第二个参数，而 parseFloat 则直接把原字符串作为十进制来解析，它不会引入任何的其他进制。</p>
+</blockquote>
+
+<p>Number 是比 parseInt 和 parseFloat 更好的选择。</p>
+
+<h3 id="toc_5"> 隐式转换</h3>
+
+<p>某些运算符会做隐式的类型转换，有时用于类型转换。</p>
+
+<pre><code class="language-javascript">    x + &quot;&quot; // 等价于String(x)
+    +x   // 等价于Number(x)
+    !!x  // 等价于Boolean(x)
+</code></pre>
+
+<h2 id="toc_6"> 对象转换为原始值（拆箱转换）</h2>
+
+<p>到布尔值转换，所有对象（包括数组和函数）都转换为true。</p>
+
+<pre><code class="language-javascript">    Boolean(Boolean(false))
+    // false
+    Boolean(new Boolean(false))
+    // true
+</code></pre>
+
+<p>对象到字符串和数字是通过两个不同的方法来转换的。<br/>
+所有对象都继承了两个方法toString()和valueOf()。对象转化字符串先tostring()方法，如果不是原始值用valueof()方法，如果还不是原始值 抛类型错误。有任何原始值都用原始值进行toStirng()。<br/>
+反之转数值型转换，先进行valueof()后进行tostring()。<br/>
+案例：空数组转数值型等于0.</p>
+
+<pre><code class="language-javascript">    Number([])
+    0
+    [].valueOf()
+    []
+    [].toString()
+    &quot;&quot;
+    Number(&quot;&quot;)
+    0
+</code></pre>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[chapter 2 Dining]]></title>
+    <link href="blog.2019919.top/16089552578971.html"/>
+    <updated>2020-12-26T12:00:57+08:00</updated>
+    <id>blog.2019919.top/16089552578971.html</id>
+    <content type="html"><![CDATA[
+<h2 id="toc_0"> lesson 12</h2>
+
+<p>Good evening.<strong>May I take your order?</strong><br/>
+Yes,I would like to have the salad please,and I think the bread and butter is <strong>free of charge</strong>?<br/>
+Yes,bread and butter if free.Are you interested in a <strong>main course</strong>?<br/>
+Yes,<strong>Do you have any speicals</strong> tonight?<br/>
+Of course.Tonight we&#39;<strong>re offering</strong> lobster for only twenty dollars.<br/>
+Ok.I&#39;ll take it!</p>
+
+<h2 id="toc_1"> lesson 13</h2>
+
+<p>Are we <strong>still on</strong> for dinner tonight?I&#39;m already getting hungry.<br/>
+Sure!<strong>What do you have in mind?</strong><br/>
+I&#39;d like a big meal in the evening.What about you?<strong>What are you in the mood for?</strong><br/>
+We should <strong>head over to</strong> the new <strong>department store</strong>.They&#39;ve got an <strong>enormous food court</strong> with <strong>loads of</strong> differenmt restaurants.There are supposed to be Japanese,Korean,Thai restaurents and so on.<br/>
+My friend gave great <strong>reviews</strong> of the Mexican and Italian places.<strong>Are you in the mood for</strong> a taco or a burrito？Or maybe some pasta?<br/>
+<strong>I think I have more of an appetite for</strong> Italian food right now.<br/>
+Let&#39;s <strong>definitely</strong> go there.</p>
+
+<h2 id="toc_2"> lesson 14</h2>
+
+<p>Hi,<strong>what can I get you?</strong><br/>
+I&#39;ll have a large <strong>mocha</strong> with cream,and a small <strong>cappuccino</strong>.<br/>
+<strong>Would you like anything else?</strong><br/>
+Yes,I&#39;d also like an <strong>espresso</strong> and a brownie,please.<br/>
+<strong>Are they for here or go?</strong><br/>
+To go.<br/>
+<strong>Your total comes to $12.</strong><br/>
+<strong>Heare you go.</strong><br/>
+Here&#39;s your change.Thank you.</p>
+
+<h2 id="toc_3"> lesson 15</h2>
+
+<p><strong>What&#39;d you have for lunch</strong> today?<br/>
+I had sushi and a salad.<br/>
+Oh,sounds heathly.<br/>
+<strong>I&#39;m watching my weight.</strong><br/>
+You don&#39;t need to <strong>go on a diet</strong>.You look fine.<br/>
+I know,but I&#39;<strong>ve been eating too much junk food lately</strong>,like too many <strong>lollipops</strong>,packets of chips,and lots of chocolate bars.<br/>
+I know,those potato chips are really <strong>addictive</strong>.You just can&#39;t stop.<br/>
+So I&#39;m trying to be healthy for a few weeks.<br/>
+Well,<strong>everything in moderation</strong>.</p>
+
+<h2 id="toc_4"> lesson 16</h2>
+
+<p>Excuse me,I&#39;d like to try some Chinese food.<br/>
+<strong>We serve authentic Chinese food.Which style do you prefer?</strong><br/>
+I know nothing about Chinese food.<strong>Chould you give me some suggestions?</strong><br/>
+It&#39;s <strong>divided into eight cuisines</strong>,such as Cantonese food,Shandong food and Sichuan food.<br/>
+Is there any difference?<br/>
+Yes,Cantonese food is lighter while Sichuan food is spicy and hot.They taste different.<br/>
+Oh,really?I like hot food.So <strong>what is your recommendation for me?</strong><br/>
+I think mapo tofu and yuxiang shredded pork are quite special and delicious.I recommend the Sichuan food dining room on the third floor.</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Chapter 1 Shopping]]></title>
+    <link href="blog.2019919.top/16089552264437.html"/>
+    <updated>2020-12-26T12:00:26+08:00</updated>
+    <id>blog.2019919.top/16089552264437.html</id>
+    <content type="html"><![CDATA[
+<h2 id="toc_0"> Lesson 1</h2>
+
+<p>These clothes are <strong>on sale</strong> now.<br/>
+Mybe I&#39;ll buy a new shirt.<br/>
+<strong>What size are you?</strong><br/>
+XL,but I should <strong>try it on</strong>.<strong>Where&#39;s the fitting room?</strong><br/>
+It looks a little loose for you.But size L is <strong>out of stock</strong> right now.<br/>
+Then I&#39;ll <strong>take it in</strong>.</p>
+
+<h2 id="toc_1"> lesson 2</h2>
+
+<p>Good evening,sir,can I help you?<br/>
+Yeah!I&#39;m <strong>looking for</strong> a gift for my girlfriend.<br/>
+Do you <strong>have something in mind?</strong><br/>
+I think a necklace would be prefect.<br/>
+<strong>How about this one?</strong>It sells very well.<br/>
+Sounds good,but could you <strong>gift-wrap</strong> this,please?<br/>
+Sure.</p>
+
+<h2 id="toc_2"> lesson 3</h2>
+
+<p>Have a look at these <strong>toothbrushes</strong>.They are <strong>being promoted</strong> in this gift pack now.<br/>
+What&#39;s <strong>included</strong> in the gift pack?<br/>
+Toothbrushes,toothpaste,mouthwash and a cup!<br/>
+<strong>It&#39;s a good deal.</strong>Where can I find shower gel?<br/>
+It&#39;s in <strong>aisle</strong> 10.</p>
+
+<h2 id="toc_3"> lesson 4</h2>
+
+<p>How about this one?<br/>
+I like this brand,and the price isn&#39;t too high.<br/>
+<strong>How long is the warranty for this TV?</strong><br/>
+It <strong>comes with</strong> a 2-year parts warranty.It&#39;s also the <strong>best-seller</strong> now.<br/>
+<strong>Do you offer free delivery?</strong><br/>
+Yes,we do.</p>
+
+<h2 id="toc_4"> lesson 5</h2>
+
+<p><strong>What&#39;s special about this phone?</strong><br/>
+That&#39;s our <strong>top-of-the-line</strong> model,and if you choose this carrier,<strong>you&#39;ll have unlimited access to the Internet.</strong><br/>
+I go online alot with my phone.It easily gets <strong>out of credit</strong> and I have to <strong>top it up</strong> twice a month.<br/>
+<strong>Then this really works for you.</strong></p>
+
+<h2 id="toc_5"> lesson 6</h2>
+
+<p>How much are these three books?<br/>
+80 yuan.<br/>
+But they <strong>set me back</strong> only 60 yuan on the Internet.<strong>Could you go down on the price?</strong><br/>
+Maybe I could <strong>make an exception</strong> for you if you bug four books.80 yuan for four boosk.<strong>That would be my final offer.</strong><br/>
+Alright.That&#39;s a <strong>bargain</strong>.<br/>
+You&#39;ve got a <strong>windfall</strong>!</p>
+
+<h2 id="toc_6"> lesson 7</h2>
+
+<p>Would you like to <strong>pay by card or in cash</strong>?<br/>
+I want to <strong>pay by credit card</strong>.Do you take Visa?<br/>
+Yes we do.Just a moment.Oh,there&#39;s an error.It syas your password is incorrect.Could you please try it again?<br/>
+Well,I completely forgot the password.How about <strong>paying in cash</strong>?<br/>
+Not a problem.<strong>Here is your change and your receipt.</strong>Have a nice day!</p>
+
+<h2 id="toc_7"> lesson 8</h2>
+
+<p>How can I help you,sir?<br/>
+I&#39;m <strong>returning</strong> a cellphone that I bought yesterday.<br/>
+<strong>Is there something wrong with it?</strong><br/>
+It keeps <strong>turning off on its own</strong>.It doesn&#39;t work at all.<br/>
+I&#39;m sorry to hear about your bad experience.Do you have the receipt with you?<br/>
+I have it right here.<br/>
+Thank you,sir.I am going to <strong>take care of</strong> this and give you the refund.</p>
+
+<h2 id="toc_8"> lesson 9</h2>
+
+<p>Hey,where did you but this dress?<br/>
+I <strong>ordered</strong> it on eBay.<br/>
+Didn&#39;t you find it expensive there?<br/>
+No,not at all.<strong>It has some great deals!I got crazy discounts!</strong><br/>
+<strong>How much did this cost you?</strong><br/>
+Well,I got a 45% <strong>discount</strong> on the <strong>original</strong> price.<br/>
+Wow!That&#39;s a super <strong>deal</strong>.I will check it out today.</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[01 JavaScript Drum Kit]]></title>
+    <link href="blog.2019919.top/16089052254448.html"/>
+    <updated>2020-12-25T22:07:05+08:00</updated>
+    <id>blog.2019919.top/16089052254448.html</id>
+    <content type="html"><![CDATA[
+<p>模拟一个打鼓的页面。用户在键盘上按下 ASDFGHJKL 这几个键时，页面上与字母对应的按钮变大变亮，对应的鼓点声音响起来。</p>
+
+<h2 id="toc_0">知识点</h2>
+
+<h3 id="toc_1">Html5</h3>
+
+<h4 id="toc_2">data-*</h4>
+
+<blockquote>
+<p>HTML（超文本标记语言） &gt; 全局属性 &gt; data-*</p>
+</blockquote>
+
+<p>data-* 全局属性 是一类被称为自定义数据属性的属性，它赋予我们在所有 HTML 元素上嵌入自定义数据属性的能力，并可以通过脚本在 HTML 与 DOM 表现之间进行专有数据的交换。<br/>
+所有这些自定义数据属性都可以通过所属元素的 HTMLElement 接口来访问。  HTMLElement.dataset 属性可以访问它们。</p>
+
+<p>TODO</p>
+
+<h4 id="toc_3">HTML <audio></h4>
+
+<blockquote>
+<p>HTML（超文本标记语言）&gt; HTML 元素参考 &gt; <audio></p>
+</blockquote>
+
+<p>HTML <audio> 元素用于在文档中嵌入音频内容。 <audio> 元素可以包含一个或多个音频资源， 这些音频资源可以使用 src 属性或者<source> 元素来进行描述：浏览器将会选择最合适的一个来使用。也可以使用 MediaStream 将这个元素用于流式媒体。</p>
+
+<h3 id="toc_4">JavaScript</h3>
+
+<h4 id="toc_5">Array.from()</h4>
+
+<blockquote>
+<p>JavaScript &gt; JavaScript 参考 &gt; JavaScript 标准内置对象&gt;Array&gt;Array.from()</p>
+</blockquote>
+
+<p>Array.from() 方法从一个类似数组或可迭代对象创建一个新的，浅拷贝的数组实例。</p>
+
+<pre><code class="language-javascript">    console.log(Array.from(&#39;foo&#39;));
+    // expected output: Array [&quot;f&quot;, &quot;o&quot;, &quot;o&quot;]    
+    console.log(Array.from([1, 2, 3], x =&gt; x + x));
+    // expected output: Array [2, 4, 6]
+</code></pre>
+
+<h3 id="toc_6">WebAPI</h3>
+
+<blockquote>
+<p>Web API 接口参考 &gt; HTMLCollection</p>
+</blockquote>
+
+<p>HTMLCollection 接口表示一个包含了元素（元素顺序为文档流中的顺序）的通用集合（generic collection），还提供了用来从该集合中选择元素的方法和属性。</p>
+
+<blockquote>
+<p>document.getElementsBy***是获取了HTMLCollection，如果想要foreach需要转成数组。</p>
+</blockquote>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[01 JavaScript Drum Kit 中文指南]]></title>
+    <link href="blog.2019919.top/16089048368062.html"/>
+    <updated>2020-12-25T22:00:36+08:00</updated>
+    <id>blog.2019919.top/16089048368062.html</id>
+    <content type="html"><![CDATA[
+<blockquote>
+<p>作者：©<a href="https://github.com/soyaine">未枝丫</a><br/><br/>
+简介：<a href="https://javascript30.com">JavaScript30</a> 是 <a href="https://github.com/wesbos">Wes Bos</a> 推出的一个 30 天挑战。项目免费提供了 30 个视频教程、30 个挑战的起始文档和 30 个挑战解决方案源代码。目的是帮助人们用纯 JavaScript 来写东西，不借助框架和库，也不使用编译器和引用。现在你看到的是这系列指南的第 1 篇。完整指南在 <a href="https://github.com/soyaine/JavaScript30">GitHub</a>，喜欢请 Star 哦♪(<sup>∇<sup>*)</sup></sup></p>
+</blockquote>
+
+<h2 id="toc_0">实现效果</h2>
+
+<p>模拟一个打鼓的页面。用户在键盘上按下 ASDFGHJKL 这几个键时，页面上与字母对应的按钮变大变亮，对应的鼓点声音响起来。</p>
+
+<p><a href="http://soyaine.github.io/JavaScript30/01%20-%20JavaScript%20Drum%20Kit/index-SOYAINE.html">看在线效果</a></p>
+
+<h2 id="toc_1">关键要点</h2>
+
+<ol>
+<li>键盘事件</li>
+<li>播放声音</li>
+<li>改变样式</li>
+</ol>
+
+<h2 id="toc_2">步骤分解</h2>
+
+<ol>
+<li><strong>添加键盘事件监听</strong>。在 window 上添加键盘 <code>keydown</code> 事件。</li>
+<li><strong>对应事件处理程序。</strong>
+<ol>
+<li><strong>获取键码</strong></li>
+<li><strong>用 <code>querySelector</code> 获取元素</strong></li>
+<li><strong>获取 <code>data-key</code> 为对应键码的元素</strong></li>
+<li><strong>处理元素</strong>。播放音频、添加样式。</li>
+</ol></li>
+<li><strong>为所有的 <code>div.key</code> 添加 <code>transitionened</code> 事件</strong>。
+<ol>
+<li><strong>获取所有样式为 <code>key</code> 的元素</strong></li>
+<li><strong>为其添加事件监听</strong></li>
+</ol></li>
+<li><strong>去除样式的事件处理程序</strong></li>
+</ol>
+
+<h2 id="toc_3">基础语法</h2>
+
+<h3 id="toc_4">一些 ES6 语法</h3>
+
+<ol>
+<li><p><code>const</code> ：声明一个只读的常量，标识符的值只能赋值一次。</p></li>
+<li><p>`字符串 \({ 变量、属性名 } \`：模板字面量（Template literals）中用于表示模板字符串的标识。特点是字符串首尾用反引号（\`），内部的模板部分用 \){ } 括起来表示，具体请看<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/template_strings">MDN文档</a>。简单例子如下：</p>
+<pre><code class="language-javascript">      var a = 1;
+      var b = 2;<br/>
+      //不用模板的写法<br/>
+      console.log(&quot;三是&quot; + (a + b) + &quot;不是&quot; + (2 * a + b)); //&quot;三是3不是4&quot;<br/>
+      //使用模板字符串的写法<br/>
+      console.log(`三是${a + b}不是${2 * a + b}`); //&quot;三是3不是4&quot;
+</code></pre></li>
+</ol>
+
+<h3 id="toc_5"><code>forEach</code> 与箭头函数</h3>
+
+<p>使用 <code>document.querySelector</code> 获取一组符合 CSS 选择符的元素快照，类型为 NodeList（此对象是对于文档的实时运行的动态查询），对其进行遍历时可采用 <code>forEach</code> 方法。</p>
+
+<pre><code class="language-javascript">// Code from http://es6-features.org/#StatementBodies
+
+// ES6
+nums.forEach(v =&gt; {
+    if (v % 5 === 0)
+        fives.push(v);
+})
+
+// ES5
+nums.forEach(function (v) {
+    if (v % 5 === 0)
+        five.push(v);
+})
+</code></pre>
+
+<h2 id="toc_6">解决难点</h2>
+
+<h3 id="toc_7">如何将键盘按键与页面按钮对应起来？</h3>
+
+<p>连接的帮手是 <code>keydown</code> 事件中的 <code>keyCode</code> 属性，<code>keyCode</code> 属性的值和 ASCII 编码值相同（对应小写字母）。在<a href="http://keycode.info/">这个网站</a>可以用按键盘来查看对应的键码。</p>
+
+<p>我们能获取到的初始页面中，按钮 <code>div</code> 和音频 <code>audio</code> 标签中都添加了一个属性 <code>data-key</code> 用于存储对应的键码，这样做的目的是，添加键盘事件监听后，触发键盘事件时即可获取事件的 <code>keyCode</code> 属性值，以此为线索，操作对应的按钮及音频。</p>
+
+<pre><code class="language-javascript">const audio = document.querySelector(`audio[data-key=&quot;${e.keyCode}&quot;]`);
+const key = document.querySelector(`div[data-key=&quot;${e.keyCode}&quot;]`);
+</code></pre>
+
+<h3 id="toc_8">如何保证按键被按住不放时，可以马上响起连续鼓点声？</h3>
+
+<p>每次播放音频之前，设置播放时间戳为 0：</p>
+
+<pre><code class="language-javascript">var audio = document.getElementById(&quot;video&quot;); 
+audio.currentTime = 0;
+audio.play();
+</code></pre>
+
+<h3 id="toc_9">如何使页面按钮恢复原状？</h3>
+
+<p>利用一个叫 <a href="https://developer.mozilla.org/zh-CN/docs/Web/Events/transitionend"><code>transitionend</code></a> 的事件，它在 CSS transition 结束后会被触发。我们就可以利用这个事件，在每次打鼓的效果（尺寸变大、颜色变化）完成之后，去除相应样式。</p>
+
+<p>在这个页面中，发生 <code>transition</code> 的样式属性不止一个（<code>box-shadow</code>, <code>transform</code>, <code>border-color</code>），所以需要添加一个判断语句，使每发生一次按键事件时，只去除一次样式。</p>
+
+<pre><code class="language-javascript">funciton remove(event) {
+  if (event.propertyName !== &#39;border-left-color&#39;) return;
+  this.classList.remove(&#39;playing&#39;);
+  // event.target.classList.remove(&#39;playing&#39;);
+}
+</code></pre>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[通过变量作用域深入了解undefined]]></title>
@@ -248,7 +728,7 @@ JavaScript可以允许使用this关键字来引用全局对象，但是不能引
         };
         fun1();
         fun2();
-    }
+    }∫
     test();
     // fun1:i=2
     // fun2:i=2
