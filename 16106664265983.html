@@ -1,25 +1,118 @@
-<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
+<!doctype html>
+<html class="no-js" lang="en">
 
-  <title><![CDATA[十]]></title>
-  <link href="blog.2019919.top/atom.xml" rel="self"/>
-  <link href="blog.2019919.top/"/>
-  <updated>2021-01-15T07:21:05+08:00</updated>
-  <id>blog.2019919.top/</id>
-  <author>
-    <name><![CDATA[]]></name>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>
     
-  </author>
-  <generator uri="http://www.mweb.im">MWeb</generator>
+    # 第 8 章 函数 - 十
+    
+  </title>
+  <meta name="description" content="">
+  <link href="atom.xml" rel="alternate" title="十" type="application/atom+xml">
+  <link rel="stylesheet" href="asset/css/foundation.min.css" />
+  <link rel="stylesheet" href="asset/css/docs.css" />
+  <script src="asset/js/vendor/modernizr.js"></script>
+  <script src="asset/js/vendor/jquery.js"></script>
+  <script src="asset/highlightjs/highlight.pack.js"></script>
+  <link href="asset/highlightjs/styles/github.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script>
+    hljs.initHighlightingOnLoad();
+  </script>
+</head>
 
-  
-  <entry>
-    <title type="html"><![CDATA[# 第 8 章 函数]]></title>
-    <link href="blog.2019919.top/16106664265983.html"/>
-    <updated>2021-01-15T07:20:26+08:00</updated>
-    <id>blog.2019919.top/16106664265983.html</id>
-    <content type="html"><![CDATA[
-<p>本章介绍了 JavaScript 函数。函数是 JavaScript 程序的基本构建块，也是几乎所有编程语言的共同特性。你可能已经了解函数的概念，如子例程或过程。</p>
+<body class="antialiased hide-extras">
+  <div class="marketing off-canvas-wrap" data-offcanvas>
+    <div class="inner-wrap">
+      <nav class="top-bar docs-bar hide-for-small" data-topbar>
+        <div id="header">
+          <h3><a href="index.html">十的对称 十的完美</a></h1>
+        </div>
+      </nav>
+      <nav class="tab-bar show-for-small">
+        <a href="javascript:void(0)" class="left-off-canvas-toggle menu-icon">
+          <span> &nbsp;</span>
+        </a>
+        <div id="header">
+          <h3><a href="index.html">十的对称 十的完美</a></h1>
+        </div>
+      </nav>
+      <aside class="left-off-canvas-menu">
+        <ul class="off-canvas-list">
+          <li><a href="index.html">关于我</a></li>
+          
+          <li class="divider"></li>
+          <li><label>JavaScript权威指南第七版</label></li>
+          
+          <li><a title="# 第 8 章 函数" href="16106664265983.html"># 第 8 章 函数</a></li>
+          
+          
+          <li class="divider"></li>
+          <li><label>JavaScript30</label></li>
+          
+          <li><a title="01 JavaScript Drum Kit" href="16089052254448.html">01 JavaScript Drum Kit</a></li>
+          
+          <li><a title="01 JavaScript Drum Kit 中文指南" href="16089048368062.html">01 JavaScript Drum Kit 中文指南</a></li>
+          
+          
+          <li class="divider"></li>
+          <li><label>杂念</label></li>
+          
+          <li><a title="努力了三个月的总结" href="16084764191221.html">努力了三个月的总结</a></li>
+          
+          
+          <li class="divider"></li>
+          <li><label>JavaScript</label></li>
+          
+          <li><a title="类型转换" href="16089553577924.html">类型转换</a></li>
+          
+          <li><a title="通过变量作用域深入了解undefined" href="16088182648987.html">通过变量作用域深入了解undefined</a></li>
+          
+          <li><a title="重新认识下熟悉的浏览器" href="16076922632055.html">重新认识下熟悉的浏览器</a></li>
+          
+          <li><a title="JavaScript类型转换" href="16087263047458.html">JavaScript类型转换</a></li>
+          
+          
+          <li class="divider"></li>
+          <li><label>重学前端--学习笔记</label></li>
+          
+          <li><a title="JavaScript全部的对象分类" href="16085442753431.html">JavaScript全部的对象分类</a></li>
+          
+          <li><a title="JavaScript的面向对象" href="16085441443213.html">JavaScript的面向对象</a></li>
+          
+          <li><a title="JavaScript中的类型" href="16083847578374.html">JavaScript中的类型</a></li>
+          
+          <li><a title="JavaScript原型和原型链" href="16080322533005.html">JavaScript原型和原型链</a></li>
+          
+          
+          <li class="divider"></li>
+          <li><label>Angular</label></li>
+          
+          <li><a title="angular mock的使用" href="16073237309370.html">angular mock的使用</a></li>
+          
+          
+          <li class="divider"></li>
+          <li><label>英语课</label></li>
+          
+          <li><a title="chapter 3 Travaling" href="16092359109167.html">chapter 3 Travaling</a></li>
+          
+          <li><a title="chapter 2 Dining" href="16089552578971.html">chapter 2 Dining</a></li>
+          
+          <li><a title="Chapter 1 Shopping" href="16089552264437.html">Chapter 1 Shopping</a></li>
+          
+          
+        </ul>
+      </aside>
+      <a class="exit-off-canvas" href="#"></a>
+      <section id="main-content" role="main" class="scroll-container">
+        <div class="row">
+          <div class="large-9 medium-9 columns">
+  <div class="markdown-body">
+  <div class="markdown-inside">
+    <h1># 第 8 章 函数</h1>
+    <time class="article-date" datetime="2021-01-15T07:20:26+08:00">发布于2021/01/15</time>
+    <p>本章介绍了 JavaScript 函数。函数是 JavaScript 程序的基本构建块，也是几乎所有编程语言的共同特性。你可能已经了解函数的概念，如子例程或过程。</p>
 
 <p>函数是一个 JavaScript 代码块，只定义一次，但可以执行或调用任意次数。JavaScript 函数是参数化的：一个函数定义可以包含一个标识符列表，称为参数，作为函数体的局部变量。函数调用为函数的参数提供值或实参。函数通常使用它们的实参值来计算一个返回值，该返回值成为函数调用表达式的值。除了参数之外，每次调用都有另一个值——调用上下文——即 this 关键字的值。</p>
 
@@ -1396,1629 +1489,161 @@ factorial(5)      // =&gt; 120: also caches values for 4, 3, 2 and 1.
 </ol>
 </blockquote>
 
-]]></content>
-  </entry>
+  </div>
+</div>
+<br /><br />
+<hr />
+<div class="row clearfix">
+  <div class="large-6 columns">
+    <div class="text-left" style="padding:15px 0px;">
+      
+    </div>
+  </div>
+  <div class="large-6 columns">
+    <div class="text-right" style="padding:15px 0px;">
+      
+      <a href="16092359109167.html" title="Next Post: chapter 3 Travaling">chapter 3 Travaling &raquo;</a>
+      
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div style="padding:0px 0.93em;" class="share-comments">
+    
+  </div>
+</div>
+<script type="text/javascript">
+  $(function () {
+    var currentURL = '16106664265983.html';
+    $('#side-nav a').each(function () {
+      if ($(this).attr('href') == currentURL) {
+        $(this).parent().addClass('active');
+      }
+    });
+  });
+</script>  
+          </div>
+          <div class="large-3 medium-3 columns">
+            <div class="hide-for-small">
+              <div class="sidebar">
+                <nav>
+                  <ul id="side-nav" class="side-nav">
+                    
+                    <li class="side-title"><span>JavaScript权威指南第七版</span></li>
+                    
+                    <li>
+                      <a title="# 第 8 章 函数" href="16106664265983.html"># 第 8 章 函数</a>
+                    </li>
+                    
+                    
+                    <li class="side-title"><span>JavaScript30</span></li>
+                    
+                    <li>
+                      <a title="01 JavaScript Drum Kit" href="16089052254448.html">01 JavaScript Drum Kit</a>
+                    </li>
+                    
+                    <li>
+                      <a title="01 JavaScript Drum Kit 中文指南" href="16089048368062.html">01 JavaScript Drum Kit 中文指南</a>
+                    </li>
+                    
+                    
+                    <li class="side-title"><span>杂念</span></li>
+                    
+                    <li>
+                      <a title="努力了三个月的总结" href="16084764191221.html">努力了三个月的总结</a>
+                    </li>
+                    
+                    
+                    <li class="side-title"><span>JavaScript</span></li>
+                    
+                    <li>
+                      <a title="类型转换" href="16089553577924.html">类型转换</a>
+                    </li>
+                    
+                    <li>
+                      <a title="通过变量作用域深入了解undefined" href="16088182648987.html">通过变量作用域深入了解undefined</a>
+                    </li>
+                    
+                    <li>
+                      <a title="重新认识下熟悉的浏览器" href="16076922632055.html">重新认识下熟悉的浏览器</a>
+                    </li>
+                    
+                    <li>
+                      <a title="JavaScript类型转换" href="16087263047458.html">JavaScript类型转换</a>
+                    </li>
+                    
+                    
+                    <li class="side-title"><span>重学前端--学习笔记</span></li>
+                    
+                    <li>
+                      <a title="JavaScript全部的对象分类" href="16085442753431.html">JavaScript全部的对象分类</a>
+                    </li>
+                    
+                    <li>
+                      <a title="JavaScript的面向对象" href="16085441443213.html">JavaScript的面向对象</a>
+                    </li>
+                    
+                    <li>
+                      <a title="JavaScript中的类型" href="16083847578374.html">JavaScript中的类型</a>
+                    </li>
+                    
+                    <li>
+                      <a title="JavaScript原型和原型链" href="16080322533005.html">JavaScript原型和原型链</a>
+                    </li>
+                    
+                    
+                    <li class="side-title"><span>Angular</span></li>
+                    
+                    <li>
+                      <a title="angular mock的使用" href="16073237309370.html">angular mock的使用</a>
+                    </li>
+                    
+                    
+                    <li class="side-title"><span>英语课</span></li>
+                    
+                    <li>
+                      <a title="chapter 3 Travaling" href="16092359109167.html">chapter 3 Travaling</a>
+                    </li>
+                    
+                    <li>
+                      <a title="chapter 2 Dining" href="16089552578971.html">chapter 2 Dining</a>
+                    </li>
+                    
+                    <li>
+                      <a title="Chapter 1 Shopping" href="16089552264437.html">Chapter 1 Shopping</a>
+                    </li>
+                    
+                    
+                  </ul>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="page-bottom">
+          <div class="row">
+            <hr />
+            <div class="small-9 columns">
+              <p class="copyright">Contact Me&nbsp;
+                Tel: +86 18641188786,&nbsp;
+                mail: 416376663@qq.com</p>
+            </div>
+            <div class="small-3 columns">
+              <p class="copyright text-right"><a href="#top">TOP</a></p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+  <script src="asset/js/foundation.min.js"></script>
+  <script src="asset/js/foundation/foundation.offcanvas.js"></script>
+  <script>
+    $(document).foundation();
+  </script>
   
-  <entry>
-    <title type="html"><![CDATA[chapter 3 Travaling]]></title>
-    <link href="blog.2019919.top/16092359109167.html"/>
-    <updated>2020-12-29T17:58:30+08:00</updated>
-    <id>blog.2019919.top/16092359109167.html</id>
-    <content type="html"><![CDATA[
-
-]]></content>
-  </entry>
   
-  <entry>
-    <title type="html"><![CDATA[类型转换]]></title>
-    <link href="blog.2019919.top/16089553577924.html"/>
-    <updated>2020-12-26T12:02:37+08:00</updated>
-    <id>blog.2019919.top/16089553577924.html</id>
-    <content type="html"><![CDATA[
-<h2 id="toc_0"> 不注意会出错的类型转换</h2>
-
-<h3 id="toc_1"> 转数值型</h3>
-
-<table>
-<thead>
-<tr>
-<th>原类型</th>
-<th>转换后类型</th>
-</tr>
-</thead>
-
-<tbody>
-<tr>
-<td>undefined</td>
-<td>NaN</td>
-</tr>
-<tr>
-<td>null</td>
-<td>0</td>
-</tr>
-<tr>
-<td>&quot;&quot;</td>
-<td>0</td>
-</tr>
-<tr>
-<td>非空非数字字符串</td>
-<td>NaN</td>
-</tr>
-</tbody>
-</table>
-
-<blockquote>
-<p> NaN（Not a Number，非数）</p>
-</blockquote>
-
-<p>NaN 属性是代表非数字值的特殊值。该属性用于指示某个值不是数字。可以把 Number 对象设置为该值，来指示其不是数字值。<br/>
-isNaN() 全局函数来判断一个值是否是 NaN 值。</p>
-
-<pre><code class="language-javascript">    Number.NaN === NaN
-    // false
-    Number.NaN == NaN
-    // false
-    isNaN(NaN)
-    // true
-</code></pre>
-
-<h3 id="toc_2"> 转布尔型</h3>
-
-<table>
-<thead>
-<tr>
-<th>原类型</th>
-<th>转换后类型</th>
-</tr>
-</thead>
-
-<tbody>
-<tr>
-<td>&quot;&quot;</td>
-<td>false</td>
-</tr>
-<tr>
-<td>0,-0,NaN</td>
-<td>false</td>
-</tr>
-<tr>
-<td>Infinity,-Infinity,非零数</td>
-<td>true</td>
-</tr>
-</tbody>
-</table>
-
-<p>NaN空串null和undefined都为false，所以常用ture,false判断对象是否可以使用。</p>
-
-<h2 id="toc_3"> 转换</h2>
-
-<p>转换分为两种：</p>
-
-<ul>
-<li>显示转换</li>
-<li>隐式转换<br/>
-### 显示转换<br/>
-最简单的方法就是使用Boolean（）、Number（）、String（）或Object（）函数。当不通过new运算符调用这些函数时，它们会作为类型转换函数。<br/>
-除了null或undefined之外的任何值都具有toString（）方法，这个方法的执行结果通常和String（）方法的返回结果一致。<br/>
-把null或undefined转换为对象抛出一个类型错误。<br/>
-&gt; 为什么123.tostring()报错？</li>
-</ul>
-
-<p>JavaScript中还提供了专门的函数和方法来做显示转换。</p>
-
-<ul>
-<li>Number.toString（）方法可以接收表示转换基数（radix）。</li>
-<li>Number.toFixed（）根据小数点后的指定位数将数字转换为字符串。</li>
-<li>Number.toExponential（）使用指数记数法将数字转换为指数形式的字符串，其中小数点位数为参数。</li>
-<li>Number，toPrecision（）根据指定的有效数字位数将数字转换成字符串。<br/>
-后三个方法都会进行四舍五入或填充0。<br/>
-Number（）只能进行十进制转换。<br/>
-全局函数parseInt（）和parseFloat（）会跳过任意数量的前导空格，尽可能多的解析数值字符，并忽略后面的内容。如果第一个为非空字符返回NaN。<br/>
-parseInt（）可以接收第二个可选参数，这个参数指定数字转换的基数，合法的取值范围是2～36。<br/>
-&gt; 在不传入第二个参数的情况下，parseInt 只支持 16 进制前缀“0x”，而且会忽略非数字字符，也不支持科学计数法。在一些古老的浏览器环境中，parseInt 还支持 0 开头的数字作为 8 进制前缀，这是很多错误的来源。所以在任何环境下，都建议传入 parseInt 的第二个参数，而 parseFloat 则直接把原字符串作为十进制来解析，它不会引入任何的其他进制。</li>
-</ul>
-
-<p>Number 是比 parseInt 和 parseFloat 更好的选择。</p>
-
-<h3 id="toc_4"> 隐式转换</h3>
-
-<p>某些运算符会做隐式的类型转换，有时用于类型转换。</p>
-
-<pre><code class="language-javascript">    x + &quot;&quot; // 等价于String(x)
-    +x   // 等价于Number(x)
-    !!x  // 等价于Boolean(x)
-</code></pre>
-
-<h2 id="toc_5"> 对象转换为原始值（拆箱转换）</h2>
-
-<p>到布尔值转换，所有对象（包括数组和函数）都转换为true。</p>
-
-<pre><code class="language-javascript">    Boolean(Boolean(false))
-    // false
-    Boolean(new Boolean(false))
-    // true
-</code></pre>
-
-<p>对象到字符串和数字是通过两个不同的方法来转换的。<br/>
-所有对象都继承了两个方法toString()和valueOf()。对象转化字符串先tostring()方法，如果不是原始值用valueof()方法，如果还不是原始值 抛类型错误。有任何原始值都用原始值进行toStirng()。<br/>
-反之转数值型转换，先进行valueof()后进行tostring()。<br/>
-案例：空数组转数值型等于0.</p>
-
-<pre><code class="language-javascript">    Number([])
-    0
-    [].valueOf()
-    []
-    [].toString()
-    &quot;&quot;
-    Number(&quot;&quot;)
-    0
-</code></pre>
-
-]]></content>
-  </entry>
   
-  <entry>
-    <title type="html"><![CDATA[chapter 2 Dining]]></title>
-    <link href="blog.2019919.top/16089552578971.html"/>
-    <updated>2020-12-26T12:00:57+08:00</updated>
-    <id>blog.2019919.top/16089552578971.html</id>
-    <content type="html"><![CDATA[
-<h2 id="toc_0"> lesson 12</h2>
+</body>
 
-<p>Good evening.<strong>May I take your order?</strong><br/>
-Yes,I would like to have the salad please,and I think the bread and butter is <strong>free of charge</strong>?<br/>
-Yes,bread and butter if free.Are you interested in a <strong>main course</strong>?<br/>
-Yes,<strong>Do you have any speicals</strong> tonight?<br/>
-Of course.Tonight we&#39;<strong>re offering</strong> lobster for only twenty dollars.<br/>
-Ok.I&#39;ll take it!</p>
-
-<h2 id="toc_1"> lesson 13</h2>
-
-<p>Are we <strong>still on</strong> for dinner tonight?I&#39;m already getting hungry.<br/>
-Sure!<strong>What do you have in mind?</strong><br/>
-I&#39;d like a big meal in the evening.What about you?<strong>What are you in the mood for?</strong><br/>
-We should <strong>head over to</strong> the new <strong>department store</strong>.They&#39;ve got an <strong>enormous food court</strong> with <strong>loads of</strong> different restaurants.There are supposed to be Japanese,Korean,Thai restaurants and so on.<br/>
-My friend gave great <strong>reviews</strong> of the Mexican and Italian places.<strong>Are you in the mood for</strong> a taco or a burrito？Or maybe some pasta?<br/>
-<strong>I think I have more of an appetite for</strong> Italian food right now.<br/>
-Let&#39;s <strong>definitely</strong> go there.</p>
-
-<h2 id="toc_2"> lesson 14</h2>
-
-<p>Hi,<strong>what can I get you?</strong><br/>
-I&#39;ll have a large <strong>mocha</strong> with cream,and a small <strong>cappuccino</strong>.<br/>
-<strong>Would you like anything else?</strong><br/>
-Yes,I&#39;d also like an <strong>espresso</strong> and a brownie,please.<br/>
-<strong>Are they for here or go?</strong><br/>
-To go.<br/>
-<strong>Your total comes to $12.</strong><br/>
-<strong>Hear you go.</strong><br/>
-Here&#39;s your change.Thank you.</p>
-
-<h2 id="toc_3"> lesson 15</h2>
-
-<p><strong>What&#39;d you have for lunch</strong> today?<br/>
-I had sushi and a salad.<br/>
-Oh,sounds heathly.<br/>
-<strong>I&#39;m watching my weight.</strong><br/>
-You don&#39;t need to <strong>go on a diet</strong>.You look fine.<br/>
-I know,but I&#39;<strong>ve been eating too much junk food lately</strong>,like too many <strong>lollipops</strong>,packets of chips,and lots of chocolate bars.<br/>
-I know,those potato chips are really <strong>addictive</strong>.You just can&#39;t stop.<br/>
-So I&#39;m trying to be healthy for a few weeks.<br/>
-Well,<strong>everything in moderation</strong>.</p>
-
-<h2 id="toc_4"> lesson 16</h2>
-
-<p>Excuse me,I&#39;d like to try some Chinese food.<br/>
-<strong>We serve authentic Chinese food.Which style do you prefer?</strong><br/>
-I know nothing about Chinese food.<strong>Chould you give me some suggestions?</strong><br/>
-It&#39;s <strong>divided into eight cuisines</strong>,such as Cantonese food,Shandong food and Sichuan food.<br/>
-Is there any difference?<br/>
-Yes,Cantonese food is lighter while Sichuan food is spicy and hot.They taste different.<br/>
-Oh,really?I like hot food.So <strong>what is your recommendation for me?</strong><br/>
-I think mapo tofu and yuxiang shredded pork are quite special and delicious.I recommend the Sichuan food dining room on the third floor.</p>
-
-<h2 id="toc_5">lesson 17</h2>
-
-<p>Good morning。<strong>I&#39;d like to order some groceries</strong>,please.<br/>
-Sure,what&#39;d you like to order?<br/>
-Well,I need a medium bottle of vanilla essence,a small bottle of chocolate syrup,and some dark chocolate cubes.<strong>When can I expect the dilivery?</strong><br/>
-It&#39;ll be delivered in about an hour.May I please have your name and address?<br/>
-Sure.My name is Wesley Thomas.The address is 34-B,George Sstreet.<br/>
-Alright.<strong>A delivery staff member</strong> will reach your palce in about an hour.<br/>
-<strong>What&#39;s the total amount of the things that I just purchased?</strong><br/>
-That would be $25.<br/>
-Thank you.</p>
-
-<h2 id="toc_6">lesson 18</h2>
-
-<p>Hello,this is Love Restaurant.<strong>How may I assist you?</strong><br/>
-<strong>I&#39;d like to make a reservation for two.</strong><br/>
-May I have your name,please.?<br/>
-I&#39;m Cindy lautner.<br/>
-Okay,ma&#39;am.<strong>Would you like the corner table or middle?</strong><br/>
-<strong>In the corner with a window view</strong>.<br/>
-Okay,done.We reserved your table for two for tomorrow evening.<br/>
-Yes,thanks a lot.</p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Chapter 1 Shopping]]></title>
-    <link href="blog.2019919.top/16089552264437.html"/>
-    <updated>2020-12-26T12:00:26+08:00</updated>
-    <id>blog.2019919.top/16089552264437.html</id>
-    <content type="html"><![CDATA[
-<h2 id="toc_0"> Lesson 1</h2>
-
-<p>These clothes are <strong>on sale</strong> now.<br/>
-Mybe I&#39;ll buy a new shirt.<br/>
-<strong>What size are you?</strong><br/>
-XL,but I should <strong>try it on</strong>.<strong>Where&#39;s the fitting room?</strong><br/>
-It looks a little loose for you.But size L is <strong>out of stock</strong> right now.<br/>
-Then I&#39;ll <strong>take it in</strong>.</p>
-
-<h2 id="toc_1"> lesson 2</h2>
-
-<p>Good evening,sir,can I help you?<br/>
-Yeah!I&#39;m <strong>looking for</strong> a gift for my girlfriend.<br/>
-Do you <strong>have something in mind?</strong><br/>
-I think a necklace would be prefect.<br/>
-<strong>How about this one?</strong>It sells very well.<br/>
-Sounds good,but could you <strong>gift-wrap</strong> this,please?<br/>
-Sure.</p>
-
-<h2 id="toc_2"> lesson 3</h2>
-
-<p>Have a look at these <strong>toothbrushes</strong>.They are <strong>being promoted</strong> in this gift pack now.<br/>
-What&#39;s <strong>included</strong> in the gift pack?<br/>
-Toothbrushes,toothpaste,mouthwash and a cup!<br/>
-<strong>It&#39;s a good deal.</strong>Where can I find shower gel?<br/>
-It&#39;s in <strong>aisle</strong> 10.</p>
-
-<h2 id="toc_3"> lesson 4</h2>
-
-<p>How about this one?<br/>
-I like this brand,and the price isn&#39;t too high.<br/>
-<strong>How long is the warranty for this TV?</strong><br/>
-It <strong>comes with</strong> a 2-year parts warranty.It&#39;s also the <strong>best-seller</strong> now.<br/>
-<strong>Do you offer free delivery?</strong><br/>
-Yes,we do.</p>
-
-<h2 id="toc_4"> lesson 5</h2>
-
-<p><strong>What&#39;s special about this phone?</strong><br/>
-That&#39;s our <strong>top-of-the-line</strong> model,and if you choose this carrier,<strong>you&#39;ll have unlimited access to the Internet.</strong><br/>
-I go online alot with my phone.It easily gets <strong>out of credit</strong> and I have to <strong>top it up</strong> twice a month.<br/>
-<strong>Then this really works for you.</strong></p>
-
-<h2 id="toc_5"> lesson 6</h2>
-
-<p>How much are these three books?<br/>
-80 yuan.<br/>
-But they <strong>set me back</strong> only 60 yuan on the Internet.<strong>Could you go down on the price?</strong><br/>
-Maybe I could <strong>make an exception</strong> for you if you bug four books.80 yuan for four boosk.<strong>That would be my final offer.</strong><br/>
-Alright.That&#39;s a <strong>bargain</strong>.<br/>
-You&#39;ve got a <strong>windfall</strong>!</p>
-
-<h2 id="toc_6"> lesson 7</h2>
-
-<p>Would you like to <strong>pay by card or in cash</strong>?<br/>
-I want to <strong>pay by credit card</strong>.Do you take Visa?<br/>
-Yes we do.Just a moment.Oh,there&#39;s an error.It syas your password is incorrect.Could you please try it again?<br/>
-Well,I completely forgot the password.How about <strong>paying in cash</strong>?<br/>
-Not a problem.<strong>Here is your change and your receipt.</strong>Have a nice day!</p>
-
-<h2 id="toc_7"> lesson 8</h2>
-
-<p>How can I help you,sir?<br/>
-I&#39;m <strong>returning</strong> a cellphone that I bought yesterday.<br/>
-<strong>Is there something wrong with it?</strong><br/>
-It keeps <strong>turning off on its own</strong>.It doesn&#39;t work at all.<br/>
-I&#39;m sorry to hear about your bad experience.Do you have the receipt with you?<br/>
-I have it right here.<br/>
-Thank you,sir.I am going to <strong>take care of</strong> this and give you the refund.</p>
-
-<h2 id="toc_8"> lesson 9</h2>
-
-<p>Hey,where did you but this dress?<br/>
-I <strong>ordered</strong> it on eBay.<br/>
-Didn&#39;t you find it expensive there?<br/>
-No,not at all.<strong>It has some great deals!I got crazy discounts!</strong><br/>
-<strong>How much did this cost you?</strong><br/>
-Well,I got a 45% <strong>discount</strong> on the <strong>original</strong> price.<br/>
-Wow!That&#39;s a super <strong>deal</strong>.I will check it out today.</p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[01 JavaScript Drum Kit]]></title>
-    <link href="blog.2019919.top/16089052254448.html"/>
-    <updated>2020-12-25T22:07:05+08:00</updated>
-    <id>blog.2019919.top/16089052254448.html</id>
-    <content type="html"><![CDATA[
-<p>模拟一个打鼓的页面。用户在键盘上按下 ASDFGHJKL 这几个键时，页面上与字母对应的按钮变大变亮，对应的鼓点声音响起来。</p>
-
-<h2 id="toc_0">知识点</h2>
-
-<h3 id="toc_1">Html5</h3>
-
-<h4 id="toc_2">data-*</h4>
-
-<blockquote>
-<p>HTML（超文本标记语言） &gt; 全局属性 &gt; data-*</p>
-</blockquote>
-
-<p>data-* 全局属性 是一类被称为自定义数据属性的属性，它赋予我们在所有 HTML 元素上嵌入自定义数据属性的能力，并可以通过脚本在 HTML 与 DOM 表现之间进行专有数据的交换。<br/>
-所有这些自定义数据属性都可以通过所属元素的 HTMLElement 接口来访问。  HTMLElement.dataset 属性可以访问它们。</p>
-
-<p>TODO</p>
-
-<h4 id="toc_3">HTML <audio></h4>
-
-<blockquote>
-<p>HTML（超文本标记语言）&gt; HTML 元素参考 &gt; <audio></p>
-</blockquote>
-
-<p>HTML <audio> 元素用于在文档中嵌入音频内容。 <audio> 元素可以包含一个或多个音频资源， 这些音频资源可以使用 src 属性或者<source> 元素来进行描述：浏览器将会选择最合适的一个来使用。也可以使用 MediaStream 将这个元素用于流式媒体。</p>
-
-<h3 id="toc_4">JavaScript</h3>
-
-<h4 id="toc_5">Array.from()</h4>
-
-<blockquote>
-<p>JavaScript &gt; JavaScript 参考 &gt; JavaScript 标准内置对象&gt;Array&gt;Array.from()</p>
-</blockquote>
-
-<p>Array.from() 方法从一个类似数组或可迭代对象创建一个新的，浅拷贝的数组实例。</p>
-
-<pre><code class="language-javascript">    console.log(Array.from(&#39;foo&#39;));
-    // expected output: Array [&quot;f&quot;, &quot;o&quot;, &quot;o&quot;]    
-    console.log(Array.from([1, 2, 3], x =&gt; x + x));
-    // expected output: Array [2, 4, 6]
-</code></pre>
-
-<h3 id="toc_6">WebAPI</h3>
-
-<blockquote>
-<p>Web API 接口参考 &gt; HTMLCollection</p>
-</blockquote>
-
-<p>HTMLCollection 接口表示一个包含了元素（元素顺序为文档流中的顺序）的通用集合（generic collection），还提供了用来从该集合中选择元素的方法和属性。</p>
-
-<blockquote>
-<p>document.getElementsBy***是获取了HTMLCollection，如果想要foreach需要转成数组。</p>
-</blockquote>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[01 JavaScript Drum Kit 中文指南]]></title>
-    <link href="blog.2019919.top/16089048368062.html"/>
-    <updated>2020-12-25T22:00:36+08:00</updated>
-    <id>blog.2019919.top/16089048368062.html</id>
-    <content type="html"><![CDATA[
-<blockquote>
-<p>作者：©<a href="https://github.com/soyaine">未枝丫</a><br/><br/>
-简介：<a href="https://javascript30.com">JavaScript30</a> 是 <a href="https://github.com/wesbos">Wes Bos</a> 推出的一个 30 天挑战。项目免费提供了 30 个视频教程、30 个挑战的起始文档和 30 个挑战解决方案源代码。目的是帮助人们用纯 JavaScript 来写东西，不借助框架和库，也不使用编译器和引用。现在你看到的是这系列指南的第 1 篇。完整指南在 <a href="https://github.com/soyaine/JavaScript30">GitHub</a>，喜欢请 Star 哦♪(<sup>∇<sup>*)</sup></sup></p>
-</blockquote>
-
-<h2 id="toc_0">实现效果</h2>
-
-<p>模拟一个打鼓的页面。用户在键盘上按下 ASDFGHJKL 这几个键时，页面上与字母对应的按钮变大变亮，对应的鼓点声音响起来。</p>
-
-<p><a href="http://soyaine.github.io/JavaScript30/01%20-%20JavaScript%20Drum%20Kit/index-SOYAINE.html">看在线效果</a></p>
-
-<h2 id="toc_1">关键要点</h2>
-
-<ol>
-<li>键盘事件</li>
-<li>播放声音</li>
-<li>改变样式</li>
-</ol>
-
-<h2 id="toc_2">步骤分解</h2>
-
-<ol>
-<li><strong>添加键盘事件监听</strong>。在 window 上添加键盘 <code>keydown</code> 事件。</li>
-<li><strong>对应事件处理程序。</strong>
-<ol>
-<li><strong>获取键码</strong></li>
-<li><strong>用 <code>querySelector</code> 获取元素</strong></li>
-<li><strong>获取 <code>data-key</code> 为对应键码的元素</strong></li>
-<li><strong>处理元素</strong>。播放音频、添加样式。</li>
-</ol></li>
-<li><strong>为所有的 <code>div.key</code> 添加 <code>transitionened</code> 事件</strong>。
-<ol>
-<li><strong>获取所有样式为 <code>key</code> 的元素</strong></li>
-<li><strong>为其添加事件监听</strong></li>
-</ol></li>
-<li><strong>去除样式的事件处理程序</strong></li>
-</ol>
-
-<h2 id="toc_3">基础语法</h2>
-
-<h3 id="toc_4">一些 ES6 语法</h3>
-
-<ol>
-<li><p><code>const</code> ：声明一个只读的常量，标识符的值只能赋值一次。</p></li>
-<li><p>`字符串 \({ 变量、属性名 } \`：模板字面量（Template literals）中用于表示模板字符串的标识。特点是字符串首尾用反引号（\`），内部的模板部分用 \){ } 括起来表示，具体请看<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/template_strings">MDN文档</a>。简单例子如下：</p>
-<pre><code class="language-javascript">      var a = 1;
-      var b = 2;<br/>
-      //不用模板的写法<br/>
-      console.log(&quot;三是&quot; + (a + b) + &quot;不是&quot; + (2 * a + b)); //&quot;三是3不是4&quot;<br/>
-      //使用模板字符串的写法<br/>
-      console.log(`三是${a + b}不是${2 * a + b}`); //&quot;三是3不是4&quot;
-</code></pre></li>
-</ol>
-
-<h3 id="toc_5"><code>forEach</code> 与箭头函数</h3>
-
-<p>使用 <code>document.querySelector</code> 获取一组符合 CSS 选择符的元素快照，类型为 NodeList（此对象是对于文档的实时运行的动态查询），对其进行遍历时可采用 <code>forEach</code> 方法。</p>
-
-<pre><code class="language-javascript">// Code from http://es6-features.org/#StatementBodies
-
-// ES6
-nums.forEach(v =&gt; {
-    if (v % 5 === 0)
-        fives.push(v);
-})
-
-// ES5
-nums.forEach(function (v) {
-    if (v % 5 === 0)
-        five.push(v);
-})
-</code></pre>
-
-<h2 id="toc_6">解决难点</h2>
-
-<h3 id="toc_7">如何将键盘按键与页面按钮对应起来？</h3>
-
-<p>连接的帮手是 <code>keydown</code> 事件中的 <code>keyCode</code> 属性，<code>keyCode</code> 属性的值和 ASCII 编码值相同（对应小写字母）。在<a href="http://keycode.info/">这个网站</a>可以用按键盘来查看对应的键码。</p>
-
-<p>我们能获取到的初始页面中，按钮 <code>div</code> 和音频 <code>audio</code> 标签中都添加了一个属性 <code>data-key</code> 用于存储对应的键码，这样做的目的是，添加键盘事件监听后，触发键盘事件时即可获取事件的 <code>keyCode</code> 属性值，以此为线索，操作对应的按钮及音频。</p>
-
-<pre><code class="language-javascript">const audio = document.querySelector(`audio[data-key=&quot;${e.keyCode}&quot;]`);
-const key = document.querySelector(`div[data-key=&quot;${e.keyCode}&quot;]`);
-</code></pre>
-
-<h3 id="toc_8">如何保证按键被按住不放时，可以马上响起连续鼓点声？</h3>
-
-<p>asdf<br/>
-每次播放音频之前，设置播放时间戳为 0：</p>
-
-<pre><code class="language-javascript">var audio = document.getElementById(&quot;video&quot;); 
-audio.currentTime = 0;
-audio.play();
-</code></pre>
-
-<h3 id="toc_9">如何使页面按钮恢复原状？</h3>
-
-<p>利用一个叫 <a href="https://developer.mozilla.org/zh-CN/docs/Web/Events/transitionend"><code>transitionend</code></a> 的事件，它在 CSS transition 结束后会被触发。我们就可以利用这个事件，在每次打鼓的效果（尺寸变大、颜色变化）完成之后，去除相应样式。</p>
-
-<p>在这个页面中，发生 <code>transition</code> 的样式属性不止一个（<code>box-shadow</code>, <code>transform</code>, <code>border-color</code>），所以需要添加一个判断语句，使每发生一次按键事件时，只去除一次样式。</p>
-
-<pre><code class="language-javascript">funciton remove(event) {
-  if (event.propertyName !== &#39;border-left-color&#39;) return;
-  this.classList.remove(&#39;playing&#39;);
-  // event.target.classList.remove(&#39;playing&#39;);
-}
-</code></pre>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[通过变量作用域深入了解undefined]]></title>
-    <link href="blog.2019919.top/16088182648987.html"/>
-    <updated>2020-12-24T21:57:44+08:00</updated>
-    <id>blog.2019919.top/16088182648987.html</id>
-    <content type="html"><![CDATA[
-<p>听winter老师的课知道undefined是一个变量，它可以被改变，所以使用void（0）来代替他，但是在做实验的时候发现虽然它赋值不报错，取值时候undefined却并没有改变。</p>
-
-<pre><code class="language-javascript">    undefined = 0
-    // 0
-    undefined
-    // undefined
-</code></pre>
-
-<p>这回学习到了变量作用域，再结合之前学的对象的属性，深入了解下undefined到底什么时候会被篡改。</p>
-
-<h2 id="toc_0">函数作用域和声明提前</h2>
-
-<p>别的语言一般为块级作用域，js取而代之使用了函数作用域：变量在声明它们的函数体以及这个函数体嵌套的任意函数体内都是有定义的。</p>
-
-<pre><code class="language-javascript">    var a = function test(o){
-        var i = 0;                          // i在整个函数体内均是有定义的
-        if(typeof o == &quot;object&quot;){
-            var j = 4;                      // j在函数体内是有定义的，不仅仅是在这个代码段内
-            for(var k=0; k &lt; 3; k++){       // k在函数体内是有定义的，不仅仅是在循环内
-                console.log(k);             // 输出数字0～2
-            }
-            console.log(k);                 // k已经定义了，输出3
-        }
-        console.log(k);                     // k已经定义了，输出3
-        console.log(j);                     // j已经定义了，输出4
-    };
-</code></pre>
-
-<p>JavaScript的这个特性被非正式地称为声明提前（hoisting），即JavaScript函数里声明的所有变量（但不涉及赋值）都被“提前”至函数体的顶部。</p>
-
-<pre><code class="language-javascript">    var a = &#39;1&#39;;
-    function f(){
-        console.log(a);
-        var a = &#39;2&#39;;
-        console.log(a);
-    }
-</code></pre>
-
-<p>由于函数作用域的特性，变量a的声明被提前到了整个函数体最前面，声明了但是没赋值，所以第一次console是undefined。执行到var语句时才被赋值，这应该也是为什么可以一个变量多次var生命的愿意，后面每一次var都只是起到了赋值的作用。</p>
-
-<h2 id="toc_1">ES6块作用域</h2>
-
-<p>ES6弥补了这这个概念，追加了let和const，也就有了{}块作用域的概念，let和const的区别就不提了，这个在工作中经常用到，用上面的例子感受一下let和var的区别。</p>
-
-<pre><code class="language-javascript">    var a = function test(o){
-        var i = 0;                          // i在整个函数体内均是有定义的
-        if(typeof o == &quot;object&quot;){
-            let j = 4;                      // j在if块内是有定义的
-            for(var k=0; k &lt; 3; k++){       // k在函数体内是有定义的，不仅仅是在循环内
-                console.log(k);             // 输出数字0～2
-                console.log(j);             // j已经定义了，输出4
-            }
-            console.log(k);                 // k已经定义了，输出3
-        }
-        console.log(k);                     // k已经定义了，输出3
-        console.log(j);                     // j在块外，抛出异常Uncaught ReferenceError: j is not defined
-    };
-</code></pre>
-
-<p>let和const只有在块内是被声明的。</p>
-
-<h2 id="toc_2">全局变量的本质</h2>
-
-<p>当声明一个JavaScript全局变量时，实际上是定义了全局对象的一个属性。当使用var声明一个变量时，创建的这个属性是不可配置的，无法通过delete运算符删除。</p>
-
-<pre><code class="language-javascript">    test =1
-    // 1
-    window.test
-    // 1
-    delete test
-    // true
-    window.test
-    // undefined
-    var test = 1
-    // undefined
-    window.test
-    // 1
-    delete test
-    // false
-    window.test
-    // 1
-</code></pre>
-
-<p>可以看到当定义一个全局变量的时候他变成了window的属性。<br/>
-JavaScript可以允许使用this关键字来引用全局对象，但是不能引用局部变量中存放的对象。</p>
-
-<pre><code class="language-javascript">    this.test
-    // 1
-</code></pre>
-
-<h2 id="toc_3">深入理解undefined的本质</h2>
-
-<p>undefined明明是个变量为什么赋值后无法使用呢。任何地方都可以直接使用undefined，那他是一个全局变量一个全局的属性，事实也果然如此。</p>
-
-<pre><code class="language-javascript">    window.undefined == undefined
-    // true
-</code></pre>
-
-<p>而属性分两类，他们的特征如下：</p>
-
-<ul>
-<li>数据属性
-<ul>
-<li>value：就是属性的值。</li>
-<li>writable：决定属性是否能被赋值。</li>
-<li>enumerable：决定for in 能否枚举该属性。</li>
-<li>configurable：决定该属性能否被删除或者改变特征值。</li>
-</ul></li>
-<li>访问器属性（getter/setter）
-<ul>
-<li>getter：函数或undefined，在取属性值时被调用。</li>
-<li>setter：函数或undefined，在设置属性值时被调用。</li>
-<li>enumerable：决定for in 能否枚举该属性。</li>
-<li>configurable：决定该属性能否被删除或者改变特征值。<br/>
-查看下全局属性undefined的属性特征。</li>
-</ul></li>
-</ul>
-
-<pre><code class="language-javascript">    console.log(Object.getOwnPropertyDescriptor(window,&#39;undefined&#39;));
-    // configurable: false
-    // enumerable: false
-    // value: undefined
-    // writable: false
-</code></pre>
-
-<p>writable：false，就是这个原因undefined虽然是个全局变量，但是我们赋值之后他并没有被改变。那为什么还需要用void(0)来代替undefined呢？结合上面的函数作用域再做一个实验。</p>
-
-<pre><code class="language-javascript">    function test() {
-        var undefined = 100; 
-        console.log(undefined);
-        var obj = {a : undefined}; 
-        console.log(Object.getOwnPropertyDescriptor(obj,&#39;a&#39;));
-    }
-    test();
-    // 100
-    // configurable: true
-    // enumerable: true
-    // value: 100
-    // writable: true
-</code></pre>
-
-<p>在函数作用域中，undefined被从声明并赋值为100，无论是直接console它自己还是去查看undefined属性特性都能看出，undefined变量被修改了。这也就说在作用域内undefined可以被修改。</p>
-
-<pre><code class="language-javascript">    function test() {
-        const undefined = 100; 
-        console.log(undefined);
-        const obj = {a : undefined}; 
-        console.log(Object.getOwnPropertyDescriptor(obj,&#39;a&#39;));
-        test();
-    }
-    // 100
-    // configurable: true
-    // enumerable: true
-    // value: 100
-    // writable: true
-</code></pre>
-
-<p>块作用域内也一样可以被修改，得出结论undefined是一个类似var声明一样可以被重复声明的全局属性，而他的属性特性writable是false，所以不能被修改，但是在非全局作用域内，他是可以被篡改的，这是由也就要注意用void (0)来替代undefined。</p>
-
-<h2 id="toc_4">作用域链</h2>
-
-<p>以书中的角度用对象属性去看作用域链：</p>
-
-<ul>
-<li>JavaScript最顶层的代码，其作用域链只有一个全局对象。</li>
-</ul>
-
-<table>
-    <tr>
-        <th colspan=2>Scope chain</th>
-    </tr>
-    <tr>
-        <td>0</td><td>Global object</td>
-    <tr>
-</table>
-
-<ul>
-<li>不包含嵌套的函数，其作用域两个对象：函数自身的变量对象和全局对象。</li>
-</ul>
-
-<table>
-    <tr>
-        <th colspan=2>Scope chain</th>
-    </tr>
-    <tr>
-        <td>0</td><td>Activation object</td>
-    <tr>
-    <tr>
-        <td>1</td><td>Global object</td>
-    <tr>
-</table>
-
-<blockquote>
-<p>活动对象(activation object)，该对象包含了函数的所有局部变量、命名参数、参数集合以及this，然后此对象会被推入作用域链的前端</p>
-</blockquote>
-
-<ul>
-<li>对于包含了嵌套函数的函数，其作用域包含至少三个对象：自身的变量对象，外层的变量对象（将自身嵌套的函数），全局变量对象。</li>
-</ul>
-
-<table>
-    <tr>
-        <th colspan=2>Scope chain</th>
-    </tr>
-    <tr>
-        <td>0</td><td>Sub activation object</td>
-    <tr>
-    <tr>
-        <td>1</td><td>Activation object</td>
-    <tr>
-    <tr>
-        <td>2</td><td>Global object</td>
-    <tr>
-</table>
-
-<p>作用域链给我的感觉类似原型链，将函数的上下文构成了链表的形式,而方法执行时一层一层往外找，所以为了方便链表从上到下查找属性，所以有了声明提前，链表最顶端为嵌套函数的最里层，链表最底端则是全局变量对象。</p>
-
-<pre><code class="language-javascript">    function test(){
-        var fun1,fun2;
-        for(var i=0;i&lt;2;i++){
-            if(i === 0){
-                fun1 = function(){console.log(&#39;fun1:i=&#39;+i)};
-            }
-            if(i === 1){
-                fun2 = function(){console.log(&#39;fun2:i=&#39;+i)};
-            }
-        };
-        fun1();
-        fun2();
-    }∫
-    test();
-    // fun1:i=2
-    // fun2:i=2
-</code></pre>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[努力了三个月的总结]]></title>
-    <link href="blog.2019919.top/16084764191221.html"/>
-    <updated>2020-12-20T23:00:19+08:00</updated>
-    <id>blog.2019919.top/16084764191221.html</id>
-    <content type="html"><![CDATA[
-<p>今年是个灾难年，疫情让大家都不是太好受，但是年初的疫情期间，我想一定有很多人抓住了这段空闲时期努力学习，而这些人一般都是一些比别人更加优秀的人，这几个月他们再次拉开了和我的距离，而我到了8月中旬的夏休长假后才意识到这一点，此时此刻距离我<strong>30岁</strong>还剩1个月。</p>
-
-<h2 id="toc_0">第一次落实到笔纸上的执行计划</h2>
-
-<p>第一次的计划起于我的夏休，夏休期间因为电脑更换了新配置，旧件废物利用做家庭服务器，研究多个NAS操作系统和软路由，在不断的失败中了解了好多操作系统都是基于Linux，再加上公司最近的项目都是在Linux中开发，觉得熟练Linux命令行对今后的作业有一定的帮助，在NAS草草的选择了WINDOWS之后有了这一路线。</p>
-
-<ol>
-<li>centOS</li>
-<li>git</li>
-<li>开发环境（原设想windows开发，通过CLI让Linux服务器同步代码编译并发布）</li>
-<li>angular</li>
-<li>postgreSQL</li>
-<li>dotnet core</li>
-<li>ngnix</li>
-<li>docker</li>
-<li>软路由</li>
-</ol>
-
-<h3 id="toc_1">想法初衷</h3>
-
-<p>整体目标是通过工作中应用的语言和技术来实现一个blog，然后将我的软件硬件爬坑的经历给记录下来，123三点进行开发环境学习，4为前端，56是DB和后端api，789是部署服务器相关内容。<br/>
-整个流程走下来应该可以将我想要的博客搭建起来，今后更好的记录未来工作中遇到的问题，便于回顾，而开发过程中也是一个学习的过程，毕竟在项目中没有完全一个人从无到有的实施。</p>
-
-<h3 id="toc_2">实施结果</h3>
-
-<p>经过两个月的学习做一个小总结，<strong>以下都是垃圾</strong>：</p>
-
-<blockquote>
-<p>centOS学习了一些基本指令，什么文件处理啊权限用户处理啊，这些简单的能用的到的，跟了一波视频，自己也做了一些笔记。<br/>
-git和开发环境，嗯设想的并没有去实现，感觉怪怪得，明明docker就是为了多平台，打个镜像就完事了我干啥做这么奇葩，所以最后熟悉了下git的一些常用命令行，从此脱离vsCode的图形化界面操作。<br/>
-关于angular，不得不说还真是有一些提高，尤其是在路由（包括后期部署的坑）这一块，还真是有了一定的提高，再就是结构指令，真正的不是纸上谈兵真正的动手操作了一番。前端这一部分最耽误时间的应该就是在选择一个富文本编辑器，最后应用的是tinymce，不用额外的资源文件，也比较美观功能齐全。<br/>
-后端因为一直不是我的侧重点，仅仅是为了API的实现浅浅的完成了前端的需求，不过在tinymce图片文件交互这里也稍微下了一点功夫。<br/>
-最后的部署环境首先是在IIS中完成了前后端部署，毕竟电脑还是都是windows的，然后docker也是撸了一遍视频，简单的完成了部署。<br/>
-公网IP也申请了，还傻傻的去备案了，至今还是下面这个状态<br/>
-<img src="media/16084764191221/16086441905741.jpg" alt="" style="width:943px;"/></p>
-</blockquote>
-
-<p><strong>以上灰色部分都是垃圾！</strong><br/>
-到此为止，我总结下我的状态，我发现我没留下什么，除了github上多了几行代码电脑多了几个软件安装包之外，我觉得我一无所获，于是就在次沉浸在迷茫之中。我为什么就无法提升，我也没有在闲着，而且效率明显比之前提高了，学习时间也增加了，我的未来呢。</p>
-
-<h2 id="toc_3">奇遇➡️心得</h2>
-
-<p>好在我迷茫但是没有堕落，有一天在学习浏览器原理时，看到别人博客的引用文献中除了一些书和别人的博文，还有一些课程，而这个课程的介绍就有意思了。</p>
-
-<blockquote>
-<p>前端学习是一条先块后慢的曲线。在快速入门之后，大多数人都会感觉：自己仅仅停留在会用的阶段，后面的学习之路似乎越来越陡峭，每前进一步都十分艰难。<br/>
-其实是你没有意识到，你在自学的过程中走了太多弯路。</p>
-</blockquote>
-
-<p>后面还有一些，我觉得这些完全说到了我的心坎，还是有大牛懂得菜鸟的心的，而其课程目录正含有我在自学的浏览器原理，我觉得我碰到知己了啊，赶紧买过来课啃，上下班一起啃。<br/>
-这样坚持了大概～～好吧6天，我成功服输了。就有种刚接触人工智能AI，人家提了一个名词我去查，最后一直查到了高中数学，而且这知识早就忘了。<br/>
-好在赶上了这个老师的直播，这个课程原来是面向阿里P5P6水平如何上P7的一个指导，通过他的直播我确切的找到了差距，要知道这些大牛也不过30到35左右，甚至可能是我同届的毕业生，我八年的对日经验真的是提前养老了，而脑子也养老了，但是我真的不愿意这样认输，我唯一的目标就是不希望到我40岁的时候活得跟周围这些40岁老大哥一样，满嘴都是没法学习的借口。<br/>
-带着迷茫悲哀和不服的心态继续浏览着知乎，<a href="https://zhuanlan.zhihu.com/p/27662828">JavaScript入门的5条建议</a>救世的贴出现了，这个贴发写于2017年。我总结下对我最有用的亮点：</p>
-
-<ol>
-<li>写代码 &gt; 看视频 &gt; 看书 三个部分时间配比</li>
-<li>不可盲目追新技术</li>
-</ol>
-
-<p>第一点新鸟老鸟都懂，但是我经常看视频简单就不动手了，讲的东西我知道我会，但是落实到键盘上发现就总也写不对。<br/>
-第二点他的描述很有趣：</p>
-
-<blockquote>
-<p>react，vue，angular,和你没关系<br/>
-node，express，koa，和你没关系<br/>
-grunt，gulp，webpack，和你没关系</p>
-</blockquote>
-
-<p>这确实是我的问题，做dotnet出身，因typescript后端程序员很容易接纳，而基本上没有什么基础直接开始了angularJs到angular的开发，html样式能做，然而说不清楚，一切都靠搜索大家记录的bug来辅助我完成工作，真的做到了老师说的会用而已，而跟不上老师的课原因就是没有基础，一个曾经让我们看不起的前端程序员所需要的基础知识梁是我根本不了解的。虽然心理上不接受，但是不得不说，我这八年工作经验可能赶不上大厂p4的新手。<br/>
-以上心理活动和经历再加上睡觉，大概经历了18个小时，之后我重新操起了《JavaScript权威指南》，一本传说中最不适合初学者学习的书，而恰巧，这本书上次读到了类型转换。对象类型的转换也就是装箱拆箱这一块，读完了也理解了老师当时讲的拆箱转换 valueOf() 方法和 toString() 方法的执行顺序，而这时我发现，原来像听了天书的一节课程，我竟然用读《JavaScript权威指南》不到两个小时就全部消化了。<br/>
-内心汹涌澎湃，至此我觉得我得到的不仅仅是一课的知识，还得到的是对这个学习方向的肯定，找到了能前进一步的路线。</p>
-
-<h2 id="toc_4">直播其他所得</h2>
-
-<p>winter老师直播的主要围绕是面试，而今年我也仅仅参加了一次面试，这一次就让我知道了差距，那总结老师所说的案例性问题：</p>
-
-<ul>
-<li>css布局</li>
-<li>dom api</li>
-<li>原型</li>
-<li>闭包</li>
-</ul>
-
-<p>后两个问题对日至今也没有被问过，通过这次直播也找到了原因。</p>
-
-<blockquote>
-<p>考原型闭包是为了考架构能力<br/>
-原型是考面向对象<br/>
-考闭包是为了考函数式编程</p>
-</blockquote>
-
-<p>所以对日外包真的是并不需要呢。</p>
-
-<h2 id="toc_5">最新计划</h2>
-
-<ul>
-<li>《JavaScript权威指南》</li>
-<li>《JavaScript函数式编程》</li>
-<li>《重学前端》--JS部分</li>
-<li>css布局</li>
-<li>浏览器原理及API</li>
-</ul>
-
-<p>新的计划很简单，抓好基础，不甘堕落。争取明年七月完成这些目标。</p>
-
-<h2 id="toc_6">今年的最后总结</h2>
-
-<p>这三个月也是今年最后的三个月了，那也就基本是今年的总结了，也是我开始真的努力坚持写博客的第一次总结。<br/>
-今年上半年虽然没学习技术，好在磨练了下心性，读书是人类走向心智成熟的最佳捷径。在上半年中除了名人传记金融和技术相关方面的书之外，我觉得心理上的书最让我受益匪浅，这里不仅仅是类似《论语》的《人性的弱点》这类书，只讲表象，《少有人走的路》这一套书从心理上讲解了我们一些人性上的弱点的起因以及自己努力掩盖这些弱点的行为，而起初发现这本书只是我想寻求一些在自律上的帮助，却获得了更大的回报，真的是太幸运了。今年读书让我得到的最大最受用的两大改变：</p>
-
-<ol>
-<li>控制焦躁的心，可以做到不争吵并且坚决拒绝否定别人。</li>
-<li>正式面对自己的善恶和伪善，不以恶小而为之，不以善小而不为。</li>
-</ol>
-
-<p>在不断的读书和知识的学习中，我的谈吐也在发生改变，无论跟同事朋友还是亲人，说话越来越调理清晰了。<br/>
-我是个喜欢完善环境的人，开发环境我会去找各种各样的插件来辅助编程，这次的学习环境也有了很大的投入，买了两份前端课程，买了一个英语外教课程，买了一个苹果一体机，买了一个新pad，买了niz键盘，买了妙控板。嗯这些都花在了11月底12月初，也就是说我有了个明确的目标，我希望到我31岁的时候就能获得丰厚的30岁进行自我投资的知识回报，并在不久的将来进行变现。</p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[重新认识下熟悉的浏览器]]></title>
-    <link href="blog.2019919.top/16076922632055.html"/>
-    <updated>2020-12-11T21:11:03+08:00</updated>
-    <id>blog.2019919.top/16076922632055.html</id>
-    <content type="html"><![CDATA[
-<p>前端程序员每天都在抠代码，各种各样的技术，千变万化的框架，但最后组装压缩在一起，就是为了伺候操作系统的一个软件————浏览器。这一次，在阅读了三天各大博主的精华后，就chrome浏览器来做一下自己的整理记录。<br/>
-双击桌面chrome浏览器发生了什么呢：</p>
-
-<blockquote>
-<p>系统创建了一个chrome的进程。</p>
-
-<blockquote>
-<p>从多标签页app的开始，一个chrome进程中有了多个子tab进程。</p>
-
-<blockquote>
-<p>每个tab进程内有下面这些进程：<br/>
-<a href="#toc_0">渲染引擎</a><br/>
-<a href="#toc_1">JS引擎</a><br/>
-<a href="#toc_2">用户界面</a><br/>
-<a href="#toc_3">存储</a></p>
-</blockquote>
-</blockquote>
-</blockquote>
-
-<h2 id="toc_0">渲染引擎</h2>
-
-<p>最初渲染引擎和JS引擎并没有分家，在一起统称为浏览器内核，后来JS引擎越来越独立，内核就完全倾向于渲染引擎。chrome原来使用的就是webkit引擎，后来为了不受制于苹果，基于webkit改编了blink，将其内置于chrome中。</p>
-
-<h2 id="toc_1">JS引擎</h2>
-
-<h2 id="toc_2">用户界面</h2>
-
-<h2 id="toc_3">存储</h2>
-
-<h2 id="toc_4">感受</h2>
-
-<p>现在对学习的感觉是即入迷又无力，学到这里的时候回想一下，我最开始只是看到了一篇短文，浅谈JS事件的原理，而当时的那篇文章真的是比较浅，我现在已经忘了内容是什么了，但是在我不断深入的时候，每每看到一个强大的人的博客的时候就会发现一些新内容，当我为了弄懂其中一个小名词的时候又会引出无数的子节点，真的是树无处不在，越来越入迷，也越来越吃力。虽然我不知道整个树有多大，但是当学到末梢节点的时候回头来总结一下，看看我捋顺的健壮的树枝，真的是振奋人心。</p>
-
-<h2 id="toc_5">参考</h2>
-
-<p><a href="https://segmentfault.com/a/1190000018806562">webkit引擎和v8引擎工作原理</a></p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[JavaScript类型转换]]></title>
-    <link href="blog.2019919.top/16087263047458.html"/>
-    <updated>2020-12-23T20:25:04+08:00</updated>
-    <id>blog.2019919.top/16087263047458.html</id>
-    <content type="html"><![CDATA[
-<p>《JavaScript权威指南》的这一章节就是让我确定了我学习路线的一节，这一节的掌握与老师讲拆包转换的时候内容一致，只是描述名词略有变化，也就是说还是要从基础抓起。</p>
-
-<h2 id="toc_0"> 不注意会出错的类型转换</h2>
-
-<h3 id="toc_1"> 转数值型</h3>
-
-<table>
-<thead>
-<tr>
-<th>原类型</th>
-<th>转换后类型</th>
-</tr>
-</thead>
-
-<tbody>
-<tr>
-<td>undefined</td>
-<td>NaN</td>
-</tr>
-<tr>
-<td>null</td>
-<td>0</td>
-</tr>
-<tr>
-<td>&quot;&quot;</td>
-<td>0</td>
-</tr>
-<tr>
-<td>非空非数字字符串</td>
-<td>NaN</td>
-</tr>
-</tbody>
-</table>
-
-<blockquote>
-<p>NaN（Not a Number，非数）<br/>
-NaN 属性是代表非数字值的特殊值。该属性用于指示某个值不是数字。可以把 Number 对象设置为该值，来指示其不是数字值。<br/>
-isNaN() 全局函数来判断一个值是否是 NaN 值。</p>
-</blockquote>
-
-<pre><code class="language-javascript">    Number.NaN === NaN
-    // false
-    Number.NaN == NaN
-    // false
-    isNaN(NaN)
-    // true
-</code></pre>
-
-<h3 id="toc_2"> 转布尔型</h3>
-
-<table>
-<thead>
-<tr>
-<th>原类型</th>
-<th>转换后类型</th>
-</tr>
-</thead>
-
-<tbody>
-<tr>
-<td>&quot;&quot;</td>
-<td>false</td>
-</tr>
-<tr>
-<td>0,-0,NaN</td>
-<td>false</td>
-</tr>
-<tr>
-<td>Infinity,-Infinity,非零数</td>
-<td>true</td>
-</tr>
-</tbody>
-</table>
-
-<p>NaN空串null和undefined都为false，所以常用ture,false判断对象是否可以使用。</p>
-
-<h2 id="toc_3"> 转换</h2>
-
-<p>转换分为两种：</p>
-
-<ul>
-<li>显示转换</li>
-<li>隐式转换</li>
-</ul>
-
-<h3 id="toc_4"> 显示转换</h3>
-
-<p>最简单的方法就是使用Boolean（）、Number（）、String（）或Object（）函数。当不通过new运算符调用这些函数时，它们会作为类型转换函数。</p>
-
-<p>除了null或undefined之外的任何值都具有toString（）方法，这个方法的执行结果通常和String（）方法的返回结果一致。</p>
-
-<p>把null或undefined转换为对象抛出一个类型错误。</p>
-
-<blockquote>
-<p>为什么123.tostring()报错？</p>
-</blockquote>
-
-<p>JavaScript中还提供了专门的函数和方法来做显示转换。</p>
-
-<ul>
-<li>Number.toString（）方法可以接收表示转换基数（radix）。</li>
-<li>Number.toFixed（）根据小数点后的指定位数将数字转换为字符串。</li>
-<li>Number.toExponential（）使用指数记数法将数字转换为指数形式的字符串，其中小数点位数为参数。</li>
-<li>Number，toPrecision（）根据指定的有效数字位数将数字转换成字符串。</li>
-</ul>
-
-<p>后三个方法都会进行四舍五入或填充0。</p>
-
-<p>Number（）只能进行十进制转换。</p>
-
-<p>全局函数parseInt（）和parseFloat（）会<strong>跳过任意数量的前导空格，结束于空格</strong>，尽可能多的解析数值字符，并忽略后面的内容。如果第一个为非空字符不是数字返回NaN。</p>
-
-<pre><code class="language-javascript">    parseInt(&#39; 112 333&#39;)
-    // 112
-</code></pre>
-
-<p>parseInt（）可以接收第二个可选参数，这个参数指定数字转换的基数，合法的取值范围是2～36。</p>
-
-<blockquote>
-<p>在不传入第二个参数的情况下，parseInt 只支持 16 进制前缀“0x”，而且会忽略非数字字符，也不支持科学计数法。在一些古老的浏览器环境中，parseInt 还支持 0 开头的数字作为 8 进制前缀，这是很多错误的来源。所以在任何环境下，都建议传入 parseInt 的第二个参数，而 parseFloat 则直接把原字符串作为十进制来解析，它不会引入任何的其他进制。<br/>
-Number 是比 parseInt更好的选择。<br/>
-这一段觉得老师说的有问题</p>
-</blockquote>
-
-<pre><code class="language-javascript">    parseInt(&#39;! 112 333&#39;)
-    // NaN
-    parseInt(&#39;0x 112 333&#39;)
-    // NaN
-</code></pre>
-
-<h3 id="toc_5"> 隐式转换</h3>
-
-<p>某些运算符会做隐式的类型转换，有时用于类型转换。</p>
-
-<pre><code class="language-javascript">    x + &quot;&quot; // 等价于String(x)
-    +x   // 等价于Number(x)
-    !!x  // 等价于Boolean(x)
-</code></pre>
-
-<h2 id="toc_6"> 对象转换为原始值（拆箱转换）</h2>
-
-<p>到布尔值转换，所有对象（包括数组和函数）都转换为true。</p>
-
-<pre><code class="language-javascript">    Boolean(Boolean(false))
-    // false
-    Boolean(new Boolean(false))
-    // true
-</code></pre>
-
-<p>对象到字符串和数字是通过两个不同的方法来转换的。<br/>
-所有对象都继承了两个方法toString()和valueOf()。对象转化字符串先tostring()方法，如果不是原始值用valueof()方法，如果还不是原始值 抛类型错误。有任何原始值都用原始值进行toStirng()。<br/>
-反之转数值型转换，先进行valueof()后进行tostring()。<br/>
-案例：空数组转数值型等于0.</p>
-
-<pre><code class="language-javascript">    Number([])
-    // 0
-    [].valueOf()
-    // []
-    [].toString()
-    // &quot;&quot;
-    Number(&quot;&quot;)
-    // 0
-</code></pre>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[JavaScript全部的对象分类]]></title>
-    <link href="blog.2019919.top/16085442753431.html"/>
-    <updated>2020-12-21T17:51:15+08:00</updated>
-    <id>blog.2019919.top/16085442753431.html</id>
-    <content type="html"><![CDATA[
-<p>之前讲解的对象只是特定的一部分，并不能涵盖全部的JavaScript对象。<br/>
-比如无论怎样编写代码都没法绕开Array，实现一个跟原生数组行为一模一样的对象，因为原生数组底层实现了一个自动随着下标变化的length属性。并且也无法依靠JavaScript代码实现div对象，需要用document.createElement来创建。这也说明了JavaScript的对象机制并非简单的属性集合+原型。</p>
-
-<h2 id="toc_0"> JavaScript中的对象分类</h2>
-
-<p>* 宿主对象（host Objects）<br/>
-由JavaScript宿主环境提供的对象，他们的行为完全由宿主环境决定。<br/>
-* 内置对象（Built-in Objects）<br/>
-由JavaScript语言提供的对象。<br/>
-    - 固有对象（Intrinsic Objects）<br/>
-    由便准规定，随着JavaScript运行时创建而自动创建的对象实例。<br/>
-    - 原生对象（Native Objects）<br/>
-    可以由用户通过Array、RegExp等内置构造器或者特殊语法创建的对象。<br/>
-    - 普通对象（Ordinary Objects）<br/>
-    由{}语法、Object构造器或者calss关键字定义类创建的对象，它能够被原型继承。</p>
-
-<h2 id="toc_1"> 宿主对象</h2>
-
-<p>前端最熟悉的就是浏览器环境中的宿主。在浏览器环境中全局对象是window，window上又有很多属性，如document。<br/>
-实际上这个全局对象window上的属性一部分来自于JavaScript语言，一部分来自浏览器环境。</p>
-
-<h2 id="toc_2"> 内置对象·固有对象</h2>
-
-<p>固有对象是由标准规定，随着JavaScript运行时创建而自动创建的对象实例，类似基础库的角色。比如window、document等。</p>
-
-<h2 id="toc_3"> 内置对象·原生对象</h2>
-
-<p>能够通过语言本身的构造器创建的对象叫做原生对象。<br/>
-老师将对象分成了如下五类：<br/>
-通过这些构造器可以通过new运算创建新的对象，</p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[JavaScript的面向对象]]></title>
-    <link href="blog.2019919.top/16085441443213.html"/>
-    <updated>2020-12-21T17:49:04+08:00</updated>
-    <id>blog.2019919.top/16085441443213.html</id>
-    <content type="html"><![CDATA[
-<p>在不同的编程语言中，设计者也利用各种不同的语言特性来抽象描述对象，最为成功的流派是使用“类”的方式来描述对象，这诞生了诸如 C++、Java 等流行的编程语言。而 JavaScript 早年却选择了一个更为冷门的方式：原型。<br/>
-这节课了解一下 JavaScript 是如何设计对象模型的。</p>
-
-<h2 id="toc_0"> JavaScript对象的特征</h2>
-
-<p>* 对象具有唯一标识性：即使完全相同的两个对象，也并非同一个对象。<br/>
-* 对象有状态：对象具有状态，同一对象可能处于不同状态之下。<br/>
-* 对象具有行为：即对象的状态，可能因为他的行为产生变迁。<br/>
-一般而言，各语言对象唯一标识性都是用内存地址来体现。</p>
-
-<pre><code class="language-javascript">    var o1 = { a: 1 };
-    var o2 = { a: 1 };
-    console.log(o1 == o2); // false
-</code></pre>
-
-<p>两个一模一样的对象，但是打印结果是false，两个对象并不是同一个对象。<br/>
-“状态和行为”在不同语言中会使用不同的术语来描述他们，C++中是“成员变量和成员函数”，Java中则称为“属性和方法”。在JavaScript中，将状态和行为统一抽象为“属性”。</p>
-
-<pre><code class="language-javascript">    var o = { 
-        d: 1,
-        f() {
-            console.log(this.d);
-            }    
-        };
-</code></pre>
-
-<p>o 是对象，d 是一个属性，而函数 f 也是一个属性，尽管写法不太相同，但是对 JavaScript 来说，d 和 f 就是两个普通属性。<br/>
-JavaScript 中对象独有的特色是：<strong>对象具有高度的动态性</strong>，这是因为 JavaScript 赋予了使用者在运行时为对象添改状态和行为的能力。</p>
-
-<pre><code class="language-javascript">    var o = { a: 1 };
-    o.b = 2;
-    console.log(o.a, o.b); //1 2
-</code></pre>
-
-<h2 id="toc_1"> JavaScript对象的两类属性</h2>
-
-<h3 id="toc_2"> 第一类属性数据属性</h3>
-
-<p>数据属性接近于其他语言的属性概念，具有四个特征：</p>
-
-<ul>
-<li>value：就是属性的值。</li>
-<li>writable：决定属性是否能被赋值。</li>
-<li>enumerable：决定for in 能否枚举该属性。</li>
-<li>configurable：决定该属性能否被删除或者改变特征值。<br/>
-### 第二类属性访问器属性（getter/setter）<br/>
-访问器属性也有四个特征：</li>
-<li>getter：函数或undefined，在取属性值时被调用。</li>
-<li>setter：函数或undefined，在设置属性值时被调用。</li>
-<li>enumerable：决定for in 能否枚举该属性。</li>
-<li>configurable：决定该属性能否被删除或者改变特征值。<br/>
-## 总结<br/>
-实际上 JavaScript 对象的运行时是一个“属性的集合”。<br/>
-&gt; 属性key：字符串或者 Symbol<br/>
-&gt; 值value：数据属性特征值或者访问器属性特征值<br/>
-对象是一个属性的索引结构（索引结构是一类常见的数据结构，可以把它理解为一个能够以比较快的速度用 key 来查找 value 的字典）。</li>
-</ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[JavaScript中的类型]]></title>
-    <link href="blog.2019919.top/16083847578374.html"/>
-    <updated>2020-12-19T21:32:37+08:00</updated>
-    <id>blog.2019919.top/16083847578374.html</id>
-    <content type="html"><![CDATA[
-<p>根据最新的语言标准，javascript规定了7种语言类型：</p>
-
-<ul>
-<li>Undefined</li>
-<li>Null</li>
-<li>Boolean</li>
-<li>String</li>
-<li>Number</li>
-<li>Symbol</li>
-<li>Object</li>
-</ul>
-
-<blockquote>
-<p>但是在MDN中是这样描述的：<br/>
-基本类型（基本数值、基本数据类型）是一种既非对象也无方法的数据。在 JavaScript 中，共有7种基本类型：string，number，bigint，boolean，null，undefined，symbol  (ECMAScript 2016新增)。</p>
-</blockquote>
-
-<h2 id="toc_0">Undefined</h2>
-
-<p>void运算把任意一个表达式变成undefined。</p>
-
-<pre><code class="language-markup">&lt;a href=&quot;javascript: void(0)&quot;&gt;&lt;/a&gt;
-</code></pre>
-
-<p>常用以上代码来描述一个没有锚点的死链接。<br/>
-往往应用void 0来做undefined使用的原因是<strong>Javascript中undefined是一个变量，并非关键字，可以被篡改</strong>。</p>
-
-<h2 id="toc_1">Null</h2>
-
-<p>null是关键字，可以放心使用null关键字获取null的值。</p>
-
-<h2 id="toc_2">Boolean</h2>
-
-<p>true 和 false。</p>
-
-<h2 id="toc_3">String</h2>
-
-<p>String并非“字符串”，而是字符串的UTF16编码，所以charAt、charCodeAt、length等方法都是针对UTF16编码。所以字符串的最大长度实际上是受字符串的编码长度影响的,String 有最大长度是 2<sup>53</sup> - 1是指编码长度，并不是字符数。</p>
-
-<blockquote>
-<p><strong>Unicode</strong> <br/>
-Unicode（又称统一码、万国码、单一码）是计算机科学领域里的一项业界标准，包括字符集、编码方案等。Unicode是为了解决传统的字符编码方案的局限而产生的，它为每种语言中的每个字符设定了统一并且唯一的二进制编码，以满足跨语言、跨平台进行文本转换、处理的要求。1990年开始研发，1994年正式公布。<br/>
-UTF是Unicode的编码格式，<br/>
-他具体定义 了 Unicode 字符在计算机中存取方法。<br/>
-常见的就是UTF-16和UTF-8 <br/>
-UTF-16用两个字节表示一个Unicode转化格式，定长两个字节16bit，所以是UTF-16。<br/>
-UTF-8因为很大一部分字符用一个字节就可以表示现在要的两个字节表示，UTF-8采用了一种变长的技术，每个编码区域有不同的字码长度，不同类型的字符可以是由1~6个字节组成，看前两字节的值来确定是什么类型的字符。</p>
-</blockquote>
-
-<p><strong>string是不可变的引用类型。</strong>他拥有值类型的特性。</p>
-
-<h2 id="toc_4">Number</h2>
-
-<p><strong>NAN</strong>编码中很少直接使用。通常都是在计算失败时，作为 Math 的某个方法的返回值出现的，比较NAN必须使用 Number.isNaN() 或 isNaN() 函数。<br/>
-但是，请注意isNaN（）和Number.isNaN（）之间的区别：如果当前值是NaN，或者将其强制转换为数字后将是NaN，则前者将返回true。<br/>
-<strong>Infinity</strong> 无穷大<br/>
-<strong>-Infinity</strong> 负无穷大<br/>
--0和0在进行除法作为除数的时候符号带入计算。</p>
-
-<p>经典问题0.1+0.2不能等于0.3，浮点数运算的精度问题导致等式左右不是严格相等，而是相差了个微小的值。<br/>
-正确的比较方法是：</p>
-
-<pre><code class="language-javascript">console.log( Math.abs(0.1 + 0.2 - 0.3) &lt;= Number.EPSILON);
-</code></pre>
-
-<p><strong>检查等式两边的差值是否小于最小精度</strong>才是正确比较浮点数的方法。</p>
-
-<h2 id="toc_5">Symbol</h2>
-
-<p>这个英文单词就是象征和符号的意思,它是一切非字符串的对象key的集合。一个symbol值能作为对象属性的标识符,这是该数据类型仅有的目的。<br/>
-Symbol() 函数会返回Symbol类型的值，该类型具有静态属性和静态方法。它的静态属性会暴露几个内建的成员对象；它的静态方法会暴露全局的Symbol注册，且类似于内建对象类，但作为构造函数来说它并不完整，因为它不支持语法：&quot;new Symbol()&quot;。</p>
-
-<pre><code class="language-javascript">var mySymbol = Symbol(&quot;my symbol&quot;);
-</code></pre>
-
-<p>每个从Symbol()返回的symbol值都是唯一的。</p>
-
-<pre><code class="language-javascript">console.log(Symbol(&#39;foo&#39;) === Symbol(&#39;foo&#39;));
-// expected output: false
-</code></pre>
-
-<h2 id="toc_6">Object</h2>
-
-<p>在JavaScript中，对象的定义是“属性的集合”。属性分为数据属性和访问器属性，二者都是key-value结构，key可以是字符串或者Symbol类型。<br/>
-JavaScript 中的几个基本类型，都在对象类型中有一个“亲戚”。它们是：</p>
-
-<ul>
-<li>Number</li>
-<li>String</li>
-<li>Boolean</li>
-<li>Symbol</li>
-</ul>
-
-<p>所以3与new Number(3)是完全不同的值，一个是Number类型，一个是对象类型。<br/>
-日常代码中可以把对象的方法在基本类型上使用</p>
-
-<pre><code class="language-javascript">console.log(&quot;abc&quot;.charAt(0)); //a
-</code></pre>
-
-<p>而往常常理解为String类型有charAt方法，看来这个理解是错误的。<br/>
-甚至可以在基本类型的亲戚对象的原型中添加方法，这样任何相同基本类型的变量都可以调用这个方法。</p>
-
-<pre><code class="language-javascript">    Symbol.prototype.hello = () =&gt; console.log(&quot;hello&quot;);
-
-    var a = Symbol(&quot;a&quot;);
-    console.log(typeof a); //symbol，a并非对象
-    a.hello(); //hello，有效
-</code></pre>
-
-<p>运算符提供了装箱操作，它会根据基础类型构造一个临时对象，使得我们能够在基础类型上条用对应对象的方法。（感觉类似一个原型链的应用）</p>
-
-<blockquote>
-<p>值类型给引用类型叫装箱<br/>
-引用类型给值类型叫拆箱<br/>
-给我的理解是将多个属性打包成对象就是装箱，将对象的属性独立出来就是拆箱。</p>
-</blockquote>
-
-<h2 id="toc_7">类型转换</h2>
-
-<p>==运算很臭，应该是没有意义去记住他的比较结果，只需要记住只用===来比较。</p>
-
-<h3 id="toc_8">StringToNumber</h3>
-
-<p>字符串到数字的类型转换支持十进制、二进制、八进制和十六进制,还包括正负号科学计数法，可以使用大写或者小写的 e 来表示。<br/>
-parseInt 和 parseFloat 并不使用这个转换，所以支持的语法跟这里不尽相同。在不传入第二个参数的情况下，parseInt 只支持 16 进制前缀“0x”，而且会忽略非数字字符，也不支持科学计数法。在一些古老的浏览器环境中，parseInt 还支持 0 开头的数字作为 8 进制前缀，这是很多错误的来源。所以在任何环境下，都建议传入 parseInt 的第二个参数，而 parseFloat 则直接把原字符串作为十进制来解析，它不会引入任何的其他进制。<br/>
-<strong>Number</strong> 是比 parseInt 和 parseFloat 更好的选择。</p>
-
-<h3 id="toc_9">NumberToString</h3>
-
-<p>当Number绝对值较大或者较小时，字符串为了保证不会过长会用科学记数法表示。</p>
-
-<h3 id="toc_10">装箱转换</h3>
-
-<p>每一种基本类型 Number、String、Boolean、Symbol 在对象中都有对应的类，所谓装箱转换，正是把基本类型转换为对应的对象，它是类型转换中一种相当重要的种类。<br/>
-Symbole函数无法使用new来调用，可以利用call方法来强迫装箱。</p>
-
-<pre><code class="language-javascript">    var symbolObject = (function(){ return this; }).call(Symbol(&quot;a&quot;));
-
-    console.log(typeof symbolObject); //object
-    console.log(symbolObject instanceof Symbol); //true
-    console.log(symbolObject.constructor == Symbol); //true
-</code></pre>
-
-<p>我们可以用 console.log 看一下 symbolObject 的 type of，它的值是 object，我们使用 symbolObject instanceof 可以看到，它是 Symbol 这个类的实例，我们找它的 constructor 也是等于 Symbol 的，所以我们无论从哪个角度看，它都是 Symbol 装箱过的对象，这里再次应用了js原型。<br/>
-装箱机制会频繁产生临时对象，在一些对性能要求较高的场景下，我们应该尽量避免对基本类型做装箱转换。<br/>
-使用内置的 Object 函数，我们可以在 JavaScript 代码中显式调用装箱能力。</p>
-
-<pre><code class="language-javascript">    var symbolObject = Object(Symbol(&quot;a&quot;));
-
-    console.log(typeof symbolObject); //object
-    console.log(symbolObject instanceof Symbol); //true
-    console.log(symbolObject.constructor == Symbol); //true
-</code></pre>
-
-<h3 id="toc_11">拆箱转换</h3>
-
-<p>在 JavaScript 标准中，规定了 ToPrimitive 函数，它是对象类型到基本类型的转换（即，拆箱转换）<a href="https://juejin.cn/post/6844903555548053511">JavaScript 对象转换到基本类型值算法 ToPrimitive</a>。对象到 String 和 Number 的转换都遵循“先拆箱再转换”的规则。通过拆箱转换，把对象变成基本类型，再从基本类型转换为对应的 String 或者 Number。拆箱转换会尝试调用 valueOf 和 toString 来获得拆箱后的基本类型。如果 valueOf 和 toString 都不存在，或者没有返回基本类型，则会产生类型错误 TypeError。</p>
-
-<pre><code class="language-javascript">    var o = {
-        valueOf : () =&gt; {console.log(&quot;valueOf&quot;); return {}},
-        toString : () =&gt; {console.log(&quot;toString&quot;); return {}}
-    }
-
-    o * 2
-    // valueOf
-    // toString
-    // TypeError
-</code></pre>
-
-<p>进行 o*2 这个运算的时候，先执行了 valueOf，接下来是 toString，最后抛出了一个TypeError，拆箱转换失败了。</p>
-
-<pre><code class="language-javascript">    var o = {
-        valueOf : () =&gt; {console.log(&quot;valueOf&quot;); return {}},
-        toString : () =&gt; {console.log(&quot;toString&quot;); return {}}
-    }
-
-   String(o)
-    // toString
-    // valueOf
-    // TypeError
-</code></pre>
-
-<p>到 String 的拆箱转换会优先调用 toString。</p>
-
-<blockquote>
-<p>在 ES6 之后，还允许对象通过显式指定 @@toPrimitive Symbol 来覆盖原有的行为.</p>
-
-<pre><code class="language-javascript">var o = {
-        valueOf : () =&gt; {console.log(&quot;valueOf&quot;); return {}},
-        toString : () =&gt; {console.log(&quot;toString&quot;); return {}}
-    }
-   
-o[Symbol.toPrimitive] = () =&gt; {console.log(&quot;toPrimitive&quot;); return &quot;hello&quot;}
-    console.log(o + &quot;&quot;)
-    // toPrimitive
-    // hello
-</code></pre>
-</blockquote>
-
-<h2 id="toc_12">补充</h2>
-
-<p>除了这七种语言类型，还有一些语言的实现者更关心的规范类型。</p>
-
-<ul>
-<li>List 和 Record： 用于描述函数传参过程。</li>
-<li>Set：主要用于解释字符集等。</li>
-<li>Completion Record：用于描述异常、跳出等语句执行过程。</li>
-<li>Reference：用于描述对象属性访问、delete 等。</li>
-<li>Property Descriptor：用于描述对象的属性。</li>
-<li>Lexical Environment 和 Environment Record：用于描述变量和作用域。</li>
-<li>Data Block：用于描述二进制数据。</li>
-</ul>
-
-<p>标准中规定了运行时数据类型； 另一方面，JavaScript 语言中提供了 typeof 这样的运算，用来返回操作数的类型，但 typeof 的运算结果，与运行时类型的规定有很多不一致的地方。<br/>
-<img src="media/16083847578374/16084396239357.jpg" alt="" style="width:305px;"/><br/>
-JavaScript 之父本人也在多个场合表示过，typeof 的设计是有缺陷的，只是现在已经错过了修正它的时机。</p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[JavaScript原型和原型链]]></title>
-    <link href="blog.2019919.top/16080322533005.html"/>
-    <updated>2020-12-15T19:37:33+08:00</updated>
-    <id>blog.2019919.top/16080322533005.html</id>
-    <content type="html"><![CDATA[
-<p>今天刚开始学习【重学前端】的课程，讲到装箱转换的时候提到了函数的<code>call</code>方法，而<code>call</code>方法在我的印象中就只有<code>call</code>约等于<code>apply</code>，然后就再没有然后了。在我想深入了解下<code>call</code>方法的时候又发现了有人在同时讲解原型，而于此同时我看到了知乎上的一个贴<a href="https://www.zhihu.com/question/60165921">面试一个5年的前端，却连原型链也搞不清楚，满口都是Vue，React之类的实现，这样的人该用吗？</a>，这我不看内容我就惊呆了，这标题不就是在说我吗。带着各种心情赶紧学习下到底什么是原型和原型链。</p>
-
-<h2 id="toc_0">原型</h2>
-
-<pre><code class="language-text">prototype  [ˈproʊtətaɪp]  原型
-</code></pre>
-
-<p>OK完了😊！</p>
-
-<p>下面这个图很多大神都有画过，下面记录下我自己的理解和实验。</p>
-
-<p><img src="media/16080322533005/16080400429560.jpg" alt="" style="width:450px;"/></p>
-
-<h3 id="toc_1">构造函数视角</h3>
-
-<p>函数可以用来做构造器，也就是constructor，而构造器也可以称为类。<br/>
-通过构造器<code>Apple</code>来创建一个对象对象<code>apple</code>。</p>
-
-<p><img src="media/16080322533005/16080397593797.jpg" alt="" style="width:198px;"/></p>
-
-<p><strong>构造函数创建了实例对象</strong>，这是构造函数与实例对象的关系。</p>
-
-<hr/>
-
-<p><strong>构造函数有一个属性叫做propotype,他指向了原型对象。</strong></p>
-
-<p><img src="media/16080322533005/16080405364424.jpg" alt="" style="width:299px;"/></p>
-
-<p>这里的原型对象有些大神也写做<code>[[propotype]]</code>，这里我猜测是为了区分propotype的属性。</p>
-
-<h3 id="toc_2">原型对象视角</h3>
-
-<p><strong>原型对象的constructor属性指向了构造函数</strong>。</p>
-
-<p><img src="media/16080322533005/16080407735350.jpg" alt="" style="width:382px;"/></p>
-
-<p>这里用构造器的原型对象的constructor方法来创建一个<code>badApple</code>，会发现它和<code>apple</code>的类型是相等的。</p>
-
-<h3 id="toc_3">实例对象视角</h3>
-
-<p>对象也有一个属性__propo__，这是一个隐式属性，<strong>对象的__propo__指向了他的构造函数的原型对象。</strong><br/>
-也就是说<code>Apple</code>的propotype属性和<code>apple</code>、<code>badApple</code>的__propo__指向了同一个地址。</p>
-
-<p><img src="media/16080322533005/16080419126552.jpg" alt="" style="width:318px;"/></p>
-
-<h3 id="toc_4">由函数引出原型链</h3>
-
-<p>函数是JS中的第一类对象，在Javascript中，对象所拥有的函数也同样拥有，也就是说构造函数<code>Apple</code>也同样会有__propo__属性去指向他的父类的原型对象，为了理清这乱七八糟的关系，就有了下面【对象-函数-构造函数-实例对象】这样的一个关系图，也就是原型链图。</p>
-
-<h2 id="toc_5">原型链</h2>
-
-<p><img src="media/16080322533005/16080423510561.jpg" alt=""/></p>
-
-<p>这张图理解了上面的内容之后就感觉容易多了，总结一下有以下几点需要注意。</p>
-
-<ul>
-<li>任何函数的父类都是Function函数，也就是任何函数的__proto__指向Function的原型对象,这里同样包含了Function函数自己。</li>
-<li>Object函数的__proto__指向Function的原型对象
-<code>TODO</code></li>
-</ul>
-
-<h2 id="toc_6"> ES6中的类</h2>
-
-<p>类的写法也是由原型运行时来承载的，逻辑上JavaScript认为每个类是有共同原型的一组对象，类中定义的方法和属性会被卸载原型对象之上。此外最重要的是类提供了继承能力。</p>
-
-<pre><code class="language-javascript">class Animal { 
-  constructor(name) {
-    this.name = name;
-  }
-  
-  speak() {
-    console.log(this.name + &#39; makes a noise.&#39;);
-  }
-}
-class Dog extends Animal {
-  constructor(name) {
-    super(name); // call the super class constructor and pass in the name parameter
-  }
-  speak() {
-    console.log(this.name + &#39; barks.&#39;);
-  }
-}
-let d = new Dog(&#39;Mitzie&#39;);
-d.speak(); // Mitzie barks.
-</code></pre>
-
-<p>以上代码创造了 Animal 类，并且通过 extends 关键字让 Dog 继承了它，展示了最终调用子类的 speak 方法获取了父类的 name。比起早期的原型模拟方式，使用 extends 关键字自动设置了 constructor，并且会自动调用父类的构造函数，这是一种更少坑的设计。所以当我们使用类的思想来设计代码时，应该尽量使用 class 来声明类，而不是用旧语法，拿函数来模拟对象。</p>
-
-<blockquote>
-<p>super关键字用于访问和调用一个对象的父对象上的函数。<br/>
-在构造函数中使用时，super关键字将单独出现，并且必须在使用this关键字之前使用。</p>
-
-<pre><code class="language-javascript">super([arguments]);
-// 调用 父对象/父类 的构造函数
-super.functionOnParent([arguments]);
-// 调用 父对象/父类 上的方法
-</code></pre>
-</blockquote>
-
-<h2 id="toc_7">最后</h2>
-
-<p>在我继续学习这个课程之后，发现老师讲了什么是原型。。。尴尬！先过一遍全部课程，再回过头来自己输出一遍。</p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[angular mock的使用]]></title>
-    <link href="blog.2019919.top/16073237309370.html"/>
-    <updated>2020-12-07T14:48:50+08:00</updated>
-    <id>blog.2019919.top/16073237309370.html</id>
-    <content type="html"><![CDATA[
-<p>在现在公司中，并没有真的前后端分离，往往是前后端一同疏通测试，美其名曰节省时间全面发展。因此至今没有单独写过mock进行前端自己的单体测试。这一次调查下mock的使用。</p>
-
-<h2 id="toc_0">Angular的environments文件</h2>
-
-<p><img src="media/16073237309370/16073245939102.jpg" alt="" style="width:746px;"/></p>
-
-<p>environments文件分别是每个环境对应的配置。<br/>
-每个文件与环境的对应关系存放于<code>angular.json</code>中。</p>
-
-<p><img src="media/16073237309370/16073266078090.jpg" alt="" style="width:555px;"/></p>
-
-<p>这个设定指定了cli在进行<code>production build</code>的时候将<code>environment.ts</code>替换成<code>environment.prod.ts</code>，即将开发环境的环境配置替换成生产环境的开发配置。<br/>
-在这里设置isMock属性，让mock在生产环境中自动启动，开发环境~~~~中自动关闭。</p>
-
-<h2 id="toc_1">Angular的main.ts文件</h2>
-
-<p><img src="media/16073237309370/16073284745167.jpg" alt="" style="width:555px;"/></p>
-
-<p>同样在cli中webpack的入口程序被设置为<code>src/main.ts</code>，也就是说<code>main.ts</code>是我们整个angualr的入口程序。我们在这里判断当前环境是否引入mock服务。</p>
-
-<p><img src="media/16073237309370/16073286403589.jpg" alt="" style="width:566px;"/></p>
-
-<h2 id="toc_2">mock服务的实现</h2>
-
-<h3 id="toc_3">1.选择自己的包管理器添加mock的指令安装mock</h3>
-
-<pre><code class="language-text">npm install mockjs --save
-</code></pre>
-
-<pre><code class="language-text">yarn add mockjs
-</code></pre>
-
-<h3 id="toc_4">2.创建mock文件，并添加到打包配置文件中</h3>
-
-<p>又是<code>angualr.json</code>，在scripts中添加自己的mock文件路径，让webpack打包angular时同时打包我们的mock文件。<br/>
-<img src="media/16073237309370/16073291483432.jpg" alt="" style="width:541px;"/></p>
-
-<h3 id="toc_5">3.编写mock服务</h3>
-
-<ul>
-<li><p>首先导入mockjs。</p>
-<pre><code class="language-typescript">import * as Mock from &#39;mockjs&#39;;
-</code></pre></li>
-<li><p>然后拦截请求，返回假数据</p>
-<pre><code class="language-typescript">Mock.mock(&#39;http://localhost:9080/list&#39;, {
-message: &#39;调用成功&#39;,<br/>
-&#39;data|10&#39;: [{<br/>
-&#39;id|+1&#39;: 1,<br/>
-title: &#39;This is a title&#39;,<br/>
-tags: [<br/>
-  {<br/>
-    id: 1,<br/>
-    name: &#39;aaaa&#39;,<br/>
-    color: &#39;red&#39;<br/>
-  }<br/>
-],<br/>
-&#39;note|100&#39;: &#39;There are notes!&#39;<br/>
-}]<br/>
-});
-</code></pre></li>
-</ul>
-
-<h2 id="toc_6">最后鼓励下自己</h2>
-
-<p>angular中如何加载mock服务就到这，mock中的精髓是通过代码来生成数据，一行代码就可以生成千万条带有逻辑的数据，这些还需要细读一下API。这次记录是通过编译打包时的顺序来记录mock的使用方法，今后需要更深入的理解angular要多多从这个方向调查问题。</p>
-
-]]></content>
-  </entry>
-  
-</feed>
+</html>
