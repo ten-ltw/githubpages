@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>
     
-    JavaScript原型和原型链 - 十
+    JavaScript 原型和原型链 - 十
     
   </title>
   <meta name="description" content="">
@@ -49,57 +49,13 @@
           
           
           <li class="divider"></li>
-          <li><label>JavaScript30</label></li>
-          
-          <li><a title="01 JavaScript Drum Kit" href="16089052254448.html">01 JavaScript Drum Kit</a></li>
-          
-          <li><a title="01 JavaScript Drum Kit 中文指南" href="16089048368062.html">01 JavaScript Drum Kit 中文指南</a></li>
-          
-          
-          <li class="divider"></li>
-          <li><label>杂念</label></li>
-          
-          <li><a title="努力了三个月的总结" href="16084764191221.html">努力了三个月的总结</a></li>
-          
-          
-          <li class="divider"></li>
           <li><label>JavaScript</label></li>
           
-          <li><a title="类型转换" href="16089553577924.html">类型转换</a></li>
+          <li><a title="通过函数声明和调用掌握函数的 this 值" href="16107633205948.html">通过函数声明和调用掌握函数的 this 值</a></li>
           
-          <li><a title="通过变量作用域深入了解undefined" href="16088182648987.html">通过变量作用域深入了解undefined</a></li>
+          <li><a title="通过变量作用域深入了解 undefined" href="16088182648987.html">通过变量作用域深入了解 undefined</a></li>
           
-          <li><a title="重新认识下熟悉的浏览器" href="16076922632055.html">重新认识下熟悉的浏览器</a></li>
-          
-          <li><a title="JavaScript类型转换" href="16087263047458.html">JavaScript类型转换</a></li>
-          
-          
-          <li class="divider"></li>
-          <li><label>重学前端--学习笔记</label></li>
-          
-          <li><a title="JavaScript全部的对象分类" href="16085442753431.html">JavaScript全部的对象分类</a></li>
-          
-          <li><a title="JavaScript的面向对象" href="16085441443213.html">JavaScript的面向对象</a></li>
-          
-          <li><a title="JavaScript中的类型" href="16083847578374.html">JavaScript中的类型</a></li>
-          
-          <li><a title="JavaScript原型和原型链" href="16080322533005.html">JavaScript原型和原型链</a></li>
-          
-          
-          <li class="divider"></li>
-          <li><label>Angular</label></li>
-          
-          <li><a title="angular mock的使用" href="16073237309370.html">angular mock的使用</a></li>
-          
-          
-          <li class="divider"></li>
-          <li><label>英语课</label></li>
-          
-          <li><a title="chapter 3 Travaling" href="16092359109167.html">chapter 3 Travaling</a></li>
-          
-          <li><a title="chapter 2 Dining" href="16089552578971.html">chapter 2 Dining</a></li>
-          
-          <li><a title="Chapter 1 Shopping" href="16089552264437.html">Chapter 1 Shopping</a></li>
+          <li><a title="JavaScript 原型和原型链" href="16080322533005.html">JavaScript 原型和原型链</a></li>
           
           
         </ul>
@@ -110,9 +66,9 @@
           <div class="large-9 medium-9 columns">
   <div class="markdown-body">
   <div class="markdown-inside">
-    <h1>JavaScript原型和原型链</h1>
+    <h1>JavaScript 原型和原型链</h1>
     <time class="article-date" datetime="2020-12-15T19:37:33+08:00">发布于2020/12/15</time>
-    <p>今天刚开始学习【重学前端】的课程，讲到装箱转换的时候提到了函数的<code>call</code>方法，而<code>call</code>方法在我的印象中就只有<code>call</code>约等于<code>apply</code>，然后就再没有然后了。在我想深入了解下<code>call</code>方法的时候又发现了有人在同时讲解原型，而于此同时我看到了知乎上的一个贴<a href="https://www.zhihu.com/question/60165921">面试一个5年的前端，却连原型链也搞不清楚，满口都是Vue，React之类的实现，这样的人该用吗？</a>，这我不看内容我就惊呆了，这标题不就是在说我吗。带着各种心情赶紧学习下到底什么是原型和原型链。</p>
+    <p>今天刚开始学习【重学前端】的课程，讲到装箱转换的时候提到了函数的 call 方法，而 call 方法在我的印象中就只有 call 约等于 apply ，然后就再没有然后了。在我想深入了解下 call 方法的时候又发现了有人在同时讲解原型，而于此同时我看到了知乎上的一个贴<a href="https://www.zhihu.com/question/60165921">面试一个5年的前端，却连原型链也搞不清楚，满口都是Vue，React之类的实现，这样的人该用吗？</a>，这我不看内容我就惊呆了，这标题不就是在说我吗。带着各种心情赶紧学习下到底什么是原型和原型链。</p>
 
 <h2 id="toc_0">原型</h2>
 
@@ -127,8 +83,8 @@
 
 <h3 id="toc_1">构造函数视角</h3>
 
-<p>函数可以用来做构造器，也就是constructor，而构造器也可以称为类。<br/>
-通过构造器<code>Apple</code>来创建一个对象对象<code>apple</code>。</p>
+<p>函数可以用来做构造器，也就是 constructor，而构造器也可以称为类。<br/>
+通过构造器 Apple 来创建一个对象对象 apple。</p>
 
 <p><img src="media/16080322533005/16080397593797.jpg" alt="" style="width:198px;"/></p>
 
@@ -136,30 +92,29 @@
 
 <hr/>
 
-<p><strong>构造函数有一个属性叫做propotype,他指向了原型对象。</strong></p>
+<p><strong>构造函数有一个属性叫做 propotype，他指向了原型对象。</strong></p>
 
 <p><img src="media/16080322533005/16080405364424.jpg" alt="" style="width:299px;"/></p>
 
-<p>这里的原型对象有些大神也写做<code>[[propotype]]</code>，这里我猜测是为了区分propotype的属性。</p>
+<p>这里的原型对象写做 [[propotype]]，这里我猜测是为了区分propotype的属性。</p>
 
 <h3 id="toc_2">原型对象视角</h3>
 
-<p><strong>原型对象的constructor属性指向了构造函数</strong>。</p>
+<p><strong>原型对象的 constructor 属性指向了构造函数</strong>。</p>
 
 <p><img src="media/16080322533005/16080407735350.jpg" alt="" style="width:382px;"/></p>
 
-<p>这里用构造器的原型对象的constructor方法来创建一个<code>badApple</code>，会发现它和<code>apple</code>的类型是相等的。</p>
+<p>这里用构造器的原型对象的 constructor 方法来创建一个 badApple ，会发现它和 apple 的类型是相等的。</p>
 
 <h3 id="toc_3">实例对象视角</h3>
 
-<p>对象也有一个属性__propo__，这是一个隐式属性，<strong>对象的__propo__指向了他的构造函数的原型对象。</strong><br/>
-也就是说<code>Apple</code>的propotype属性和<code>apple</code>、<code>badApple</code>的__propo__指向了同一个地址。</p>
+<p>对象也有一个属性 __propo__，这是一个隐式属性，<strong>对象的 __propo__ 指向了他的构造函数的原型对象。</strong>也就是说 Apple 的 propotype 属性和 apple、badApple 的 __propo__ 指向了同一个地址。</p>
 
 <p><img src="media/16080322533005/16080419126552.jpg" alt="" style="width:318px;"/></p>
 
 <h3 id="toc_4">由函数引出原型链</h3>
 
-<p>函数是JS中的第一类对象，在Javascript中，对象所拥有的函数也同样拥有，也就是说构造函数<code>Apple</code>也同样会有__propo__属性去指向他的父类的原型对象，为了理清这乱七八糟的关系，就有了下面【对象-函数-构造函数-实例对象】这样的一个关系图，也就是原型链图。</p>
+<p>函数是 JS 中的第一类对象，在 Javascript 中，对象所拥有的函数也同样拥有，也就是说构造函数 Apple 也同样会有 __propo__ 属性去指向他的父类的原型对象，为了理清这乱七八糟的关系，就有了下面“对象-函数-构造函数-实例对象”这样的一个关系图，也就是原型链图。</p>
 
 <h2 id="toc_5">原型链</h2>
 
@@ -168,14 +123,15 @@
 <p>这张图理解了上面的内容之后就感觉容易多了，总结一下有以下几点需要注意。</p>
 
 <ul>
-<li>任何函数的父类都是Function函数，也就是任何函数的__proto__指向Function的原型对象,这里同样包含了Function函数自己。</li>
-<li>Object函数的__proto__指向Function的原型对象
-<code>TODO</code></li>
+<li>任何函数的父类都是 Function 构造函数，也就是任何函数的 __proto__ 指向 Function.prototype，这里同样包含了 Function 构造函数自己。</li>
+<li>Object 构造函数它也是函数，它的的 __proto__ 也指向 Function.prototype。</li>
+<li>Function.prototype 的 __proto__ 指向 Object.prototype，这也就是为什么说函数也是对象。</li>
+<li>Object.prototype 的 __proto__ 是 null。</li>
 </ul>
 
-<h2 id="toc_6"> ES6中的类</h2>
+<h2 id="toc_6"> ES6 中的类</h2>
 
-<p>类的写法也是由原型运行时来承载的，逻辑上JavaScript认为每个类是有共同原型的一组对象，类中定义的方法和属性会被卸载原型对象之上。此外最重要的是类提供了继承能力。</p>
+<p>类的写法也是由原型运行时来承载的，逻辑上 JavaScript 认为每个类是有共同原型的一组对象，类中定义的方法和属性会被卸载原型对象之上。此外最重要的是类提供了继承能力。</p>
 
 <pre><code class="language-javascript">class Animal { 
   constructor(name) {
@@ -201,19 +157,15 @@ d.speak(); // Mitzie barks.
 <p>以上代码创造了 Animal 类，并且通过 extends 关键字让 Dog 继承了它，展示了最终调用子类的 speak 方法获取了父类的 name。比起早期的原型模拟方式，使用 extends 关键字自动设置了 constructor，并且会自动调用父类的构造函数，这是一种更少坑的设计。所以当我们使用类的思想来设计代码时，应该尽量使用 class 来声明类，而不是用旧语法，拿函数来模拟对象。</p>
 
 <blockquote>
-<p>super关键字用于访问和调用一个对象的父对象上的函数。<br/>
+<p>super 关键字用于访问和调用一个对象的父对象上的函数。<br/>
 在构造函数中使用时，super关键字将单独出现，并且必须在使用this关键字之前使用。</p>
+</blockquote>
 
 <pre><code class="language-javascript">super([arguments]);
 // 调用 父对象/父类 的构造函数
 super.functionOnParent([arguments]);
 // 调用 父对象/父类 上的方法
 </code></pre>
-</blockquote>
-
-<h2 id="toc_7">最后</h2>
-
-<p>在我继续学习这个课程之后，发现老师讲了什么是原型。。。尴尬！先过一遍全部课程，再回过头来自己输出一遍。</p>
 
   </div>
 </div>
@@ -223,15 +175,13 @@ super.functionOnParent([arguments]);
   <div class="large-6 columns">
     <div class="text-left" style="padding:15px 0px;">
       
-      <a href="16083847578374.html" title="Previous Post: JavaScript中的类型">&laquo;
-        JavaScript中的类型</a>
+      <a href="16088182648987.html" title="Previous Post: 通过变量作用域深入了解 undefined">&laquo;
+        通过变量作用域深入了解 undefined</a>
       
     </div>
   </div>
   <div class="large-6 columns">
     <div class="text-right" style="padding:15px 0px;">
-      
-      <a href="16073237309370.html" title="Next Post: angular mock的使用">angular mock的使用 &raquo;</a>
       
     </div>
   </div>
@@ -265,81 +215,18 @@ super.functionOnParent([arguments]);
                     </li>
                     
                     
-                    <li class="side-title"><span>JavaScript30</span></li>
-                    
-                    <li>
-                      <a title="01 JavaScript Drum Kit" href="16089052254448.html">01 JavaScript Drum Kit</a>
-                    </li>
-                    
-                    <li>
-                      <a title="01 JavaScript Drum Kit 中文指南" href="16089048368062.html">01 JavaScript Drum Kit 中文指南</a>
-                    </li>
-                    
-                    
-                    <li class="side-title"><span>杂念</span></li>
-                    
-                    <li>
-                      <a title="努力了三个月的总结" href="16084764191221.html">努力了三个月的总结</a>
-                    </li>
-                    
-                    
                     <li class="side-title"><span>JavaScript</span></li>
                     
                     <li>
-                      <a title="类型转换" href="16089553577924.html">类型转换</a>
+                      <a title="通过函数声明和调用掌握函数的 this 值" href="16107633205948.html">通过函数声明和调用掌握函数的 this 值</a>
                     </li>
                     
                     <li>
-                      <a title="通过变量作用域深入了解undefined" href="16088182648987.html">通过变量作用域深入了解undefined</a>
+                      <a title="通过变量作用域深入了解 undefined" href="16088182648987.html">通过变量作用域深入了解 undefined</a>
                     </li>
                     
                     <li>
-                      <a title="重新认识下熟悉的浏览器" href="16076922632055.html">重新认识下熟悉的浏览器</a>
-                    </li>
-                    
-                    <li>
-                      <a title="JavaScript类型转换" href="16087263047458.html">JavaScript类型转换</a>
-                    </li>
-                    
-                    
-                    <li class="side-title"><span>重学前端--学习笔记</span></li>
-                    
-                    <li>
-                      <a title="JavaScript全部的对象分类" href="16085442753431.html">JavaScript全部的对象分类</a>
-                    </li>
-                    
-                    <li>
-                      <a title="JavaScript的面向对象" href="16085441443213.html">JavaScript的面向对象</a>
-                    </li>
-                    
-                    <li>
-                      <a title="JavaScript中的类型" href="16083847578374.html">JavaScript中的类型</a>
-                    </li>
-                    
-                    <li>
-                      <a title="JavaScript原型和原型链" href="16080322533005.html">JavaScript原型和原型链</a>
-                    </li>
-                    
-                    
-                    <li class="side-title"><span>Angular</span></li>
-                    
-                    <li>
-                      <a title="angular mock的使用" href="16073237309370.html">angular mock的使用</a>
-                    </li>
-                    
-                    
-                    <li class="side-title"><span>英语课</span></li>
-                    
-                    <li>
-                      <a title="chapter 3 Travaling" href="16092359109167.html">chapter 3 Travaling</a>
-                    </li>
-                    
-                    <li>
-                      <a title="chapter 2 Dining" href="16089552578971.html">chapter 2 Dining</a>
-                    </li>
-                    
-                    <li>
-                      <a title="Chapter 1 Shopping" href="16089552264437.html">Chapter 1 Shopping</a>
+                      <a title="JavaScript 原型和原型链" href="16080322533005.html">JavaScript 原型和原型链</a>
                     </li>
                     
                     

@@ -49,57 +49,13 @@
           
           
           <li class="divider"></li>
-          <li><label>JavaScript30</label></li>
-          
-          <li><a title="01 JavaScript Drum Kit" href="16089052254448.html">01 JavaScript Drum Kit</a></li>
-          
-          <li><a title="01 JavaScript Drum Kit 中文指南" href="16089048368062.html">01 JavaScript Drum Kit 中文指南</a></li>
-          
-          
-          <li class="divider"></li>
-          <li><label>杂念</label></li>
-          
-          <li><a title="努力了三个月的总结" href="16084764191221.html">努力了三个月的总结</a></li>
-          
-          
-          <li class="divider"></li>
           <li><label>JavaScript</label></li>
           
-          <li><a title="类型转换" href="16089553577924.html">类型转换</a></li>
+          <li><a title="通过函数声明和调用掌握函数的 this 值" href="16107633205948.html">通过函数声明和调用掌握函数的 this 值</a></li>
           
-          <li><a title="通过变量作用域深入了解undefined" href="16088182648987.html">通过变量作用域深入了解undefined</a></li>
+          <li><a title="通过变量作用域深入了解 undefined" href="16088182648987.html">通过变量作用域深入了解 undefined</a></li>
           
-          <li><a title="重新认识下熟悉的浏览器" href="16076922632055.html">重新认识下熟悉的浏览器</a></li>
-          
-          <li><a title="JavaScript类型转换" href="16087263047458.html">JavaScript类型转换</a></li>
-          
-          
-          <li class="divider"></li>
-          <li><label>重学前端--学习笔记</label></li>
-          
-          <li><a title="JavaScript全部的对象分类" href="16085442753431.html">JavaScript全部的对象分类</a></li>
-          
-          <li><a title="JavaScript的面向对象" href="16085441443213.html">JavaScript的面向对象</a></li>
-          
-          <li><a title="JavaScript中的类型" href="16083847578374.html">JavaScript中的类型</a></li>
-          
-          <li><a title="JavaScript原型和原型链" href="16080322533005.html">JavaScript原型和原型链</a></li>
-          
-          
-          <li class="divider"></li>
-          <li><label>Angular</label></li>
-          
-          <li><a title="angular mock的使用" href="16073237309370.html">angular mock的使用</a></li>
-          
-          
-          <li class="divider"></li>
-          <li><label>英语课</label></li>
-          
-          <li><a title="chapter 3 Travaling" href="16092359109167.html">chapter 3 Travaling</a></li>
-          
-          <li><a title="chapter 2 Dining" href="16089552578971.html">chapter 2 Dining</a></li>
-          
-          <li><a title="Chapter 1 Shopping" href="16089552264437.html">Chapter 1 Shopping</a></li>
+          <li><a title="JavaScript 原型和原型链" href="16080322533005.html">JavaScript 原型和原型链</a></li>
           
           
         </ul>
@@ -222,11 +178,7 @@ let tensquared = (function(x) {return x*x;}(10));
 
 <p>注意，当写一个箭头函数时，函数参数和箭头之间不能换行。否则，可能会直接在赋值后中止，就像 <code>const polynomial = x</code>，因为它本身是一个语法上合法的赋值语句。</p>
 
-<p>Also, if the body of your arrow function is a single return statement but the expression to be returned is an object literal, then you have to put the object literal inside parentheses to avoid syntactic ambiguity between the curly braces of a function body and the curly braces of an object literal:</p>
-
-<blockquote>
 <p>此外，如果箭头函数体是一个单一的 return 语句，而且他返回的是一个对象字面量，那必须将对象字面量用圆括号包起来，避免将对象字面量的大括号误解成函数体的大括号。</p>
-</blockquote>
 
 <pre><code class="language-javascript">const f = x =&gt; { return { value: x }; };  // Good: f() returns an object
 const g = x =&gt; ({ value: x });            // Good: g() returns an object
@@ -1102,7 +1054,7 @@ g(3)     // =&gt; 6: this.x is bound to 1, y is bound to 2 and z is 3
 
 <p>和所有的 JavaScript 对象一样，函数也有 toString() 方法，ECMAScript 规范规定这个方法返回一个字符串，这个字符串和函数声明语句的语法相关。实际上，大多数（非全部）的 toString() 方法的实现都返回函数的完整源码。内置函数往往返回一个类似”[native code]”的字符串作为函数体。</p>
 
-<h3 id="toc_32">8.7.7 The Function() Constructor</h3>
+<h3 id="toc_32">8.7.7 Function() 构造函数</h3>
 
 <p>因为函数是对象，有一个 Function() 构造函数可以用来创建新的函数：</p>
 
@@ -1497,12 +1449,15 @@ factorial(5)      // =&gt; 120: also caches values for 4, 3, 2 and 1.
   <div class="large-6 columns">
     <div class="text-left" style="padding:15px 0px;">
       
+      <a href="16107633205948.html" title="Previous Post: 通过函数声明和调用掌握函数的 this 值">&laquo;
+        通过函数声明和调用掌握函数的 this 值</a>
+      
     </div>
   </div>
   <div class="large-6 columns">
     <div class="text-right" style="padding:15px 0px;">
       
-      <a href="16092359109167.html" title="Next Post: chapter 3 Travaling">chapter 3 Travaling &raquo;</a>
+      <a href="16088182648987.html" title="Next Post: 通过变量作用域深入了解 undefined">通过变量作用域深入了解 undefined &raquo;</a>
       
     </div>
   </div>
@@ -1536,81 +1491,18 @@ factorial(5)      // =&gt; 120: also caches values for 4, 3, 2 and 1.
                     </li>
                     
                     
-                    <li class="side-title"><span>JavaScript30</span></li>
-                    
-                    <li>
-                      <a title="01 JavaScript Drum Kit" href="16089052254448.html">01 JavaScript Drum Kit</a>
-                    </li>
-                    
-                    <li>
-                      <a title="01 JavaScript Drum Kit 中文指南" href="16089048368062.html">01 JavaScript Drum Kit 中文指南</a>
-                    </li>
-                    
-                    
-                    <li class="side-title"><span>杂念</span></li>
-                    
-                    <li>
-                      <a title="努力了三个月的总结" href="16084764191221.html">努力了三个月的总结</a>
-                    </li>
-                    
-                    
                     <li class="side-title"><span>JavaScript</span></li>
                     
                     <li>
-                      <a title="类型转换" href="16089553577924.html">类型转换</a>
+                      <a title="通过函数声明和调用掌握函数的 this 值" href="16107633205948.html">通过函数声明和调用掌握函数的 this 值</a>
                     </li>
                     
                     <li>
-                      <a title="通过变量作用域深入了解undefined" href="16088182648987.html">通过变量作用域深入了解undefined</a>
+                      <a title="通过变量作用域深入了解 undefined" href="16088182648987.html">通过变量作用域深入了解 undefined</a>
                     </li>
                     
                     <li>
-                      <a title="重新认识下熟悉的浏览器" href="16076922632055.html">重新认识下熟悉的浏览器</a>
-                    </li>
-                    
-                    <li>
-                      <a title="JavaScript类型转换" href="16087263047458.html">JavaScript类型转换</a>
-                    </li>
-                    
-                    
-                    <li class="side-title"><span>重学前端--学习笔记</span></li>
-                    
-                    <li>
-                      <a title="JavaScript全部的对象分类" href="16085442753431.html">JavaScript全部的对象分类</a>
-                    </li>
-                    
-                    <li>
-                      <a title="JavaScript的面向对象" href="16085441443213.html">JavaScript的面向对象</a>
-                    </li>
-                    
-                    <li>
-                      <a title="JavaScript中的类型" href="16083847578374.html">JavaScript中的类型</a>
-                    </li>
-                    
-                    <li>
-                      <a title="JavaScript原型和原型链" href="16080322533005.html">JavaScript原型和原型链</a>
-                    </li>
-                    
-                    
-                    <li class="side-title"><span>Angular</span></li>
-                    
-                    <li>
-                      <a title="angular mock的使用" href="16073237309370.html">angular mock的使用</a>
-                    </li>
-                    
-                    
-                    <li class="side-title"><span>英语课</span></li>
-                    
-                    <li>
-                      <a title="chapter 3 Travaling" href="16092359109167.html">chapter 3 Travaling</a>
-                    </li>
-                    
-                    <li>
-                      <a title="chapter 2 Dining" href="16089552578971.html">chapter 2 Dining</a>
-                    </li>
-                    
-                    <li>
-                      <a title="Chapter 1 Shopping" href="16089552264437.html">Chapter 1 Shopping</a>
+                      <a title="JavaScript 原型和原型链" href="16080322533005.html">JavaScript 原型和原型链</a>
                     </li>
                     
                     
