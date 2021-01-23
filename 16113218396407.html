@@ -470,7 +470,7 @@ target  // =&gt; {x: 1, y: 2, z: 3}
 
 <p>Object.assign() 通过普通属性的 get 和 set 操作复制属性，因此，如果源对象具有 getter 方法或目标对象具有 setter 方法，则将在复制期间调用它们，但不会复制方法本身。</p>
 
-<p>思考将属性从一个对象分配到另一个对象，当有一个对象定义许多属性的默认值，希望将这些默认属性复制到另一个对象中,并且目标对象中不存在该名称的属性，使用 Object.assign() 不会得到想要的结果：</p>
+<p>看这样一个场景，有一个对象定义许多属性的默认值，希望将这些默认属性中不存在于目标对象中的属性复制到目标对象中，使用 Object.assign() 不会得到想要的结果：</p>
 
 <pre><code class="language-javascript">Object.assign(o, defaults);  // overwrites everything in o with defaults
 </code></pre>
