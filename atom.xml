@@ -4,7 +4,7 @@
   <title><![CDATA[十]]></title>
   <link href="blog.2019919.top/atom.xml" rel="self"/>
   <link href="blog.2019919.top/"/>
-  <updated>2021-02-04T19:39:36+08:00</updated>
+  <updated>2021-02-05T07:40:06+08:00</updated>
   <id>blog.2019919.top/</id>
   <author>
     <name><![CDATA[]]></name>
@@ -14,6 +14,1596 @@
 
   
   <entry>
+    <title type="html"><![CDATA[JavaScript 深浅拷贝]]></title>
+    <link href="blog.2019919.top/16124460113427.html"/>
+    <updated>2021-02-04T21:40:11+08:00</updated>
+    <id>blog.2019919.top/16124460113427.html</id>
+    <content type="html"><![CDATA[
+<p>在数组章节提到数组的展开运算符时，作者举例说明展开运算符可以进行拷贝，原为如下：</p>
+
+<blockquote>
+<p>The spread operator is a convenient way to create a (shallow) copy of an array:</p>
+</blockquote>
+
+<pre><code class="language-javascript">let original = [1,2,3];
+let copy = [...original];
+copy[0] = 0;  // Modifying the copy does not change the original
+original[0]   // =&gt; 1
+</code></pre>
+
+<p>copy 对象为 original 展开后的数组字面量，但是拷贝后的数组修改了序列为 0 的元素的值，但是被拷贝数组中序列为 0 的元素的值并没有被改变，作者称这样的拷贝为浅拷贝，</p>
+
+<p>在我的印象中深浅拷贝是如下形式的：</p>
+
+<ul>
+<li>浅拷贝（shallowCopy）只是增加了一个指针指向已存在的内存地址，在修改了拷贝元，拷贝先也会跟着改变。</li>
+<li>深拷贝（deepCopy）是增加了一个指针并且申请了一个新的内存，使这个增加的指针指向这个新的内存，拷贝元和拷贝之间脱离了关系。</li>
+</ul>
+
+<p>但是这个实例中，作者只测试了拷贝先的修改，我又做了如下测试：</p>
+
+<pre><code class="language-javascript">let original = [1,2,3];
+let copy = [...original];
+original[0] = 10;
+copy[0]  // =&gt; 1
+</code></pre>
+
+<p>就是说在修改被拷贝数组时，拷贝后的数组也不跟随改变。<br/>
+所以作者的浅拷贝指的是什么呢？<br/>
+问题需要最根溯源，从基础来解决问题，下面就先来回溯下数据类型。</p>
+
+<h2 id="toc_0">JavaScript 数据类型</h2>
+
+<p>第一种是基本类型，其英文后面加个 Value 构成了 Primitive Value，这就是我们常说的原始值。如下是最新 MDN 所描述的七种基本类型：</p>
+
+<blockquote>
+<p>In JavaScript, a primitive (primitive value, primitive data type) is data that is not an object and has no methods. There are 7 primitive data types: string, number, bigint, boolean, undefined, symbol, and null.</p>
+
+<p>Most of the time, a primitive value is represented directly at the lowest level of the language implementation.</p>
+
+<p>All primitives are <strong>immutable</strong>, i.e., they cannot be altered. It is important not to confuse a primitive itself with a variable assigned a primitive value. The variable may be reassigned a new value, but the existing value can not be changed in the ways that objects, arrays, and functions can be altered.</p>
+</blockquote>
+
+<p>链接：<a href="https://developer.mozilla.org/en-US/docs/Glossary/Primitive">MDN Primitive</a></p>
+
+<pre><code class="language-javascript">let x = &#39;x&#39;;
+let y = x;
+x = &#39;y&#39;;
+y;  // =&gt; &#39;x&#39;
+</code></pre>
+
+<p>基本类型的特性就是不可改变，如上代码，x 是基本数据类型字符串，将 x 赋值给 y 实际上是给 y 创建了一个字符串 &#39;x&#39; 的副本，而这时候我们去修改了 x，y 不会跟随改变。</p>
+
+<p>第二种是引用类型<br/>
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures</a></p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[函数中的展开运算符和解构]]></title>
+    <link href="blog.2019919.top/16108495213063.html"/>
+    <updated>2021-01-17T10:12:01+08:00</updated>
+    <id>blog.2019919.top/16108495213063.html</id>
+    <content type="html"><![CDATA[
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[通过函数声明和调用掌握函数的 this 值]]></title>
+    <link href="blog.2019919.top/16107633205948.html"/>
+    <updated>2021-01-16T10:15:20+08:00</updated>
+    <id>blog.2019919.top/16107633205948.html</id>
+    <content type="html"><![CDATA[
+<p>函数的 this 对于基础薄弱的前端程序员一直是一个比较头疼的问题，在对 ES6 的模糊和对 ES6 之前的函数作用域不理解双重打击下，往往无法区分 this 值到底是什么，因而在编写程序时常常需要通过测试当前作用域的 this 是什么，再去使用，甚至是某些公司严格规定哪种方式去实现。</p>
+
+<p>细细的看完了权威指南的第七版受益颇多，但是作者并没有拿出一个章节专门将相关内容进行汇总，这里就通过函数的声明和调用来总结下函数 this 值的几种情况。</p>
+
+<h2 id="toc_0"> 函数定义</h2>
+
+<p>函数的定义有多种方式来适应不同的使用场景：</p>
+
+<ul>
+<li>函数声明语句</li>
+<li>函数表达式</li>
+<li>箭头函数</li>
+<li>嵌套函数</li>
+<li>应用函数的构造函数 Function()</li>
+</ul>
+
+<h3 id="toc_1"> 函数声明语句</h3>
+
+<p>与大多数声明语句一样，以关键字 + 名称的形式来进行声明，函数用关键字 function 来声明：</p>
+
+<pre><code class="language-javascript">function testOutPut(){
+    console.log(&#39;Hello world!&#39;);        
+}
+</code></pre>
+
+<p>函数声明语句是函数名变成一个变量，这个变量的值是函数本身。这里实际上是声明了一个 testOutPut 变量，并讲函数对象赋值给 testOutPut。在 JavaScript 的运行时中，函数对象创建于该函数所在作用域的代码开始执行之前，也就是说，在同一个上下文中，可以先执行函数调用再进行函数语句声明。只是第一个函数作为值的概念的应用场景。</p>
+
+<h3 id="toc_2"> 函数表达式</h3>
+
+<p>函数表达式是一个赋值语句，将一个函数赋值给一个变量或常量。感觉函数表达式跟函数声明语句的运行时一样，但是如果先进行函数调用再进行函数表达式来定义函数将会异常。因为函数表达式在没有执行前并没有将函数赋值给变量，所以它也就不能被引用。</p>
+
+<pre><code class="language-javascript">beforeDefined();
+let beforeDefined = function(){console.log(1);}
+// Uncaught ReferenceError: beforeDefined is not defined
+</code></pre>
+
+<p>函数表达式的函数名称是可选项，如果给函数表达式添加一个函数名，那这个函数的<em>局部函数作用域内</em>会包含该属性的函数名的对象，其值绑定的是该函数：</p>
+
+<pre><code class="language-javascript">const f = function fact(x) {
+    if (x &lt;= 1) return 1;
+    else return x*fact(x-1);
+};
+</code></pre>
+
+<p>只有在函数局部作用域内会有这个对象，有点闭包的感觉。</p>
+
+<h3 id="toc_3"> 箭头函数</h3>
+
+<p>箭头函数是 ES6 的新特性，在实际生产中非常常用。它支持很多简洁语法：</p>
+
+<pre><code class="language-javascript">const sum = (x, y) =&gt; { return x + y; };
+const sum = (x, y) =&gt; x + y;
+const polynomial = x =&gt; x*x + 2*x + 3;
+const constantFunc = () =&gt; 42;
+</code></pre>
+
+<p>注意参数和箭头之间不能换行，否则会引起歧义。<br/>
+除此之外，它最大的特性就是它继承定义它环境的 this 值，我理解添加箭头函数的目的就是为了解决方法的嵌套函数 this 值为全局对象（严格模式下是 undefined）的缺陷：</p>
+
+<pre><code class="language-javascript">let o = {
+    a:1,
+    m:function(){
+        let self = this;
+        console.log(this === o);
+        f();
+        function f(){
+            console.log(this === o);
+            console.log(self === o);
+            console.log(this);
+        }
+    }
+}
+o.m();
+// true
+// flase
+// true
+// Window{...}
+</code></pre>
+
+<p>在 ES6 之前，我们需要通过闭包将 this 值保存在变量中使用，而有了箭头函数，可以直接继承 m 方法的 this 值：</p>
+
+<pre><code class="language-javascript">o = {
+    a:1,
+    m:function(){
+        let self = this;
+        console.log(this === o);
+        const f = () =&gt; {
+            console.log(this === o);
+            console.log(self === o);
+            console.log(this);
+        }
+        f();
+    }
+}
+o.m();
+// true
+// true
+// true
+// {a: 1, m: ƒ}
+</code></pre>
+
+<h3 id="toc_4"> 嵌套函数</h3>
+
+<p>函数可以嵌套在其他函数内。嵌套函数可以访问包含它们函数的变量和参数（闭包）：</p>
+
+<pre><code class="language-javascript">function first(){
+    let strFirst = &quot;first&quot;;
+    second();
+    function second(){
+        let strSecond = &quot;second&quot;;
+        third();
+        function third(){
+            console.log(strFirst);
+            console.log(strSecond);
+        }
+    }
+}
+first();
+// first
+// second
+</code></pre>
+
+<h3 id="toc_5"> Function() 构造函数创建函数</h3>
+
+<p>Function() 函数的实参都是字符串，最后一个实参是函数体。</p>
+
+<pre><code class="language-javascript">const f = new Function(&quot;x&quot;, &quot;y&quot;, &quot;return x*y;&quot;);
+</code></pre>
+
+<p>这里想到一个情况，当函数名相同时是否会报错：</p>
+
+<pre><code class="language-javascript">const f1 = new Function(&quot;x&quot;, &quot;x&quot;, &quot;return x;&quot;);
+f1(1,2);
+// 2
+</code></pre>
+
+<p>实际情况并没有，再次测试一下直接函数声明语句使用两个相同的参数，也没有报错：</p>
+
+<pre><code class="language-javascript">function f2(x,x,y){return x*y};
+f2(1,2,2);
+// 4
+</code></pre>
+
+<p>这样看实际上跟函数外部用 var 声明的变量在函数中再次声明一个效果：</p>
+
+<pre><code class="language-javascript">var x = 1;
+function test(){let x = 2;console.log(x)};
+console.log(x);
+test();
+// 1
+// 2
+</code></pre>
+
+<p>函数变量声明多个相相同的变量名时，传递的实参值将反复覆盖同名参数。<br/>
+Function() 构造函数非常重要的一点，就是它所创建的函数并不是使用词法作用域，相反，函数体代码的编译类似顶层函数，看书上的一个例子：</p>
+
+<pre><code class="language-javascript">let scope = &quot;global&quot;;
+function constructFunction() {
+    let scope = &quot;local&quot;;
+    return new Function(&quot;return scope&quot;);  // Doesn&#39;t capture local scope!
+}
+constructFunction()(); 
+// &quot;global&quot;
+</code></pre>
+
+<h2 id="toc_6"> 函数调用</h2>
+
+<p>函数调用和方法调用很常见就不再赘述，这里有三种很少使用的调用方式：</p>
+
+<ul>
+<li>构造函数调用</li>
+<li>间接调用</li>
+<li>隐式调用</li>
+</ul>
+
+<h3 id="toc_7"> 构造函数调用</h3>
+
+<pre><code class="language-javascript">function CreatObj(){
+    this[&#39;p&#39;] = &quot;property&quot;;    
+}
+o = new CreatObj();
+// CreatObj {p: &quot;property&quot;}
+</code></pre>
+
+<p>构造函数创建一个新对象，并将这个对象作为它的上下文，也就是说构造函数中的 this 值是新创建的对象。<br/>
+构造函数通常没有 return 语句，当显示的用 return 语句返回一个对象时，构造函数创建的对象将变成它 return 的对象，其他情况当没有返回值或返回一个原始值时，返回值都被忽略，返回它新创建的对象。</p>
+
+<h3 id="toc_8">间接调用</h3>
+
+<p>JavaScript 万物接对象，对象就有自己的属性和方法。同理，函数也是对象，也有自己的方法和属性，而 call() 和 apply() 方法也可以用来间接调用函数。</p>
+
+<h4 id="toc_9">call() 方法</h4>
+
+<p>MDN 中对于 call() 的解释已经很明了了：</p>
+
+<blockquote>
+<p>The call() method calls a function with a given this value and arguments provided individually.</p>
+</blockquote>
+
+<pre><code class="language-javascript">f.call(o, 1, 2);
+</code></pre>
+
+<p>这里不过是将 o 对象作为函数 f 调用的上下文，并传入两个实参 1 和 2 作为实参列表，也就是说它等同与下面的代码：</p>
+
+<pre><code class="language-javascript">o.m = f;
+o.m(1, 2);
+delete o.m;
+</code></pre>
+
+<p>这里注意 delete 语句，目的就是说函数在使用 call 方法时只是临时将 o 作为 f 的上下文并调用。而函数还有个不涉及调用的方法 bind() 它可以返回一个新的函数对象，<code>f.bind(o);</code>，而这个对象将一直绑定 o 为函数 f 的 this 值。</p>
+
+<h4 id="toc_10">apply() 方法</h4>
+
+<blockquote>
+<p>The apply() method calls a function with a given this value, and arguments provided as an array (or an array-like object).</p>
+</blockquote>
+
+<p>不难看出 apply() 和 call() 基本一致，只是实参以数组或者类似数组的对象进行传递。这里对类似数组的对象进行测试：</p>
+
+<pre><code class="language-javascript">function test(...args){
+    console.log(this);
+    for(item in args) console.log(item);
+}
+let o = {a:1};
+let likeArr = {p1:1,p2:2};
+likeArr.length = 2;    
+let unLikeArr = {p1:1,p2:2};
+test.apply(o,likeArr);
+// {a: 1}
+// 0
+// 1
+test.apply(o,unLikeArr);
+// {a: 1}
+</code></pre>
+
+<p>可见有了 length 的对象就被当作是类似数组的对象。</p>
+
+<h4 id="toc_11">this 值</h4>
+
+<p>可见当 call() 和 apply() 调用函数时给函数绑定了一个上下文 this 值，但是箭头函数是个特例，它从它定义的位置的上下文继承 this 值。也就是说当给箭头函数定义的函数使用这两个方法时，第一个参数将被忽略：</p>
+
+<pre><code class="language-javascript">let o = {
+    a: 1,
+    f: function(){
+        const oBind = {b:1};
+        const test = ()=&gt; console.log(this);
+        test.apply(oBind);
+    }
+}
+o.f();
+// {a: 1, f: ƒ}
+</code></pre>
+
+<h3 id="toc_12">隐式调用</h3>
+
+<ul>
+<li>getter 和 setter 方法在获取或者设置它的属性时可能被隐式调用。</li>
+<li>在对象进行字符串或者数值型和 BigInt 类型转换时，会隐式调用 toString() 和 valueOf() 方法。</li>
+<li>循环可迭代对象的元素时会产生很多方法调用。</li>
+<li>模板字符串可以调用函数。</li>
+<li>Proxy 对象的任何一个操作都会导致函数调用。</li>
+</ul>
+
+<h2 id="toc_13"> 关于函数 this 值的总结</h2>
+
+<p>函数 this 值有以下几种情况：</p>
+
+<ul>
+<li>函数声明语句和函数表达式定义的函数，在非严格模式下 this 值永远是 global，严格模式下是 undefined。</li>
+<li>apply() call() bind() 方法用在非箭头函数时，第一个参数作为函数运行时的 this 值。</li>
+<li>箭头函数的 this 值永远继承于它所定义的位置的 this 值。</li>
+<li>对象的方法中 this 值是该对象的引用，嵌套在该对象中的函数不为方法，所以遵循函数的 this 值（global 或者 undefined）。</li>
+<li>构造函数的 this 值是新创建的对象。</li>
+</ul>
+
+<p>闭包只是参数和变量作用域的引用，与 this 值无关。</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[通过变量作用域深入了解 undefined]]></title>
+    <link href="blog.2019919.top/16088182648987.html"/>
+    <updated>2020-12-24T21:57:44+08:00</updated>
+    <id>blog.2019919.top/16088182648987.html</id>
+    <content type="html"><![CDATA[
+<p>undefined 是一个变量，它有可能被篡改，所以使用void（0）来代替他，但是在做实验的时候发现虽然给它赋值不报错，取值时候 undefined 却并没有改变。</p>
+
+<pre><code class="language-javascript">    undefined = 0
+    // 0
+    undefined
+    // undefined
+</code></pre>
+
+<p>这回学习到了变量作用域，再结合之前学的对象的属性，深入了解下 undefined 到底什么时候会被篡改。</p>
+
+<h2 id="toc_0">函数作用域和声明提前</h2>
+
+<p>别的语言一般为块级作用域，JavaScript 取而代之使用了函数作用域：变量在声明它们的函数体以及这个函数体嵌套的任意函数体内都是有定义的。</p>
+
+<pre><code class="language-javascript">    var a = function test(o){
+        var i = 0;                          // i在整个函数体内均是有定义的
+        if(typeof o == &quot;object&quot;){
+            var j = 4;                      // j在函数体内是有定义的，不仅仅是在这个代码段内
+            for(var k=0; k &lt; 3; k++){       // k在函数体内是有定义的，不仅仅是在循环内
+                console.log(k);             // 输出数字0～2
+            }
+            console.log(k);                 // k已经定义了，输出3
+        }
+        console.log(k);                     // k已经定义了，输出3
+        console.log(j);                     // j已经定义了，输出4
+    };
+</code></pre>
+
+<p>JavaScript 的这个特性被非正式地称为声明提前（hoisting），即 JavaScript 函数里声明的所有变量（但不涉及赋值）都被“提前”至函数体的顶部。</p>
+
+<pre><code class="language-javascript">    var a = &#39;1&#39;;
+    function f(){
+        console.log(a);
+        var a = &#39;2&#39;;
+        console.log(a);
+    }
+</code></pre>
+
+<p>由于函数作用域的特性，变量 a 的声明被提前到了整个函数体最前面，声明了但是没赋值，所以第一次 console 是 undefined。执行到 var 语句时才被赋值，这应该也是为什么可以一个变量多次 var 声明的原因，后面每一次 var 只是起到了赋值的作用。</p>
+
+<h2 id="toc_1">ES6 块作用域</h2>
+
+<p>ES6 弥补了这这个概念，追加了 let 和 const，也就有了 {} 块作用域的概念，const 用来声明常量，这个就不提了，用上面的例子感受一下 let 和 var 的区别。</p>
+
+<pre><code class="language-javascript">    var a = function test(o){
+        var i = 0;                          // i在整个函数体内均是有定义的
+        if(typeof o == &quot;object&quot;){
+            let j = 4;                      // j在if块内是有定义的
+            for(var k=0; k &lt; 3; k++){       // k在函数体内是有定义的，不仅仅是在循环内
+                console.log(k);             // 输出数字0～2
+                console.log(j);             // j已经定义了，输出4
+            }
+            console.log(k);                 // k已经定义了，输出3
+        }
+        console.log(k);                     // k已经定义了，输出3
+        console.log(j);                     // j在块外，抛出异常Uncaught ReferenceError: j is not defined
+    };
+</code></pre>
+
+<p>let 和 const 只有在块内是被声明的。</p>
+
+<h2 id="toc_2">全局变量的本质</h2>
+
+<p>当声明一个 JavaScript 全局变量时，实际上是定义了全局对象的一个属性。当使用 var 声明一个变量时，创建的这个属性是不可配置的，无法通过 delete 运算符删除。</p>
+
+<pre><code class="language-javascript">    test =1
+    // 1
+    window.test
+    // 1
+    delete test
+    // true
+    window.test
+    // undefined
+    var test = 1
+    // undefined
+    window.test
+    // 1
+    delete test
+    // false
+    window.test
+    // 1
+</code></pre>
+
+<p>可以看到当定义一个全局变量的时候他变成了 window 的属性。<br/>
+JavaScript 可以允许使用 this 关键字来引用全局对象，但是不能引用局部变量中存放的对象。</p>
+
+<pre><code class="language-javascript">    this.test
+    // 1
+</code></pre>
+
+<h2 id="toc_3">深入理解 undefined 的本质</h2>
+
+<p>undefined 明明是个变量为什么赋值后无法使用呢。任何地方都可以直接使用 undefined，那他是一个全局变量一个全局的属性，事实也果然如此。</p>
+
+<pre><code class="language-javascript">    window.undefined == undefined
+    // true
+</code></pre>
+
+<p>而属性分两类，他们的特征如下：</p>
+
+<ul>
+<li>数据属性
+<ul>
+<li>value：就是属性的值。</li>
+<li>writable：决定属性是否能被赋值。</li>
+<li>enumerable：决定 for in 能否枚举该属性。</li>
+<li>configurable：决定该属性能否被删除或者改变特征值。</li>
+</ul></li>
+<li>访问器属性（getter/setter）
+<ul>
+<li>getter：函数或 undefined，在取属性值时被调用。</li>
+<li>setter：函数或 undefined，在设置属性值时被调用。</li>
+<li>enumerable：决定 for in 能否枚举该属性。</li>
+<li>configurable：决定该属性能否被删除或者改变特征值。<br/>
+查看下全局属性 undefined 的属性特征。</li>
+</ul></li>
+</ul>
+
+<pre><code class="language-javascript">    console.log(Object.getOwnPropertyDescriptor(window,&#39;undefined&#39;));
+    // configurable: false
+    // enumerable: false
+    // value: undefined
+    // writable: false
+</code></pre>
+
+<p>writable：false，就是这个原因 undefined 虽然是个全局变量，但是我们赋值之后他并没有被改变。那为什么还需要用 void(0) 来代替 undefined 呢？结合上面的函数作用域再做一个实验。</p>
+
+<pre><code class="language-javascript">    function test() {
+        var undefined = 100; 
+        console.log(undefined);
+        var obj = {a : undefined}; 
+        console.log(Object.getOwnPropertyDescriptor(obj,&#39;a&#39;));
+    }
+    test();
+    // 100
+    // configurable: true
+    // enumerable: true
+    // value: 100
+    // writable: true
+</code></pre>
+
+<p>在函数作用域中，undefined 被从声明并赋值为 100，无论是直接 console 它自己还是去查看 undefined 属性特性都能看出，undefined 变量被修改了。这也就说在函数作用域内 undefined 可以被修改。</p>
+
+<pre><code class="language-javascript">    function test() {
+        const undefined = 100; 
+        console.log(undefined);
+        const obj = {a : undefined}; 
+        console.log(Object.getOwnPropertyDescriptor(obj,&#39;a&#39;));
+        test();
+    }
+    // 100
+    // configurable: true
+    // enumerable: true
+    // value: 100
+    // writable: true
+</code></pre>
+
+<p>块作用域内也一样可以被修改，得出结论 undefined 是一个类似 var 声明一样可以被重复声明的全局属性，而他的属性特性 writable 是 false，所以不能被修改，但是在非全局作用域内，他是可以被篡改的，这时候就要注意用 void (0) 来替代 undefined。</p>
+
+<h2 id="toc_4">作用域链<sup>1</sup></h2>
+
+<p>以书中的角度用对象属性去看作用域链：</p>
+
+<ul>
+<li>JavaScript最顶层的代码，其作用域链只有一个全局对象。</li>
+</ul>
+
+<table>
+    <tr>
+        <th colspan=2>Scope chain</th>
+    </tr>
+    <tr>
+        <td>0</td><td>Global object</td>
+    <tr>
+</table>
+
+<ul>
+<li>不包含嵌套的函数，其作用域两个对象：函数自身的变量对象和全局对象。</li>
+</ul>
+
+<table>
+    <tr>
+        <th colspan=2>Scope chain</th>
+    </tr>
+    <tr>
+        <td>0</td><td>Activation object</td>
+    <tr>
+    <tr>
+        <td>1</td><td>Global object</td>
+    <tr>
+</table>
+
+<blockquote>
+<p>活动对象(activation object)，该对象包含了函数的所有局部变量、命名参数、参数集合以及this，然后此对象会被推入作用域链的前端</p>
+</blockquote>
+
+<ul>
+<li>对于包含了嵌套函数的函数，其作用域包含至少三个对象：自身的变量对象，外层的变量对象（将自身嵌套的函数），全局变量对象。</li>
+</ul>
+
+<table>
+    <tr>
+        <th colspan=2>Scope chain</th>
+    </tr>
+    <tr>
+        <td>0</td><td>Sub activation object</td>
+    <tr>
+    <tr>
+        <td>1</td><td>Activation object</td>
+    <tr>
+    <tr>
+        <td>2</td><td>Global object</td>
+    <tr>
+</table>
+
+<p>作用域链给我的感觉类似原型链，将函数的上下文构成了链表的形式，而方法执行时一层一层往外找，所以为了方便链表从上到下查找属性，所以有了声明提前，链表最顶端为嵌套函数的最里层，链表最底端则是全局变量对象。</p>
+
+<pre><code class="language-javascript">    function test(){
+        var fun1,fun2;
+        for(var i=0;i&lt;2;i++){
+            if(i === 0){
+                fun1 = function(){console.log(&#39;fun1:i=&#39;+i)};
+            }
+            if(i === 1){
+                fun2 = function(){console.log(&#39;fun2:i=&#39;+i)};
+            }
+        };
+        fun1();
+        fun2();
+    }∫
+    test();
+    // fun1:i=2
+    // fun2:i=2
+</code></pre>
+
+<h2 id="toc_5">注</h2>
+
+<ol>
+<li>在看 JavaScript 权威指南第七版第八章时发现作者将原来的作用域链的“链”字都删除了，变成了作用域，但是还没有看前面作用域相关内容，应该有新的理解，在完成翻译后再继续补全。</li>
+</ol>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[第 6 章 对象]]></title>
+    <link href="blog.2019919.top/16113218396407.html"/>
+    <updated>2021-01-22T21:23:59+08:00</updated>
+    <id>blog.2019919.top/16113218396407.html</id>
+    <content type="html"><![CDATA[
+<ul>
+<li>
+<a href="#toc_0">6.1 介绍对象</a>
+</li>
+<li>
+<a href="#toc_1">6.2 创建对象</a>
+<ul>
+<li>
+<a href="#toc_2">6.2.1 对象字面量</a>
+</li>
+<li>
+<a href="#toc_3">6.2.2 用 new 创建对象</a>
+</li>
+<li>
+<a href="#toc_4">6.2.3 原型</a>
+</li>
+<li>
+<a href="#toc_5">6.2.4 Object.create()</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#toc_6">6.3 查询和设置属性</a>
+<ul>
+<li>
+<a href="#toc_7">6.3.1 对象作关联数组</a>
+</li>
+<li>
+<a href="#toc_8">6.3.2 继承</a>
+</li>
+<li>
+<a href="#toc_9">6.3.3 属性访问异常</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#toc_10">6.4 删除属性</a>
+</li>
+<li>
+<a href="#toc_11">6.5 测试属性</a>
+</li>
+<li>
+<a href="#toc_12">6.6 枚举属性</a>
+<ul>
+<li>
+<a href="#toc_13">6.6.1 属性枚举顺序</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#toc_14">6.7 扩展对象</a>
+</li>
+<li>
+<a href="#toc_15">6.8 序列化对象</a>
+</li>
+<li>
+<a href="#toc_16">6.9 对象方法</a>
+<ul>
+<li>
+<a href="#toc_17">6.9.1 toString() 方法</a>
+</li>
+<li>
+<a href="#toc_18">6.9.2 toLocaleString() 方法</a>
+</li>
+<li>
+<a href="#toc_19">6.9.3 valueOf() 方法</a>
+</li>
+<li>
+<a href="#toc_20">6.9.4 toJSON() 方法</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#toc_21">6.10 扩展的对象字面量语法</a>
+<ul>
+<li>
+<a href="#toc_22">6.10.1 速记属性</a>
+</li>
+<li>
+<a href="#toc_23">6.10.2 计算属性名</a>
+</li>
+<li>
+<a href="#toc_24">6.10.3 Symbol 作属性名</a>
+</li>
+<li>
+<a href="#toc_25">6.10.4 展开运算符</a>
+</li>
+<li>
+<a href="#toc_26">6.10.5 速记方法</a>
+</li>
+<li>
+<a href="#toc_27">6.10.6 属性 Getter 和 Setter 方法</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#toc_28">6.11 总结</a>
+</li>
+</ul>
+
+
+<p>对象是 JavaScript 最基本的数据类型，在本章之前的章节中已经多次看到它们。因为对象对 JavaScript 语言非常重要，所以了解它们的工作原理非常重要，本章将提供这些细节。它从对象的正式概述开始，然后深入到关于创建对象以及查询、设置、删除、测试和枚举对象属性的实用部分。在这些以属性为中心的章节之后，将介绍如何扩展、序列化和定义对象上的重要方法。最后，本章以一大段关于 ES6 中的新对象文字语法和该语言的最新版本结尾。</p>
+
+<h2 id="toc_0">6.1 介绍对象</h2>
+
+<p>对象是一个复合值：它聚合了多个值（原始值或其他对象），并允许按名称存储和获取这些值。对象是属性的无序集合，每个属性都有一个名称和一个值。属性名通常是字符串（尽管，正如我们将在 §6.10.3 中看到的，属性名也可以是 Symbol），所以我们可以说对象将字符串映射到值。这种字符串到值的映射有不同的名称——可能已经熟悉这种基本数据结构的别的名称“散列”（hash）、“散列表”（hashtable）、“字典”（dictionary）或“关联数组”（associative array）。然而，对象不仅仅是简单的字符串到值的映射。除了维护自己的属性集，JavaScript 对象还继承另一个对象的属性，即它的“原型”。对象的方法通常是继承的属性，而这种“原型继承”是 JavaScript 的一个关键特性。</p>
+
+<p>JavaScript 对象是动态的——属性通常可以添加和删除——但它们可以用来模拟静态类型语言的静态对象和“结构体”（struct）。有时它们也用做字符串的集 合（忽略名/值对中的值）。</p>
+
+<p>JavaScript 中任何不是字符串、数字、Symbol 或 true、false、null 或 undefined 的值都是对象。即使字符串、数字和布尔值不是对象，它们的行为和不可变对象非常类似。</p>
+
+<p>回想一下 §3.8，对象是可变的，通过引用而不是值来操作。如果变量 x 指向一个对象的引用，执行 <code>y = x;</code> 时，变量 y 也是指向同一对象的引用，而不是该对象的副本。通过变量 y 修改这个对象也会对变量 x 造成影响。</p>
+
+<p>对对象最常见的操作是创建它们并设置、查询、删除、测试和枚举它们的属性。这些基本的操作将在本章的开头部分进行描述。之后的部分将介绍更高级的主题。</p>
+
+<p>属性有一个名称和一个值。属性名可以是任何字符串，包括空字符串（或任何 Symbol），但任何对象都不能有两个同名的属性。值可以是任何 JavaScript 值，也可以是 getter 或 setter 函数（或两者都是）。我们将在 §6.10.6 中学习 getter 和 setter 函数。</p>
+
+<p>有时，能够区分直接在对象上定义的属性和从原型对象继承的属性是很重要的。JavaScript 使用术语“自有属性”来指代非继承属性。</p>
+
+<p>除了名称和值之外，每个属性还有三个属性属性:</p>
+
+<ul>
+<li>writable 属性指定是否可以设置属性的值。</li>
+<li>enumerable 属性指定 for/in 循环是否返回属性名称。</li>
+<li>可配置属性指定该属性是否可以删除，是否可以修改其属性。</li>
+</ul>
+
+<p>许多 JavaScript 的内置对象具有只读、不可枚举或不可配置的属性。但是，在默认情况下，创建的对象的所有属性都是可写、可枚举和可配置的。§14.1 解释了为对象指定非默认属性属性值的技巧。</p>
+
+<h2 id="toc_1">6.2 创建对象</h2>
+
+<p>对象可以用对象字面量创建，也可以用 new 关键字和 Object.create() 函数来创建。接下来的几部分对这些技术一一讲述。</p>
+
+<h3 id="toc_2">6.2.1 对象字面量</h3>
+
+<p>创建对象最简单的方式就是在 JavaScript 代码中使用对象直接量。对象直接量是由若干名/值对组成的映射表，名/值对中间用冒号分隔，名/值对之间用逗号分隔，整个映射表用花括号括起来。属性名可以是 JavaScript 标识符也可以是字符串字面量（包括空字符串）。属性的值可以是任意类型的 JavaScript 表达式；表达式的值（可以是原始值也可以是对象值）变成这个属性的值。下面有一些例子：</p>
+
+<pre><code class="language-javascript">let empty = {};                          // An object with no properties
+let point = { x: 0, y: 0 };              // Two numeric properties
+let p2 = { x: point.x, y: point.y+1 };   // More complex values
+let book = {
+    &quot;main title&quot;: &quot;JavaScript&quot;,          // These property names include spaces,
+    &quot;sub-title&quot;: &quot;The Definitive Guide&quot;, // and hyphens, so use string literals.
+    for: &quot;all audiences&quot;,                // for is reserved, but no quotes.
+    author: {                            // The value of this property is
+        firstname: &quot;David&quot;,              // itself an object.
+        surname: &quot;Flanagan&quot;
+    }
+};
+</code></pre>
+
+<p>对象文本中最后一个属性的尾随逗号是合法的，并且某些编程样式鼓励使用这些尾随逗号，因为，如果之后在对象文本的末尾添加新属性，则不太可能导致语法错误。</p>
+
+<p>对象字面量是一个表达式，它每次计算时都会创建和初始化一个新对象。每次字面量计算时，将计算每个属性的值。这意味着，如果单个对象字面量出现在循环体或重复调用的函数中，它能创建许多个新对象，并且这些对象的属性值可能彼此不同。</p>
+
+<p>此处的简单语法对象字面量，自 JavaScript 最早的版本以来一直是合法的。最新版本引入了许多对象字面量的新的特性，这些特性在 §6.10 中介绍。</p>
+
+<h3 id="toc_3">6.2.2 用 new 创建对象</h3>
+
+<p>new 运算符创建并初始化一个新的对象。new 关键字必须紧跟一个函数调用。这种方式使用函数叫做构造函数调用，其提供初始化一个新创建的对象的服务。在 JavaScript 中，内置类型都包含相对应的构造函数。例如：</p>
+
+<pre><code class="language-javascript">let o = new Object();  // Create an empty object: same as {}.
+let a = new Array();   // Create an empty array: same as [].
+let d = new Date();    // Create a Date object representing the current time
+let r = new Map();     // Create a Map object for key/value mapping
+</code></pre>
+
+<p>除了这些内置构造函数，常常用自定义构造函数来初始化新对象。 第 9 章将详细讲述其中的细节。</p>
+
+<h3 id="toc_4">6.2.3 原型</h3>
+
+<p>在讲述第三种对象创建技术之前，我们应当首先解释一下原型。每一个 JavaScript 对象都和另一个对象相关联。“另一个”对象就是我们熟知的原型，每一个对象都从原型继承属性。</p>
+
+<p>所有通过对象字面量创建的对象都具有同一个原型对象，并可以通过 JavaScript 代码 Object.prototype 获得对原型对象的引用。通过关键字 new 和构造函数调用创建的对象的原型就是构造函数的 prototype 属性的值。因此，同使用 {} 创建对象一样，通过 new Object() 创建的对象也继承自Object.prototype。同样，通过 new Array() 创建的对象的原型就是 Array.prototype，通过 new Date() 创建的对象的原型就是 Date.prototype。当第一次学习 JavaScript 时，这可能令人困惑。请记住：几乎所有对象都有原型，但只有相对较少的对象具有原型属性。正是这些具有原型属性的对象定义了所有其他对象的原型。</p>
+
+<p>没有原型的对象为数不多，Object.prototype就是其中之一：它不继承任何属性。其他原型对象都是普通对象，普通对象都具有原型。大部分的内置构造函数（以及大部分自定义的构造函数）都具有一个继承自 Object.prototype 的原型。例如， Date.prototype 的属性继承自 Object.prototype，因此由 new Date() 创建的 Date 对象的属性同时继承自 Date.prototype 和 Object.prototype。这一系列链接的原型对象就是所谓 “原型链”（prototype chain）。</p>
+
+<p>§6.3.2 节讲述属性继承的工作机制。第 9 章将会更详细地讨论原型和构造函数：包括如何通过编写构造函数定义对象的“类”，以及给构造函数的 prototype 属性赋值可以让其“实例”直接使用这个原型上的属性和方法。并且在 §14.3 我们会学习如何查询（甚至改变）对象的原型。</p>
+
+<h3 id="toc_5">6.2.4 Object.create()</h3>
+
+<p>Object.create() 创建一个新的对象，用第一个实参作为它的原型：</p>
+
+<pre><code class="language-javascript">let o1 = Object.create({x: 1, y: 2});     // o1 inherits properties x and y.
+o1.x + o1.y                               // =&gt; 3
+</code></pre>
+
+<p>可以通过传入参数 null 来创建一个没有原型的新对象，但通过这种方式创建的对象不会继承任何东西，甚至不包括基础方法，比如 toString()，也就是说，它将不能和“+”运算符一起正常工作：</p>
+
+<pre><code class="language-javascript">let o2 = Object.create(null);             // o2 inherits no props or methods.
+</code></pre>
+
+<p>如果想创建一个普通的空对象（像通过 {} 或 new Object() 创建的对象），需要传入 Object.prototype：</p>
+
+<pre><code class="language-javascript">let o3 = Object.create(Object.prototype); // o3 is like {} or new Object().
+</code></pre>
+
+<p>可以通过任意原型创建新对象，这是一个强大的特性，并且本章我们会在很多地方使用 Object.create()。（Object.create() 也可以传入第二个可选实参来描述这个新的对象的属性。第二个实参是一个高级特性，在  §14.1 再进行描述。）</p>
+
+<p>Object.create() 其中一个用途是预防对象无意间（非恶意地）被无法支配的库函数篡改。可以创建一个继承它的对象来传递给函数，而不是将其直接传递给函数。当函数读取继承对象的属性时，实际上读取的是继承来的值。如果给继承对象的属性赋值，则这些属性只会影响这个继承对象自身，而不是原始对象：</p>
+
+<pre><code class="language-javascript">let o = { x: &quot;don&#39;t change this value&quot; };
+library.function(Object.create(o));  // Guard against accidental modifications
+</code></pre>
+
+<p>想要了解其工作原理，需要先知道 JavaScript 中属性的查询和设置机制。这是接下来这节的主题。</p>
+
+<h2 id="toc_6">6.3 查询和设置属性</h2>
+
+<p>§4.4 已经提到，可以通过点（.）或方括号（[]）运算符来获取属性的值。运算符左侧应当是一个表达式，它返回一个对象。如果使用点运算符，右侧必须是一个以属性名称命名的简单标识符。如果使用方括号，方括号内必须是一个计算结果为字符串的表达式，这个字符串就是属性的名字：</p>
+
+<pre><code class="language-javascript">let author = book.author;       // Get the &quot;author&quot; property of the book.
+let name = author.surname;      // Get the &quot;surname&quot; property of the author.
+let title = book[&quot;main title&quot;]; // Get the &quot;main title&quot; property of the book.
+</code></pre>
+
+<p>和查询属性值的写法一样，通过点和方括号也可以创建属性或给属性赋值，但需要将它们放在赋值表达式的左侧：</p>
+
+<pre><code class="language-javascript">book.edition = 7;                   // Create an &quot;edition&quot; property of book.
+book[&quot;main title&quot;] = &quot;ECMAScript&quot;;  // Change the &quot;main title&quot; property.
+</code></pre>
+
+<p>当使用方括号时，我们说方括号内的表达式必须返回字符串。其实更严格地讲，表达式必须返回字符串或返回一个可以转换为字符串的值或 Symbol（§6.10.3）。在第 7 章里有一些例子中的方括号内使用了数字，这情况是非常常用的。</p>
+
+<h3 id="toc_7">6.3.1 对象作关联数组</h3>
+
+<p>上文提到，下面两个表达式有相同的值：</p>
+
+<pre><code class="language-javascript">object.property
+object[&quot;property&quot;]
+</code></pre>
+
+<p>第一种语法使用点运算符和一个标识符，这和 C 和 Java 中访问一个结构体或对象的静态字段非常类似。第二种语法使用方括号和一个字符串，看起来更像数组，只是这个数组元素是通过字符串索引而不是数字索引。这种数组就是我们所说的关联数组（associative array）（也称做散列、映射或字典）。JavaScript 对象都是关联数组，本节将讨论它的重要性。</p>
+
+<p>在 C、C++、Java 和一些强类型语言中，对象只能拥有固定数目的属性，并且这些属性的名称必须提前定义好。由于 JavaScript 是一个弱类型语言，因此不适用这条规则：对象在程序中可以创建任意数量的属性。当使用 . 运算符访问对象的属性时，属性名用一个标识符来表示。标识符必须直接出现在 JavaScript 程序中，它们不是数据类型，所以无法在程序中修改。</p>
+
+<p>另一种方式，当通过 [] 来访问对象的属性时，属性名通过字符串来表示。字符串是 JavaScript 的数据类型，在程序运行时可以修改和创建它们。因此，可以在 JavaScript 中使用下面这种代码：</p>
+
+<pre><code class="language-javascript">let addr = &quot;&quot;;
+for(let i = 0; i &lt; 4; i++) {
+    addr += customer[`address${i}`] + &quot;\n&quot;;
+}
+</code></pre>
+
+<p>这段代码读取 customer 对象的 address0、address1、address2 和 address3 属性，并将它们连接起来。</p>
+
+<p>这个例子主要说明了通过字符串表达式使用数组标记来访问对象属性的灵活性。这段代码也可以通过点运算符来重写，但是一些场景只能使用数组写法来完成。假设你正在写一个程序，这个程序利用网络资源计算用户股票市场投资的当前价值。程序允许用户输入他们拥有的股票名称以及对应的数量。你可以用一个名为 portfolio 的对象来储存这些信息。每一个股票在对象中都有一个属性与之对应。属性名是股票名，属性值是股票持有份额。例如，如果用户持有 IBM 的 50 股，那么 portfolio.ibm 属性的值就为 50。</p>
+
+<p>下面是程序的部分代码，这个函数用来给 portifolio 添加新的股票：</p>
+
+<pre><code class="language-javascript">function addstock(portfolio, stockname, shares) {
+    portfolio[stockname] = shares;
+}
+</code></pre>
+
+<p>由于用户是在程序运行时输入股票名称，因此在之前无法得知这些股票的名称是什么。而由于在写程序的时候不知道属性名称，因此无法通过点运算符（.）来访问对象 portfolio 的属性。但可以使用 [] 运算符，因为它使用字符串值（字符串值是动态的，可以在运行时更改）而不是标识符（标识符是静态的，必须写死在程序中）作为索引对属性进行访问。</p>
+
+<p>第 5 章介绍了 for/in 循环（§6.6 节还会进一步介绍）。当使用 for/in 循环遍历关联数组时，就可以清晰地体会到 for/in 的强大之处。下面的例子就是利用 for/in 计算  portfolio 的合计值：</p>
+
+<pre><code class="language-javascript">function computeValue(portfolio) {
+    let total = 0.0;
+    for(let stock in portfolio) {       // For each stock in the portfolio:
+        let shares = portfolio[stock];  // get the number of shares
+        let price = getQuote(stock);    // look up share price
+        total += shares * price;        // add stock value to total value
+    }
+    return total;                       // Return total value.
+}
+</code></pre>
+
+<p>如本节所示，JavaScript 对象通常用作关联数组，理解其工作原理非常重要。但是，在 ES6 之后使用 Map 类常常是一个更好的选择，我们将在 §11.1.2 中进行描述。</p>
+
+<h3 id="toc_8">6.3.2 继承</h3>
+
+<p>JavaScript 对象中有一组“自有属性”，也有一组属性是继承自它的原型对象。想要理解属性继承，必须更深入地了解属性访问的细节。这一节的例子通过使用 Object.create() 函数创建对象来指定它的原型。我们会在第 9 章再次看到它，但是，每次使用 new 创建类的实例时，都会创建一个从原型对象继承属性的对象。</p>
+
+<p>假设要查询对象 o 的属性 x。如果 o 中不存在 x 名称的自由属性，那么将会继续在 o 的原型对象中查询属性 x。如果原型对象中也没有 x，但这个原型对象也有原型，那么继续在这个原型对象的原型上执行查询，直到找到 x 或者查找到一个原型是 null 的对象为止。可以看到，对象的原型属性构成了一个“链”，通过这个“链”可以实现属性的继承。</p>
+
+<pre><code class="language-javascript">let o = {};               // o inherits object methods from Object.prototype
+o.x = 1;                  // and it now has an own property x.
+let p = Object.create(o); // p inherits properties from o and Object.prototype
+p.y = 2;                  // and has an own property y.
+let q = Object.create(p); // q inherits properties from p, o, and...
+q.z = 3;                  // ...Object.prototype and has an own property z.
+let f = q.toString();     // toString is inherited from Object.prototype
+q.x + q.y                 // =&gt; 3; x and y are inherited from o and p
+</code></pre>
+
+<p>现在假设给对象 o 的属性 x 赋值，如果 o 中已经有属性 x（这个属性不是继承来的），那么这个赋值操作只改变这个已有属性 x 的值。否则，赋值操作给 o 添加一个新属性 x。如果之前 o 继承自属性 x，那么这个继承的属性就被新创建的同名属性覆盖了。</p>
+
+<p>属性赋值操作检查原型链只是判断是否允许赋值操作。例如，如果 o 继承自一个只读属性 x，那么赋值操作是不允许的（§6.3.3 将对此进行详细讨论）。 如果允许属性赋值操作，它也总是在原始对象上创建属性或对已有的属性赋值，而不会去修改原型链。在 JavaScript 中，只有在查询属性时才会体会到继承的存在，而设置属性则和继承无关，这是 JavaScript 的一个重要特性，该特性让程序员可以有选择地重写继承的属性。</p>
+
+<pre><code class="language-javascript">let unitcircle = { r: 1 };         // An object to inherit from
+let c = Object.create(unitcircle); // c inherits the property r
+c.x = 1; c.y = 1;                  // c defines two properties of its own
+c.r = 2;                           // c overrides its inherited property
+unitcircle.r                       // =&gt; 1: the prototype is not affected
+</code></pre>
+
+<p>属性赋值要么失败，要么创建一个属性，要么在原始对象中设置属性。但有一个例外，如果 o 继承自属性 x，而这个属性是一个具有 setter 方法的存取器属性（参照 §6.10.6），那么这时将调用 setter 方法而不是给 o 创建一个属性 x。需要注意的是，setter 方法是由对象 o 调用的，而不是定义这个属性的原型对象调用的。因此如果 setter 方法定义任意属性，这个操作只是针对 o 本身，并不会修改原型链。</p>
+
+<h3 id="toc_9">6.3.3 属性访问异常</h3>
+
+<p>属性访问表达式并不总是返回或设置一个值。本节讲述查询或设置属性时的一些出错情况。</p>
+
+<p>查询一个不存在的属性并不会报错，如果在对象 o 自身的属性或继承的属性中均未找到属性 x，属性访问表达式 o.x 返回 undefined。回想一下我们的 book 对象有属性“sub-title”，而没有属性“subtitle”：</p>
+
+<pre><code class="language-javascript">book.subtitle    // =&gt; undefined: property doesn&#39;t exist
+</code></pre>
+
+<p>但是，如果对象不存在，那么试图查询这个不存在的对象的属性就会报错。null 和 undefined 值都没有属性，因此查询这些值的属性会报错，接上例：</p>
+
+<pre><code class="language-javascript">let len = book.subtitle.length; // !TypeError: undefined doesn&#39;t have length
+</code></pre>
+
+<p>如果 . 的左边是 null 或 undefined 时，其属性表达式会失败。所以当写一个像 book.author.surname 一样的表达式时，如果你不确定 book 和 book.author 确实被定义就要小心了。下面提供了两种避免出错的方法：</p>
+
+<pre><code class="language-javascript">// A verbose and explicit technique
+let surname = undefined;
+if (book) {
+    if (book.author) {
+        surname = book.author.surname;
+    }
+}
+
+// A concise and idiomatic alternative to get surname or null or undefined
+surname = book &amp;&amp; book.author &amp;&amp; book.author.surname;
+</code></pre>
+
+<p>为了理解为什么这里的第二种方法可以避免类型错误异常，可以参照 §4.10.1节 中关于 &amp;&amp; 运算符的短路行为。</p>
+
+<p>如 §4.4.1 中所描述，ES2020 支持用 ?. 条件属性访问，它允许这样重写上面的赋值表达式：</p>
+
+<pre><code class="language-javascript">let surname = book?.author?.surname;
+</code></pre>
+
+<p>当然，给 null 和 undefined 设置属性也会报类型错误。给其他值设置属性也不总是成功，有一些属性是只读的，不能重新赋值，有一些对象不允许新增属性。在严格模式下（§5.6.3），属性设定失败时会抛出 TypeError 异常。在非严格模式下，这些失败的处理经常没有任何反应。</p>
+
+<p>尽管属性赋值成功或失败的规律看起来很简单，但要描述清楚并不容易。在这些场景下给对象 o 设置属性 p 会失败：</p>
+
+<p>o 中的属性 p 是只读的：不能给只读属性重新赋值。</p>
+
+<p>o 中的属性 p 是继承属性，且它是只读的：不能通过同名自有属性覆盖只读的继承属性。</p>
+
+<p>o 中不存在自有属性 p：o 没有使用 setter 方法继承属性 p，并且o的可扩展性是（见 §14.2）false。如果 o 中不存在 p，而且没有 setter 方法可供调用，则 p 一定会添加至 o 中。但如果 o 不是可扩展的，那么在 o 中不能定义新属性。</p>
+
+<h2 id="toc_10">6.4 删除属性</h2>
+
+<p>删除运算符（§4.13.4）能删除对象中的属性。它的操作数应当是一个属性访问表达式。令人意外的是，delete 没有操作属性的值，而是操作属性的属性：</p>
+
+<pre><code class="language-javascript">delete book.author;          // The book object now has no author property.
+delete book[&quot;main title&quot;];   // Now it doesn&#39;t have &quot;main title&quot;, either.
+</code></pre>
+
+<p>delete 运算符只删除自有属性，不删除继承属性。（想要删除一个继承属性，必须从定义这个属性的原型对象上删除它。这会影响所有继承这个原型的对象。）</p>
+
+<p>如果删除成功或删除没有任何影响时删除表达式计算结果是 true（如删除不存在的属性）。delete 作用于非属性访问表达式（无用代码）时也返回 true。</p>
+
+<pre><code class="language-javascript">let o = {x: 1};    // o has own property x and inherits property toString
+delete o.x         // =&gt; true: deletes property x
+delete o.x         // =&gt; true: does nothing (x doesn&#39;t exist) but true anyway
+delete o.toString  // =&gt; true: does nothing (toString isn&#39;t an own property)
+delete 1           // =&gt; true: nonsense, but true anyway
+</code></pre>
+
+<p>delete 不能删除那些可配置性为 false 的属性。某些内置对象的属性是不可配置的，比如通过变量声明和函数声明创建的全局对象的属性。在严格模式中，删除一个不可配置属性会报一个类型错误。在非严格模式中，在这些情况下的 delete 操作会返回 false：</p>
+
+<pre><code class="language-javascript">// In strict mode, all these deletions throw TypeError instead of returning false
+delete Object.prototype // =&gt; false: property is non-configurable
+var x = 1;              // Declare a global variable
+delete globalThis.x     // =&gt; false: can&#39;t delete this property
+function f() {}         // Declare a global function
+delete globalThis.f     // =&gt; false: can&#39;t delete this property either
+</code></pre>
+
+<p>当在非严格模式中删除全局对象的可配值属性时，可以省略对全局对象的引用，直接在 delete 操作符后跟随要删除的属性名即可：</p>
+
+<pre><code class="language-javascript">globalThis.x = 1;       // Create a configurable global property (no let or var)
+delete x                // =&gt; true: this property can be deleted
+</code></pre>
+
+<p>然而在严格模式中，delete 后跟随一个非法的操作数（比如 x），则会报一个语法错误，因此必须显式指定对象及其属性：</p>
+
+<pre><code class="language-javascript">delete x;               // SyntaxError in strict mode
+delete globalThis.x;    // This works
+</code></pre>
+
+<h2 id="toc_11">6.5 测试属性</h2>
+
+<p>JavaScript 对象可以看作属性的集合，我们经常会检测集合中成员的所属关系——判断某个属性是否存在于某个对象中。可以用 in 运算符、hasOwnPreperty() 和  propertyIsEnumerable() 方法来完成这个工作，甚至仅通过属性查询也可以做到这一点。这节的例子都是用字符串作为属性名称，但是也可以用 Symbol 作为属性名（§6.10.3）。</p>
+
+<p>in 运算符的左侧是属性名，右侧是对象。如果对象的自有属性或继承属性中包含这个属性则返回 true：</p>
+
+<pre><code class="language-javascript">let o = { x: 1 };
+&quot;x&quot; in o         // =&gt; true: o has an own property &quot;x&quot;
+&quot;y&quot; in o         // =&gt; false: o doesn&#39;t have a property &quot;y&quot;
+&quot;toString&quot; in o  // =&gt; true: o inherits a toString property
+</code></pre>
+
+<p>对象的 hasOwnProperty() 方法用来检测给定的名字是否是对象的自有属性。对于继承属性它将返回 false：</p>
+
+<pre><code class="language-javascript">let o = { x: 1 };
+o.hasOwnProperty(&quot;x&quot;)        // =&gt; true: o has an own property x
+o.hasOwnProperty(&quot;y&quot;)        // =&gt; false: o doesn&#39;t have a property y
+o.hasOwnProperty(&quot;toString&quot;) // =&gt; false: toString is an inherited property
+</code></pre>
+
+<p>propertyIsEnumerable() 是 hasOwnProperty() 的增强版。只有检测到是自有属性且这个属性的可枚举性为 true 时它才返回 true。某些内置属性是不可枚举的。通常由 JavaScript 代码创建的属性都是可枚举的，除非使用  §14.1 中介绍的技术来让它们不可枚举。</p>
+
+<pre><code class="language-javascript">let o = { x: 1 };
+o.propertyIsEnumerable(&quot;x&quot;)  // =&gt; true: o has an own enumerable property x
+o.propertyIsEnumerable(&quot;toString&quot;)  // =&gt; false: not an own property
+Object.prototype.propertyIsEnumerable(&quot;toString&quot;) // =&gt; false: not enumerable
+</code></pre>
+
+<p>除了使用 in 运算符之外，另一种更简便的方法是使用 !== 判断一个属性是否是 undefined：</p>
+
+<pre><code class="language-javascript">let o = { x: 1 };
+o.x !== undefined        // =&gt; true: o has a property x
+o.y !== undefined        // =&gt; false: o doesn&#39;t have a property y
+o.toString !== undefined // =&gt; true: o inherits a toString property
+</code></pre>
+
+<p>然而有一种场景只能使用 in 运算符而不能使用上述属性访问的方式。in 可以区分不存在的属性和存在但值为 undefined 的属性。例如下面的代码：</p>
+
+<pre><code class="language-javascript">let o = { x: undefined };  // Property is explicitly set to undefined
+o.x !== undefined          // =&gt; false: property exists but is undefined
+o.y !== undefined          // =&gt; false: property doesn&#39;t even exist
+&quot;x&quot; in o                   // =&gt; true: the property exists
+&quot;y&quot; in o                   // =&gt; false: the property doesn&#39;t exist
+delete o.x;                // Delete the property x
+&quot;x&quot; in o                   // =&gt; false: it doesn&#39;t exist anymore
+</code></pre>
+
+<h2 id="toc_12">6.6 枚举属性</h2>
+
+<p>除了检测对象的属性是否存在，我们还会经常遍历对象的属性。有几种不同的方法可以做到这一点。</p>
+
+<p>§5.4.5 讨论过 for/in 循环，其可以在循环体中遍历指定对象中所有可枚举的属性（包括自有属性和继承的属性），把属性名称赋值给循环变量。对象继承的 内置方法不可枚举的，但在代码中给对象添加的属性都是可枚举的（除非用下文中提到的一个方法将它们转换为不可枚举的）。例如：</p>
+
+<pre><code class="language-javascript">let o = {x: 1, y: 2, z: 3};          // Three enumerable own properties
+o.propertyIsEnumerable(&quot;toString&quot;)   // =&gt; false: not enumerable
+for(let p in o) {                    // Loop through the properties
+    console.log(p);                  // Prints x, y, and z, but not toString
+}
+</code></pre>
+
+<p>为了防止 for/in 枚举到继承属性，可以在循环中添加显示检查：</p>
+
+<pre><code class="language-javascript">for(let p in o) {
+    if (!o.hasOwnProperty(p)) continue;       // Skip inherited properties
+}
+
+for(let p in o) {
+    if (typeof o[p] === &quot;function&quot;) continue; // Skip all methods
+}
+</code></pre>
+
+<p>作为使用 for/in 循环的替代方法，通常使用 for/of 循环遍历易获取对象的属性名称数组。可以使用四个函数获取属性名称数组：</p>
+
+<p>Object.keys() 返回对象的可枚举自有属性名称数组集合。数组内不包含不可枚举属性、继承属性或属性名称是 Symbol（见 §6.10.3）的属性</p>
+
+<p>Object.getOwnPropertyNames() 用起来和 Object.keys() 类似，但是它返回数组中也包含不可迭代的自有属性，只要它们的名称是字符串。</p>
+
+<p>Object.getOwnPropertySymbols() 返回名称是 Symbol 的自有属性，无论它们是否可枚举。</p>
+
+<p>Reflect.ownKeys() 返回所有的自由属性名称，包括可枚举和不可枚举类型，也包括字符串和 Symbol（见 §14.6）。</p>
+
+<p>在 §6.7 中有例子使用 for/of 循环 Object.keys()。</p>
+
+<h3 id="toc_13">6.6.1 属性枚举顺序</h3>
+
+<p>ES6 正式定义元素的自有属性的枚举顺序。Object.keys()、Object.getOwnPropertyNames()、Object.getOwnPropertyNames()、Object.getOwnPropertySymbols()、Reflect.ownKeys() 和相关方法如 JSON.stringify() 属性列表都按以下顺序排列的，受它们自身是否是不可枚举属性列表或者属性是字符串或者 Symbol 影响：</p>
+
+<p>首先列出名称为非负整数的字符串属性，按从最小到最大的数字顺序列出。此规则意味着数组和数组类对象将按顺序枚举其属性。</p>
+
+<p>列出所有看起来像数组索引的属性后，将列出所有具有字符串名称的剩余属性（包括看起来像负数或浮点数字的属性）。这些属性按添加到对象的顺序列出。对于在对象字面量中定义的属性，此顺序与它们在文本中显示的顺序相同。</p>
+
+<p>最后，其名称为 Symbol 对象的属性按添加到对象的顺序列出。</p>
+
+<p>for/in 循环的枚举顺序不像这些枚举函数那样严格指定，但实现通常按刚才描述的顺序枚举自己的属性，然后向上移动原型链按相同顺序枚举每个原型对象的属性。但是请注意，如果已枚举具有相同名称的属性，或者不可枚举属性已经被检测过再次枚举到相同名称的属性，都不会再次枚举。</p>
+
+<h2 id="toc_14">6.7 扩展对象</h2>
+
+<p>在 JavaScript 代码中有一个很常见的操作，需要将一个对象中的属性拷贝到另外一个对象。以下面的代码很容易实现：</p>
+
+<pre><code class="language-javascript">let target = {x: 1}, source = {y: 2, z: 3};
+for(let key of Object.keys(source)) {
+    target[key] = source[key];
+}
+target  // =&gt; {x: 1, y: 2, z: 3}
+</code></pre>
+
+<p>但是因为这个是个常用的操作，各种 JavaScript 框架定义公用函数，经常将其命名为 extend() 来执行这个拷贝操作。最后在 ES6 中，这个功能以 Object.assign() 的形式被添加到 JavaScript 核心语言中。</p>
+
+<p>Object.assign() 需要两个或多个对象作为其实参。它修改并返回第一个实参，即目标对象，但不会改变第二个或任何后续参数，这些参数是源对象。对于每个源对象，它将该对象的可枚举自有属性（包括名称为 Symbol 的属性）复制到目标对象中。它按源对象在实参列表顺序中的顺序处理，所以第一个源对象中的属性会重写在目标对象中的同名属性，然后以第二个源对象中的同名属性（如果有第二个源对象）再次重写第一个源对象重写后的属性。</p>
+
+<p>Object.assign() 通过普通属性的 get 和 set 操作复制属性，因此，如果源对象具有 getter 方法或目标对象具有 setter 方法，则将在复制期间调用它们，但不会复制方法本身。</p>
+
+<p>看这样一个场景，有一个对象定义许多属性的默认值，希望将这些默认属性中不存在于目标对象中的属性复制到目标对象中，使用 Object.assign() 不会得到想要的结果：</p>
+
+<pre><code class="language-javascript">Object.assign(o, defaults);  // overwrites everything in o with defaults
+</code></pre>
+
+<p>想得到这个效果需要创建一个新的对象，将默认值拷贝到其中，然后用 o 的属性重写默认值中的属性：</p>
+
+<pre><code class="language-javascript">o = Object.assign({}, defaults, o);
+</code></pre>
+
+<p>我们会在 §6.10.4 见到，可以用 ... 展开操作符如下操作这个对象拷贝并重写：</p>
+
+<pre><code class="language-javascript">o = {...defaults, ...o};
+</code></pre>
+
+<p>为了避免对象创建和复制的额外开销，我们还可以通过编写一个 Object.assign() 仅在缺少属性时复制属性：</p>
+
+<pre><code class="language-javascript">// Like Object.assign() but doesn&#39;t override existing properties
+// (and also doesn&#39;t handle Symbol properties)
+function merge(target, ...sources) {
+    for(let source of sources) {
+        for(let key of Object.keys(source)) {
+            if (!(key in target)) { // This is different than Object.assign()
+                target[key] = source[key];
+            }
+        }
+    }
+    return target;
+}
+Object.assign({x: 1}, {x: 2, y: 2}, {y: 3, z: 4})  // =&gt; {x: 2, y: 3, z: 4}
+merge({x: 1}, {x: 2, y: 2}, {y: 3, z: 4})          // =&gt; {x: 1, y: 2, z: 4}
+</code></pre>
+
+<p>编写其他属性操作公共函数很简单，就是像这个 merge() 函数。例如，如果对象的属性不出现在另一个模板对象中，则 restrict() 函数会删除这些属性。或者，subtract() 函数可以从其他对象中删除一个对象的所有属性。</p>
+
+<h2 id="toc_15">6.8 序列化对象</h2>
+
+<p>对象序列化（serialization）是指将对象的状态转换为字符串，也可将字符串还原为对象。函数 JSON.stringify() 和 JSON.parse() 用来序列化和还原 JavaScript 对象。这些方法都使用 JSON 作为数据交换格式，JSON 的全称是“JavaScript Object Notation”——JavaScript 对象表示法，它的语法和 JavaScript 对象与数组字面量的语法非常相近：</p>
+
+<pre><code class="language-javascript">let o = {x: 1, y: {z: [false, null, &quot;&quot;]}}; // Define a test object
+let s = JSON.stringify(o);   // s == &#39;{&quot;x&quot;:1,&quot;y&quot;:{&quot;z&quot;:[false,null,&quot;&quot;]}}&#39;
+let p = JSON.parse(s);       // p == {x: 1, y: {z: [false, null, &quot;&quot;]}}
+</code></pre>
+
+<p>JSON 的语法是 JavaScript 语法的子集，它并不能表示 JavaScript 里的所有值。支持对象、数组、字符串、无穷大数字、true、false 和 null，并且它们可以序列化和还原。NaN、Infinity 和 -Infinity 序列化的结果是 null，日期对象序列化的结果是 ISO 格式的日期字符串（参照 Date.toJSON() 函数），但 JSON.parse() 依然保留它们的字符串形态，而不会将它们还原为原始日期对象。函数、RegExp、Error 对象和 undefined 值不能序列化和还原。JSON.stringify() 只能序列化对象可枚举的自有属性。对于一个不能序列化的属性来说，在序列化后的输出字符串中会将这个属性省略掉。JSON.stringify() 和 JSON.parse() 都可以接收第二个可选实参，通过传入需要序列化或还原的属性列表来定制自定义的序列化或还原操作。§11.6 有关于这些函数的详细文档。</p>
+
+<h2 id="toc_16">6.9 对象方法</h2>
+
+<p>上文已经讨论过，所有的 JavaScript 对象都从 Object.prototype 继承属性（除了那些不通过原型显式创建的对象）。这些继承属性主要是方法，因为 JavaScript 程序员普遍对继承方法更感兴趣。例如我们已经见过的 hasOwnProperty() 和 propertyIsEnumerable() 方法。（并且我们也已经提到了一小部分定义在对象构造函数中的静态函数，像 Object.create() 和 Object.keys()。）本节介绍在 Object.prototype 上定义的少数通用对象方法，但是这些方法经常会被更专业的实现所取代。在下面的各节中，我们将展示在单个对象上定义这些方法的示例。在第 9 章中，将学习如何更常规化地为整个对象类定义这些方法。</p>
+
+<h3 id="toc_17">6.9.1 toString() 方法</h3>
+
+<p>toString() 方法没有实参，它将返回一个表示调用这个方法的对象值的字符串。在需要将对象转换为字符串的时候，JavaScript 都会调用这个方法。比如，当使用 + 运算符连接一个字符串和一个对象时或者在希望使用字符串的方法中使用了对象时都会调用 toString()。</p>
+
+<p>默认的 toString() 方法的返回值带有的信息量很少（尽管它在检测对象的类型时非常有用，参照 §14.4.3），例如，下面这行代码的计算结果为字符串”[object Object]”：</p>
+
+<pre><code class="language-javascript">let s = { x: 1, y: 1 }.toString();  // s == &quot;[object Object]&quot;
+</code></pre>
+
+<p>由于默认的 toString() 方法并不会输出很多有用的信息，因此很多类都带有自定义的 toString()。例如，当数组转换为字符串的时候，结果是一个数组元素列表，只是每个元素都转换成了字符串，再比如，当函数转换为字符串的时候，得到函数的源代码。可以像下面这样自定义 toString() 方法：</p>
+
+<pre><code class="language-javascript">let point = {
+    x: 1,
+    y: 2,
+    toString: function() { return `(${this.x}, ${this.y})`; }
+};
+String(point)    // =&gt; &quot;(1, 2)&quot;: toString() is used for string conversions
+</code></pre>
+
+<h3 id="toc_18">6.9.2 toLocaleString() 方法</h3>
+
+<p>除了基本的 toString() 方法之外，对象都包含 toLocaleString() 方法，这个方法返回一个表示这个对象的本地化字符串。Object 中默认的 toLocaleString() 方法并不做任何本地化自身的操作，它仅调用 toString() 方法并返回对应值。Date 和 Number 类对 toLocaleString() 方法做了定制，可以用它对数字、日期和时间做本地化的转换。 Array 类的 toLocaleString() 方法和 toString() 方法很像，唯一的不同是每个数组元素会调用 toLocaleString() 方法转换为字符串，而不是调用各自的 toString() 方法。可以像这样使用 point 对象做到同样的效果：</p>
+
+<pre><code class="language-javascript">let point = {
+    x: 1000,
+    y: 2000,
+    toString: function() { return `(${this.x}, ${this.y})`; },
+    toLocaleString: function() {
+        return `(${this.x.toLocaleString()}, ${this.y.toLocaleString()})`;
+    }
+};
+point.toString()        // =&gt; &quot;(1000, 2000)&quot;
+point.toLocaleString()  // =&gt; &quot;(1,000, 2,000)&quot;: note thousands separators
+</code></pre>
+
+<p>在 §11.7 的国际化类中，toLocaleString() 方法的实现是非常有用的。</p>
+
+<h3 id="toc_19">6.9.3 valueOf() 方法</h3>
+
+<p>valueOf() 方法和 toString() 方法非常类似，但往往当 JavaScript 需要将对象转换为某种原始值而非字符串的时候才会调用它，尤其是转换为数字的时候。如果在需要使用原始值的上下文中使用了对象，JavaScript 就会自动调用这个方法。默认的 valueOf() 方法不足为奇，但有些内置类自定义了 valueOf() 方法. Date 类定义 valueOf() 将日期转化成数值型，并且这允许 Date 对象使用 &lt; 和 &gt; 按时间先手顺序比较。可以对 point 对象做同样的事，定义一个 valueOf() 方法返回原点到点的距离：</p>
+
+<pre><code class="language-javascript">let point = {
+    x: 3,
+    y: 4,
+    valueOf: function() { return Math.hypot(this.x, this.y); }
+};
+Number(point)  // =&gt; 5: valueOf() is used for conversions to numbers
+point &gt; 4      // =&gt; true
+point &gt; 5      // =&gt; false
+point &lt; 6      // =&gt; true
+</code></pre>
+
+<h3 id="toc_20">6.9.4 toJSON() 方法</h3>
+
+<p>Object.prototype 实际上没有定义 toJSON() 方法，但对于需要执行序列化的对象来说，JSON.stringify() 方法（见 §6.8）会调用 toJSON() 方法。如果在待序列化的对象中存在这 个方法，则调用它，返回值即是序列化的结果，而不是原始的对象。Date 类（§11.4）定义了 toJSON() 方法返回日期的序列化字符串。我们可以这样对 point 对象做同样的事：</p>
+
+<pre><code class="language-javascript">let point = {
+    x: 1,
+    y: 2,
+    toString: function() { return `(${this.x}, ${this.y})`; },
+    toJSON: function() { return this.toString(); }
+};
+JSON.stringify([point])   // =&gt; &#39;[&quot;(1, 2)&quot;]&#39;
+</code></pre>
+
+<h2 id="toc_21">6.10 扩展的对象字面量语法</h2>
+
+<p>JavaScript 的最新版本扩展了许多有用的对象字面量相关的语法。以下小节解释这些扩展。</p>
+
+<h3 id="toc_22">6.10.1 速记属性</h3>
+
+<p>假设值存储在变量 x 和 y 中，并且想要创建具有名为 x 和 y 的属性的对象，这些属性包含这些值。使用基本对象字面量语法，最终会重复每个标识符两次：</p>
+
+<pre><code class="language-javascript">let x = 1, y = 2;
+let o = {
+    x: x,
+    y: y
+};
+</code></pre>
+
+<p>在 ES6 之后，可以删除标识符的冒号和一个副本，最终使用更简单的代码：</p>
+
+<pre><code class="language-javascript">let x = 1, y = 2;
+let o = { x, y };
+o.x + o.y  // =&gt; 3
+</code></pre>
+
+<h3 id="toc_23">6.10.2 计算属性名</h3>
+
+<p>有时需要创建具有特定属性的对象，但该属性的名称不是可以在源代码中键入的编译时常量。相反，需要的属性名称存储在变量中，或者是调用的函数的返回值。不能对此类属性使用基本对象字面量。而必须创建一个对象，通过额外的步骤，添加所需的属性：</p>
+
+<pre><code class="language-javascript">const PROPERTY_NAME = &quot;p1&quot;;
+function computePropertyName() { return &quot;p&quot; + 2; }
+
+let o = {};
+o[PROPERTY_NAME] = 1;
+o[computePropertyName()] = 2;
+</code></pre>
+
+<p>使用称为计算属性的 ES6 特性设置这样的对象要简单得多，该功能允许从前面的代码写入方括内并直接移动到对象字面量中：</p>
+
+<pre><code class="language-javascript">const PROPERTY_NAME = &quot;p1&quot;;
+function computePropertyName() { return &quot;p&quot; + 2; }
+
+let p = {
+    [PROPERTY_NAME]: 1,
+    [computePropertyName()]: 2
+};
+
+p.p1 + p.p2 // =&gt; 3
+</code></pre>
+
+<p>使用这种新语法，方括号将其分隔成 JavaScript 表达式。计算该表达式，并将结果值（如有必要转换为字符串）用作属性名称。</p>
+
+<p>可能想要使用计算属性的一个情况是，有一个 JavaScript 代码库，该库希望传递具有一组特定属性的对象，并且这些属性的名称定义为该库中的常量。如果要编写代码以创建将传递给该库的对象，可以硬编码属性名称，但如果在任何地方键入错误的属性名称，则存在错误风险；如果库的新版本更改了所需的属性名称，则存在版本不匹配问题的风险。相反，可能会发现，使用计算属性语法与库定义的属性名称常量时，它使代码更加健壮。</p>
+
+<h3 id="toc_24">6.10.3 Symbol 作属性名</h3>
+
+<p>计算属性语法启用了另一个非常重要的对象字面量特性。在 ES6 之后，属性名称可以是字符串或 Symbol。如果将 Symbol 分配给变量或常量，则可以使用计算属性语法将该 Symbol 用作属性名称：</p>
+
+<pre><code class="language-javascript">const extension = Symbol(&quot;my extension symbol&quot;);
+let o = {
+    [extension]: { /* extension data stored in this object */ }
+};
+o[extension].x = 0; // This won&#39;t conflict with other properties of o
+</code></pre>
+
+<p>如 §3.6 中所述，符号是不透明值。除了将它们用作属性名称，不能对它们进行任何其他处理。但是，每个 Symbol 都不同于所有其他 Symbol，这意味着 Symbol 适合创建唯一的属性名称。通过调用 Symbol() 工厂函数创建新 Symbol。（Symbol 是原始值，而不是对象，因此 Symbol() 不是使用 new 调用的构造函数。）Symbol() 返回的值不等于任何其他 Symbol 或其他值。可以将字符串传递给 Symbol()，当 Symbol 转换为字符串时，将使用此字符串。但是，这只是一个调试帮助：使用同一字符串参数创建的两个 Symbol 仍然彼此不同。</p>
+
+<p>Symbol 的要点不是安全性，而是为 JavaScript 对象定义一个安全的扩展机制。如果从第三方代码获取对象，您无法控制该对象，并且需要向该对象添加自己的一些属性，但希望确保属性不会与对象上可能存在的任何属性冲突，可以安全地使用 Symbol 作为属性名称。如果这样做，还可以确信第三方代码不会意外更改 Symbol 命名的属性。（当然，该第三方代码可以使用 Object.getOwnPropertySymbols() 来发现你使用的 Symbol，然后可以更改或删除你的属性。这就是为什么符号不是安全机制。）</p>
+
+<h3 id="toc_25">6.10.4 展开运算符</h3>
+
+<p>在 ES2018 之后，可以使用展开运算符 ... 将现有的对象中的属性复制到新的对象中：</p>
+
+<pre><code class="language-javascript">let position = { x: 0, y: 0 };
+let dimensions = { width: 100, height: 75 };
+let rect = { ...position, ...dimensions };
+rect.x + rect.y + rect.width + rect.height // =&gt; 175
+</code></pre>
+
+<p>在此代码中，position 和 dimensions 对象的属性被展开到 rect 对象字面量中，就像它们以字面量的方式写入这些大括号中一样。请注意，... 语法通常称为展开运算符，但在任何情况下都不是真正的 JavaScript 运算符。相反，它是一种特殊情况下语法，仅在对象文本中可用。（... 在别的 JavaScript 上下文中有其他用途，但是对象字面量上下文中只有这一种用法。）</p>
+
+<p>如果展开的目标对象和源对象中具有相同的名称，则该属性的值将是位置处于后面的值：</p>
+
+<pre><code class="language-javascript">let o = { x: 1 };
+let p = { x: 0, ...o };
+p.x   // =&gt; 1: the value from object o overrides the initial value
+let q = { ...o, x: 2 };
+q.x   // =&gt; 2: the value 2 overrides the previous value from o.
+</code></pre>
+
+<p>还有注意展开运算符只展开对象的自有属性，不展开继承属性：</p>
+
+<pre><code class="language-javascript">let o = Object.create({x: 1}); // o inherits the property x
+let p = { ...o };
+p.x                            // =&gt; undefined
+</code></pre>
+
+<p>最后，值得注意的是，虽然展开运算符在代码中只是三个小点，但它对 JavaScript 解释器来说可以代表大量的工作。如果对象具有 n 个属性，则将这些属性分散到另一个对象的过程很可能是 O(n) 操作。这意味着，如果你发现自己在使用 ... 在循环或递归函数中，类似将数据累积到一个大对象中的方法，您可能正在编写一个低效的 O(n2) 算法，该算法不会随着 n 变大而扩展。</p>
+
+<h3 id="toc_26">6.10.5 速记方法</h3>
+
+<p>当函数被定义为对象的属性时，我们称该函数为方法（我们将在第 8 章和第 9 章中对方法有更多的描述）。在 ES6 之前，在对象字面量中用函数定义表达式定义一个方法和在对象中定义其他属性一样：</p>
+
+<pre><code class="language-javascript">let square = {
+    area: function() { return this.side * this.side; },
+    side: 10
+};
+square.area() // =&gt; 100
+</code></pre>
+
+<p>但是，在 ES6 中，对象字面量语法（以及我们将在第 9 章中看到的类定义语法）已扩展成允许省略函数关键字和冒号的快捷方式，可以写成这样的代码：</p>
+
+<pre><code class="language-javascript">let square = {
+    area() { return this.side * this.side; },
+    side: 10
+};
+square.area() // =&gt; 100
+</code></pre>
+
+<p>两种形式是相同的：在对象字面量中添加一个名为 area 的属性，并指定一个函数为这个属性的值。速记语法更清晰的看出 area() 是一个方法而不是一个像 side 一样的数据属性。</p>
+
+<p>使用此速记语法编写方法时，属性名称可以采用对象字面量中的任何合法形式：除了像上面的名称 area 这样的常规 JavaScript 标识符外，还可以使用字符串字面量和计算属性名称，包括 Symbol 属性名称：</p>
+
+<pre><code class="language-javascript">const METHOD_NAME = &quot;m&quot;;
+const symbol = Symbol();
+let weirdMethods = {
+    &quot;method With Spaces&quot;(x) { return x + 1; },
+    [METHOD_NAME](x) { return x + 2; },
+    [symbol](x) { return x + 3; }
+};
+weirdMethods[&quot;method With Spaces&quot;](1)  // =&gt; 2
+weirdMethods[METHOD_NAME](1)           // =&gt; 3
+weirdMethods[symbol](1)                // =&gt; 4
+</code></pre>
+
+<p>使用 Symbol 作为方法名称并不像看起来那么奇怪。为了使对象可迭代（因此它可以与 for/of 循环一起使用），必须定义一个具有符号名称 Symbol.iterator 的方法，并且在第 12 章中有这样做的示例。</p>
+
+<h3 id="toc_27">6.10.6 属性 Getter 和 Setter 方法</h3>
+
+<p>到目前为止，本节我们所讨论的所有的对象都是具有名称和普通值的数据属性。JavaScript 还支持存取器属性，这些属性没有单个值，而是具有一个或两个存取器方法：getter 和或是或 setter。</p>
+
+<p>当程序查询存取器属性的值时，JavaScript 调用 getter 方法（无实参）。这个方法的返回值就是属性存取表达式的值。当程序设置一个存取器属性的值时， JavaScript 调用 setter 方法，将赋值表达式右侧的值当做参数传入 setter。从某种意义上讲，这个方法负责“设置”属性值。可以忽略 setter 方法的返回值。</p>
+
+<p>如果属性同时有 getter 和 setter 方法，则它是一个可读写属性。如果它只含有 getter 方法，它是一个只读属性。如果它只有 setter 方法，它是一个只可写属性（这对一个数据属性来说是不可能的），如果尝试去读它，计算结果永远是 undefined。</p>
+
+<p>存储器属性可以通过表达式在对象字面量语法中定义（不像我们在这里看到的其他 ES6 扩展，getter 和 setter 是 ES5 中的内容）：</p>
+
+<pre><code class="language-javascript">let o = {
+    // An ordinary data property
+    dataProp: value,
+
+    // An accessor property defined as a pair of functions.
+    get accessorProp() { return this.dataProp; },
+    set accessorProp(value) { this.dataProp = value; }
+};
+</code></pre>
+
+<p>存储器属性定义为名称与属性名称相同的一个或两个方法。这些方法看起来像使用 ES6 速记定义的普通方法，只不过 getter 和 setter 定义使用 get 或 set 前缀。（在 ES6 中，在定义 getter 和 setter 时还可以使用计算属性名称。只需将带方括号的表达式替换属性名称即可。</p>
+
+<p>上面定义的存储器方法只需获取并设置数据属性的值，没有理由将存储器属性替换数据属性。但作为一个更有趣的示例，请考虑以下表示 2D 笛卡尔点的对象。它具有表示点的 x 和 y 坐标的普通数据属性，并且具有提供点等效极坐标的存储器属性：</p>
+
+<pre><code class="language-javascript">let p = {
+    // x and y are regular read-write data properties.
+    x: 1.0,
+    y: 1.0,
+
+    // r is a read-write accessor property with getter and setter.
+    // Don&#39;t forget to put a comma after accessor methods.
+    get r() { return Math.hypot(this.x, this.y); },
+    set r(newvalue) {
+        let oldvalue = Math.hypot(this.x, this.y);
+        let ratio = newvalue/oldvalue;
+        this.x *= ratio;
+        this.y *= ratio;
+    },
+
+    // theta is a read-only accessor property with getter only.
+    get theta() { return Math.atan2(this.y, this.x); }
+};
+p.r     // =&gt; Math.SQRT2
+p.theta // =&gt; Math.PI / 4
+</code></pre>
+
+<p>请注意，在本示例中的 getter 和 setter 中使用 this 关键字。JavaScript 以对象的方法的方式调用这些函数，这意味着在函数体中，this 指的是点对象 p。因此，r 属性的 getter 方法通过 this.x 和 this.y 获取到 x 和 y 属性的引用。方法以及 this 关键字在 §8.2.2 中详细介绍。</p>
+
+<p>存储器属性是可继承的，就像数据属性一样，因此可以使用上面定义的对象 p 作为其他点的原型。可以为新对象提供自有的 x 和 y 属性，它们将继承 r 和 theta 属性：</p>
+
+<pre><code class="language-javascript">let q = Object.create(p); // A new object that inherits getters and setters
+q.x = 3; q.y = 4;         // Create q&#39;s own data properties
+q.r                       // =&gt; 5: the inherited accessor properties work
+q.theta                   // =&gt; Math.atan2(4, 3)
+</code></pre>
+
+<p>上述代码使用存储器属性定义一个 API，该 API 提供一组数据的两种表示形式（笛卡尔坐标和极坐标）。使用存储器属性的其他场景包括属性写入的稳健性检测以及在每个属性上返回不同的值：</p>
+
+<pre><code class="language-javascript">// This object generates strictly increasing serial numbers
+const serialnum = {
+    // This data property holds the next serial number.
+    // The _ in the property name hints that it is for internal use only.
+    _n: 0,
+
+    // Return the current value and increment it
+    get next() { return this._n++; },
+
+    // Set a new value of n, but only if it is larger than current
+    set next(n) {
+        if (n &gt; this._n) this._n = n;
+        else throw new Error(&quot;serial number can only be set to a larger value&quot;);
+    }
+};
+serialnum.next = 10;    // Set the starting serial number
+serialnum.next          // =&gt; 10
+serialnum.next          // =&gt; 11: different value each time we get next
+</code></pre>
+
+<p>最后，下面是使用 getter 方法实现具有&quot;魔幻&quot;行为的属性的示例：</p>
+
+<pre><code class="language-javascript">// This object has accessor properties that return random numbers.
+// The expression &quot;random.octet&quot;, for example, yields a random number
+// between 0 and 255 each time it is evaluated.
+const random = {
+    get octet() { return Math.floor(Math.random()*256); },
+    get uint16() { return Math.floor(Math.random()*65536); },
+    get int16() { return Math.floor(Math.random()*65536)-32768; }
+};
+</code></pre>
+
+<h2 id="toc_28">6.11 总结</h2>
+
+<p>本章非常详细地记录了 JavaScript 对象，涵盖的主题包括：</p>
+
+<p>基本对象术语，包括可枚举和自有属性等术语的含义。</p>
+
+<p>对象字面量语法，包括 ES6 及以后的许多新特性。</p>
+
+<p>如何读取、写入、删除、枚举和检查对象属性是否存在。</p>
+
+<p>基于原型的继承是如何在 JavaScript 中工作，以及如何使用 Object.create() 创建一个从另一个对象继承的对象。</p>
+
+<p>如何使用 Object.assign() 将属性从一个对象复制到另一个对象。</p>
+
+<p>所有 JavaScript 的非原始值都是对象。这包括数组和函数，这是接下来两章的主题。</p>
+
+<hr/>
+
+<ol>
+<li>记住，几乎所有对象都有一个原型，但大多数对象没有名为 prototype 的属性。即使不能直接访问原型对象，JavaScript 继承依然工作。但是，如果你想学习如何做到这一点，请参阅 §14.3。</li>
+</ol>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[JavaScript 原型和原型链]]></title>
+    <link href="blog.2019919.top/16080322533005.html"/>
+    <updated>2020-12-15T19:37:33+08:00</updated>
+    <id>blog.2019919.top/16080322533005.html</id>
+    <content type="html"><![CDATA[
+<p>今天刚开始学习【重学前端】的课程，讲到装箱转换的时候提到了函数的 call 方法，而 call 方法在我的印象中就只有 call 约等于 apply ，然后就再没有然后了。在我想深入了解下 call 方法的时候又发现了有人在同时讲解原型，而于此同时我看到了知乎上的一个贴<a href="https://www.zhihu.com/question/60165921">面试一个5年的前端，却连原型链也搞不清楚，满口都是Vue，React之类的实现，这样的人该用吗？</a>，这我不看内容我就惊呆了，这标题不就是在说我吗。带着各种心情赶紧学习下到底什么是原型和原型链。</p>
+
+<h2 id="toc_0">原型</h2>
+
+<pre><code class="language-text">prototype  [ˈproʊtətaɪp]  原型
+</code></pre>
+
+<p>OK完了😊！</p>
+
+<p>下面这个图很多大神都有画过，下面记录下我自己的理解和实验。</p>
+
+<p><img src="media/16080322533005/16080400429560.jpg" alt="" style="width:450px;"/></p>
+
+<h3 id="toc_1">构造函数视角</h3>
+
+<p>函数可以用来做构造器，也就是 constructor，而构造器也可以称为类。<br/>
+通过构造器 Apple 来创建一个对象对象 apple。</p>
+
+<p><img src="media/16080322533005/16080397593797.jpg" alt="" style="width:198px;"/></p>
+
+<p><strong>构造函数创建了实例对象</strong>，这是构造函数与实例对象的关系。</p>
+
+<hr/>
+
+<p><strong>构造函数有一个属性叫做 propotype，他指向了原型对象。</strong></p>
+
+<p><img src="media/16080322533005/16080405364424.jpg" alt="" style="width:299px;"/></p>
+
+<p>这里的原型对象写做 [[propotype]]，这里我猜测是为了区分propotype的属性。</p>
+
+<h3 id="toc_2">原型对象视角</h3>
+
+<p><strong>原型对象的 constructor 属性指向了构造函数</strong>。</p>
+
+<p><img src="media/16080322533005/16080407735350.jpg" alt="" style="width:382px;"/></p>
+
+<p>这里用构造器的原型对象的 constructor 方法来创建一个 badApple ，会发现它和 apple 的类型是相等的。</p>
+
+<h3 id="toc_3">实例对象视角</h3>
+
+<p>对象也有一个属性 __propo__，这是一个隐式属性，<strong>对象的 __propo__ 指向了他的构造函数的原型对象。</strong>也就是说 Apple 的 propotype 属性和 apple、badApple 的 __propo__ 指向了同一个地址。</p>
+
+<p><img src="media/16080322533005/16080419126552.jpg" alt="" style="width:318px;"/></p>
+
+<h3 id="toc_4">由函数引出原型链</h3>
+
+<p>函数是 JS 中的第一类对象，在 Javascript 中，对象所拥有的函数也同样拥有，也就是说构造函数 Apple 也同样会有 __propo__ 属性去指向他的父类的原型对象，为了理清这乱七八糟的关系，就有了下面“对象-函数-构造函数-实例对象”这样的一个关系图，也就是原型链图。</p>
+
+<h2 id="toc_5">原型链</h2>
+
+<p><img src="media/16080322533005/16080423510561.jpg" alt=""/></p>
+
+<p>这张图理解了上面的内容之后就感觉容易多了，总结一下有以下几点需要注意。</p>
+
+<ul>
+<li>任何函数的父类都是 Function 构造函数，也就是任何函数的 __proto__ 指向 Function.prototype，这里同样包含了 Function 构造函数自己。</li>
+<li>Object 构造函数它也是函数，它的的 __proto__ 也指向 Function.prototype。</li>
+<li>Function.prototype 的 __proto__ 指向 Object.prototype，这也就是为什么说函数也是对象。</li>
+<li>Object.prototype 的 __proto__ 是 null。</li>
+</ul>
+
+<h2 id="toc_6"> ES6 中的类</h2>
+
+<p>类的写法也是由原型运行时来承载的，逻辑上 JavaScript 认为每个类是有共同原型的一组对象，类中定义的方法和属性会被卸载原型对象之上。此外最重要的是类提供了继承能力。</p>
+
+<pre><code class="language-javascript">class Animal { 
+  constructor(name) {
+    this.name = name;
+  }
+  
+  speak() {
+    console.log(this.name + &#39; makes a noise.&#39;);
+  }
+}
+class Dog extends Animal {
+  constructor(name) {
+    super(name); // call the super class constructor and pass in the name parameter
+  }
+  speak() {
+    console.log(this.name + &#39; barks.&#39;);
+  }
+}
+let d = new Dog(&#39;Mitzie&#39;);
+d.speak(); // Mitzie barks.
+</code></pre>
+
+<p>以上代码创造了 Animal 类，并且通过 extends 关键字让 Dog 继承了它，展示了最终调用子类的 speak 方法获取了父类的 name。比起早期的原型模拟方式，使用 extends 关键字自动设置了 constructor，并且会自动调用父类的构造函数，这是一种更少坑的设计。所以当我们使用类的思想来设计代码时，应该尽量使用 class 来声明类，而不是用旧语法，拿函数来模拟对象。</p>
+
+<blockquote>
+<p>super 关键字用于访问和调用一个对象的父对象上的函数。<br/>
+在构造函数中使用时，super关键字将单独出现，并且必须在使用this关键字之前使用。</p>
+</blockquote>
+
+<pre><code class="language-javascript">super([arguments]);
+// 调用 父对象/父类 的构造函数
+super.functionOnParent([arguments]);
+// 调用 父对象/父类 上的方法
+</code></pre>
+
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[第 7 章 数组]]></title>
     <link href="blog.2019919.top/16124375850406.html"/>
     <updated>2021-02-04T19:19:45+08:00</updated>
@@ -21,16 +1611,16 @@
     <content type="html"><![CDATA[
 <ul>
 <li>
-<a href="#toc_0">7.1 Creating Arrays</a>
+<a href="#toc_0">7.1 创建数组</a>
 <ul>
 <li>
-<a href="#toc_1">7.1.1 Array Literals</a>
+<a href="#toc_1">7.1.1 数组字面量</a>
 </li>
 <li>
-<a href="#toc_2">7.1.2 The Spread Operator</a>
+<a href="#toc_2">7.1.2 展开运算符</a>
 </li>
 <li>
-<a href="#toc_3">7.1.3 The Array() Constructor</a>
+<a href="#toc_3">7.1.3 Array() 构造函数</a>
 </li>
 <li>
 <a href="#toc_4">7.1.4 Array.of()</a>
@@ -41,16 +1631,16 @@
 </ul>
 </li>
 <li>
-<a href="#toc_6">7.2 Reading and Writing Array Elements</a>
+<a href="#toc_6">7.2 数组元素的读和写</a>
 </li>
 <li>
-<a href="#toc_7">7.3 Sparse Arrays</a>
+<a href="#toc_7">7.3 稀疏数组（Sparse Arrays）</a>
 </li>
 <li>
-<a href="#toc_8">7.4 Array Length</a>
+<a href="#toc_8">7.4 数组长度</a>
 </li>
 <li>
-<a href="#toc_9">7.5 Adding and Deleting Array Elements</a>
+<a href="#toc_9">7.5 数组元素添加和删除</a>
 </li>
 <li>
 <a href="#toc_10">7.6 Iterating Arrays</a>
@@ -144,133 +1734,64 @@
 </ul>
 
 
-<p>This chapter documents arrays, a fundamental datatype in JavaScript and in most other programming languages. An array is an ordered collection of values. Each value is called an element, and each element has a numeric position in the array, known as its index. JavaScript arrays are untyped: an array element may be of any type, and different elements of the same array may be of different types. Array elements may even be objects or other arrays, which allows you to create complex data structures, such as arrays of objects and arrays of arrays. JavaScript arrays are zero-based and use 32-bit indexes: the index of the first element is 0, and the highest possible index is 4294967294 (2<sup>32</sup>−2), for a maximum array size of 4,294,967,295 elements. JavaScript arrays are dynamic: they grow or shrink as needed, and there is no need to declare a fixed size for the array when you create it or to reallocate it when the size changes. JavaScript arrays may be sparse: the elements need not have contiguous indexes, and there may be gaps. Every JavaScript array has a length property. For nonsparse arrays, this property specifies the number of elements in the array. For sparse arrays, length is larger than the highest index of any element.</p>
-
-<blockquote>
 <p>本章记录了数组、一个在 JavaScript 和大多数其他编程语言中的基本数据类型。数组是值的有序集合。每个值叫做一个元素，而每个元素在数组中有一个位置，以数字表示，称为索引。JavaScript 数组是无类型的：数组元素可以是任意类型，并且同一个数组中的不同元素也可能有不同的类型。数组的元素甚至也可能是对象或其他数组，这允许创建复杂的数据结构，如对象的数组和数组的数组。JavaScript 数组的索引是基于零的 32 位数值：第一个元素的索引为 0，最大可能的索引为 4,294,967,294（2<sup>32</sup>-2），数组最大能容纳 4,294,967,295 个元素。JavaScript 数组是动态的：根据需要它们会增长或缩减，并且在创建数组时无须声明一个固定的大小或者在数组大小变化时无须重新分配空间。JavaScript 数组可能是稀疏的：数组元素的索引不一定要连续的，它们之间可以有空缺。每个 JavaScript 数组都有一个 length 属性。针对非稀疏数组，该属性就是数组元素的个数。针对稀疏数组，length 大于任何元素的最高索引。</p>
-</blockquote>
 
-<p>JavaScript arrays are a specialized form of JavaScript object, and array indexes are really little more than property names that happen to be integers. We’ll talk more about the specializations of arrays elsewhere in this chapter. Implementations typically optimize arrays so that access to numerically indexed array elements is generally significantly faster than access to regular object properties.</p>
-
-<blockquote>
 <p>JavaScript 数组是 JavaScript 对象的特殊形式，数组索引实际上和碰巧是整数的属性名差不多。我们将在本章的其他地方更多地讨论特殊化的数组。通常，数组的实现是经过优化的，用数字索引来访问数组元素一般来说比访问常规的对象属性要快很多。</p>
-</blockquote>
 
-<p>Arrays inherit properties from Array.prototype, which defines a rich set of array manipulation methods, covered in §7.8. Most of these methods are generic, which means that they work correctly not only for true arrays, but for any “array-like object.” We’ll discuss array-like objects in §7.9. Finally, JavaScript strings behave like arrays of characters, and we’ll discuss this in §7.10.</p>
-
-<blockquote>
 <p>数组继承自 Array.prototype 中的属性，它定义了一套丰富的数组操作方法，§7.8 涵盖这方面内容。大多数这些方法是通用的，这意味着它们不仅对真正的数组有效，而且对“类数组对象”同样有效。§7.9 讨论类数组对象。最后，JavaScript 字符串的行为与字符数组类似，我们将在 §7.10 讨论。</p>
-</blockquote>
 
-<p>ES6 introduces a set of new array classes known collectively as “typed arrays.” Unlike regular JavaScript arrays, typed arrays have a fixed length and a fixed numeric element type. They offer high performance and byte-level access to binary data and are covered in §11.2.</p>
-
-<blockquote>
 <p>ES6 引入了一组新的数组类，这些类统称为“类型化数组”。与常规的 JavaScript 数组不同，类型化数组有固定的长度和固定的数值元素类型。它们提供高性能和对二进制数据的字节级访问，在 §11.2 中有介绍。</p>
-</blockquote>
 
-<h2 id="toc_0">7.1 Creating Arrays</h2>
+<h2 id="toc_0">7.1 创建数组</h2>
 
-<p>There are several ways to create arrays. The subsections that follow explain how to create arrays with:</p>
-
-<blockquote>
 <p>有很多种创建数组的方法。以下小节将说明如何使用以下方式创建数组：</p>
-</blockquote>
 
-<p>Array literals</p>
+<ul>
+<li>数组字面量</li>
+<li>可迭代数组 ... 展开运算符</li>
+<li>Array() 构造函数</li>
+<li>Array.of() 和 Array.from() 工厂方法</li>
+</ul>
 
-<blockquote>
-<p>数组字面量</p>
-</blockquote>
+<h3 id="toc_1">7.1.1 数组字面量</h3>
 
-<p>The ... spread operator on an iterable object</p>
-
-<blockquote>
-<p>可迭代数组 ... 展开运算符</p>
-</blockquote>
-
-<p>The Array() constructor</p>
-
-<blockquote>
-<p>Array() 构造函数</p>
-</blockquote>
-
-<p>The Array.of() and Array.from() factory methods</p>
-
-<blockquote>
-<p>Array.of() 和 Array.from() 工厂方法</p>
-</blockquote>
-
-<h3 id="toc_1">7.1.1 Array Literals</h3>
-
-<p>By far the simplest way to create an array is with an array literal, which is simply a comma-separated list of array elements within square brackets. For example:</p>
-
-<blockquote>
 <p>到目前为止使用数组字面量是创建数组最简单的方法，在方括号中将数组元素用逗号隔开即可。例如：</p>
-</blockquote>
 
 <pre><code class="language-javascript">let empty = [];                 // An array with no elements
 let primes = [2, 3, 5, 7, 11];  // An array with 5 numeric elements
 let misc = [ 1.1, true, &quot;a&quot;, ]; // 3 elements of various types + trailing comma
 </code></pre>
 
-<p>The values in an array literal need not be constants; they may be arbitrary expressions:</p>
-
-<blockquote>
 <p>数组字面量中的值不一定要是常量；它们可以是任意的表达式：</p>
-</blockquote>
 
 <pre><code class="language-javascript">let base = 1024;
 let table = [base, base+1, base+2, base+3];
 </code></pre>
 
-<p>Array literals can contain object literals or other array literals:</p>
-
-<blockquote>
 <p>数组字面量可以包含对象字面量或其他数组字面量：</p>
-</blockquote>
 
 <pre><code class="language-javascript">let b = [[1, {x: 1, y: 2}], [2, {x: 3, y: 4}]];
 </code></pre>
 
-<p>If an array literal contains multiple commas in a row, with no value between, the array is sparse (see §7.3). Array elements for which values are omitted do not exist but appear to be undefined if you query them:</p>
-
-<blockquote>
 <p>如果数组字面量在一行中包含多个逗号，之间没有值，则数组是稀疏的（请参阅 §7.3）。省略值的数组元素不存在，但如果查询它们则返回 undefined：</p>
-</blockquote>
 
 <pre><code class="language-javascript">let count = [1,,3]; // Elements at indexes 0 and 2. No element at index 1
 let undefs = [,,];  // An array with no elements but a length of 2
 </code></pre>
 
-<p>Array literal syntax allows an optional trailing comma, so [,,] has a length of 2, not 3.</p>
-
-<blockquote>
 <p>数组字面量语法允许可选的尾部逗号，所以 [,,] 的长度是 2，不是3。</p>
-</blockquote>
 
-<h3 id="toc_2">7.1.2 The Spread Operator</h3>
+<h3 id="toc_2">7.1.2 展开运算符</h3>
 
-<p>In ES6 and later, you can use the “spread operator,” ..., to include the elements of one array within an array literal:</p>
-
-<blockquote>
 <p>ES6 之后，可以使用展开操作符 ... 将一个数组中的元素展开在数组字面量中：</p>
-</blockquote>
 
 <pre><code class="language-javascript">let a = [1, 2, 3];
 let b = [0, ...a, 4];  // b == [0, 1, 2, 3, 4]
 </code></pre>
 
-<p>The three dots “spread” the array a so that its elements become elements within the array literal that is being created. It is as if the ...a was replaced by the elements of the array a, listed literally as part of the enclosing array literal. (Note that, although we call these three dots a spread operator, this is not a true operator because it can only be used in array literals and, as we’ll see later in the book, function invocations.)</p>
-
-<blockquote>
 <p>三个点展开数组 a，所以它的元素变成了数组字面量，并被创建在数组中。就像 ...a 被数组 a 的元素所替换，被列出作为未闭合的数组字面量的一部分。（注意，尽管我们称三点是展开运算符，但这并不是一个操作，因为它只能用于数组字面量和本书后面提到的函数调用。）</p>
-</blockquote>
 
-<p>The spread operator is a convenient way to create a (shallow) copy of an array:</p>
-
-<blockquote>
 <p>展开运算符可以方便的创建一个数组的拷贝（浅拷贝）：</p>
-</blockquote>
 
 <pre><code class="language-javascript">let original = [1,2,3];
 let copy = [...original];
@@ -278,92 +1799,48 @@ copy[0] = 0;  // Modifying the copy does not change the original
 original[0]   // =&gt; 1
 </code></pre>
 
-<p>The spread operator works on any iterable object. (Iterable objects are what the for/of loop iterates over; we first saw them in §5.4.4, and we’ll see much more about them in Chapter 12.) Strings are iterable, so you can use a spread operator to turn any string into an array of single-character strings:</p>
-
-<blockquote>
 <p>展开运算符可以作用于任何可迭代对象。（可迭代对象是可以用 for/of 进行循环的对象；第一次在 §5.4.4 中提到，在第 12 章会看到更多关于它们的描述。）字符串是可迭代对象，所以可以使用展开操作符将字符串转换成单个字符的数组。</p>
-</blockquote>
 
 <pre><code class="language-javascript">let digits = [...&quot;0123456789ABCDEF&quot;];
 digits // =&gt; [&quot;0&quot;,&quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,&quot;5&quot;,&quot;6&quot;,&quot;7&quot;,&quot;8&quot;,&quot;9&quot;,&quot;A&quot;,&quot;B&quot;,&quot;C&quot;,&quot;D&quot;,&quot;E&quot;,&quot;F&quot;]
 </code></pre>
 
-<p>Set objects (§11.1.1) are iterable, so an easy way to remove duplicate elements from an array is to convert the array to a set and then immediately convert the set back to an array using the spread operator:</p>
-
-<blockquote>
 <p>Set 对象（§11.1.1）是可迭代对象，所以数组去重有一种简单的方法是用展开运算符将数组转换成 set 然后再转成数组：</p>
-</blockquote>
 
 <pre><code class="language-javascript">let letters = [...&quot;hello world&quot;];
 [...new Set(letters)]  // =&gt; [&quot;h&quot;,&quot;e&quot;,&quot;l&quot;,&quot;o&quot;,&quot; &quot;,&quot;w&quot;,&quot;r&quot;,&quot;d&quot;]
 </code></pre>
 
-<h3 id="toc_3">7.1.3 The Array() Constructor</h3>
+<h3 id="toc_3">7.1.3 Array() 构造函数</h3>
 
-<p>Another way to create an array is with the Array() constructor. You can invoke this constructor in three distinct ways:</p>
-
-<blockquote>
 <p>另一种创建数组的方法是使用 Array() 构造函数。可以用三种不同的方式调用这个构造函数：</p>
-</blockquote>
 
-<p>Call it with no arguments:</p>
-
-<blockquote>
 <p>调用时没有实参：</p>
-</blockquote>
 
 <pre><code class="language-javascript">let a = new Array();
 </code></pre>
 
-<p>This method creates an empty array with no elements and is equivalent to the array literal [].</p>
-
-<blockquote>
 <p>这个方法创建了一个没有元素的空数组，它等价于 [] 数组字面量。</p>
-</blockquote>
 
-<p>Call it with a single numeric argument, which specifies a length:</p>
-
-<blockquote>
 <p>调用时有一个数值实参，它指定了数组的长度：</p>
-</blockquote>
 
 <pre><code class="language-javascript">let a = new Array(10);
 </code></pre>
 
-<p>This technique creates an array with the specified length. This form of the Array() constructor can be used to preallocate an array when you know in advance how many elements will be required. Note that no values are stored in the array, and the array index properties “0”, “1”, and so on are not even defined for the array.</p>
-
-<blockquote>
 <p>该技术创建指定长度的数组。当预先知道所需元素个数时，这种形式的 Array() 构造函数可以用来预分配一个数组空间。注意，数组中没有存储值，甚至数组的索引属性“0”、“1”等还未定义。</p>
-</blockquote>
 
-<p>Explicitly specify two or more array elements or a single non-numeric element for the array:</p>
-
-<blockquote>
 <p>为数组显式指定两个或多个数组元素或者非数值元素：</p>
-</blockquote>
 
 <pre><code class="language-javascript">let a = new Array(5, 4, 3, 2, 1, &quot;testing, testing&quot;);
 </code></pre>
 
-<p>In this form, the constructor arguments become the elements of the new array. Using an array literal is almost always simpler than this usage of the Array() constructor.</p>
-
-<blockquote>
 <p>以这种形式，构造函数的实参将会成为新数组的元素。使用数组字面量比这样使用 Array() 构造函数要简单多了。</p>
-</blockquote>
 
 <h3 id="toc_4">7.1.4 Array.of()</h3>
 
-<p>When the Array() constructor function is invoked with one numeric argument, it uses that argument as an array length. But when invoked with more than one numeric argument, it treats those arguments as elements for the array to be created. This means that the Array() constructor cannot be used to create an array with a single numeric element.</p>
-
-<blockquote>
 <p>当 Array() 构造函数调用时有一个数值型实参，它会将实参作为数组的长度。但当调用时不止一个数值型实参时，它会将那些实参作为数组的元素创建。这意味着 Array() 构造函数不能创建只有一个数值型元素的数组。</p>
-</blockquote>
 
-<p>In ES6, the Array.of() function addresses this problem: it is a factory method that creates and returns a new array, using its argument values (regardless of how many of them there are) as the array elements:</p>
-
-<blockquote>
 <p>在 ES6 中，Array.of() 函数修复了这个问题：它是一个将其实参值（无论有多少个实参）作为数组元素创建并返回一个新数组的工厂方法：</p>
-</blockquote>
 
 <pre><code class="language-javascript">Array.of()        // =&gt; []; returns empty array with no arguments
 Array.of(10)      // =&gt; [10]; can create arrays with a single numeric argument
@@ -372,37 +1849,21 @@ Array.of(1,2,3)   // =&gt; [1, 2, 3]
 
 <h3 id="toc_5">7.1.5 Array.from()</h3>
 
-<p>Array.from is another array factory method introduced in ES6. It expects an iterable or array-like object as its first argument and returns a new array that contains the elements of that object. With an iterable argument, Array.from(iterable) works like the spread operator [...iterable] does. It is also a simple way to make a copy of an array:</p>
-
-<blockquote>
 <p>Array.from 是 ES6 中另外一个数组工厂方法。它期望一个可迭代或类数组对象作为它的第一个实参，并返回一个包含对象中元素的新数组。使用一个可迭代实参，Array.from(iterable) 工作方式类似于展开运算符 [...iterable]。它也可以简单的拷贝一个数组：</p>
-</blockquote>
 
 <pre><code class="language-javascript">let copy = Array.from(original);
 </code></pre>
 
-<p>Array.from() is also important because it defines a way to make a true-array copy of an array-like object. Array-like objects are non-array objects that have a numeric length property and have values stored with properties whose names happen to be integers. When working with client-side JavaScript, the return values of some web browser methods are array-like, and it can be easier to work with them if you first convert them to true arrays:</p>
-
-<blockquote>
 <p>Array.from() 也很重要，因为它定义了一个将类数组对象拷贝成数组的方法。类数组对象是一个不是数组的对象，它有一个数值型的 length 属性，并且它的值碰巧保存在属性名为整数的属性中。当使用客户端 JavaScript 时，一些浏览器方法的返回值是类数组的，并且当将其转化成真正的数组后会更容易操作它们：</p>
-</blockquote>
 
 <pre><code class="language-javascript">let truearray = Array.from(arraylike);
 </code></pre>
 
-<p>Array.from() also accepts an optional second argument. If you pass a function as the second argument, then as the new array is being built, each element from the source object will be passed to the function you specify, and the return value of the function will be stored in the array instead of the original value. (This is very much like the array map() method that will be introduced later in the chapter, but it is more efficient to perform the mapping while the array is being built than it is to build the array and then map it to another new array.)</p>
-
-<blockquote>
 <p>Array.from() 第二个实参为可选实参。如果传递一个函数作为第二个实参，那么当新数组被创建，每一个元素都会被作为实参传入这个指定函数中，并且这个函数的每个返回值保存在数组中代替原来的值。（这很像后面会介绍的数组 map() 方法，但是，它会更加高效的执行映射，因其为没有创建数组，而是直接进行映射到另外一个数组。）</p>
-</blockquote>
 
-<h2 id="toc_6">7.2 Reading and Writing Array Elements</h2>
+<h2 id="toc_6">7.2 数组元素的读和写</h2>
 
-<p>You access an element of an array using the [] operator. A reference to the array should appear to the left of the brackets. An arbitrary expression that has a non-negative integer value should be inside the brackets. You can use this syntax to both read and write the value of an element of an array. Thus, the following are all legal JavaScript statements:</p>
-
-<blockquote>
 <p>使用 [] 运算符来访问数组中的一个元素。数组的引用位于方括号的左边。方括号中是一个返回非负整数值的任意表达式。使用该语法既可以读又可以写数组的一个元素。因此，如下代码都是合法的 JavaScript 语句：</p>
-</blockquote>
 
 <pre><code class="language-javascript">let a = [&quot;world&quot;];     // Start with a one-element array
 let value = a[0];      // Read element 0
@@ -413,84 +1874,48 @@ a[i + 1] = &quot;hello&quot;;    // Write element 3
 a[a[i]] = a[0];        // Read elements 0 and 2, write element 3
 </code></pre>
 
-<p>What is special about arrays is that when you use property names that are non-negative integers less than 2<sup>32</sup>–1, the array automatically maintains the value of the length property for you. In the preceding, for example, we created an array a with a single element. We then assigned values at indexes 1, 2, and 3. The length property of the array changed as we did, so:</p>
-
-<blockquote>
 <p>数组特殊的是，当使用小于 2<sup>32</sup>–1 的非负整数属性名时，数组会自动维护 length 属性。例如，上文中我们创建了只有一个元素的数组 a。然后我们为其序列为 1、2 和 3 的元素进行赋值。数组 length 属性会自动改变：</p>
-</blockquote>
 
 <pre><code class="language-javascript">a.length       // =&gt; 4
 </code></pre>
 
-<p>Remember that arrays are a specialized kind of object. The square brackets used to access array elements work just like the square brackets used to access object properties. JavaScript converts the numeric array index you specify to a string—the index 1 becomes the string &quot;1&quot;—then uses that string as a property name. There is nothing special about the conversion of the index from a number to a string: you can do that with regular objects, too:</p>
-
-<blockquote>
 <p>请记住，数组是对象的特殊形式。使用方括号访问数组元素就像用方括号访问对象的属性一样。JavaScript 将指定的数字索引值转换成字符串（索引值 1 变成“1”）然后将其作为属性名来使用。关于索引值从数字转换为字符串没什么特别之处：对常规对象也可以这么做：</p>
-</blockquote>
 
 <pre><code class="language-javascript">let o = {};    // Create a plain object
 o[1] = &quot;one&quot;;  // Index it with an integer
 o[&quot;1&quot;]         // =&gt; &quot;one&quot;; numeric and string property names are the same
 </code></pre>
 
-<p>It is helpful to clearly distinguish an array index from an object property name. All indexes are property names, but only property names that are integers between 0 and 2<sup>32</sup>–2 are indexes. All arrays are objects, and you can create properties of any name on them. If you use properties that are array indexes, however, arrays have the special behavior of updating their length property as needed.</p>
-
-<blockquote>
 <p>清晰地区分数组的索引和对象的属性名是非常有用的。所有的索引都是属性名，但只有在 0～2<sup>32</sup>-2 之间的整数属性名才是索引。所有的数组都是对象，可以为其创建任意名字的属性。但如果使用的属性是数组的索引，数组的特殊行为就是将根据需要更新它们的 length 属性值。</p>
-</blockquote>
 
-<p>Note that you can index an array using numbers that are negative or that are not integers. When you do this, the number is converted to a string, and that string is used as the property name. Since the name is not a non-negative integer, it is treated as a regular object property, not an array index. Also, if you index an array with a string that happens to be a non-negative integer, it behaves as an array index, not an object property. The same is true if you use a floating-point number that is the same as an integer:</p>
-
-<blockquote>
 <p>注意，可以使用负数或非整数来索引数组。这种情况下，数值转换为字符串，字符串作为属性名来用。既然名字不是非负整数，它就只能当做常规的对象属性，而非数组的索引。同样，如果凑巧使用了是非负整数的字符串，它就当做数组索引，而非对象属性。当使用的一个浮点数和一个整数相等时情况也是一样的：</p>
-</blockquote>
 
 <pre><code class="language-javascript">a[-1.23] = true;  // This creates a property named &quot;-1.23&quot;
 a[&quot;1000&quot;] = 0;    // This the 1001st element of the array
 a[1.000] = 1;     // Array index 1. Same as a[1] = 1;
 </code></pre>
 
-<p>The fact that array indexes are simply a special type of object property name means that JavaScript arrays have no notion of an “out of bounds” error. When you try to query a nonexistent property of any object, you don’t get an error; you simply get undefined. This is just as true for arrays as it is for objects:</p>
-
-<blockquote>
 <p>事实上数组索引仅仅是对象属性名的一种特殊类型，这意味着 JavaScript 数组没有“越界”错误的概念。当试图查询任何对象中不存在的属性时，都不会报错，只会得到 undefined 值。类似于对象，对于对象同样存在这种情况。</p>
-</blockquote>
 
 <pre><code class="language-javascript">let a = [true, false]; // This array has elements at indexes 0 and 1
 a[2]                   // =&gt; undefined; no element at this index.
 a[-1]                  // =&gt; undefined; no property with this name.
 </code></pre>
 
-<h2 id="toc_7">7.3 Sparse Arrays</h2>
+<h2 id="toc_7">7.3 稀疏数组（Sparse Arrays）</h2>
 
-<p>A sparse array is one in which the elements do not have contiguous indexes starting at 0. Normally, the length property of an array specifies the number of elements in the array. If the array is sparse, the value of the length property is greater than the number of elements. Sparse arrays can be created with the Array() constructor or simply by assigning to an array index larger than the current array length.</p>
-
-<blockquote>
 <p>稀疏数组就是包含从 0 开始的不连续索引的数组。通常，数组的 length 属性值代表数组中元素的个数。如果数组是稀疏的，length 属性值大于元素的个数。可以用 Array() 构造函数或简单地指定数组的索引值大于当前的数组长度来创建稀疏数组。</p>
-</blockquote>
 
 <pre><code class="language-javascript">let a = new Array(5); // No elements, but a.length is 5.
 a = [];               // Create an array with no elements and length = 0.
 a[1000] = 0;          // Assignment adds one element but sets length to 1001.
 </code></pre>
 
-<p>We’ll see later that you can also make an array sparse with the delete operator.</p>
-
-<blockquote>
 <p>后面会看到你也可以用 delete 运算符来生产稀疏数组。</p>
-</blockquote>
 
-<p>Arrays that are sufficiently sparse are typically implemented in a slower, more memory-efficient way than dense arrays are, and looking up elements in such an array will take about as much time as regular object property lookup.</p>
-
-<blockquote>
 <p>足够稀疏的数组通常在实现上比稠密的数组更慢、内存利用率更高，在这样的数组中查找元素的时间与常规对象属性的查找时间一样长。</p>
-</blockquote>
 
-<p>Note that when you omit a value in an array literal (using repeated commas as in [1,,3]), the resulting array is sparse, and the omitted elements simply do not exist:</p>
-
-<blockquote>
 <p>注意，当在数组字面量中省略值时（像 [1,,3] 中使用重复的逗号）返回的是稀疏数组，省略掉的值是不存在的：</p>
-</blockquote>
 
 <pre><code class="language-javascript">let a1 = [,];           // This array has no elements and length 1
 let a2 = [undefined];   // This array has one undefined element
@@ -498,35 +1923,19 @@ let a2 = [undefined];   // This array has one undefined element
 0 in a2                 // =&gt; true: a2 has the undefined value at index 0
 </code></pre>
 
-<p>Understanding sparse arrays is an important part of understanding the true nature of JavaScript arrays. In practice, however, most JavaScript arrays you will work with will not be sparse. And, if you do have to work with a sparse array, your code will probably treat it just as it would treat a nonsparse array with undefined elements.</p>
-
-<blockquote>
 <p>了解稀疏数组是了解 JavaScript 数组的真实本质的一部分。尽管如此，实际上你所碰到的绝大多数 JavaScript 数组不是稀疏数组。并且，如果你确实碰到了稀疏数组，你的代码很可能像对待非稀疏数组一样来对待它们，只不过它们包含一些 undefined 元素。</p>
-</blockquote>
 
-<h2 id="toc_8">7.4 Array Length</h2>
+<h2 id="toc_8">7.4 数组长度</h2>
 
-<p>Every array has a length property, and it is this property that makes arrays different from regular JavaScript objects. For arrays that are dense (i.e., not sparse), the length property specifies the number of elements in the array. Its value is one more than the highest index in the array:</p>
-
-<blockquote>
 <p>每个数组有一个 length 属性，就是这个属性使其区别于常规的 JavaScript 对象。针对稠密（也就是非稀疏）数组，length 属性值代表数组中元素的个数。其值比数组中最大的索引大 1：</p>
-</blockquote>
 
 <pre><code class="language-javascript">[].length             // =&gt; 0: the array has no elements
 [&quot;a&quot;,&quot;b&quot;,&quot;c&quot;].length  // =&gt; 3: highest index is 2, length is 3
 </code></pre>
 
-<p>When an array is sparse, the length property is greater than the number of elements, and all we can say about it is that length is guaranteed to be larger than the index of every element in the array. Or, put another way, an array (sparse or not) will never have an element whose index is greater than or equal to its length. In order to maintain this invariant, arrays have two special behaviors. The first we described above: if you assign a value to an array element whose index i is greater than or equal to the array’s current length, the value of the length property is set to i+1.</p>
-
-<blockquote>
 <p>当数组是稀疏的时，length 属性值大于元素的个数。而且关于此我们可以说数组长度保证大于它每个元素的索引值。或者，换一种说法，在数组中（无论稀疏与否）肯定找不到一个元素的索引值大于或等于它的长度。为了维持此规则不变化，数组有两个特殊的行为。第一个如同上面的描述：如果为一个数组元素赋值，它的索引 i 大于或等于现有数组的长度时，length 属性的值将设置为 i+1。</p>
-</blockquote>
 
-<p>The second special behavior that arrays implement in order to maintain the length invariant is that, if you set the length property to a non-negative integer n smaller than its current value, any array elements whose index is greater than or equal to n are deleted from the array:</p>
-
-<blockquote>
 <p>第二个特殊的行为就是设置 length 属性为一个小于当前长度的非负整数n时，当前数组中那些索引值大于或等于 n 的元素将从中删除：</p>
-</blockquote>
 
 <pre><code class="language-javascript">a = [1,2,3,4,5];     // Start with a 5-element array.
 a.length = 3;        // a is now [1,2,3].
@@ -534,30 +1943,18 @@ a.length = 0;        // Delete all elements.  a is [].
 a.length = 5;        // Length is 5, but no elements, like new Array(5)
 </code></pre>
 
-<p>You can also set the length property of an array to a value larger than its current value. Doing this does not actually add any new elements to the array; it simply creates a sparse area at the end of the array.</p>
-
-<blockquote>
 <p>还可以将数组的 length 属性值设置为大于其当前的长度。实际上这不会向数组中添加新的元素，它只是在数组尾部创建一个稀疏区域。</p>
-</blockquote>
 
-<h2 id="toc_9">7.5 Adding and Deleting Array Elements</h2>
+<h2 id="toc_9">7.5 数组元素添加和删除</h2>
 
-<p>We’ve already seen the simplest way to add elements to an array: just assign values to new indexes:</p>
-
-<blockquote>
 <p>我们已经见过添加数组元素最简单的方法：为新索引赋值：</p>
-</blockquote>
 
 <pre><code class="language-javascript">let a = [];      // Start with an empty array.
 a[0] = &quot;zero&quot;;   // And add elements to it.
 a[1] = &quot;one&quot;;
 </code></pre>
 
-<p>You can also use the push() method to add one or more values to the end of an array:</p>
-
-<blockquote>
 <p>也可以使用push()方法在数组末尾增加一个或多个元素：</p>
-</blockquote>
 
 <pre><code class="language-javascript">let a = [];           // Start with an empty array
 a.push(&quot;zero&quot;);       // Add a value at the end.  a = [&quot;zero&quot;]
@@ -1598,1529 +2995,6 @@ s[1]           // =&gt; &quot;e&quot;
 <blockquote>
 <p>Array 类定义了一组用于操作数组的丰富方法，应该确保熟悉 Array API。</p>
 </blockquote>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[函数中的展开运算符和解构]]></title>
-    <link href="blog.2019919.top/16108495213063.html"/>
-    <updated>2021-01-17T10:12:01+08:00</updated>
-    <id>blog.2019919.top/16108495213063.html</id>
-    <content type="html"><![CDATA[
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[通过函数声明和调用掌握函数的 this 值]]></title>
-    <link href="blog.2019919.top/16107633205948.html"/>
-    <updated>2021-01-16T10:15:20+08:00</updated>
-    <id>blog.2019919.top/16107633205948.html</id>
-    <content type="html"><![CDATA[
-<p>函数的 this 对于基础薄弱的前端程序员一直是一个比较头疼的问题，在对 ES6 的模糊和对 ES6 之前的函数作用域不理解双重打击下，往往无法区分 this 值到底是什么，因而在编写程序时常常需要通过测试当前作用域的 this 是什么，再去使用，甚至是某些公司严格规定哪种方式去实现。</p>
-
-<p>细细的看完了权威指南的第七版受益颇多，但是作者并没有拿出一个章节专门将相关内容进行汇总，这里就通过函数的声明和调用来总结下函数 this 值的几种情况。</p>
-
-<h2 id="toc_0"> 函数定义</h2>
-
-<p>函数的定义有多种方式来适应不同的使用场景：</p>
-
-<ul>
-<li>函数声明语句</li>
-<li>函数表达式</li>
-<li>箭头函数</li>
-<li>嵌套函数</li>
-<li>应用函数的构造函数 Function()</li>
-</ul>
-
-<h3 id="toc_1"> 函数声明语句</h3>
-
-<p>与大多数声明语句一样，以关键字 + 名称的形式来进行声明，函数用关键字 function 来声明：</p>
-
-<pre><code class="language-javascript">function testOutPut(){
-    console.log(&#39;Hello world!&#39;);        
-}
-</code></pre>
-
-<p>函数声明语句是函数名变成一个变量，这个变量的值是函数本身。这里实际上是声明了一个 testOutPut 变量，并讲函数对象赋值给 testOutPut。在 JavaScript 的运行时中，函数对象创建于该函数所在作用域的代码开始执行之前，也就是说，在同一个上下文中，可以先执行函数调用再进行函数语句声明。只是第一个函数作为值的概念的应用场景。</p>
-
-<h3 id="toc_2"> 函数表达式</h3>
-
-<p>函数表达式是一个赋值语句，将一个函数赋值给一个变量或常量。感觉函数表达式跟函数声明语句的运行时一样，但是如果先进行函数调用再进行函数表达式来定义函数将会异常。因为函数表达式在没有执行前并没有将函数赋值给变量，所以它也就不能被引用。</p>
-
-<pre><code class="language-javascript">beforeDefined();
-let beforeDefined = function(){console.log(1);}
-// Uncaught ReferenceError: beforeDefined is not defined
-</code></pre>
-
-<p>函数表达式的函数名称是可选项，如果给函数表达式添加一个函数名，那这个函数的<em>局部函数作用域内</em>会包含该属性的函数名的对象，其值绑定的是该函数：</p>
-
-<pre><code class="language-javascript">const f = function fact(x) {
-    if (x &lt;= 1) return 1;
-    else return x*fact(x-1);
-};
-</code></pre>
-
-<p>只有在函数局部作用域内会有这个对象，有点闭包的感觉。</p>
-
-<h3 id="toc_3"> 箭头函数</h3>
-
-<p>箭头函数是 ES6 的新特性，在实际生产中非常常用。它支持很多简洁语法：</p>
-
-<pre><code class="language-javascript">const sum = (x, y) =&gt; { return x + y; };
-const sum = (x, y) =&gt; x + y;
-const polynomial = x =&gt; x*x + 2*x + 3;
-const constantFunc = () =&gt; 42;
-</code></pre>
-
-<p>注意参数和箭头之间不能换行，否则会引起歧义。<br/>
-除此之外，它最大的特性就是它继承定义它环境的 this 值，我理解添加箭头函数的目的就是为了解决方法的嵌套函数 this 值为全局对象（严格模式下是 undefined）的缺陷：</p>
-
-<pre><code class="language-javascript">let o = {
-    a:1,
-    m:function(){
-        let self = this;
-        console.log(this === o);
-        f();
-        function f(){
-            console.log(this === o);
-            console.log(self === o);
-            console.log(this);
-        }
-    }
-}
-o.m();
-// true
-// flase
-// true
-// Window{...}
-</code></pre>
-
-<p>在 ES6 之前，我们需要通过闭包将 this 值保存在变量中使用，而有了箭头函数，可以直接继承 m 方法的 this 值：</p>
-
-<pre><code class="language-javascript">o = {
-    a:1,
-    m:function(){
-        let self = this;
-        console.log(this === o);
-        const f = () =&gt; {
-            console.log(this === o);
-            console.log(self === o);
-            console.log(this);
-        }
-        f();
-    }
-}
-o.m();
-// true
-// true
-// true
-// {a: 1, m: ƒ}
-</code></pre>
-
-<h3 id="toc_4"> 嵌套函数</h3>
-
-<p>函数可以嵌套在其他函数内。嵌套函数可以访问包含它们函数的变量和参数（闭包）：</p>
-
-<pre><code class="language-javascript">function first(){
-    let strFirst = &quot;first&quot;;
-    second();
-    function second(){
-        let strSecond = &quot;second&quot;;
-        third();
-        function third(){
-            console.log(strFirst);
-            console.log(strSecond);
-        }
-    }
-}
-first();
-// first
-// second
-</code></pre>
-
-<h3 id="toc_5"> Function() 构造函数创建函数</h3>
-
-<p>Function() 函数的实参都是字符串，最后一个实参是函数体。</p>
-
-<pre><code class="language-javascript">const f = new Function(&quot;x&quot;, &quot;y&quot;, &quot;return x*y;&quot;);
-</code></pre>
-
-<p>这里想到一个情况，当函数名相同时是否会报错：</p>
-
-<pre><code class="language-javascript">const f1 = new Function(&quot;x&quot;, &quot;x&quot;, &quot;return x;&quot;);
-f1(1,2);
-// 2
-</code></pre>
-
-<p>实际情况并没有，再次测试一下直接函数声明语句使用两个相同的参数，也没有报错：</p>
-
-<pre><code class="language-javascript">function f2(x,x,y){return x*y};
-f2(1,2,2);
-// 4
-</code></pre>
-
-<p>这样看实际上跟函数外部用 var 声明的变量在函数中再次声明一个效果：</p>
-
-<pre><code class="language-javascript">var x = 1;
-function test(){let x = 2;console.log(x)};
-console.log(x);
-test();
-// 1
-// 2
-</code></pre>
-
-<p>函数变量声明多个相相同的变量名时，传递的实参值将反复覆盖同名参数。<br/>
-Function() 构造函数非常重要的一点，就是它所创建的函数并不是使用词法作用域，相反，函数体代码的编译类似顶层函数，看书上的一个例子：</p>
-
-<pre><code class="language-javascript">let scope = &quot;global&quot;;
-function constructFunction() {
-    let scope = &quot;local&quot;;
-    return new Function(&quot;return scope&quot;);  // Doesn&#39;t capture local scope!
-}
-constructFunction()(); 
-// &quot;global&quot;
-</code></pre>
-
-<h2 id="toc_6"> 函数调用</h2>
-
-<p>函数调用和方法调用很常见就不再赘述，这里有三种很少使用的调用方式：</p>
-
-<ul>
-<li>构造函数调用</li>
-<li>间接调用</li>
-<li>隐式调用</li>
-</ul>
-
-<h3 id="toc_7"> 构造函数调用</h3>
-
-<pre><code class="language-javascript">function CreatObj(){
-    this[&#39;p&#39;] = &quot;property&quot;;    
-}
-o = new CreatObj();
-// CreatObj {p: &quot;property&quot;}
-</code></pre>
-
-<p>构造函数创建一个新对象，并将这个对象作为它的上下文，也就是说构造函数中的 this 值是新创建的对象。<br/>
-构造函数通常没有 return 语句，当显示的用 return 语句返回一个对象时，构造函数创建的对象将变成它 return 的对象，其他情况当没有返回值或返回一个原始值时，返回值都被忽略，返回它新创建的对象。</p>
-
-<h3 id="toc_8">间接调用</h3>
-
-<p>JavaScript 万物接对象，对象就有自己的属性和方法。同理，函数也是对象，也有自己的方法和属性，而 call() 和 apply() 方法也可以用来间接调用函数。</p>
-
-<h4 id="toc_9">call() 方法</h4>
-
-<p>MDN 中对于 call() 的解释已经很明了了：</p>
-
-<blockquote>
-<p>The call() method calls a function with a given this value and arguments provided individually.</p>
-</blockquote>
-
-<pre><code class="language-javascript">f.call(o, 1, 2);
-</code></pre>
-
-<p>这里不过是将 o 对象作为函数 f 调用的上下文，并传入两个实参 1 和 2 作为实参列表，也就是说它等同与下面的代码：</p>
-
-<pre><code class="language-javascript">o.m = f;
-o.m(1, 2);
-delete o.m;
-</code></pre>
-
-<p>这里注意 delete 语句，目的就是说函数在使用 call 方法时只是临时将 o 作为 f 的上下文并调用。而函数还有个不涉及调用的方法 bind() 它可以返回一个新的函数对象，<code>f.bind(o);</code>，而这个对象将一直绑定 o 为函数 f 的 this 值。</p>
-
-<h4 id="toc_10">apply() 方法</h4>
-
-<blockquote>
-<p>The apply() method calls a function with a given this value, and arguments provided as an array (or an array-like object).</p>
-</blockquote>
-
-<p>不难看出 apply() 和 call() 基本一致，只是实参以数组或者类似数组的对象进行传递。这里对类似数组的对象进行测试：</p>
-
-<pre><code class="language-javascript">function test(...args){
-    console.log(this);
-    for(item in args) console.log(item);
-}
-let o = {a:1};
-let likeArr = {p1:1,p2:2};
-likeArr.length = 2;    
-let unLikeArr = {p1:1,p2:2};
-test.apply(o,likeArr);
-// {a: 1}
-// 0
-// 1
-test.apply(o,unLikeArr);
-// {a: 1}
-</code></pre>
-
-<p>可见有了 length 的对象就被当作是类似数组的对象。</p>
-
-<h4 id="toc_11">this 值</h4>
-
-<p>可见当 call() 和 apply() 调用函数时给函数绑定了一个上下文 this 值，但是箭头函数是个特例，它从它定义的位置的上下文继承 this 值。也就是说当给箭头函数定义的函数使用这两个方法时，第一个参数将被忽略：</p>
-
-<pre><code class="language-javascript">let o = {
-    a: 1,
-    f: function(){
-        const oBind = {b:1};
-        const test = ()=&gt; console.log(this);
-        test.apply(oBind);
-    }
-}
-o.f();
-// {a: 1, f: ƒ}
-</code></pre>
-
-<h3 id="toc_12">隐式调用</h3>
-
-<ul>
-<li>getter 和 setter 方法在获取或者设置它的属性时可能被隐式调用。</li>
-<li>在对象进行字符串或者数值型和 BigInt 类型转换时，会隐式调用 toString() 和 valueOf() 方法。</li>
-<li>循环可迭代对象的元素时会产生很多方法调用。</li>
-<li>模板字符串可以调用函数。</li>
-<li>Proxy 对象的任何一个操作都会导致函数调用。</li>
-</ul>
-
-<h2 id="toc_13"> 关于函数 this 值的总结</h2>
-
-<p>函数 this 值有以下几种情况：</p>
-
-<ul>
-<li>函数声明语句和函数表达式定义的函数，在非严格模式下 this 值永远是 global，严格模式下是 undefined。</li>
-<li>apply() call() bind() 方法用在非箭头函数时，第一个参数作为函数运行时的 this 值。</li>
-<li>箭头函数的 this 值永远继承于它所定义的位置的 this 值。</li>
-<li>对象的方法中 this 值是该对象的引用，嵌套在该对象中的函数不为方法，所以遵循函数的 this 值（global 或者 undefined）。</li>
-<li>构造函数的 this 值是新创建的对象。</li>
-</ul>
-
-<p>闭包只是参数和变量作用域的引用，与 this 值无关。</p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[通过变量作用域深入了解 undefined]]></title>
-    <link href="blog.2019919.top/16088182648987.html"/>
-    <updated>2020-12-24T21:57:44+08:00</updated>
-    <id>blog.2019919.top/16088182648987.html</id>
-    <content type="html"><![CDATA[
-<p>undefined 是一个变量，它有可能被篡改，所以使用void（0）来代替他，但是在做实验的时候发现虽然给它赋值不报错，取值时候 undefined 却并没有改变。</p>
-
-<pre><code class="language-javascript">    undefined = 0
-    // 0
-    undefined
-    // undefined
-</code></pre>
-
-<p>这回学习到了变量作用域，再结合之前学的对象的属性，深入了解下 undefined 到底什么时候会被篡改。</p>
-
-<h2 id="toc_0">函数作用域和声明提前</h2>
-
-<p>别的语言一般为块级作用域，JavaScript 取而代之使用了函数作用域：变量在声明它们的函数体以及这个函数体嵌套的任意函数体内都是有定义的。</p>
-
-<pre><code class="language-javascript">    var a = function test(o){
-        var i = 0;                          // i在整个函数体内均是有定义的
-        if(typeof o == &quot;object&quot;){
-            var j = 4;                      // j在函数体内是有定义的，不仅仅是在这个代码段内
-            for(var k=0; k &lt; 3; k++){       // k在函数体内是有定义的，不仅仅是在循环内
-                console.log(k);             // 输出数字0～2
-            }
-            console.log(k);                 // k已经定义了，输出3
-        }
-        console.log(k);                     // k已经定义了，输出3
-        console.log(j);                     // j已经定义了，输出4
-    };
-</code></pre>
-
-<p>JavaScript 的这个特性被非正式地称为声明提前（hoisting），即 JavaScript 函数里声明的所有变量（但不涉及赋值）都被“提前”至函数体的顶部。</p>
-
-<pre><code class="language-javascript">    var a = &#39;1&#39;;
-    function f(){
-        console.log(a);
-        var a = &#39;2&#39;;
-        console.log(a);
-    }
-</code></pre>
-
-<p>由于函数作用域的特性，变量 a 的声明被提前到了整个函数体最前面，声明了但是没赋值，所以第一次 console 是 undefined。执行到 var 语句时才被赋值，这应该也是为什么可以一个变量多次 var 声明的原因，后面每一次 var 只是起到了赋值的作用。</p>
-
-<h2 id="toc_1">ES6 块作用域</h2>
-
-<p>ES6 弥补了这这个概念，追加了 let 和 const，也就有了 {} 块作用域的概念，const 用来声明常量，这个就不提了，用上面的例子感受一下 let 和 var 的区别。</p>
-
-<pre><code class="language-javascript">    var a = function test(o){
-        var i = 0;                          // i在整个函数体内均是有定义的
-        if(typeof o == &quot;object&quot;){
-            let j = 4;                      // j在if块内是有定义的
-            for(var k=0; k &lt; 3; k++){       // k在函数体内是有定义的，不仅仅是在循环内
-                console.log(k);             // 输出数字0～2
-                console.log(j);             // j已经定义了，输出4
-            }
-            console.log(k);                 // k已经定义了，输出3
-        }
-        console.log(k);                     // k已经定义了，输出3
-        console.log(j);                     // j在块外，抛出异常Uncaught ReferenceError: j is not defined
-    };
-</code></pre>
-
-<p>let 和 const 只有在块内是被声明的。</p>
-
-<h2 id="toc_2">全局变量的本质</h2>
-
-<p>当声明一个 JavaScript 全局变量时，实际上是定义了全局对象的一个属性。当使用 var 声明一个变量时，创建的这个属性是不可配置的，无法通过 delete 运算符删除。</p>
-
-<pre><code class="language-javascript">    test =1
-    // 1
-    window.test
-    // 1
-    delete test
-    // true
-    window.test
-    // undefined
-    var test = 1
-    // undefined
-    window.test
-    // 1
-    delete test
-    // false
-    window.test
-    // 1
-</code></pre>
-
-<p>可以看到当定义一个全局变量的时候他变成了 window 的属性。<br/>
-JavaScript 可以允许使用 this 关键字来引用全局对象，但是不能引用局部变量中存放的对象。</p>
-
-<pre><code class="language-javascript">    this.test
-    // 1
-</code></pre>
-
-<h2 id="toc_3">深入理解 undefined 的本质</h2>
-
-<p>undefined 明明是个变量为什么赋值后无法使用呢。任何地方都可以直接使用 undefined，那他是一个全局变量一个全局的属性，事实也果然如此。</p>
-
-<pre><code class="language-javascript">    window.undefined == undefined
-    // true
-</code></pre>
-
-<p>而属性分两类，他们的特征如下：</p>
-
-<ul>
-<li>数据属性
-<ul>
-<li>value：就是属性的值。</li>
-<li>writable：决定属性是否能被赋值。</li>
-<li>enumerable：决定 for in 能否枚举该属性。</li>
-<li>configurable：决定该属性能否被删除或者改变特征值。</li>
-</ul></li>
-<li>访问器属性（getter/setter）
-<ul>
-<li>getter：函数或 undefined，在取属性值时被调用。</li>
-<li>setter：函数或 undefined，在设置属性值时被调用。</li>
-<li>enumerable：决定 for in 能否枚举该属性。</li>
-<li>configurable：决定该属性能否被删除或者改变特征值。<br/>
-查看下全局属性 undefined 的属性特征。</li>
-</ul></li>
-</ul>
-
-<pre><code class="language-javascript">    console.log(Object.getOwnPropertyDescriptor(window,&#39;undefined&#39;));
-    // configurable: false
-    // enumerable: false
-    // value: undefined
-    // writable: false
-</code></pre>
-
-<p>writable：false，就是这个原因 undefined 虽然是个全局变量，但是我们赋值之后他并没有被改变。那为什么还需要用 void(0) 来代替 undefined 呢？结合上面的函数作用域再做一个实验。</p>
-
-<pre><code class="language-javascript">    function test() {
-        var undefined = 100; 
-        console.log(undefined);
-        var obj = {a : undefined}; 
-        console.log(Object.getOwnPropertyDescriptor(obj,&#39;a&#39;));
-    }
-    test();
-    // 100
-    // configurable: true
-    // enumerable: true
-    // value: 100
-    // writable: true
-</code></pre>
-
-<p>在函数作用域中，undefined 被从声明并赋值为 100，无论是直接 console 它自己还是去查看 undefined 属性特性都能看出，undefined 变量被修改了。这也就说在函数作用域内 undefined 可以被修改。</p>
-
-<pre><code class="language-javascript">    function test() {
-        const undefined = 100; 
-        console.log(undefined);
-        const obj = {a : undefined}; 
-        console.log(Object.getOwnPropertyDescriptor(obj,&#39;a&#39;));
-        test();
-    }
-    // 100
-    // configurable: true
-    // enumerable: true
-    // value: 100
-    // writable: true
-</code></pre>
-
-<p>块作用域内也一样可以被修改，得出结论 undefined 是一个类似 var 声明一样可以被重复声明的全局属性，而他的属性特性 writable 是 false，所以不能被修改，但是在非全局作用域内，他是可以被篡改的，这时候就要注意用 void (0) 来替代 undefined。</p>
-
-<h2 id="toc_4">作用域链<sup>1</sup></h2>
-
-<p>以书中的角度用对象属性去看作用域链：</p>
-
-<ul>
-<li>JavaScript最顶层的代码，其作用域链只有一个全局对象。</li>
-</ul>
-
-<table>
-    <tr>
-        <th colspan=2>Scope chain</th>
-    </tr>
-    <tr>
-        <td>0</td><td>Global object</td>
-    <tr>
-</table>
-
-<ul>
-<li>不包含嵌套的函数，其作用域两个对象：函数自身的变量对象和全局对象。</li>
-</ul>
-
-<table>
-    <tr>
-        <th colspan=2>Scope chain</th>
-    </tr>
-    <tr>
-        <td>0</td><td>Activation object</td>
-    <tr>
-    <tr>
-        <td>1</td><td>Global object</td>
-    <tr>
-</table>
-
-<blockquote>
-<p>活动对象(activation object)，该对象包含了函数的所有局部变量、命名参数、参数集合以及this，然后此对象会被推入作用域链的前端</p>
-</blockquote>
-
-<ul>
-<li>对于包含了嵌套函数的函数，其作用域包含至少三个对象：自身的变量对象，外层的变量对象（将自身嵌套的函数），全局变量对象。</li>
-</ul>
-
-<table>
-    <tr>
-        <th colspan=2>Scope chain</th>
-    </tr>
-    <tr>
-        <td>0</td><td>Sub activation object</td>
-    <tr>
-    <tr>
-        <td>1</td><td>Activation object</td>
-    <tr>
-    <tr>
-        <td>2</td><td>Global object</td>
-    <tr>
-</table>
-
-<p>作用域链给我的感觉类似原型链，将函数的上下文构成了链表的形式，而方法执行时一层一层往外找，所以为了方便链表从上到下查找属性，所以有了声明提前，链表最顶端为嵌套函数的最里层，链表最底端则是全局变量对象。</p>
-
-<pre><code class="language-javascript">    function test(){
-        var fun1,fun2;
-        for(var i=0;i&lt;2;i++){
-            if(i === 0){
-                fun1 = function(){console.log(&#39;fun1:i=&#39;+i)};
-            }
-            if(i === 1){
-                fun2 = function(){console.log(&#39;fun2:i=&#39;+i)};
-            }
-        };
-        fun1();
-        fun2();
-    }∫
-    test();
-    // fun1:i=2
-    // fun2:i=2
-</code></pre>
-
-<h2 id="toc_5">注</h2>
-
-<ol>
-<li>在看 JavaScript 权威指南第七版第八章时发现作者将原来的作用域链的“链”字都删除了，变成了作用域，但是还没有看前面作用域相关内容，应该有新的理解，在完成翻译后再继续补全。</li>
-</ol>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[JavaScript 原型和原型链]]></title>
-    <link href="blog.2019919.top/16080322533005.html"/>
-    <updated>2020-12-15T19:37:33+08:00</updated>
-    <id>blog.2019919.top/16080322533005.html</id>
-    <content type="html"><![CDATA[
-<p>今天刚开始学习【重学前端】的课程，讲到装箱转换的时候提到了函数的 call 方法，而 call 方法在我的印象中就只有 call 约等于 apply ，然后就再没有然后了。在我想深入了解下 call 方法的时候又发现了有人在同时讲解原型，而于此同时我看到了知乎上的一个贴<a href="https://www.zhihu.com/question/60165921">面试一个5年的前端，却连原型链也搞不清楚，满口都是Vue，React之类的实现，这样的人该用吗？</a>，这我不看内容我就惊呆了，这标题不就是在说我吗。带着各种心情赶紧学习下到底什么是原型和原型链。</p>
-
-<h2 id="toc_0">原型</h2>
-
-<pre><code class="language-text">prototype  [ˈproʊtətaɪp]  原型
-</code></pre>
-
-<p>OK完了😊！</p>
-
-<p>下面这个图很多大神都有画过，下面记录下我自己的理解和实验。</p>
-
-<p><img src="media/16080322533005/16080400429560.jpg" alt="" style="width:450px;"/></p>
-
-<h3 id="toc_1">构造函数视角</h3>
-
-<p>函数可以用来做构造器，也就是 constructor，而构造器也可以称为类。<br/>
-通过构造器 Apple 来创建一个对象对象 apple。</p>
-
-<p><img src="media/16080322533005/16080397593797.jpg" alt="" style="width:198px;"/></p>
-
-<p><strong>构造函数创建了实例对象</strong>，这是构造函数与实例对象的关系。</p>
-
-<hr/>
-
-<p><strong>构造函数有一个属性叫做 propotype，他指向了原型对象。</strong></p>
-
-<p><img src="media/16080322533005/16080405364424.jpg" alt="" style="width:299px;"/></p>
-
-<p>这里的原型对象写做 [[propotype]]，这里我猜测是为了区分propotype的属性。</p>
-
-<h3 id="toc_2">原型对象视角</h3>
-
-<p><strong>原型对象的 constructor 属性指向了构造函数</strong>。</p>
-
-<p><img src="media/16080322533005/16080407735350.jpg" alt="" style="width:382px;"/></p>
-
-<p>这里用构造器的原型对象的 constructor 方法来创建一个 badApple ，会发现它和 apple 的类型是相等的。</p>
-
-<h3 id="toc_3">实例对象视角</h3>
-
-<p>对象也有一个属性 __propo__，这是一个隐式属性，<strong>对象的 __propo__ 指向了他的构造函数的原型对象。</strong>也就是说 Apple 的 propotype 属性和 apple、badApple 的 __propo__ 指向了同一个地址。</p>
-
-<p><img src="media/16080322533005/16080419126552.jpg" alt="" style="width:318px;"/></p>
-
-<h3 id="toc_4">由函数引出原型链</h3>
-
-<p>函数是 JS 中的第一类对象，在 Javascript 中，对象所拥有的函数也同样拥有，也就是说构造函数 Apple 也同样会有 __propo__ 属性去指向他的父类的原型对象，为了理清这乱七八糟的关系，就有了下面“对象-函数-构造函数-实例对象”这样的一个关系图，也就是原型链图。</p>
-
-<h2 id="toc_5">原型链</h2>
-
-<p><img src="media/16080322533005/16080423510561.jpg" alt=""/></p>
-
-<p>这张图理解了上面的内容之后就感觉容易多了，总结一下有以下几点需要注意。</p>
-
-<ul>
-<li>任何函数的父类都是 Function 构造函数，也就是任何函数的 __proto__ 指向 Function.prototype，这里同样包含了 Function 构造函数自己。</li>
-<li>Object 构造函数它也是函数，它的的 __proto__ 也指向 Function.prototype。</li>
-<li>Function.prototype 的 __proto__ 指向 Object.prototype，这也就是为什么说函数也是对象。</li>
-<li>Object.prototype 的 __proto__ 是 null。</li>
-</ul>
-
-<h2 id="toc_6"> ES6 中的类</h2>
-
-<p>类的写法也是由原型运行时来承载的，逻辑上 JavaScript 认为每个类是有共同原型的一组对象，类中定义的方法和属性会被卸载原型对象之上。此外最重要的是类提供了继承能力。</p>
-
-<pre><code class="language-javascript">class Animal { 
-  constructor(name) {
-    this.name = name;
-  }
-  
-  speak() {
-    console.log(this.name + &#39; makes a noise.&#39;);
-  }
-}
-class Dog extends Animal {
-  constructor(name) {
-    super(name); // call the super class constructor and pass in the name parameter
-  }
-  speak() {
-    console.log(this.name + &#39; barks.&#39;);
-  }
-}
-let d = new Dog(&#39;Mitzie&#39;);
-d.speak(); // Mitzie barks.
-</code></pre>
-
-<p>以上代码创造了 Animal 类，并且通过 extends 关键字让 Dog 继承了它，展示了最终调用子类的 speak 方法获取了父类的 name。比起早期的原型模拟方式，使用 extends 关键字自动设置了 constructor，并且会自动调用父类的构造函数，这是一种更少坑的设计。所以当我们使用类的思想来设计代码时，应该尽量使用 class 来声明类，而不是用旧语法，拿函数来模拟对象。</p>
-
-<blockquote>
-<p>super 关键字用于访问和调用一个对象的父对象上的函数。<br/>
-在构造函数中使用时，super关键字将单独出现，并且必须在使用this关键字之前使用。</p>
-</blockquote>
-
-<pre><code class="language-javascript">super([arguments]);
-// 调用 父对象/父类 的构造函数
-super.functionOnParent([arguments]);
-// 调用 父对象/父类 上的方法
-</code></pre>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[第 6 章 对象]]></title>
-    <link href="blog.2019919.top/16113218396407.html"/>
-    <updated>2021-01-22T21:23:59+08:00</updated>
-    <id>blog.2019919.top/16113218396407.html</id>
-    <content type="html"><![CDATA[
-<ul>
-<li>
-<a href="#toc_0">6.1 介绍对象</a>
-</li>
-<li>
-<a href="#toc_1">6.2 创建对象</a>
-<ul>
-<li>
-<a href="#toc_2">6.2.1 对象字面量</a>
-</li>
-<li>
-<a href="#toc_3">6.2.2 用 new 创建对象</a>
-</li>
-<li>
-<a href="#toc_4">6.2.3 原型</a>
-</li>
-<li>
-<a href="#toc_5">6.2.4 Object.create()</a>
-</li>
-</ul>
-</li>
-<li>
-<a href="#toc_6">6.3 查询和设置属性</a>
-<ul>
-<li>
-<a href="#toc_7">6.3.1 对象作关联数组</a>
-</li>
-<li>
-<a href="#toc_8">6.3.2 继承</a>
-</li>
-<li>
-<a href="#toc_9">6.3.3 属性访问异常</a>
-</li>
-</ul>
-</li>
-<li>
-<a href="#toc_10">6.4 删除属性</a>
-</li>
-<li>
-<a href="#toc_11">6.5 测试属性</a>
-</li>
-<li>
-<a href="#toc_12">6.6 枚举属性</a>
-<ul>
-<li>
-<a href="#toc_13">6.6.1 属性枚举顺序</a>
-</li>
-</ul>
-</li>
-<li>
-<a href="#toc_14">6.7 扩展对象</a>
-</li>
-<li>
-<a href="#toc_15">6.8 序列化对象</a>
-</li>
-<li>
-<a href="#toc_16">6.9 对象方法</a>
-<ul>
-<li>
-<a href="#toc_17">6.9.1 toString() 方法</a>
-</li>
-<li>
-<a href="#toc_18">6.9.2 toLocaleString() 方法</a>
-</li>
-<li>
-<a href="#toc_19">6.9.3 valueOf() 方法</a>
-</li>
-<li>
-<a href="#toc_20">6.9.4 toJSON() 方法</a>
-</li>
-</ul>
-</li>
-<li>
-<a href="#toc_21">6.10 扩展的对象字面量语法</a>
-<ul>
-<li>
-<a href="#toc_22">6.10.1 速记属性</a>
-</li>
-<li>
-<a href="#toc_23">6.10.2 计算属性名</a>
-</li>
-<li>
-<a href="#toc_24">6.10.3 Symbol 作属性名</a>
-</li>
-<li>
-<a href="#toc_25">6.10.4 展开运算符</a>
-</li>
-<li>
-<a href="#toc_26">6.10.5 速记方法</a>
-</li>
-<li>
-<a href="#toc_27">6.10.6 属性 Getter 和 Setter 方法</a>
-</li>
-</ul>
-</li>
-<li>
-<a href="#toc_28">6.11 总结</a>
-</li>
-</ul>
-
-
-<p>对象是 JavaScript 最基本的数据类型，在本章之前的章节中已经多次看到它们。因为对象对 JavaScript 语言非常重要，所以了解它们的工作原理非常重要，本章将提供这些细节。它从对象的正式概述开始，然后深入到关于创建对象以及查询、设置、删除、测试和枚举对象属性的实用部分。在这些以属性为中心的章节之后，将介绍如何扩展、序列化和定义对象上的重要方法。最后，本章以一大段关于 ES6 中的新对象文字语法和该语言的最新版本结尾。</p>
-
-<h2 id="toc_0">6.1 介绍对象</h2>
-
-<p>对象是一个复合值：它聚合了多个值（原始值或其他对象），并允许按名称存储和获取这些值。对象是属性的无序集合，每个属性都有一个名称和一个值。属性名通常是字符串（尽管，正如我们将在 §6.10.3 中看到的，属性名也可以是 Symbol），所以我们可以说对象将字符串映射到值。这种字符串到值的映射有不同的名称——可能已经熟悉这种基本数据结构的别的名称“散列”（hash）、“散列表”（hashtable）、“字典”（dictionary）或“关联数组”（associative array）。然而，对象不仅仅是简单的字符串到值的映射。除了维护自己的属性集，JavaScript 对象还继承另一个对象的属性，即它的“原型”。对象的方法通常是继承的属性，而这种“原型继承”是 JavaScript 的一个关键特性。</p>
-
-<p>JavaScript 对象是动态的——属性通常可以添加和删除——但它们可以用来模拟静态类型语言的静态对象和“结构体”（struct）。有时它们也用做字符串的集 合（忽略名/值对中的值）。</p>
-
-<p>JavaScript 中任何不是字符串、数字、Symbol 或 true、false、null 或 undefined 的值都是对象。即使字符串、数字和布尔值不是对象，它们的行为和不可变对象非常类似。</p>
-
-<p>回想一下 §3.8，对象是可变的，通过引用而不是值来操作。如果变量 x 指向一个对象的引用，执行 <code>y = x;</code> 时，变量 y 也是指向同一对象的引用，而不是该对象的副本。通过变量 y 修改这个对象也会对变量 x 造成影响。</p>
-
-<p>对对象最常见的操作是创建它们并设置、查询、删除、测试和枚举它们的属性。这些基本的操作将在本章的开头部分进行描述。之后的部分将介绍更高级的主题。</p>
-
-<p>属性有一个名称和一个值。属性名可以是任何字符串，包括空字符串（或任何 Symbol），但任何对象都不能有两个同名的属性。值可以是任何 JavaScript 值，也可以是 getter 或 setter 函数（或两者都是）。我们将在 §6.10.6 中学习 getter 和 setter 函数。</p>
-
-<p>有时，能够区分直接在对象上定义的属性和从原型对象继承的属性是很重要的。JavaScript 使用术语“自有属性”来指代非继承属性。</p>
-
-<p>除了名称和值之外，每个属性还有三个属性属性:</p>
-
-<ul>
-<li>writable 属性指定是否可以设置属性的值。</li>
-<li>enumerable 属性指定 for/in 循环是否返回属性名称。</li>
-<li>可配置属性指定该属性是否可以删除，是否可以修改其属性。</li>
-</ul>
-
-<p>许多 JavaScript 的内置对象具有只读、不可枚举或不可配置的属性。但是，在默认情况下，创建的对象的所有属性都是可写、可枚举和可配置的。§14.1 解释了为对象指定非默认属性属性值的技巧。</p>
-
-<h2 id="toc_1">6.2 创建对象</h2>
-
-<p>对象可以用对象字面量创建，也可以用 new 关键字和 Object.create() 函数来创建。接下来的几部分对这些技术一一讲述。</p>
-
-<h3 id="toc_2">6.2.1 对象字面量</h3>
-
-<p>创建对象最简单的方式就是在 JavaScript 代码中使用对象直接量。对象直接量是由若干名/值对组成的映射表，名/值对中间用冒号分隔，名/值对之间用逗号分隔，整个映射表用花括号括起来。属性名可以是 JavaScript 标识符也可以是字符串字面量（包括空字符串）。属性的值可以是任意类型的 JavaScript 表达式；表达式的值（可以是原始值也可以是对象值）变成这个属性的值。下面有一些例子：</p>
-
-<pre><code class="language-javascript">let empty = {};                          // An object with no properties
-let point = { x: 0, y: 0 };              // Two numeric properties
-let p2 = { x: point.x, y: point.y+1 };   // More complex values
-let book = {
-    &quot;main title&quot;: &quot;JavaScript&quot;,          // These property names include spaces,
-    &quot;sub-title&quot;: &quot;The Definitive Guide&quot;, // and hyphens, so use string literals.
-    for: &quot;all audiences&quot;,                // for is reserved, but no quotes.
-    author: {                            // The value of this property is
-        firstname: &quot;David&quot;,              // itself an object.
-        surname: &quot;Flanagan&quot;
-    }
-};
-</code></pre>
-
-<p>对象文本中最后一个属性的尾随逗号是合法的，并且某些编程样式鼓励使用这些尾随逗号，因为，如果之后在对象文本的末尾添加新属性，则不太可能导致语法错误。</p>
-
-<p>对象字面量是一个表达式，它每次计算时都会创建和初始化一个新对象。每次字面量计算时，将计算每个属性的值。这意味着，如果单个对象字面量出现在循环体或重复调用的函数中，它能创建许多个新对象，并且这些对象的属性值可能彼此不同。</p>
-
-<p>此处的简单语法对象字面量，自 JavaScript 最早的版本以来一直是合法的。最新版本引入了许多对象字面量的新的特性，这些特性在 §6.10 中介绍。</p>
-
-<h3 id="toc_3">6.2.2 用 new 创建对象</h3>
-
-<p>new 运算符创建并初始化一个新的对象。new 关键字必须紧跟一个函数调用。这种方式使用函数叫做构造函数调用，其提供初始化一个新创建的对象的服务。在 JavaScript 中，内置类型都包含相对应的构造函数。例如：</p>
-
-<pre><code class="language-javascript">let o = new Object();  // Create an empty object: same as {}.
-let a = new Array();   // Create an empty array: same as [].
-let d = new Date();    // Create a Date object representing the current time
-let r = new Map();     // Create a Map object for key/value mapping
-</code></pre>
-
-<p>除了这些内置构造函数，常常用自定义构造函数来初始化新对象。 第 9 章将详细讲述其中的细节。</p>
-
-<h3 id="toc_4">6.2.3 原型</h3>
-
-<p>在讲述第三种对象创建技术之前，我们应当首先解释一下原型。每一个 JavaScript 对象都和另一个对象相关联。“另一个”对象就是我们熟知的原型，每一个对象都从原型继承属性。</p>
-
-<p>所有通过对象字面量创建的对象都具有同一个原型对象，并可以通过 JavaScript 代码 Object.prototype 获得对原型对象的引用。通过关键字 new 和构造函数调用创建的对象的原型就是构造函数的 prototype 属性的值。因此，同使用 {} 创建对象一样，通过 new Object() 创建的对象也继承自Object.prototype。同样，通过 new Array() 创建的对象的原型就是 Array.prototype，通过 new Date() 创建的对象的原型就是 Date.prototype。当第一次学习 JavaScript 时，这可能令人困惑。请记住：几乎所有对象都有原型，但只有相对较少的对象具有原型属性。正是这些具有原型属性的对象定义了所有其他对象的原型。</p>
-
-<p>没有原型的对象为数不多，Object.prototype就是其中之一：它不继承任何属性。其他原型对象都是普通对象，普通对象都具有原型。大部分的内置构造函数（以及大部分自定义的构造函数）都具有一个继承自 Object.prototype 的原型。例如， Date.prototype 的属性继承自 Object.prototype，因此由 new Date() 创建的 Date 对象的属性同时继承自 Date.prototype 和 Object.prototype。这一系列链接的原型对象就是所谓 “原型链”（prototype chain）。</p>
-
-<p>§6.3.2 节讲述属性继承的工作机制。第 9 章将会更详细地讨论原型和构造函数：包括如何通过编写构造函数定义对象的“类”，以及给构造函数的 prototype 属性赋值可以让其“实例”直接使用这个原型上的属性和方法。并且在 §14.3 我们会学习如何查询（甚至改变）对象的原型。</p>
-
-<h3 id="toc_5">6.2.4 Object.create()</h3>
-
-<p>Object.create() 创建一个新的对象，用第一个实参作为它的原型：</p>
-
-<pre><code class="language-javascript">let o1 = Object.create({x: 1, y: 2});     // o1 inherits properties x and y.
-o1.x + o1.y                               // =&gt; 3
-</code></pre>
-
-<p>可以通过传入参数 null 来创建一个没有原型的新对象，但通过这种方式创建的对象不会继承任何东西，甚至不包括基础方法，比如 toString()，也就是说，它将不能和“+”运算符一起正常工作：</p>
-
-<pre><code class="language-javascript">let o2 = Object.create(null);             // o2 inherits no props or methods.
-</code></pre>
-
-<p>如果想创建一个普通的空对象（像通过 {} 或 new Object() 创建的对象），需要传入 Object.prototype：</p>
-
-<pre><code class="language-javascript">let o3 = Object.create(Object.prototype); // o3 is like {} or new Object().
-</code></pre>
-
-<p>可以通过任意原型创建新对象，这是一个强大的特性，并且本章我们会在很多地方使用 Object.create()。（Object.create() 也可以传入第二个可选实参来描述这个新的对象的属性。第二个实参是一个高级特性，在  §14.1 再进行描述。）</p>
-
-<p>Object.create() 其中一个用途是预防对象无意间（非恶意地）被无法支配的库函数篡改。可以创建一个继承它的对象来传递给函数，而不是将其直接传递给函数。当函数读取继承对象的属性时，实际上读取的是继承来的值。如果给继承对象的属性赋值，则这些属性只会影响这个继承对象自身，而不是原始对象：</p>
-
-<pre><code class="language-javascript">let o = { x: &quot;don&#39;t change this value&quot; };
-library.function(Object.create(o));  // Guard against accidental modifications
-</code></pre>
-
-<p>想要了解其工作原理，需要先知道 JavaScript 中属性的查询和设置机制。这是接下来这节的主题。</p>
-
-<h2 id="toc_6">6.3 查询和设置属性</h2>
-
-<p>§4.4 已经提到，可以通过点（.）或方括号（[]）运算符来获取属性的值。运算符左侧应当是一个表达式，它返回一个对象。如果使用点运算符，右侧必须是一个以属性名称命名的简单标识符。如果使用方括号，方括号内必须是一个计算结果为字符串的表达式，这个字符串就是属性的名字：</p>
-
-<pre><code class="language-javascript">let author = book.author;       // Get the &quot;author&quot; property of the book.
-let name = author.surname;      // Get the &quot;surname&quot; property of the author.
-let title = book[&quot;main title&quot;]; // Get the &quot;main title&quot; property of the book.
-</code></pre>
-
-<p>和查询属性值的写法一样，通过点和方括号也可以创建属性或给属性赋值，但需要将它们放在赋值表达式的左侧：</p>
-
-<pre><code class="language-javascript">book.edition = 7;                   // Create an &quot;edition&quot; property of book.
-book[&quot;main title&quot;] = &quot;ECMAScript&quot;;  // Change the &quot;main title&quot; property.
-</code></pre>
-
-<p>当使用方括号时，我们说方括号内的表达式必须返回字符串。其实更严格地讲，表达式必须返回字符串或返回一个可以转换为字符串的值或 Symbol（§6.10.3）。在第 7 章里有一些例子中的方括号内使用了数字，这情况是非常常用的。</p>
-
-<h3 id="toc_7">6.3.1 对象作关联数组</h3>
-
-<p>上文提到，下面两个表达式有相同的值：</p>
-
-<pre><code class="language-javascript">object.property
-object[&quot;property&quot;]
-</code></pre>
-
-<p>第一种语法使用点运算符和一个标识符，这和 C 和 Java 中访问一个结构体或对象的静态字段非常类似。第二种语法使用方括号和一个字符串，看起来更像数组，只是这个数组元素是通过字符串索引而不是数字索引。这种数组就是我们所说的关联数组（associative array）（也称做散列、映射或字典）。JavaScript 对象都是关联数组，本节将讨论它的重要性。</p>
-
-<p>在 C、C++、Java 和一些强类型语言中，对象只能拥有固定数目的属性，并且这些属性的名称必须提前定义好。由于 JavaScript 是一个弱类型语言，因此不适用这条规则：对象在程序中可以创建任意数量的属性。当使用 . 运算符访问对象的属性时，属性名用一个标识符来表示。标识符必须直接出现在 JavaScript 程序中，它们不是数据类型，所以无法在程序中修改。</p>
-
-<p>另一种方式，当通过 [] 来访问对象的属性时，属性名通过字符串来表示。字符串是 JavaScript 的数据类型，在程序运行时可以修改和创建它们。因此，可以在 JavaScript 中使用下面这种代码：</p>
-
-<pre><code class="language-javascript">let addr = &quot;&quot;;
-for(let i = 0; i &lt; 4; i++) {
-    addr += customer[`address${i}`] + &quot;\n&quot;;
-}
-</code></pre>
-
-<p>这段代码读取 customer 对象的 address0、address1、address2 和 address3 属性，并将它们连接起来。</p>
-
-<p>这个例子主要说明了通过字符串表达式使用数组标记来访问对象属性的灵活性。这段代码也可以通过点运算符来重写，但是一些场景只能使用数组写法来完成。假设你正在写一个程序，这个程序利用网络资源计算用户股票市场投资的当前价值。程序允许用户输入他们拥有的股票名称以及对应的数量。你可以用一个名为 portfolio 的对象来储存这些信息。每一个股票在对象中都有一个属性与之对应。属性名是股票名，属性值是股票持有份额。例如，如果用户持有 IBM 的 50 股，那么 portfolio.ibm 属性的值就为 50。</p>
-
-<p>下面是程序的部分代码，这个函数用来给 portifolio 添加新的股票：</p>
-
-<pre><code class="language-javascript">function addstock(portfolio, stockname, shares) {
-    portfolio[stockname] = shares;
-}
-</code></pre>
-
-<p>由于用户是在程序运行时输入股票名称，因此在之前无法得知这些股票的名称是什么。而由于在写程序的时候不知道属性名称，因此无法通过点运算符（.）来访问对象 portfolio 的属性。但可以使用 [] 运算符，因为它使用字符串值（字符串值是动态的，可以在运行时更改）而不是标识符（标识符是静态的，必须写死在程序中）作为索引对属性进行访问。</p>
-
-<p>第 5 章介绍了 for/in 循环（§6.6 节还会进一步介绍）。当使用 for/in 循环遍历关联数组时，就可以清晰地体会到 for/in 的强大之处。下面的例子就是利用 for/in 计算  portfolio 的合计值：</p>
-
-<pre><code class="language-javascript">function computeValue(portfolio) {
-    let total = 0.0;
-    for(let stock in portfolio) {       // For each stock in the portfolio:
-        let shares = portfolio[stock];  // get the number of shares
-        let price = getQuote(stock);    // look up share price
-        total += shares * price;        // add stock value to total value
-    }
-    return total;                       // Return total value.
-}
-</code></pre>
-
-<p>如本节所示，JavaScript 对象通常用作关联数组，理解其工作原理非常重要。但是，在 ES6 之后使用 Map 类常常是一个更好的选择，我们将在 §11.1.2 中进行描述。</p>
-
-<h3 id="toc_8">6.3.2 继承</h3>
-
-<p>JavaScript 对象中有一组“自有属性”，也有一组属性是继承自它的原型对象。想要理解属性继承，必须更深入地了解属性访问的细节。这一节的例子通过使用 Object.create() 函数创建对象来指定它的原型。我们会在第 9 章再次看到它，但是，每次使用 new 创建类的实例时，都会创建一个从原型对象继承属性的对象。</p>
-
-<p>假设要查询对象 o 的属性 x。如果 o 中不存在 x 名称的自由属性，那么将会继续在 o 的原型对象中查询属性 x。如果原型对象中也没有 x，但这个原型对象也有原型，那么继续在这个原型对象的原型上执行查询，直到找到 x 或者查找到一个原型是 null 的对象为止。可以看到，对象的原型属性构成了一个“链”，通过这个“链”可以实现属性的继承。</p>
-
-<pre><code class="language-javascript">let o = {};               // o inherits object methods from Object.prototype
-o.x = 1;                  // and it now has an own property x.
-let p = Object.create(o); // p inherits properties from o and Object.prototype
-p.y = 2;                  // and has an own property y.
-let q = Object.create(p); // q inherits properties from p, o, and...
-q.z = 3;                  // ...Object.prototype and has an own property z.
-let f = q.toString();     // toString is inherited from Object.prototype
-q.x + q.y                 // =&gt; 3; x and y are inherited from o and p
-</code></pre>
-
-<p>现在假设给对象 o 的属性 x 赋值，如果 o 中已经有属性 x（这个属性不是继承来的），那么这个赋值操作只改变这个已有属性 x 的值。否则，赋值操作给 o 添加一个新属性 x。如果之前 o 继承自属性 x，那么这个继承的属性就被新创建的同名属性覆盖了。</p>
-
-<p>属性赋值操作检查原型链只是判断是否允许赋值操作。例如，如果 o 继承自一个只读属性 x，那么赋值操作是不允许的（§6.3.3 将对此进行详细讨论）。 如果允许属性赋值操作，它也总是在原始对象上创建属性或对已有的属性赋值，而不会去修改原型链。在 JavaScript 中，只有在查询属性时才会体会到继承的存在，而设置属性则和继承无关，这是 JavaScript 的一个重要特性，该特性让程序员可以有选择地重写继承的属性。</p>
-
-<pre><code class="language-javascript">let unitcircle = { r: 1 };         // An object to inherit from
-let c = Object.create(unitcircle); // c inherits the property r
-c.x = 1; c.y = 1;                  // c defines two properties of its own
-c.r = 2;                           // c overrides its inherited property
-unitcircle.r                       // =&gt; 1: the prototype is not affected
-</code></pre>
-
-<p>属性赋值要么失败，要么创建一个属性，要么在原始对象中设置属性。但有一个例外，如果 o 继承自属性 x，而这个属性是一个具有 setter 方法的存取器属性（参照 §6.10.6），那么这时将调用 setter 方法而不是给 o 创建一个属性 x。需要注意的是，setter 方法是由对象 o 调用的，而不是定义这个属性的原型对象调用的。因此如果 setter 方法定义任意属性，这个操作只是针对 o 本身，并不会修改原型链。</p>
-
-<h3 id="toc_9">6.3.3 属性访问异常</h3>
-
-<p>属性访问表达式并不总是返回或设置一个值。本节讲述查询或设置属性时的一些出错情况。</p>
-
-<p>查询一个不存在的属性并不会报错，如果在对象 o 自身的属性或继承的属性中均未找到属性 x，属性访问表达式 o.x 返回 undefined。回想一下我们的 book 对象有属性“sub-title”，而没有属性“subtitle”：</p>
-
-<pre><code class="language-javascript">book.subtitle    // =&gt; undefined: property doesn&#39;t exist
-</code></pre>
-
-<p>但是，如果对象不存在，那么试图查询这个不存在的对象的属性就会报错。null 和 undefined 值都没有属性，因此查询这些值的属性会报错，接上例：</p>
-
-<pre><code class="language-javascript">let len = book.subtitle.length; // !TypeError: undefined doesn&#39;t have length
-</code></pre>
-
-<p>如果 . 的左边是 null 或 undefined 时，其属性表达式会失败。所以当写一个像 book.author.surname 一样的表达式时，如果你不确定 book 和 book.author 确实被定义就要小心了。下面提供了两种避免出错的方法：</p>
-
-<pre><code class="language-javascript">// A verbose and explicit technique
-let surname = undefined;
-if (book) {
-    if (book.author) {
-        surname = book.author.surname;
-    }
-}
-
-// A concise and idiomatic alternative to get surname or null or undefined
-surname = book &amp;&amp; book.author &amp;&amp; book.author.surname;
-</code></pre>
-
-<p>为了理解为什么这里的第二种方法可以避免类型错误异常，可以参照 §4.10.1节 中关于 &amp;&amp; 运算符的短路行为。</p>
-
-<p>如 §4.4.1 中所描述，ES2020 支持用 ?. 条件属性访问，它允许这样重写上面的赋值表达式：</p>
-
-<pre><code class="language-javascript">let surname = book?.author?.surname;
-</code></pre>
-
-<p>当然，给 null 和 undefined 设置属性也会报类型错误。给其他值设置属性也不总是成功，有一些属性是只读的，不能重新赋值，有一些对象不允许新增属性。在严格模式下（§5.6.3），属性设定失败时会抛出 TypeError 异常。在非严格模式下，这些失败的处理经常没有任何反应。</p>
-
-<p>尽管属性赋值成功或失败的规律看起来很简单，但要描述清楚并不容易。在这些场景下给对象 o 设置属性 p 会失败：</p>
-
-<p>o 中的属性 p 是只读的：不能给只读属性重新赋值。</p>
-
-<p>o 中的属性 p 是继承属性，且它是只读的：不能通过同名自有属性覆盖只读的继承属性。</p>
-
-<p>o 中不存在自有属性 p：o 没有使用 setter 方法继承属性 p，并且o的可扩展性是（见 §14.2）false。如果 o 中不存在 p，而且没有 setter 方法可供调用，则 p 一定会添加至 o 中。但如果 o 不是可扩展的，那么在 o 中不能定义新属性。</p>
-
-<h2 id="toc_10">6.4 删除属性</h2>
-
-<p>删除运算符（§4.13.4）能删除对象中的属性。它的操作数应当是一个属性访问表达式。令人意外的是，delete 没有操作属性的值，而是操作属性的属性：</p>
-
-<pre><code class="language-javascript">delete book.author;          // The book object now has no author property.
-delete book[&quot;main title&quot;];   // Now it doesn&#39;t have &quot;main title&quot;, either.
-</code></pre>
-
-<p>delete 运算符只删除自有属性，不删除继承属性。（想要删除一个继承属性，必须从定义这个属性的原型对象上删除它。这会影响所有继承这个原型的对象。）</p>
-
-<p>如果删除成功或删除没有任何影响时删除表达式计算结果是 true（如删除不存在的属性）。delete 作用于非属性访问表达式（无用代码）时也返回 true。</p>
-
-<pre><code class="language-javascript">let o = {x: 1};    // o has own property x and inherits property toString
-delete o.x         // =&gt; true: deletes property x
-delete o.x         // =&gt; true: does nothing (x doesn&#39;t exist) but true anyway
-delete o.toString  // =&gt; true: does nothing (toString isn&#39;t an own property)
-delete 1           // =&gt; true: nonsense, but true anyway
-</code></pre>
-
-<p>delete 不能删除那些可配置性为 false 的属性。某些内置对象的属性是不可配置的，比如通过变量声明和函数声明创建的全局对象的属性。在严格模式中，删除一个不可配置属性会报一个类型错误。在非严格模式中，在这些情况下的 delete 操作会返回 false：</p>
-
-<pre><code class="language-javascript">// In strict mode, all these deletions throw TypeError instead of returning false
-delete Object.prototype // =&gt; false: property is non-configurable
-var x = 1;              // Declare a global variable
-delete globalThis.x     // =&gt; false: can&#39;t delete this property
-function f() {}         // Declare a global function
-delete globalThis.f     // =&gt; false: can&#39;t delete this property either
-</code></pre>
-
-<p>当在非严格模式中删除全局对象的可配值属性时，可以省略对全局对象的引用，直接在 delete 操作符后跟随要删除的属性名即可：</p>
-
-<pre><code class="language-javascript">globalThis.x = 1;       // Create a configurable global property (no let or var)
-delete x                // =&gt; true: this property can be deleted
-</code></pre>
-
-<p>然而在严格模式中，delete 后跟随一个非法的操作数（比如 x），则会报一个语法错误，因此必须显式指定对象及其属性：</p>
-
-<pre><code class="language-javascript">delete x;               // SyntaxError in strict mode
-delete globalThis.x;    // This works
-</code></pre>
-
-<h2 id="toc_11">6.5 测试属性</h2>
-
-<p>JavaScript 对象可以看作属性的集合，我们经常会检测集合中成员的所属关系——判断某个属性是否存在于某个对象中。可以用 in 运算符、hasOwnPreperty() 和  propertyIsEnumerable() 方法来完成这个工作，甚至仅通过属性查询也可以做到这一点。这节的例子都是用字符串作为属性名称，但是也可以用 Symbol 作为属性名（§6.10.3）。</p>
-
-<p>in 运算符的左侧是属性名，右侧是对象。如果对象的自有属性或继承属性中包含这个属性则返回 true：</p>
-
-<pre><code class="language-javascript">let o = { x: 1 };
-&quot;x&quot; in o         // =&gt; true: o has an own property &quot;x&quot;
-&quot;y&quot; in o         // =&gt; false: o doesn&#39;t have a property &quot;y&quot;
-&quot;toString&quot; in o  // =&gt; true: o inherits a toString property
-</code></pre>
-
-<p>对象的 hasOwnProperty() 方法用来检测给定的名字是否是对象的自有属性。对于继承属性它将返回 false：</p>
-
-<pre><code class="language-javascript">let o = { x: 1 };
-o.hasOwnProperty(&quot;x&quot;)        // =&gt; true: o has an own property x
-o.hasOwnProperty(&quot;y&quot;)        // =&gt; false: o doesn&#39;t have a property y
-o.hasOwnProperty(&quot;toString&quot;) // =&gt; false: toString is an inherited property
-</code></pre>
-
-<p>propertyIsEnumerable() 是 hasOwnProperty() 的增强版。只有检测到是自有属性且这个属性的可枚举性为 true 时它才返回 true。某些内置属性是不可枚举的。通常由 JavaScript 代码创建的属性都是可枚举的，除非使用  §14.1 中介绍的技术来让它们不可枚举。</p>
-
-<pre><code class="language-javascript">let o = { x: 1 };
-o.propertyIsEnumerable(&quot;x&quot;)  // =&gt; true: o has an own enumerable property x
-o.propertyIsEnumerable(&quot;toString&quot;)  // =&gt; false: not an own property
-Object.prototype.propertyIsEnumerable(&quot;toString&quot;) // =&gt; false: not enumerable
-</code></pre>
-
-<p>除了使用 in 运算符之外，另一种更简便的方法是使用 !== 判断一个属性是否是 undefined：</p>
-
-<pre><code class="language-javascript">let o = { x: 1 };
-o.x !== undefined        // =&gt; true: o has a property x
-o.y !== undefined        // =&gt; false: o doesn&#39;t have a property y
-o.toString !== undefined // =&gt; true: o inherits a toString property
-</code></pre>
-
-<p>然而有一种场景只能使用 in 运算符而不能使用上述属性访问的方式。in 可以区分不存在的属性和存在但值为 undefined 的属性。例如下面的代码：</p>
-
-<pre><code class="language-javascript">let o = { x: undefined };  // Property is explicitly set to undefined
-o.x !== undefined          // =&gt; false: property exists but is undefined
-o.y !== undefined          // =&gt; false: property doesn&#39;t even exist
-&quot;x&quot; in o                   // =&gt; true: the property exists
-&quot;y&quot; in o                   // =&gt; false: the property doesn&#39;t exist
-delete o.x;                // Delete the property x
-&quot;x&quot; in o                   // =&gt; false: it doesn&#39;t exist anymore
-</code></pre>
-
-<h2 id="toc_12">6.6 枚举属性</h2>
-
-<p>除了检测对象的属性是否存在，我们还会经常遍历对象的属性。有几种不同的方法可以做到这一点。</p>
-
-<p>§5.4.5 讨论过 for/in 循环，其可以在循环体中遍历指定对象中所有可枚举的属性（包括自有属性和继承的属性），把属性名称赋值给循环变量。对象继承的 内置方法不可枚举的，但在代码中给对象添加的属性都是可枚举的（除非用下文中提到的一个方法将它们转换为不可枚举的）。例如：</p>
-
-<pre><code class="language-javascript">let o = {x: 1, y: 2, z: 3};          // Three enumerable own properties
-o.propertyIsEnumerable(&quot;toString&quot;)   // =&gt; false: not enumerable
-for(let p in o) {                    // Loop through the properties
-    console.log(p);                  // Prints x, y, and z, but not toString
-}
-</code></pre>
-
-<p>为了防止 for/in 枚举到继承属性，可以在循环中添加显示检查：</p>
-
-<pre><code class="language-javascript">for(let p in o) {
-    if (!o.hasOwnProperty(p)) continue;       // Skip inherited properties
-}
-
-for(let p in o) {
-    if (typeof o[p] === &quot;function&quot;) continue; // Skip all methods
-}
-</code></pre>
-
-<p>作为使用 for/in 循环的替代方法，通常使用 for/of 循环遍历易获取对象的属性名称数组。可以使用四个函数获取属性名称数组：</p>
-
-<p>Object.keys() 返回对象的可枚举自有属性名称数组集合。数组内不包含不可枚举属性、继承属性或属性名称是 Symbol（见 §6.10.3）的属性</p>
-
-<p>Object.getOwnPropertyNames() 用起来和 Object.keys() 类似，但是它返回数组中也包含不可迭代的自有属性，只要它们的名称是字符串。</p>
-
-<p>Object.getOwnPropertySymbols() 返回名称是 Symbol 的自有属性，无论它们是否可枚举。</p>
-
-<p>Reflect.ownKeys() 返回所有的自由属性名称，包括可枚举和不可枚举类型，也包括字符串和 Symbol（见 §14.6）。</p>
-
-<p>在 §6.7 中有例子使用 for/of 循环 Object.keys()。</p>
-
-<h3 id="toc_13">6.6.1 属性枚举顺序</h3>
-
-<p>ES6 正式定义元素的自有属性的枚举顺序。Object.keys()、Object.getOwnPropertyNames()、Object.getOwnPropertyNames()、Object.getOwnPropertySymbols()、Reflect.ownKeys() 和相关方法如 JSON.stringify() 属性列表都按以下顺序排列的，受它们自身是否是不可枚举属性列表或者属性是字符串或者 Symbol 影响：</p>
-
-<p>首先列出名称为非负整数的字符串属性，按从最小到最大的数字顺序列出。此规则意味着数组和数组类对象将按顺序枚举其属性。</p>
-
-<p>列出所有看起来像数组索引的属性后，将列出所有具有字符串名称的剩余属性（包括看起来像负数或浮点数字的属性）。这些属性按添加到对象的顺序列出。对于在对象字面量中定义的属性，此顺序与它们在文本中显示的顺序相同。</p>
-
-<p>最后，其名称为 Symbol 对象的属性按添加到对象的顺序列出。</p>
-
-<p>for/in 循环的枚举顺序不像这些枚举函数那样严格指定，但实现通常按刚才描述的顺序枚举自己的属性，然后向上移动原型链按相同顺序枚举每个原型对象的属性。但是请注意，如果已枚举具有相同名称的属性，或者不可枚举属性已经被检测过再次枚举到相同名称的属性，都不会再次枚举。</p>
-
-<h2 id="toc_14">6.7 扩展对象</h2>
-
-<p>在 JavaScript 代码中有一个很常见的操作，需要将一个对象中的属性拷贝到另外一个对象。以下面的代码很容易实现：</p>
-
-<pre><code class="language-javascript">let target = {x: 1}, source = {y: 2, z: 3};
-for(let key of Object.keys(source)) {
-    target[key] = source[key];
-}
-target  // =&gt; {x: 1, y: 2, z: 3}
-</code></pre>
-
-<p>但是因为这个是个常用的操作，各种 JavaScript 框架定义公用函数，经常将其命名为 extend() 来执行这个拷贝操作。最后在 ES6 中，这个功能以 Object.assign() 的形式被添加到 JavaScript 核心语言中。</p>
-
-<p>Object.assign() 需要两个或多个对象作为其实参。它修改并返回第一个实参，即目标对象，但不会改变第二个或任何后续参数，这些参数是源对象。对于每个源对象，它将该对象的可枚举自有属性（包括名称为 Symbol 的属性）复制到目标对象中。它按源对象在实参列表顺序中的顺序处理，所以第一个源对象中的属性会重写在目标对象中的同名属性，然后以第二个源对象中的同名属性（如果有第二个源对象）再次重写第一个源对象重写后的属性。</p>
-
-<p>Object.assign() 通过普通属性的 get 和 set 操作复制属性，因此，如果源对象具有 getter 方法或目标对象具有 setter 方法，则将在复制期间调用它们，但不会复制方法本身。</p>
-
-<p>看这样一个场景，有一个对象定义许多属性的默认值，希望将这些默认属性中不存在于目标对象中的属性复制到目标对象中，使用 Object.assign() 不会得到想要的结果：</p>
-
-<pre><code class="language-javascript">Object.assign(o, defaults);  // overwrites everything in o with defaults
-</code></pre>
-
-<p>想得到这个效果需要创建一个新的对象，将默认值拷贝到其中，然后用 o 的属性重写默认值中的属性：</p>
-
-<pre><code class="language-javascript">o = Object.assign({}, defaults, o);
-</code></pre>
-
-<p>我们会在 §6.10.4 见到，可以用 ... 展开操作符如下操作这个对象拷贝并重写：</p>
-
-<pre><code class="language-javascript">o = {...defaults, ...o};
-</code></pre>
-
-<p>为了避免对象创建和复制的额外开销，我们还可以通过编写一个 Object.assign() 仅在缺少属性时复制属性：</p>
-
-<pre><code class="language-javascript">// Like Object.assign() but doesn&#39;t override existing properties
-// (and also doesn&#39;t handle Symbol properties)
-function merge(target, ...sources) {
-    for(let source of sources) {
-        for(let key of Object.keys(source)) {
-            if (!(key in target)) { // This is different than Object.assign()
-                target[key] = source[key];
-            }
-        }
-    }
-    return target;
-}
-Object.assign({x: 1}, {x: 2, y: 2}, {y: 3, z: 4})  // =&gt; {x: 2, y: 3, z: 4}
-merge({x: 1}, {x: 2, y: 2}, {y: 3, z: 4})          // =&gt; {x: 1, y: 2, z: 4}
-</code></pre>
-
-<p>编写其他属性操作公共函数很简单，就是像这个 merge() 函数。例如，如果对象的属性不出现在另一个模板对象中，则 restrict() 函数会删除这些属性。或者，subtract() 函数可以从其他对象中删除一个对象的所有属性。</p>
-
-<h2 id="toc_15">6.8 序列化对象</h2>
-
-<p>对象序列化（serialization）是指将对象的状态转换为字符串，也可将字符串还原为对象。函数 JSON.stringify() 和 JSON.parse() 用来序列化和还原 JavaScript 对象。这些方法都使用 JSON 作为数据交换格式，JSON 的全称是“JavaScript Object Notation”——JavaScript 对象表示法，它的语法和 JavaScript 对象与数组字面量的语法非常相近：</p>
-
-<pre><code class="language-javascript">let o = {x: 1, y: {z: [false, null, &quot;&quot;]}}; // Define a test object
-let s = JSON.stringify(o);   // s == &#39;{&quot;x&quot;:1,&quot;y&quot;:{&quot;z&quot;:[false,null,&quot;&quot;]}}&#39;
-let p = JSON.parse(s);       // p == {x: 1, y: {z: [false, null, &quot;&quot;]}}
-</code></pre>
-
-<p>JSON 的语法是 JavaScript 语法的子集，它并不能表示 JavaScript 里的所有值。支持对象、数组、字符串、无穷大数字、true、false 和 null，并且它们可以序列化和还原。NaN、Infinity 和 -Infinity 序列化的结果是 null，日期对象序列化的结果是 ISO 格式的日期字符串（参照 Date.toJSON() 函数），但 JSON.parse() 依然保留它们的字符串形态，而不会将它们还原为原始日期对象。函数、RegExp、Error 对象和 undefined 值不能序列化和还原。JSON.stringify() 只能序列化对象可枚举的自有属性。对于一个不能序列化的属性来说，在序列化后的输出字符串中会将这个属性省略掉。JSON.stringify() 和 JSON.parse() 都可以接收第二个可选实参，通过传入需要序列化或还原的属性列表来定制自定义的序列化或还原操作。§11.6 有关于这些函数的详细文档。</p>
-
-<h2 id="toc_16">6.9 对象方法</h2>
-
-<p>上文已经讨论过，所有的 JavaScript 对象都从 Object.prototype 继承属性（除了那些不通过原型显式创建的对象）。这些继承属性主要是方法，因为 JavaScript 程序员普遍对继承方法更感兴趣。例如我们已经见过的 hasOwnProperty() 和 propertyIsEnumerable() 方法。（并且我们也已经提到了一小部分定义在对象构造函数中的静态函数，像 Object.create() 和 Object.keys()。）本节介绍在 Object.prototype 上定义的少数通用对象方法，但是这些方法经常会被更专业的实现所取代。在下面的各节中，我们将展示在单个对象上定义这些方法的示例。在第 9 章中，将学习如何更常规化地为整个对象类定义这些方法。</p>
-
-<h3 id="toc_17">6.9.1 toString() 方法</h3>
-
-<p>toString() 方法没有实参，它将返回一个表示调用这个方法的对象值的字符串。在需要将对象转换为字符串的时候，JavaScript 都会调用这个方法。比如，当使用 + 运算符连接一个字符串和一个对象时或者在希望使用字符串的方法中使用了对象时都会调用 toString()。</p>
-
-<p>默认的 toString() 方法的返回值带有的信息量很少（尽管它在检测对象的类型时非常有用，参照 §14.4.3），例如，下面这行代码的计算结果为字符串”[object Object]”：</p>
-
-<pre><code class="language-javascript">let s = { x: 1, y: 1 }.toString();  // s == &quot;[object Object]&quot;
-</code></pre>
-
-<p>由于默认的 toString() 方法并不会输出很多有用的信息，因此很多类都带有自定义的 toString()。例如，当数组转换为字符串的时候，结果是一个数组元素列表，只是每个元素都转换成了字符串，再比如，当函数转换为字符串的时候，得到函数的源代码。可以像下面这样自定义 toString() 方法：</p>
-
-<pre><code class="language-javascript">let point = {
-    x: 1,
-    y: 2,
-    toString: function() { return `(${this.x}, ${this.y})`; }
-};
-String(point)    // =&gt; &quot;(1, 2)&quot;: toString() is used for string conversions
-</code></pre>
-
-<h3 id="toc_18">6.9.2 toLocaleString() 方法</h3>
-
-<p>除了基本的 toString() 方法之外，对象都包含 toLocaleString() 方法，这个方法返回一个表示这个对象的本地化字符串。Object 中默认的 toLocaleString() 方法并不做任何本地化自身的操作，它仅调用 toString() 方法并返回对应值。Date 和 Number 类对 toLocaleString() 方法做了定制，可以用它对数字、日期和时间做本地化的转换。 Array 类的 toLocaleString() 方法和 toString() 方法很像，唯一的不同是每个数组元素会调用 toLocaleString() 方法转换为字符串，而不是调用各自的 toString() 方法。可以像这样使用 point 对象做到同样的效果：</p>
-
-<pre><code class="language-javascript">let point = {
-    x: 1000,
-    y: 2000,
-    toString: function() { return `(${this.x}, ${this.y})`; },
-    toLocaleString: function() {
-        return `(${this.x.toLocaleString()}, ${this.y.toLocaleString()})`;
-    }
-};
-point.toString()        // =&gt; &quot;(1000, 2000)&quot;
-point.toLocaleString()  // =&gt; &quot;(1,000, 2,000)&quot;: note thousands separators
-</code></pre>
-
-<p>在 §11.7 的国际化类中，toLocaleString() 方法的实现是非常有用的。</p>
-
-<h3 id="toc_19">6.9.3 valueOf() 方法</h3>
-
-<p>valueOf() 方法和 toString() 方法非常类似，但往往当 JavaScript 需要将对象转换为某种原始值而非字符串的时候才会调用它，尤其是转换为数字的时候。如果在需要使用原始值的上下文中使用了对象，JavaScript 就会自动调用这个方法。默认的 valueOf() 方法不足为奇，但有些内置类自定义了 valueOf() 方法. Date 类定义 valueOf() 将日期转化成数值型，并且这允许 Date 对象使用 &lt; 和 &gt; 按时间先手顺序比较。可以对 point 对象做同样的事，定义一个 valueOf() 方法返回原点到点的距离：</p>
-
-<pre><code class="language-javascript">let point = {
-    x: 3,
-    y: 4,
-    valueOf: function() { return Math.hypot(this.x, this.y); }
-};
-Number(point)  // =&gt; 5: valueOf() is used for conversions to numbers
-point &gt; 4      // =&gt; true
-point &gt; 5      // =&gt; false
-point &lt; 6      // =&gt; true
-</code></pre>
-
-<h3 id="toc_20">6.9.4 toJSON() 方法</h3>
-
-<p>Object.prototype 实际上没有定义 toJSON() 方法，但对于需要执行序列化的对象来说，JSON.stringify() 方法（见 §6.8）会调用 toJSON() 方法。如果在待序列化的对象中存在这 个方法，则调用它，返回值即是序列化的结果，而不是原始的对象。Date 类（§11.4）定义了 toJSON() 方法返回日期的序列化字符串。我们可以这样对 point 对象做同样的事：</p>
-
-<pre><code class="language-javascript">let point = {
-    x: 1,
-    y: 2,
-    toString: function() { return `(${this.x}, ${this.y})`; },
-    toJSON: function() { return this.toString(); }
-};
-JSON.stringify([point])   // =&gt; &#39;[&quot;(1, 2)&quot;]&#39;
-</code></pre>
-
-<h2 id="toc_21">6.10 扩展的对象字面量语法</h2>
-
-<p>JavaScript 的最新版本扩展了许多有用的对象字面量相关的语法。以下小节解释这些扩展。</p>
-
-<h3 id="toc_22">6.10.1 速记属性</h3>
-
-<p>假设值存储在变量 x 和 y 中，并且想要创建具有名为 x 和 y 的属性的对象，这些属性包含这些值。使用基本对象字面量语法，最终会重复每个标识符两次：</p>
-
-<pre><code class="language-javascript">let x = 1, y = 2;
-let o = {
-    x: x,
-    y: y
-};
-</code></pre>
-
-<p>在 ES6 之后，可以删除标识符的冒号和一个副本，最终使用更简单的代码：</p>
-
-<pre><code class="language-javascript">let x = 1, y = 2;
-let o = { x, y };
-o.x + o.y  // =&gt; 3
-</code></pre>
-
-<h3 id="toc_23">6.10.2 计算属性名</h3>
-
-<p>有时需要创建具有特定属性的对象，但该属性的名称不是可以在源代码中键入的编译时常量。相反，需要的属性名称存储在变量中，或者是调用的函数的返回值。不能对此类属性使用基本对象字面量。而必须创建一个对象，通过额外的步骤，添加所需的属性：</p>
-
-<pre><code class="language-javascript">const PROPERTY_NAME = &quot;p1&quot;;
-function computePropertyName() { return &quot;p&quot; + 2; }
-
-let o = {};
-o[PROPERTY_NAME] = 1;
-o[computePropertyName()] = 2;
-</code></pre>
-
-<p>使用称为计算属性的 ES6 特性设置这样的对象要简单得多，该功能允许从前面的代码写入方括内并直接移动到对象字面量中：</p>
-
-<pre><code class="language-javascript">const PROPERTY_NAME = &quot;p1&quot;;
-function computePropertyName() { return &quot;p&quot; + 2; }
-
-let p = {
-    [PROPERTY_NAME]: 1,
-    [computePropertyName()]: 2
-};
-
-p.p1 + p.p2 // =&gt; 3
-</code></pre>
-
-<p>使用这种新语法，方括号将其分隔成 JavaScript 表达式。计算该表达式，并将结果值（如有必要转换为字符串）用作属性名称。</p>
-
-<p>可能想要使用计算属性的一个情况是，有一个 JavaScript 代码库，该库希望传递具有一组特定属性的对象，并且这些属性的名称定义为该库中的常量。如果要编写代码以创建将传递给该库的对象，可以硬编码属性名称，但如果在任何地方键入错误的属性名称，则存在错误风险；如果库的新版本更改了所需的属性名称，则存在版本不匹配问题的风险。相反，可能会发现，使用计算属性语法与库定义的属性名称常量时，它使代码更加健壮。</p>
-
-<h3 id="toc_24">6.10.3 Symbol 作属性名</h3>
-
-<p>计算属性语法启用了另一个非常重要的对象字面量特性。在 ES6 之后，属性名称可以是字符串或 Symbol。如果将 Symbol 分配给变量或常量，则可以使用计算属性语法将该 Symbol 用作属性名称：</p>
-
-<pre><code class="language-javascript">const extension = Symbol(&quot;my extension symbol&quot;);
-let o = {
-    [extension]: { /* extension data stored in this object */ }
-};
-o[extension].x = 0; // This won&#39;t conflict with other properties of o
-</code></pre>
-
-<p>如 §3.6 中所述，符号是不透明值。除了将它们用作属性名称，不能对它们进行任何其他处理。但是，每个 Symbol 都不同于所有其他 Symbol，这意味着 Symbol 适合创建唯一的属性名称。通过调用 Symbol() 工厂函数创建新 Symbol。（Symbol 是原始值，而不是对象，因此 Symbol() 不是使用 new 调用的构造函数。）Symbol() 返回的值不等于任何其他 Symbol 或其他值。可以将字符串传递给 Symbol()，当 Symbol 转换为字符串时，将使用此字符串。但是，这只是一个调试帮助：使用同一字符串参数创建的两个 Symbol 仍然彼此不同。</p>
-
-<p>Symbol 的要点不是安全性，而是为 JavaScript 对象定义一个安全的扩展机制。如果从第三方代码获取对象，您无法控制该对象，并且需要向该对象添加自己的一些属性，但希望确保属性不会与对象上可能存在的任何属性冲突，可以安全地使用 Symbol 作为属性名称。如果这样做，还可以确信第三方代码不会意外更改 Symbol 命名的属性。（当然，该第三方代码可以使用 Object.getOwnPropertySymbols() 来发现你使用的 Symbol，然后可以更改或删除你的属性。这就是为什么符号不是安全机制。）</p>
-
-<h3 id="toc_25">6.10.4 展开运算符</h3>
-
-<p>在 ES2018 之后，可以使用展开运算符 ... 将现有的对象中的属性复制到新的对象中：</p>
-
-<pre><code class="language-javascript">let position = { x: 0, y: 0 };
-let dimensions = { width: 100, height: 75 };
-let rect = { ...position, ...dimensions };
-rect.x + rect.y + rect.width + rect.height // =&gt; 175
-</code></pre>
-
-<p>在此代码中，position 和 dimensions 对象的属性被展开到 rect 对象字面量中，就像它们以字面量的方式写入这些大括号中一样。请注意，... 语法通常称为展开运算符，但在任何情况下都不是真正的 JavaScript 运算符。相反，它是一种特殊情况下语法，仅在对象文本中可用。（... 在别的 JavaScript 上下文中有其他用途，但是对象字面量上下文中只有这一种用法。）</p>
-
-<p>如果展开的目标对象和源对象中具有相同的名称，则该属性的值将是位置处于后面的值：</p>
-
-<pre><code class="language-javascript">let o = { x: 1 };
-let p = { x: 0, ...o };
-p.x   // =&gt; 1: the value from object o overrides the initial value
-let q = { ...o, x: 2 };
-q.x   // =&gt; 2: the value 2 overrides the previous value from o.
-</code></pre>
-
-<p>还有注意展开运算符只展开对象的自有属性，不展开继承属性：</p>
-
-<pre><code class="language-javascript">let o = Object.create({x: 1}); // o inherits the property x
-let p = { ...o };
-p.x                            // =&gt; undefined
-</code></pre>
-
-<p>最后，值得注意的是，虽然展开运算符在代码中只是三个小点，但它对 JavaScript 解释器来说可以代表大量的工作。如果对象具有 n 个属性，则将这些属性分散到另一个对象的过程很可能是 O(n) 操作。这意味着，如果你发现自己在使用 ... 在循环或递归函数中，类似将数据累积到一个大对象中的方法，您可能正在编写一个低效的 O(n2) 算法，该算法不会随着 n 变大而扩展。</p>
-
-<h3 id="toc_26">6.10.5 速记方法</h3>
-
-<p>当函数被定义为对象的属性时，我们称该函数为方法（我们将在第 8 章和第 9 章中对方法有更多的描述）。在 ES6 之前，在对象字面量中用函数定义表达式定义一个方法和在对象中定义其他属性一样：</p>
-
-<pre><code class="language-javascript">let square = {
-    area: function() { return this.side * this.side; },
-    side: 10
-};
-square.area() // =&gt; 100
-</code></pre>
-
-<p>但是，在 ES6 中，对象字面量语法（以及我们将在第 9 章中看到的类定义语法）已扩展成允许省略函数关键字和冒号的快捷方式，可以写成这样的代码：</p>
-
-<pre><code class="language-javascript">let square = {
-    area() { return this.side * this.side; },
-    side: 10
-};
-square.area() // =&gt; 100
-</code></pre>
-
-<p>两种形式是相同的：在对象字面量中添加一个名为 area 的属性，并指定一个函数为这个属性的值。速记语法更清晰的看出 area() 是一个方法而不是一个像 side 一样的数据属性。</p>
-
-<p>使用此速记语法编写方法时，属性名称可以采用对象字面量中的任何合法形式：除了像上面的名称 area 这样的常规 JavaScript 标识符外，还可以使用字符串字面量和计算属性名称，包括 Symbol 属性名称：</p>
-
-<pre><code class="language-javascript">const METHOD_NAME = &quot;m&quot;;
-const symbol = Symbol();
-let weirdMethods = {
-    &quot;method With Spaces&quot;(x) { return x + 1; },
-    [METHOD_NAME](x) { return x + 2; },
-    [symbol](x) { return x + 3; }
-};
-weirdMethods[&quot;method With Spaces&quot;](1)  // =&gt; 2
-weirdMethods[METHOD_NAME](1)           // =&gt; 3
-weirdMethods[symbol](1)                // =&gt; 4
-</code></pre>
-
-<p>使用 Symbol 作为方法名称并不像看起来那么奇怪。为了使对象可迭代（因此它可以与 for/of 循环一起使用），必须定义一个具有符号名称 Symbol.iterator 的方法，并且在第 12 章中有这样做的示例。</p>
-
-<h3 id="toc_27">6.10.6 属性 Getter 和 Setter 方法</h3>
-
-<p>到目前为止，本节我们所讨论的所有的对象都是具有名称和普通值的数据属性。JavaScript 还支持存取器属性，这些属性没有单个值，而是具有一个或两个存取器方法：getter 和或是或 setter。</p>
-
-<p>当程序查询存取器属性的值时，JavaScript 调用 getter 方法（无实参）。这个方法的返回值就是属性存取表达式的值。当程序设置一个存取器属性的值时， JavaScript 调用 setter 方法，将赋值表达式右侧的值当做参数传入 setter。从某种意义上讲，这个方法负责“设置”属性值。可以忽略 setter 方法的返回值。</p>
-
-<p>如果属性同时有 getter 和 setter 方法，则它是一个可读写属性。如果它只含有 getter 方法，它是一个只读属性。如果它只有 setter 方法，它是一个只可写属性（这对一个数据属性来说是不可能的），如果尝试去读它，计算结果永远是 undefined。</p>
-
-<p>存储器属性可以通过表达式在对象字面量语法中定义（不像我们在这里看到的其他 ES6 扩展，getter 和 setter 是 ES5 中的内容）：</p>
-
-<pre><code class="language-javascript">let o = {
-    // An ordinary data property
-    dataProp: value,
-
-    // An accessor property defined as a pair of functions.
-    get accessorProp() { return this.dataProp; },
-    set accessorProp(value) { this.dataProp = value; }
-};
-</code></pre>
-
-<p>存储器属性定义为名称与属性名称相同的一个或两个方法。这些方法看起来像使用 ES6 速记定义的普通方法，只不过 getter 和 setter 定义使用 get 或 set 前缀。（在 ES6 中，在定义 getter 和 setter 时还可以使用计算属性名称。只需将带方括号的表达式替换属性名称即可。</p>
-
-<p>上面定义的存储器方法只需获取并设置数据属性的值，没有理由将存储器属性替换数据属性。但作为一个更有趣的示例，请考虑以下表示 2D 笛卡尔点的对象。它具有表示点的 x 和 y 坐标的普通数据属性，并且具有提供点等效极坐标的存储器属性：</p>
-
-<pre><code class="language-javascript">let p = {
-    // x and y are regular read-write data properties.
-    x: 1.0,
-    y: 1.0,
-
-    // r is a read-write accessor property with getter and setter.
-    // Don&#39;t forget to put a comma after accessor methods.
-    get r() { return Math.hypot(this.x, this.y); },
-    set r(newvalue) {
-        let oldvalue = Math.hypot(this.x, this.y);
-        let ratio = newvalue/oldvalue;
-        this.x *= ratio;
-        this.y *= ratio;
-    },
-
-    // theta is a read-only accessor property with getter only.
-    get theta() { return Math.atan2(this.y, this.x); }
-};
-p.r     // =&gt; Math.SQRT2
-p.theta // =&gt; Math.PI / 4
-</code></pre>
-
-<p>请注意，在本示例中的 getter 和 setter 中使用 this 关键字。JavaScript 以对象的方法的方式调用这些函数，这意味着在函数体中，this 指的是点对象 p。因此，r 属性的 getter 方法通过 this.x 和 this.y 获取到 x 和 y 属性的引用。方法以及 this 关键字在 §8.2.2 中详细介绍。</p>
-
-<p>存储器属性是可继承的，就像数据属性一样，因此可以使用上面定义的对象 p 作为其他点的原型。可以为新对象提供自有的 x 和 y 属性，它们将继承 r 和 theta 属性：</p>
-
-<pre><code class="language-javascript">let q = Object.create(p); // A new object that inherits getters and setters
-q.x = 3; q.y = 4;         // Create q&#39;s own data properties
-q.r                       // =&gt; 5: the inherited accessor properties work
-q.theta                   // =&gt; Math.atan2(4, 3)
-</code></pre>
-
-<p>上述代码使用存储器属性定义一个 API，该 API 提供一组数据的两种表示形式（笛卡尔坐标和极坐标）。使用存储器属性的其他场景包括属性写入的稳健性检测以及在每个属性上返回不同的值：</p>
-
-<pre><code class="language-javascript">// This object generates strictly increasing serial numbers
-const serialnum = {
-    // This data property holds the next serial number.
-    // The _ in the property name hints that it is for internal use only.
-    _n: 0,
-
-    // Return the current value and increment it
-    get next() { return this._n++; },
-
-    // Set a new value of n, but only if it is larger than current
-    set next(n) {
-        if (n &gt; this._n) this._n = n;
-        else throw new Error(&quot;serial number can only be set to a larger value&quot;);
-    }
-};
-serialnum.next = 10;    // Set the starting serial number
-serialnum.next          // =&gt; 10
-serialnum.next          // =&gt; 11: different value each time we get next
-</code></pre>
-
-<p>最后，下面是使用 getter 方法实现具有&quot;魔幻&quot;行为的属性的示例：</p>
-
-<pre><code class="language-javascript">// This object has accessor properties that return random numbers.
-// The expression &quot;random.octet&quot;, for example, yields a random number
-// between 0 and 255 each time it is evaluated.
-const random = {
-    get octet() { return Math.floor(Math.random()*256); },
-    get uint16() { return Math.floor(Math.random()*65536); },
-    get int16() { return Math.floor(Math.random()*65536)-32768; }
-};
-</code></pre>
-
-<h2 id="toc_28">6.11 总结</h2>
-
-<p>本章非常详细地记录了 JavaScript 对象，涵盖的主题包括：</p>
-
-<p>基本对象术语，包括可枚举和自有属性等术语的含义。</p>
-
-<p>对象字面量语法，包括 ES6 及以后的许多新特性。</p>
-
-<p>如何读取、写入、删除、枚举和检查对象属性是否存在。</p>
-
-<p>基于原型的继承是如何在 JavaScript 中工作，以及如何使用 Object.create() 创建一个从另一个对象继承的对象。</p>
-
-<p>如何使用 Object.assign() 将属性从一个对象复制到另一个对象。</p>
-
-<p>所有 JavaScript 的非原始值都是对象。这包括数组和函数，这是接下来两章的主题。</p>
-
-<hr/>
-
-<ol>
-<li>记住，几乎所有对象都有一个原型，但大多数对象没有名为 prototype 的属性。即使不能直接访问原型对象，JavaScript 继承依然工作。但是，如果你想学习如何做到这一点，请参阅 §14.3。</li>
-</ol>
 
 ]]></content>
   </entry>

@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>
     
-    JavaScript权威指南第七版 - 十
+    JavaScript 深浅拷贝 - 十
     
   </title>
   <meta name="description" content="">
@@ -76,12 +76,99 @@
           <div class="large-9 medium-9 columns">
   <div class="markdown-body">
   <div class="markdown-inside">
-    <h1>关于我</h1>
-    <time class="article-date">发布于明天</time>
-    <p>才知道该学啥，可是不知道自学到底会多走多少弯路！</p>
-    <p>等小有成就，再总结下自己吧。</p>
+    <h1>JavaScript 深浅拷贝</h1>
+    <time class="article-date" datetime="2021-02-04T21:40:11+08:00">发布于2021/02/04</time>
+    <p>在数组章节提到数组的展开运算符时，作者举例说明展开运算符可以进行拷贝，原为如下：</p>
+
+<blockquote>
+<p>The spread operator is a convenient way to create a (shallow) copy of an array:</p>
+</blockquote>
+
+<pre><code class="language-javascript">let original = [1,2,3];
+let copy = [...original];
+copy[0] = 0;  // Modifying the copy does not change the original
+original[0]   // =&gt; 1
+</code></pre>
+
+<p>copy 对象为 original 展开后的数组字面量，但是拷贝后的数组修改了序列为 0 的元素的值，但是被拷贝数组中序列为 0 的元素的值并没有被改变，作者称这样的拷贝为浅拷贝，</p>
+
+<p>在我的印象中深浅拷贝是如下形式的：</p>
+
+<ul>
+<li>浅拷贝（shallowCopy）只是增加了一个指针指向已存在的内存地址，在修改了拷贝元，拷贝先也会跟着改变。</li>
+<li>深拷贝（deepCopy）是增加了一个指针并且申请了一个新的内存，使这个增加的指针指向这个新的内存，拷贝元和拷贝之间脱离了关系。</li>
+</ul>
+
+<p>但是这个实例中，作者只测试了拷贝先的修改，我又做了如下测试：</p>
+
+<pre><code class="language-javascript">let original = [1,2,3];
+let copy = [...original];
+original[0] = 10;
+copy[0]  // =&gt; 1
+</code></pre>
+
+<p>就是说在修改被拷贝数组时，拷贝后的数组也不跟随改变。<br/>
+所以作者的浅拷贝指的是什么呢？<br/>
+问题需要最根溯源，从基础来解决问题，下面就先来回溯下数据类型。</p>
+
+<h2 id="toc_0">JavaScript 数据类型</h2>
+
+<p>第一种是基本类型，其英文后面加个 Value 构成了 Primitive Value，这就是我们常说的原始值。如下是最新 MDN 所描述的七种基本类型：</p>
+
+<blockquote>
+<p>In JavaScript, a primitive (primitive value, primitive data type) is data that is not an object and has no methods. There are 7 primitive data types: string, number, bigint, boolean, undefined, symbol, and null.</p>
+
+<p>Most of the time, a primitive value is represented directly at the lowest level of the language implementation.</p>
+
+<p>All primitives are <strong>immutable</strong>, i.e., they cannot be altered. It is important not to confuse a primitive itself with a variable assigned a primitive value. The variable may be reassigned a new value, but the existing value can not be changed in the ways that objects, arrays, and functions can be altered.</p>
+</blockquote>
+
+<p>链接：<a href="https://developer.mozilla.org/en-US/docs/Glossary/Primitive">MDN Primitive</a></p>
+
+<pre><code class="language-javascript">let x = &#39;x&#39;;
+let y = x;
+x = &#39;y&#39;;
+y;  // =&gt; &#39;x&#39;
+</code></pre>
+
+<p>基本类型的特性就是不可改变，如上代码，x 是基本数据类型字符串，将 x 赋值给 y 实际上是给 y 创建了一个字符串 &#39;x&#39; 的副本，而这时候我们去修改了 x，y 不会跟随改变。</p>
+
+<p>第二种是引用类型<br/>
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures</a></p>
+
   </div>
-</div>  
+</div>
+<br /><br />
+<hr />
+<div class="row clearfix">
+  <div class="large-6 columns">
+    <div class="text-left" style="padding:15px 0px;">
+      
+    </div>
+  </div>
+  <div class="large-6 columns">
+    <div class="text-right" style="padding:15px 0px;">
+      
+      <a href="16108495213063.html" title="Next Post: 函数中的展开运算符和解构">函数中的展开运算符和解构 &raquo;</a>
+      
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div style="padding:0px 0.93em;" class="share-comments">
+    
+  </div>
+</div>
+<script type="text/javascript">
+  $(function () {
+    var currentURL = '16124460113427.html';
+    $('#side-nav a').each(function () {
+      if ($(this).attr('href') == currentURL) {
+        $(this).parent().addClass('active');
+      }
+    });
+  });
+</script>  
           </div>
           <div class="large-3 medium-3 columns">
             <div class="hide-for-small">
