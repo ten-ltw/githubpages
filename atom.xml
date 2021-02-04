@@ -4,7 +4,7 @@
   <title><![CDATA[十]]></title>
   <link href="blog.2019919.top/atom.xml" rel="self"/>
   <link href="blog.2019919.top/"/>
-  <updated>2021-02-04T19:21:25+08:00</updated>
+  <updated>2021-02-04T19:39:29+08:00</updated>
   <id>blog.2019919.top/</id>
   <author>
     <name><![CDATA[]]></name>
@@ -19,6 +19,86 @@
     <updated>2021-02-04T19:19:45+08:00</updated>
     <id>blog.2019919.top/16124375850406.html</id>
     <content type="html"><![CDATA[
+<ul>
+<li>
+<a href="#toc_0">7.1 Creating Arrays</a>
+<ul>
+<li>
+<a href="#toc_1">7.1.1 Array Literals</a>
+</li>
+<li>
+<a href="#toc_2">7.1.2 The Spread Operator</a>
+</li>
+<li>
+<a href="#toc_3">7.1.3 The Array() Constructor</a>
+</li>
+<li>
+<a href="#toc_4">7.1.4 Array.of()</a>
+</li>
+<li>
+<a href="#toc_5">7.1.5 Array.from()</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#toc_6">7.2 Reading and Writing Array Elements</a>
+</li>
+<li>
+<a href="#toc_7">7.3 Sparse Arrays</a>
+</li>
+<li>
+<a href="#toc_8">7.4 Array Length</a>
+</li>
+<li>
+<a href="#toc_9">7.5 Adding and Deleting Array Elements</a>
+</li>
+<li>
+<a href="#toc_10">7.6 Iterating Arrays</a>
+</li>
+<li>
+<a href="#toc_11">7.7 Multidimensional Arrays</a>
+</li>
+<li>
+<a href="#toc_12">7.8 Array Methods</a>
+<ul>
+<li>
+<a href="#toc_13">7.8.1 Array Iterator Methods</a>
+</li>
+<li>
+<a href="#toc_14">7.8.2 Flattening arrays with flat() and flatMap()</a>
+</li>
+<li>
+<a href="#toc_15">7.8.3 Adding arrays with concat()</a>
+</li>
+<li>
+<a href="#toc_16">7.8.4 Stacks and Queues with push(), pop(), shift(), and unshift()</a>
+</li>
+<li>
+<a href="#toc_17">7.8.5 Subarrays with slice(), splice(), fill(), and copyWithin()</a>
+</li>
+<li>
+<a href="#toc_18">7.8.6 Array Searching and Sorting Methods</a>
+</li>
+<li>
+<a href="#toc_19">7.8.7 Array to String Conversions</a>
+</li>
+<li>
+<a href="#toc_20">7.8.8 Static Array Functions</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#toc_21">7.9 Array-Like Objects</a>
+</li>
+<li>
+<a href="#toc_22">7.10 Strings as Arrays</a>
+</li>
+<li>
+<a href="#toc_23">7.11 Summary</a>
+</li>
+</ul>
+
+
 <p>This chapter documents arrays, a fundamental datatype in JavaScript and in most other programming languages. An array is an ordered collection of values. Each value is called an element, and each element has a numeric position in the array, known as its index. JavaScript arrays are untyped: an array element may be of any type, and different elements of the same array may be of different types. Array elements may even be objects or other arrays, which allows you to create complex data structures, such as arrays of objects and arrays of arrays. JavaScript arrays are zero-based and use 32-bit indexes: the index of the first element is 0, and the highest possible index is 4294967294 (2<sup>32</sup>−2), for a maximum array size of 4,294,967,295 elements. JavaScript arrays are dynamic: they grow or shrink as needed, and there is no need to declare a fixed size for the array when you create it or to reallocate it when the size changes. JavaScript arrays may be sparse: the elements need not have contiguous indexes, and there may be gaps. Every JavaScript array has a length property. For nonsparse arrays, this property specifies the number of elements in the array. For sparse arrays, length is larger than the highest index of any element.</p>
 
 <blockquote>
@@ -2124,6 +2204,107 @@ super.functionOnParent([arguments]);
     <updated>2021-01-22T21:23:59+08:00</updated>
     <id>blog.2019919.top/16113218396407.html</id>
     <content type="html"><![CDATA[
+<ul>
+<li>
+<a href="#toc_0">6.1 介绍对象</a>
+</li>
+<li>
+<a href="#toc_1">6.2 创建对象</a>
+<ul>
+<li>
+<a href="#toc_2">6.2.1 对象字面量</a>
+</li>
+<li>
+<a href="#toc_3">6.2.2 用 new 创建对象</a>
+</li>
+<li>
+<a href="#toc_4">6.2.3 原型</a>
+</li>
+<li>
+<a href="#toc_5">6.2.4 Object.create()</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#toc_6">6.3 查询和设置属性</a>
+<ul>
+<li>
+<a href="#toc_7">6.3.1 对象作关联数组</a>
+</li>
+<li>
+<a href="#toc_8">6.3.2 继承</a>
+</li>
+<li>
+<a href="#toc_9">6.3.3 属性访问异常</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#toc_10">6.4 删除属性</a>
+</li>
+<li>
+<a href="#toc_11">6.5 测试属性</a>
+</li>
+<li>
+<a href="#toc_12">6.6 枚举属性</a>
+<ul>
+<li>
+<a href="#toc_13">6.6.1 属性枚举顺序</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#toc_14">6.7 扩展对象</a>
+</li>
+<li>
+<a href="#toc_15">6.8 序列化对象</a>
+</li>
+<li>
+<a href="#toc_16">6.9 对象方法</a>
+<ul>
+<li>
+<a href="#toc_17">6.9.1 toString() 方法</a>
+</li>
+<li>
+<a href="#toc_18">6.9.2 toLocaleString() 方法</a>
+</li>
+<li>
+<a href="#toc_19">6.9.3 valueOf() 方法</a>
+</li>
+<li>
+<a href="#toc_20">6.9.4 toJSON() 方法</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#toc_21">6.10 扩展的对象字面量语法</a>
+<ul>
+<li>
+<a href="#toc_22">6.10.1 速记属性</a>
+</li>
+<li>
+<a href="#toc_23">6.10.2 计算属性名</a>
+</li>
+<li>
+<a href="#toc_24">6.10.3 Symbol 作属性名</a>
+</li>
+<li>
+<a href="#toc_25">6.10.4 展开运算符</a>
+</li>
+<li>
+<a href="#toc_26">6.10.5 速记方法</a>
+</li>
+<li>
+<a href="#toc_27">6.10.6 属性 Getter 和 Setter 方法</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#toc_28">6.11 总结</a>
+</li>
+</ul>
+
+
 <p>对象是 JavaScript 最基本的数据类型，在本章之前的章节中已经多次看到它们。因为对象对 JavaScript 语言非常重要，所以了解它们的工作原理非常重要，本章将提供这些细节。它从对象的正式概述开始，然后深入到关于创建对象以及查询、设置、删除、测试和枚举对象属性的实用部分。在这些以属性为中心的章节之后，将介绍如何扩展、序列化和定义对象上的重要方法。最后，本章以一大段关于 ES6 中的新对象文字语法和该语言的最新版本结尾。</p>
 
 <h2 id="toc_0">6.1 介绍对象</h2>
@@ -2892,6 +3073,143 @@ const random = {
     <updated>2021-01-15T07:20:26+08:00</updated>
     <id>blog.2019919.top/16106664265983.html</id>
     <content type="html"><![CDATA[
+<ul>
+<li>
+<a href="#toc_0">8.1 函数定义</a>
+<ul>
+<li>
+<a href="#toc_1">8.1.1 函数声明</a>
+</li>
+<li>
+<a href="#toc_2">8.1.2 函数表达式</a>
+</li>
+<li>
+<a href="#toc_3">8.1.3 箭头函数</a>
+</li>
+<li>
+<a href="#toc_4">8.1.4 嵌套函数</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#toc_5">8.2 函数调用</a>
+<ul>
+<li>
+<a href="#toc_6">8.2.1 函数调用</a>
+<ul>
+<li>
+<a href="#toc_7">条件调用</a>
+</li>
+<li>
+<a href="#toc_8">递归函数和栈</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#toc_9">8.2.2 方法调用</a>
+<ul>
+<li>
+<a href="#toc_10">方法链</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#toc_11">8.2.3 构造函数调用</a>
+</li>
+<li>
+<a href="#toc_12">8.2.4 间接调用</a>
+</li>
+<li>
+<a href="#toc_13">8.2.5 函数隐式调用</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#toc_14">8.3 函数的实参和形参</a>
+<ul>
+<li>
+<a href="#toc_15">8.3.1 可选形参和默认值</a>
+</li>
+<li>
+<a href="#toc_16">8.3.2 剩余参数和可变长实参列表</a>
+</li>
+<li>
+<a href="#toc_17">8.3.3 实参对象</a>
+</li>
+<li>
+<a href="#toc_18">8.3.4 函数调用时的展开运算符</a>
+</li>
+<li>
+<a href="#toc_19">8.3.5 实参解构到形参中</a>
+</li>
+<li>
+<a href="#toc_20">8.3.6 实参类型</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#toc_21">8.4 函数作为值</a>
+<ul>
+<li>
+<a href="#toc_22">8.4.1 自定义函数属性</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#toc_23">8.5 函数作为命名空间</a>
+</li>
+<li>
+<a href="#toc_24">8.6 闭包</a>
+</li>
+<li>
+<a href="#toc_25">8.7 函数属性、方法、和构造函数</a>
+<ul>
+<li>
+<a href="#toc_26">8.7.1 length 属性</a>
+</li>
+<li>
+<a href="#toc_27">8.7.2 name 属性</a>
+</li>
+<li>
+<a href="#toc_28">8.7.3 prototype 属性</a>
+</li>
+<li>
+<a href="#toc_29">8.7.4 call() 和 apply() 方法</a>
+</li>
+<li>
+<a href="#toc_30">8.7.5 bind() 方法</a>
+</li>
+<li>
+<a href="#toc_31">8.7.6 toString() 方法</a>
+</li>
+<li>
+<a href="#toc_32">8.7.7 Function() 构造函数</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#toc_33">8.8 函数式编程</a>
+<ul>
+<li>
+<a href="#toc_34">8.8.1 用函数处理数组</a>
+</li>
+<li>
+<a href="#toc_35">8.8.2 高阶函数</a>
+</li>
+<li>
+<a href="#toc_36">8.8.3 局部应用函数</a>
+</li>
+<li>
+<a href="#toc_37">8.8.4 记忆（Memoization）</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#toc_38">8.9 总结</a>
+</li>
+</ul>
+
+
 <p>本章介绍了 JavaScript 函数。函数是 JavaScript 程序的基本构建块，也是几乎所有编程语言的共同特性。你可能已经了解函数的概念，如子例程或过程。</p>
 
 <p>函数是一个 JavaScript 代码块，只定义一次，但可以执行或调用任意次数。JavaScript 函数是参数化的：一个函数定义可以包含一个标识符列表，称为参数，作为函数体的局部变量。函数调用为函数的参数提供值或实参。函数通常使用它们的实参值来计算一个返回值，该返回值成为函数调用表达式的值。除了参数之外，每次调用都有另一个值——调用上下文——即 this 关键字的值。</p>
@@ -3141,7 +3459,7 @@ setRectSize(rect, width, height);
 doStepOne().then(doStepTwo).then(doStepThree).catch(handleErrors);
 </code></pre>
 
-<p>当方法并不需要返回值时，最好直接返回 this。如果在设计的 API 中一直采用这种方式，使用 API 就可以用方法链 <sup>1</sup> 风格的编程，在这种编程风格中，只要指定一次要调用的对象即可，余下的方法都可以基于此进行调用：</p>
+<p>当方法并不需要返回值时，最好直接返回 this。如果在设计的 API 中一直采用这种方式，使用 API 就可以用方法链 <sup id="fnref1"><a href="#fn1" rel="footnote">1</a></sup> 风格的编程，在这种编程风格中，只要指定一次要调用的对象即可，余下的方法都可以基于此进行调用：</p>
 
 <pre><code class="language-javascript">new Square().x(100).y(100).size(50).outline(&quot;red&quot;).fill(&quot;blue&quot;).draw();
 </code></pre>
@@ -3260,7 +3578,7 @@ function getPropertyNames(o, a = []) {
 }
 </code></pre>
 
-<p>默认参数表达式只有在函数调用时进行计算，而不是在它定义时，所以每一次 getPropertyNames() 函数只传一个实参调用时，一个新的空数组被创建并传给参数。<sup>2</sup> 最容易理解的就是参数默认值是常量（或者字面量表达式 [] 和 {}）。但这并不是必须的：举个例子，你可以用变量或者函数调用，计算一个默认参数的值。一个很有趣的情况是，对于有多个参数的函数，可以用前面的参数值来定义后面的参数默认值。</p>
+<p>默认参数表达式只有在函数调用时进行计算，而不是在它定义时，所以每一次 getPropertyNames() 函数只传一个实参调用时，一个新的空数组被创建并传给参数。<sup id="fnref2"><a href="#fn2" rel="footnote">2</a></sup> 最容易理解的就是参数默认值是常量（或者字面量表达式 [] 和 {}）。但这并不是必须的：举个例子，你可以用变量或者函数调用，计算一个默认参数的值。一个很有趣的情况是，对于有多个参数的函数，可以用前面的参数值来定义后面的参数默认值。</p>
 
 <pre><code class="language-javascript">// This function returns an object representing a rectangle&#39;s dimensions.
 // If only width is supplied, make it twice as high as it is wide.
@@ -3473,7 +3791,7 @@ sum([1,2,&quot;3&quot;]); // !TypeError: element 2 is not a number
 
 <h2 id="toc_21">8.4 函数作为值</h2>
 
-<p>函数可以定义，也可以调用，这是函数最重要的特性。函数定义和调用是  JavaScript 的词法特性，对于其他大多数编程语言来说亦是如此。然而在 JavaScript 中，函数不仅是一种语法，也是值，也就是说，可以将函数赋值给变量，存储在对象的属性或数组的元素中，作为参数传入另外一个函数等。<sup>3</sup></p>
+<p>函数可以定义，也可以调用，这是函数最重要的特性。函数定义和调用是  JavaScript 的词法特性，对于其他大多数编程语言来说亦是如此。然而在 JavaScript 中，函数不仅是一种语法，也是值，也就是说，可以将函数赋值给变量，存储在对象的属性或数组的元素中，作为参数传入另外一个函数等。<sup id="fnref3"><a href="#fn3" rel="footnote">3</a></sup></p>
 
 <p>To understand how functions can be JavaScript data as well as JavaScript syntax, consider this function definition:</p>
 
@@ -3914,21 +4232,13 @@ constructFunction()()  // =&gt; &quot;global&quot;
 
 <p>我们可以将 Function() 构造函数认为是在全局作用域中执行的 eval()（见  §4.12.2），eval() 可以在自己的私有作用域内定义新变量和函数，Function() 构造函数在实际编程过程中很少会用到。</p>
 
-<h2 id="toc_33">8.8 Functional Programming</h2>
+<h2 id="toc_33">8.8 函数式编程</h2>
 
-<p>JavaScript is not a functional programming language like Lisp or Haskell, but the fact that JavaScript can manipulate functions as objects means that we can use functional programming techniques in JavaScript. Array methods such as map() and reduce() lend themselves particularly well to a functional programming style. The sections that follow demonstrate techniques for functional programming in JavaScript. They are intended as a mind-expanding exploration of the power of JavaScript’s functions, not as a prescription for good programming style.</p>
-
-<blockquote>
 <p>和 Lisp、Haskell 不同，JavaScript 并非函数式编程语言，但在 JavaScript 中可以像操控对象一样操控函数，也就是说可以在 JavaScript 中应用函数式编程技术。数组方法诸如 map() 和 reduce() 就可以非常适合用于函数式编程风格。接下来的几节将会着重介绍 JavaScript 中的函数式编程技术。函数式编程旨在扩展对 JavaScript 函数功能功能的探索，而不是为了良好的编程风格。</p>
-</blockquote>
 
-<h3 id="toc_34">8.8.1 Processing Arrays with Functions</h3>
+<h3 id="toc_34">8.8.1 用函数处理数组</h3>
 
-<p>Suppose we have an array of numbers and we want to compute the mean and standard deviation of those values. We might do that in nonfunctional style like this:</p>
-
-<blockquote>
 <p>假设有一个数组，数组元素都是数字，我们想要计算这些元素的平均值和标准差。若使用非函数式编程风格的话，代码会是这样：</p>
-</blockquote>
 
 <pre><code class="language-javascript">let data = [1,1,3,5,5];  // This is our array of numbers
 
@@ -3947,11 +4257,7 @@ for(let i = 0; i &lt; data.length; i++) {
 let stddev = Math.sqrt(total/(data.length-1));  // stddev == 2
 </code></pre>
 
-<p>We can perform these same computations in concise functional style using the array methods map() and reduce() like this (see §7.8.1 to review these methods):</p>
-
-<blockquote>
 <p>可以使用数组方法 map() 和 reduce() 来实现同样的计算，这种实现极其简洁（参照 §7.8.1 来查看这些方法）：</p>
-</blockquote>
 
 <pre><code class="language-javascript">// First, define two simple functions
 const sum = (x,y) =&gt; x+y;
@@ -3965,21 +4271,13 @@ let stddev = Math.sqrt(deviations.map(square).reduce(sum)/(data.length-1));
 stddev  // =&gt; 2
 </code></pre>
 
-<p>This new version of the code looks quite different than the first one, but it is still invoking methods on objects, so it has some object-oriented conventions remaining. Let’s write functional versions of the map() and reduce() methods:</p>
-
-<blockquote>
 <p>这个新版本的代码看起来跟第一版有很大不同，但是它仍然调用对象的方法，所以它还是面向对象编程。接下来用函数版本的 map() 和 reduce() 方法：</p>
-</blockquote>
 
 <pre><code class="language-javascript">const map = function(a, ...args) { return a.map(...args); };
 const reduce = function(a, ...args) { return a.reduce(...args); };
 </code></pre>
 
-<p>With these map() and reduce() functions defined, our code to compute the mean and standard deviation now looks like this:</p>
-
-<blockquote>
 <p>用这两个函数定义了 map() 和 reduce()，我们计算平均值和标准差变成这样：</p>
-</blockquote>
 
 <pre><code class="language-javascript">const sum = (x,y) =&gt; x+y;
 const square = x =&gt; x*x;
@@ -3991,13 +4289,9 @@ let stddev = Math.sqrt(reduce(map(deviations, square), sum)/(data.length-1));
 stddev  // =&gt; 2
 </code></pre>
 
-<h3 id="toc_35">8.8.2 Higher-Order Functions</h3>
+<h3 id="toc_35">8.8.2 高阶函数</h3>
 
-<p>A higher-order function is a function that operates on functions, taking one or more functions as arguments and returning a new function. Here is an example:</p>
-
-<blockquote>
 <p>所谓高阶函数就是操作函数的函数，它接收一个或多个函数作为参数，并返回一个新函数。来看这个例子：</p>
-</blockquote>
 
 <pre><code class="language-javascript">// This higher-order function returns a new function that passes its
 // arguments to f and returns the logical negation of f&#39;s return value;
@@ -4013,11 +4307,7 @@ const odd = not(even);         // A new function that does the opposite
 [1,1,3,5,5].every(odd)         // =&gt; true: every element of the array is odd
 </code></pre>
 
-<p>This not() function is a higher-order function because it takes a function argument and returns a new function. As another example, consider the mapper() function that follows. It takes a function argument and returns a new function that maps one array to another using that function. This function uses the map() function defined earlier, and it is important that you understand how the two functions are different:</p>
-
-<blockquote>
 <p>上面的 not() 函数就是一个高阶函数，因为它接收一个函数作为参数，并返回一个新函数。另外一个例子，来看下面的 mapper() 函数，它也是接收一个函数作为实参，并返回一个新函数，这个新函数将一个数组映射到另一个使用这个函数的数组上。这个函数使用了之前定义的 map() 函数，但要首先理解这两个函数有哪里不 同，理解这一点至关重要：</p>
-</blockquote>
 
 <pre><code class="language-javascript">// Return a function that expects an array argument and applies f to
 // each element, returning the array of return values.
@@ -4031,11 +4321,7 @@ const incrementAll = mapper(increment);
 incrementAll([1,2,3])  // =&gt; [2,3,4]
 </code></pre>
 
-<p>Here is another, more general, example that takes two functions, f and g, and returns a new function that computes f(g()):</p>
-
-<blockquote>
 <p>这里是一个更常见的例子，它接收两个函数 f() 和 g()，并返回一个新的函数用以计算 f(g())：</p>
-</blockquote>
 
 <pre><code class="language-javascript">// Return a new function that computes f(g(...)).
 // The returned function h passes all of its arguments to g, then passes
@@ -4054,19 +4340,11 @@ const square = x =&gt; x*x;
 compose(square, sum)(2,3)  // =&gt; 25; the square of the sum
 </code></pre>
 
-<p>The partial() and memoize() functions defined in the sections that follow are two more important higher-order functions.</p>
-
-<blockquote>
 <p>本章后续几节中定义了 partial() 和 memoize() 函数，这两个函数是非常重要的高阶函数。</p>
-</blockquote>
 
-<h3 id="toc_36">8.8.3 Partial Application of Functions</h3>
+<h3 id="toc_36">8.8.3 局部应用函数</h3>
 
-<p>The bind() method of a function f (see §8.7.5) returns a new function that invokes f in a specified context and with a specified set of arguments. We say that it binds the function to an object and partially applies the arguments. The bind() method partially applies arguments on the left—that is, the arguments you pass to bind() are placed at the start of the argument list that is passed to the original function. But it is also possible to partially apply arguments on the right:</p>
-
-<blockquote>
 <p>函数 f()（见 §8.7.5）的 bind() 方法返回一个新函数，给新函数传入特定的上下文和一组指定的参数，然后调用函数 f()。我们说它把函数“绑定至”对象并传入一部分参数。bind() 方法只是将实参放在（完整实参列表的）左侧，也就是说传入 bind() 的实参都是放在传入原始函数的实参列表开始的位置，但有时我们期望将传入 bind() 的实参放在（完整实参列表的）右侧：</p>
-</blockquote>
 
 <pre><code class="language-javascript">// The arguments to this function are passed on the left
 function partialLeft(f, ...outerArgs) {
@@ -4108,22 +4386,14 @@ partialRight(f, 2)(3,4)        // =&gt;  6: Bind last argument: 3 * (4 - 2)
 partial(f, undefined, 2)(3,4)  // =&gt; -6: Bind middle argument: 3 * (2 - 4)
 </code></pre>
 
-<p>These partial application functions allow us to easily define interesting functions out of functions we already have defined. Here are some examples:</p>
-
-<blockquote>
 <p>利用这种不完全函数的编程技巧，可以编写一些有意思的代码，利用已有的函数来定义新的函数，参照下面这个例子：</p>
-</blockquote>
 
 <pre><code class="language-javascript">const increment = partialLeft(sum, 1);
 const cuberoot = partialRight(Math.pow, 1/3);
 cuberoot(increment(26))  // =&gt; 3
 </code></pre>
 
-<p>Partial application becomes even more interesting when we combine it with other higher-order functions. Here, for example, is a way to define the preceding not() function just shown using composition and partial application:</p>
-
-<blockquote>
 <p>当将不完全调用和其他高阶函数整合在一起的时候，事情就变得格外有趣了。比如，这里的例子定义了 not() 函数，它用到了刚才提到的不完全调用：</p>
-</blockquote>
 
 <pre><code class="language-javascript">const not = partialLeft(compose, x =&gt; !x);
 const even = x =&gt; x % 2 === 0;
@@ -4132,11 +4402,7 @@ const isNumber = not(isNaN);
 odd(3) &amp;&amp; isNumber(2)  // =&gt; true
 </code></pre>
 
-<p>We can also use composition and partial application to redo our mean and standard deviation calculations in extreme functional style:</p>
-
-<blockquote>
 <p>我们也可以使用不完全调用的组合来重新组织求平均数和标准差的代码，这种编码风格是非常纯粹的函数式编程：</p>
-</blockquote>
 
 <pre><code class="language-javascript">// sum() and square() functions are defined above. Here are some more:
 const product = (x,y) =&gt; x*y;
@@ -4155,19 +4421,11 @@ let stddev = sqrt(product(reduce(map(data,
 [mean, stddev]  // =&gt; [3, 2]
 </code></pre>
 
-<p>Notice that this code to compute mean and standard deviation is entirely function invocations; there are no operators involved, and the number of parentheses has grown so large that this JavaScript is beginning to look like Lisp code. Again, this is not a style that I advocate for JavaScript programming, but it is an interesting exercise to see how deeply functional JavaScript code can be.</p>
-
-<blockquote>
 <p>注意，这段代码计算平均值和标准差完全是函数调用;没有涉及运算符，并且括号的数量增长如此之大让 JavaScript 开始看起来像 Lisp 代码。同样，这不是我提倡的 JavaScript 编程风格，但它是一个有趣的练习，看看 JavaScript 代码的功能有多深。</p>
-</blockquote>
 
-<h3 id="toc_37">8.8.4 Memoization</h3>
+<h3 id="toc_37">8.8.4 记忆（Memoization）</h3>
 
-<p>In §8.4.1, we defined a factorial function that cached its previously computed results. In functional programming, this kind of caching is called memoization. The code that follows shows a higher-order function, memoize(), that accepts a function as its argument and returns a memoized version of the function:</p>
-
-<blockquote>
 <p>在 §8.4.1 中定义了一个阶乘函数，它可以将上次的计算结果缓存起来。在函数式编程当中，这种缓存技巧叫做“记忆”（memorization）。下面的代码展示了一个高阶函数，memorize() 接收一个函数作为实参，并返回带有记忆能力的函数:</p>
-</blockquote>
 
 <pre><code class="language-javascript">// Return a memoized version of f.
 // It only works if arguments to f all have distinct string representations.
@@ -4188,11 +4446,7 @@ function memoize(f) {
 }
 </code></pre>
 
-<p>The memoize() function creates a new object to use as the cache and assigns this object to a local variable so that it is private to (in the closure of) the returned function. The returned function converts its arguments array to a string and uses that string as a property name for the cache object. If a value exists in the cache, it returns it directly. Otherwise, it calls the specified function to compute the value for these arguments, caches that value, and returns it. Here is how we might use memoize():</p>
-
-<blockquote>
 <p>memorize() 函数创建一个新的对象，这个对象被当做缓存（的宿主）并赋值给一个局部变量，因此对于返回的函数来说它是私有的（在闭包中）。所返回的函数将它的实参数组转换成字符串，并将字符串用做缓存对象的属性名。如果在缓存中存在这个值，则直接返回它。否则，就调用既定的函数对实参进行计算，将计算结果缓存起来并返回，下面的代码展示了如何使用 memorize()：</p>
-</blockquote>
 
 <pre><code class="language-javascript">// Return the Greatest Common Divisor of two integers using the Euclidian
 // algorithm: http://en.wikipedia.org/wiki/Euclidean_algorithm
@@ -4217,23 +4471,8 @@ const factorial = memoize(function(n) {
 factorial(5)      // =&gt; 120: also caches values for 4, 3, 2 and 1.
 </code></pre>
 
-<h2 id="toc_38">8.9 Summary</h2>
+<h2 id="toc_38">8.9 总结</h2>
 
-<p>Some key points to remember about this chapter are as follows:</p>
-
-<p>You can define functions with the function keyword and with the ES6 =&gt; arrow syntax.</p>
-
-<p>You can invoke functions, which can be used as methods and constructors.</p>
-
-<p>Some ES6 features allow you to define default values for optional function parameters, to gather multiple arguments into an array using a rest parameter, and to destructure object and array arguments into function parameters.</p>
-
-<p>You can use the ... spread operator to pass the elements of an array or other iterable object as arguments in a function invocation.</p>
-
-<p>A function defined inside of and returned by an enclosing function retains access to its lexical scope and can therefore read and write the variables defined inside the outer function. Functions used in this way are called closures, and this is a technique that is worth understanding.</p>
-
-<p>Functions are objects that can be manipulated by JavaScript, and this enables a functional style of programming.</p>
-
-<blockquote>
 <p>本章关键点总结如下：</p>
 
 <p>可以用函数关键字和 ES6 =&gt; 箭头函数来定义函数。</p>
@@ -4247,23 +4486,25 @@ factorial(5)      // =&gt; 120: also caches values for 4, 3, 2 and 1.
 <p>封闭函数内部定义并返回的函数保留对其词法作用域的访问，因此可以读取和写入外部函数内定义的变量。用这种方式使用的函数称为闭包，这是一种值得理解的技术。</p>
 
 <p>函数是可由 JavaScript 操作的对象，这使 JavaScript 支持函数式编程。</p>
-</blockquote>
 
+<div class="footnotes">
 <hr/>
-
 <ol>
-<li>The term was coined by Martin Fowler. See <a href="http://martinfowler.com/dslCatalog/methodChaining.html">http://martinfowler.com/dslCatalog/methodChaining.html</a>.</li>
-<li>If you are familiar with Python, note that this is different than Python, in which every invocation shares the same default value.</li>
-<li>This may not seem like a particularly interesting point unless you are familiar with more static languages, in which functions are part of a program but cannot be manipulated by the program.</li>
-</ol>
 
-<blockquote>
-<ol>
-<li>这个术语最初是由 Martin Fowler 提出的，参见<a href="http://martinfowler.com/dslwip/MethodChaining.html%E3%80%82">http://martinfowler.com/dslwip/MethodChaining.html。</a></li>
-<li>这看起来不足为奇，但如果你对 Python 很熟悉，你会发现 Python 中的函数是程序的一 部分，但无法被程序操作。</li>
-<li>这似乎并不是一个特别有趣的点，除非你熟悉更多的静态语言，其中函数是程序的一部分，但不能由程序操作。</li>
+<li id="fn1">
+<p>这个术语最初是由 Martin Fowler 提出的，参见<a href="http://martinfowler.com/dslwip/MethodChaining.html%E3%80%82">http://martinfowler.com/dslwip/MethodChaining.html。</a>&nbsp;<a href="#fnref1" rev="footnote">&#8617;</a></p>
+</li>
+
+<li id="fn2">
+<p>这看起来不足为奇，但如果你对 Python 很熟悉，你会发现 Python 中的函数是程序的一 部分，但无法被程序操作。&nbsp;<a href="#fnref2" rev="footnote">&#8617;</a></p>
+</li>
+
+<li id="fn3">
+<p>这似乎并不是一个特别有趣的点，除非你熟悉更多的静态语言，其中函数是程序的一部分，但不能由程序操作。&nbsp;<a href="#fnref3" rev="footnote">&#8617;</a></p>
+</li>
+
 </ol>
-</blockquote>
+</div>
 
 ]]></content>
   </entry>
@@ -4274,6 +4515,64 @@ factorial(5)      // =&gt; 120: also caches values for 4, 3, 2 and 1.
     <updated>2021-01-28T20:57:49+08:00</updated>
     <id>blog.2019919.top/16118386693796.html</id>
     <content type="html"><![CDATA[
+<ul>
+<li>
+<a href="#toc_0">9.1 类和原型</a>
+</li>
+<li>
+<a href="#toc_1">9.2 类和构造函数</a>
+<ul>
+<li>
+<a href="#toc_2">9.2.1 构造函数、类标识和 instanceof</a>
+</li>
+<li>
+<a href="#toc_3">9.2.2 constructor 属性</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#toc_4">9.3 使用 class 关键字的类</a>
+<ul>
+<li>
+<a href="#toc_5">9.3.1 静态方法</a>
+</li>
+<li>
+<a href="#toc_6">9.3.2 Getter、Setter 和其他方法</a>
+</li>
+<li>
+<a href="#toc_7">9.3.3 公有、私有和静态字段</a>
+</li>
+<li>
+<a href="#toc_8">9.3.4 示例：一个复数类</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#toc_9">9.4 为类添加方法</a>
+</li>
+<li>
+<a href="#toc_10">9.5 子类</a>
+<ul>
+<li>
+<a href="#toc_11">9.5.1 子类和原型</a>
+</li>
+<li>
+<a href="#toc_12">9.5.2 子类与 extends 和 super</a>
+</li>
+<li>
+<a href="#toc_13">9.5.3 委托代替继承</a>
+</li>
+<li>
+<a href="#toc_14">9.5.4 Hierarchies 类和抽象类</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#toc_15">9.6 总结</a>
+</li>
+</ul>
+
+
 <p>第 6 章详细介绍了 JavaScript 对象，每个 JavaScript 对象都是一个属性集合，相互之间没有任何联系。在 JavaScript 中也可以定义对象的类，让每个对象都共享某些属性，这种“共享”的特性是非常有用的。类的成员或实例都包含一些属性，用以存放或定义它们的状态，其中有些属性定义了它们的行为（通常称为方法）。这些行为通常是由类定义的，而且为所有实例所共享。例如，假设有一个名为 Complex 的类用来表示复数，同时还定义了一些复数运算。一个 Complex 实例应当包含复数的实部和虚部（状态），同样 Complex 类还会定义复数的加法和乘法操作（行为）。</p>
 
 <p>在 JavaScript 中，类的实现是基于其原型继承机制的。如果两个实例都从同一个原型对象上继承了属性，我们说它们是同一个类的实例。JavaScript 原型和继承在 §6.2.3 和 §6.3.2 节中有详细讨论，为了更好地理解本章的内容，请务必首先阅读这两个章节。本章将会在 §9.1 中对原型做进一步讨论。</p>
