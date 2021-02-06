@@ -113,28 +113,72 @@ copy[0]  // =&gt; 1
 
 <h2 id="toc_0">JavaScript 数据类型</h2>
 
-<p>第一种是基本类型，其英文后面加个 Value 构成了 Primitive Value，这就是我们常说的原始值。如下是最新 MDN 所描述的七种基本类型：</p>
+<p>最新 ECMAScript 标准定义了九种类型：</p>
 
-<blockquote>
-<p>In JavaScript, a primitive (primitive value, primitive data type) is data that is not an object and has no methods. There are 7 primitive data types: string, number, bigint, boolean, undefined, symbol, and null.</p>
+<ul>
+<li>六个数据类型</li>
+</ul>
 
-<p>Most of the time, a primitive value is represented directly at the lowest level of the language implementation.</p>
-
-<p>All primitives are <strong>immutable</strong>, i.e., they cannot be altered. It is important not to confuse a primitive itself with a variable assigned a primitive value. The variable may be reassigned a new value, but the existing value can not be changed in the ways that objects, arrays, and functions can be altered.</p>
-</blockquote>
-
-<p>链接：<a href="https://developer.mozilla.org/en-US/docs/Glossary/Primitive">MDN Primitive</a></p>
-
-<pre><code class="language-javascript">let x = &#39;x&#39;;
-let y = x;
-x = &#39;y&#39;;
-y;  // =&gt; &#39;x&#39;
+<pre><code class="language-javascript">typeof undefined === &#39;undefined&#39;;
+typeof true === &#39;boolean&#39;;
+typeof 123 === &#39;number&#39;;
+typeof &#39;str&#39; === &#39;string&#39;;
+typeof 123n ===&#39;bigint&#39;;
+typeof Symbol(&#39;symbol&#39;) === &#39;symbol&#39;;
 </code></pre>
 
-<p>基本类型的特性就是不可改变，如上代码，x 是基本数据类型字符串，将 x 赋值给 y 实际上是给 y 创建了一个字符串 &#39;x&#39; 的副本，而这时候我们去修改了 x，y 不会跟随改变。</p>
+<ul>
+<li>两个结构类型</li>
+</ul>
 
-<p>第二种是引用类型<br/>
-<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures</a></p>
+<pre><code class="language-javascript">typeof {} === &#39;object&#39;;
+typeof (() =&gt; {}) === &#39;function&#39;;
+</code></pre>
+
+<ul>
+<li>结构根</li>
+</ul>
+
+<pre><code class="language-javascript">typeof null === &#39;object&#39;;
+</code></pre>
+
+<p>以上九种类型又分为原始值（Primitive Value）和对象（Object）：</p>
+
+<ul>
+<li>Primitive values
+<ul>
+<li>Boolean type</li>
+<li>Null type</li>
+<li>Undefined type</li>
+<li>Number type</li>
+<li>BigInt type</li>
+<li>String type</li>
+<li>Symbol type</li>
+</ul></li>
+<li>Objects</li>
+</ul>
+
+<p>原始值（又名基本类型）其值存放在栈中，它的值无法被修改，当对基本类型进行操作时，会在新的空间内创建一个原始值。</p>
+
+<p>对象也就是引用类型（又名复杂类型），它只在栈中保存其内存地址，指向存在堆中的数据，当对其进行修改时，栈内的地址进行改变，指向堆中另外的数据。</p>
+
+<h2 id="toc_1">问题解决</h2>
+
+<p>现在再回想一下深浅拷贝的定义就会发现，其只是针对复杂类型。也就是说在原文中所用示例在用展开运算符对 original 数组进行拷贝，而其拷贝的值是初始数组内的元素，而其元素只是 number 类型的原始值，因此这个实例无法展示其浅拷贝特性。</p>
+
+<p>了解了这些后，针对引用类型做一个实验：</p>
+
+<pre><code class="language-javascript">let original = [{a:1},2,3];
+let copy = [...original];
+original[0].a = 10;
+copy[0].a; // =&gt; 10
+</code></pre>
+
+<p>这个例子中初始数组中的第一个元素为对象，是一个引用类型数据，拷贝后对其中的 a 属性进行修改，果然拷贝后的数组中第一个元素的 a 属性值也被修改。如此证明了展开运算符的确是浅拷贝。</p>
+
+<h2 id="toc_2"> 总结</h2>
+
+<p>这次的错误理解的根源是对基本概念掌握的不够牢固，这里展开运算符只是将初始数组中的元素展开到一个新的数组字面量中，因此并不是拷贝整个数组，而是拷贝数组中的每个元素，所以深浅拷贝的描述对象也是数组中的元素。</p>
 
   </div>
 </div>

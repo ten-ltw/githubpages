@@ -776,7 +776,7 @@ Array.isPrototypeOf(EZArray) // =&gt; true
 
 <h3 id="toc_13">9.5.3 委托代替继承</h3>
 
-<p>extends 关键字便于创建子类。但这并不意味着应该创建大量的子类。如果要编写某些其他类共享的行为的类，可以尝试通过创建子类来继承该行为。但是，通常将期望的行为编写在类中比用类创建其他类的实例并根据需要委托给该实例更简单也更灵活。创建新类不将其作为子类，而是通过包装或&quot;组合&quot;其他类。这种委托方法通常称为&quot;组合&quot;，它是一种面向对象编程经常被引用的座右铭&quot;倾向于组合而不是继承&quot;。<sup>2</sup></p>
+<p>extends 关键字便于创建子类。但这并不意味着应该创建大量的子类。如果要编写某些其他类共享的行为的类，可以尝试通过创建子类来继承该行为。但是，通常将期望的行为编写在类中比用类创建其他类的实例并根据需要委托给该实例更简单也更灵活。创建新类不将其作为子类，而是通过包装或&quot;组合&quot;其他类。这种委托方法通常称为&quot;组合&quot;，它是一种面向对象编程经常被引用的座右铭&quot;倾向于组合而不是继承&quot;。<sup id="fnref1"><a href="#fn1" rel="footnote">1</a></sup></p>
 
 <p>例如，假设我们想要一个行为类似于 JavaScript 的 Set 类的 Histogram 类，只不过，它不只是跟踪是否给集合添加了值，还维护该值添加次数的计数。由于 Histogram 类的 API 与 Set 类似，因此我们可以考虑 Set 子类并添加 count() 方法。另一方面，一旦我们开始考虑如何实现 count() 方法，我们可能会意识到 Histogram 类更像是一个 Map 而不是一个 Set，因为它需要维护值与添加它们次数之间的映射。因此，我们可以创建一个类，该类定义一个类似 Set 的 API，但委托内部 Map 对象来实现这些方法，而不是创建 Set 的子类。示例 9-7 显示了我们如何做到这一点。</p>
 
@@ -1050,22 +1050,24 @@ BitSet.masks = new Uint8Array([~1, ~2, ~4, ~8, ~16, ~32, ~64, ~128]);
 
 <p>本章说明了 JavaScript 类的主要功能：</p>
 
-<p>同一类的成员对象从同一原型对象继承属性。原型对象是 JavaScript 类的关键特性，只有 Object.create() 方法可以定义类。</p>
+<ul>
+<li>同一类的成员对象从同一原型对象继承属性。原型对象是 JavaScript 类的关键特性，只有 Object.create() 方法可以定义类。</li>
+<li>在 ES6 之前，典型的类定义先定义构造函数。使用 function 关键字创建的函数具有原型属性，this 属性的值是使用 new 将函数用作构造函数调用时创建的对象的原型对象。通过初始化此原型对象，可以定义类的共享方法。虽然原型对象是类的关键特性，但构造函数是类的公共标识。</li>
+<li>ES6 引入了一个 class 关键字，它使定义类更加容易，但它只是个语法糖，构造函数和原型机制保持不变。</li>
+<li>子类使用类声明中的 extends 关键字定义。</li>
+<li>子类可以使用 super 关键字调用其父类的构造函数或父类的重写方法。</li>
+</ul>
 
-<p>在 ES6 之前，典型的类定义先定义构造函数。使用 function 关键字创建的函数具有原型属性，this 属性的值是使用 new 将函数用作构造函数调用时创建的对象的原型对象。通过初始化此原型对象，可以定义类的共享方法。虽然原型对象是类的关键特性，但构造函数是类的公共标识。</p>
-
-<p>ES6 引入了一个 class 关键字，它使定义类更加容易，但它只是个语法糖，构造函数和原型机制保持不变。</p>
-
-<p>子类使用类声明中的 extends 关键字定义。</p>
-
-<p>子类可以使用 super 关键字调用其父类的构造函数或父类的重写方法。</p>
-
+<div class="footnotes">
 <hr/>
-
 <ol>
-<li><p>除了 ES5 Function.bind() 方法返回的函数。绑定函数没有自己的原型属性，但如果它们作为构造函数调用，则它们使用基础函数的原型。</p></li>
-<li><p>例如，见《Design Patterns (Addison-Wesley Professional)》作者 Erich Gamma 等，或者《Effective Java (Addison-Wesley Professional)》作者 Joshua Bloch。</p></li>
+
+<li id="fn1">
+<p>例如，见《Design Patterns (Addison-Wesley Professional)》作者 Erich Gamma 等，或者《Effective Java (Addison-Wesley Professional)》作者 Joshua Bloch。&nbsp;<a href="#fnref1" rev="footnote">&#8617;</a></p>
+</li>
+
 </ol>
+</div>
 
   </div>
 </div>
