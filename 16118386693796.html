@@ -53,9 +53,15 @@
           
           <li><a title="第 9 章 类" href="16118386693796.html">第 9 章 类</a></li>
           
+          <li><a title="第 10 章 模块" href="16130963383709.html">第 10 章 模块</a></li>
+          
+          <li><a title="第 13 章 异步 JavaScript" href="16130963623880.html">第 13 章 异步 JavaScript</a></li>
+          
           
           <li class="divider"></li>
           <li><label>JavaScript</label></li>
+          
+          <li><a title="States and Fates" href="16129618605374.html">States and Fates</a></li>
           
           <li><a title="JavaScript 深浅拷贝" href="16124460113427.html">JavaScript 深浅拷贝</a></li>
           
@@ -776,7 +782,7 @@ Array.isPrototypeOf(EZArray) // =&gt; true
 
 <h3 id="toc_13">9.5.3 委托代替继承</h3>
 
-<p>extends 关键字便于创建子类。但这并不意味着应该创建大量的子类。如果要编写某些其他类共享的行为的类，可以尝试通过创建子类来继承该行为。但是，通常将期望的行为编写在类中比用类创建其他类的实例并根据需要委托给该实例更简单也更灵活。创建新类不将其作为子类，而是通过包装或&quot;组合&quot;其他类。这种委托方法通常称为&quot;组合&quot;，它是一种面向对象编程经常被引用的座右铭&quot;倾向于组合而不是继承&quot;。<sup id="fnref1"><a href="#fn1" rel="footnote">1</a></sup></p>
+<p>extends 关键字便于创建子类。但这并不意味着应该创建大量的子类。如果要编写某些其他类共享的行为的类，可以尝试通过创建子类来继承该行为。但是，通常将期望的行为编写在类中比用类创建其他类的实例并根据需要委托给该实例更简单也更灵活。创建新类不将其作为子类，而是通过包装或&quot;组合&quot;其他类。这种委托方法通常称为&quot;组合&quot;，它是一种面向对象编程经常被引用的座右铭&quot;倾向于组合而不是继承&quot;。 <sup id="fnref1"><a href="#fn1" rel="footnote">1</a></sup></p>
 
 <p>例如，假设我们想要一个行为类似于 JavaScript 的 Set 类的 Histogram 类，只不过，它不只是跟踪是否给集合添加了值，还维护该值添加次数的计数。由于 Histogram 类的 API 与 Set 类似，因此我们可以考虑 Set 子类并添加 count() 方法。另一方面，一旦我们开始考虑如何实现 count() 方法，我们可能会意识到 Histogram 类更像是一个 Map 而不是一个 Set，因为它需要维护值与添加它们次数之间的映射。因此，我们可以创建一个类，该类定义一个类似 Set 的 API，但委托内部 Map 对象来实现这些方法，而不是创建 Set 的子类。示例 9-7 显示了我们如何做到这一点。</p>
 
@@ -1077,13 +1083,15 @@ BitSet.masks = new Uint8Array([~1, ~2, ~4, ~8, ~16, ~32, ~64, ~128]);
   <div class="large-6 columns">
     <div class="text-left" style="padding:15px 0px;">
       
-      <a href="16106664265983.html" title="Previous Post: 第 8 章 函数">&laquo;
-        第 8 章 函数</a>
+      <a href="16080322533005.html" title="Previous Post: JavaScript 原型和原型链">&laquo;
+        JavaScript 原型和原型链</a>
       
     </div>
   </div>
   <div class="large-6 columns">
     <div class="text-right" style="padding:15px 0px;">
+      
+      <a href="16130963383709.html" title="Next Post: 第 10 章 模块">第 10 章 模块 &raquo;</a>
       
     </div>
   </div>
@@ -1128,8 +1136,20 @@ BitSet.masks = new Uint8Array([~1, ~2, ~4, ~8, ~16, ~32, ~64, ~128]);
                       <a title="第 9 章 类" href="16118386693796.html">第 9 章 类</a>
                     </li>
                     
+                    <li>
+                      <a title="第 10 章 模块" href="16130963383709.html">第 10 章 模块</a>
+                    </li>
+                    
+                    <li>
+                      <a title="第 13 章 异步 JavaScript" href="16130963623880.html">第 13 章 异步 JavaScript</a>
+                    </li>
+                    
                     
                     <li class="side-title"><span>JavaScript</span></li>
+                    
+                    <li>
+                      <a title="States and Fates" href="16129618605374.html">States and Fates</a>
+                    </li>
                     
                     <li>
                       <a title="JavaScript 深浅拷贝" href="16124460113427.html">JavaScript 深浅拷贝</a>
