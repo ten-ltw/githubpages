@@ -1,0 +1,458 @@
+<!doctype html>
+<html class="no-js" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>
+    
+    Angular 中的 DI - 十
+    
+  </title>
+  <meta name="description" content="">
+  <link href="atom.xml" rel="alternate" title="十" type="application/atom+xml">
+  <link rel="stylesheet" href="asset/css/foundation.min.css" />
+  <link rel="stylesheet" href="asset/css/docs.css" />
+  <script src="asset/js/vendor/modernizr.js"></script>
+  <script src="asset/js/vendor/jquery.js"></script>
+  <script src="asset/highlightjs/highlight.pack.js"></script>
+  <link href="asset/highlightjs/styles/github.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script>
+    hljs.initHighlightingOnLoad();
+  </script>
+</head>
+
+<body class="antialiased hide-extras">
+  <div class="marketing off-canvas-wrap" data-offcanvas>
+    <div class="inner-wrap">
+      <nav class="top-bar docs-bar hide-for-small" data-topbar>
+        <div id="header">
+          <h3><a href="index.html">十的对称 十的完美</a></h1>
+        </div>
+      </nav>
+      <nav class="tab-bar show-for-small">
+        <a href="javascript:void(0)" class="left-off-canvas-toggle menu-icon">
+          <span> &nbsp;</span>
+        </a>
+        <div id="header">
+          <h3><a href="index.html">十的对称 十的完美</a></h1>
+        </div>
+      </nav>
+      <aside class="left-off-canvas-menu">
+        <ul class="off-canvas-list">
+          <li><a href="index.html">关于我</a></li>
+          
+          <li class="divider"></li>
+          <li><label>Angular</label></li>
+          
+          <li><a title="Angular 中的 DI" href="16166681233612.html">Angular 中的 DI</a></li>
+          
+          <li><a title="Angular 变更检测——它到底是如何工作的？" href="16164996860696.html">Angular 变更检测——它到底是如何工作的？</a></li>
+          
+          
+          <li class="divider"></li>
+          <li><label>JavaScript</label></li>
+          
+          <li><a title="States and Fates" href="16129618605374.html">States and Fates</a></li>
+          
+          <li><a title="JavaScript 深浅拷贝" href="16124460113427.html">JavaScript 深浅拷贝</a></li>
+          
+          <li><a title="函数中的展开运算符和解构" href="16108495213063.html">函数中的展开运算符和解构</a></li>
+          
+          <li><a title="通过函数声明和调用掌握函数的 this 值" href="16107633205948.html">通过函数声明和调用掌握函数的 this 值</a></li>
+          
+          <li><a title="通过变量作用域深入了解 undefined" href="16088182648987.html">通过变量作用域深入了解 undefined</a></li>
+          
+          <li><a title="JavaScript 原型和原型链" href="16080322533005.html">JavaScript 原型和原型链</a></li>
+          
+          
+          <li class="divider"></li>
+          <li><label>JavaScript权威指南第七版</label></li>
+          
+          <li><a title="第 6 章 对象" href="16113218396407.html">第 6 章 对象</a></li>
+          
+          <li><a title="第 7 章 数组" href="16124375850406.html">第 7 章 数组</a></li>
+          
+          <li><a title="第 8 章 函数" href="16106664265983.html">第 8 章 函数</a></li>
+          
+          <li><a title="第 9 章 类" href="16118386693796.html">第 9 章 类</a></li>
+          
+          <li><a title="第 10 章 模块" href="16130963383709.html">第 10 章 模块</a></li>
+          
+          <li><a title="第 12 章 迭代器和生成器" href="16135261093456.html">第 12 章 迭代器和生成器</a></li>
+          
+          <li><a title="第 13 章 异步 JavaScript" href="16130963623880.html">第 13 章 异步 JavaScript</a></li>
+          
+          
+          <li class="divider"></li>
+          <li><label>读书笔记</label></li>
+          
+          <li><a title="第一章 让爱融入生活" href="16160615801436.html">第一章 让爱融入生活</a></li>
+          
+          
+        </ul>
+      </aside>
+      <a class="exit-off-canvas" href="#"></a>
+      <section id="main-content" role="main" class="scroll-container">
+        <div class="row">
+          <div class="large-9 medium-9 columns">
+  <div class="markdown-body">
+  <div class="markdown-inside">
+    <h1>Angular 中的 DI</h1>
+    <time class="article-date" datetime="2021-03-25T18:28:43+08:00">发布于2021/03/25</time>
+    <p>我们都知道创建一个服务，并通过 <code>@Injectable</code> 装饰器或者在 Module 中的 providers 中注册，并在组件的构造方法中通过如下方式依赖注入：</p>
+
+<pre><code class="language-typescript">import { AuthService } from &#39;../user/auth.service&#39;;
+export class NavBarComponent {
+    constructor(public auth:AuthService){
+    }
+}
+</code></pre>
+
+<p>首先，必须先从其文件中导入 AuthService，并在构造函数中以参数的形式将其注入，参数的类型与文件内导出的 Class 一致，这个 Class 是 ES6 的语法糖，它实际上就是一个构造函数。 </p>
+
+<p>但是我们在这里是想得到一个 AuthService 的实例，我们并是想要得到 AuthService Class 或者 AuthService 函数，这就是 Angular 所做的：创建了一个实例并给我们这个实例。当我们注册了 AuthService Class，Angular 会创建这个 Class 的实例，并在任何引用它的构造函数中给我们这个实例，而创建这个实例就发生在我们将 AuthService 注册在 Module 的 providers 中。</p>
+
+<p>那 Angular 是如何知道我们想要的是 AuthService 而不是其他 service 呢？</p>
+
+<h2 id="toc_0">Angular 如何知道我们要的是哪个 service 的实例呢？</h2>
+
+<p>Angular 通过截获组件构造函数中的声明，通过 TypeScript 的类型声明（这里就是 AuthService），在服务中寻找。所以实际上，它是通过 Class 作为一个 key 来寻找正确的对象，在上面的例子中，AuthService 实例就是在 AuthService 的 DI 注册时被创建的。</p>
+
+<h3 id="toc_1">Angular 与 Angular Js 的 DI 的区别</h3>
+
+<pre><code class="language-javascript">angular.module(&#39;app&#39;).service(&#39;auth&#39;,AuthService)
+</code></pre>
+
+<p>在 Angular Js 中，服务是通过上面的方式注册的，service() 方法有两个参数，第一个参数是一个字符串，第二个参数是我们想要的对象。所以 Angular Js 的依赖注入是通过字符串来匹配的。</p>
+
+<p>当我们想要这个服务的实例时，我们需要创建一个同名的参数。而在我们编写代码时，常常因为单纯 miss 导致服务注入的失败，不得不在检查我们的代码。</p>
+
+<p>而 Angular 中，我们使用 Class 或者 Type 作为我们的 key 或者换个词 token。</p>
+
+<p>在 Angular 中，构造函数参数的类型 AuthService 起到两个作用：其一是用来给 TypeScript 识别变量类型，让我们在编写代码时 IDE 可以通过 . 来访问其中的成员。其二就是就是 Angular 通过这个 Type 声明在依赖注入注册中寻找匹配的对象。</p>
+
+<p>所以在 Angular 中，我们创建一个 service 就直接创建一个 Class。</p>
+
+<h2 id="toc_2">如何使用 InjectionToken</h2>
+
+<p>我们通过使用一个消息通知库来学习如何使用 InjectionToken。</p>
+
+<h3 id="toc_3">如何在 Angular 中使用 toastr</h3>
+
+<p><a href="https://www.npmjs.com/package/toastr">toastr</a> 是一个通知 Jquery 库，目前已经有支持 Angular 版本的 <a href="https://www.npmjs.com/package/ngx-toastr">ngx-toastr</a> 提供使用，但是如果想使用原生的 toastr 我们该如何做呢。</p>
+
+<p>根据官方的方法安装 toastr 库到我们的工程中，那如何在 Angular 中使用呢？</p>
+
+<p>首先在 Angular 的 webpack 文件中导入 toastr 的 style 和 script：</p>
+
+<pre><code class="language-javascript">&quot;styles&quot;: [
+    &quot;node_modules/toastr/build/toastr.min.css&quot;,
+    &quot;src/styles.css&quot;
+],
+&quot;scripts&quot;: [
+    &quot;node_modules/jquery/dist/jquery.min.js&quot;,
+    &quot;node_modules/toastr/build/toastr.min.js&quot;
+]
+</code></pre>
+
+<p>此时编译后的 SPA 中已经有了我们需要的 toastr 对象，我们可以在页面的控制台中查看 window.toastr 对象：</p>
+
+<p><img src="media/16166681233612/16166682192597.jpg" alt=""/></p>
+
+<p>但是这时候在使用 toastr 对象时，IDE 会报错：</p>
+
+<p><img src="media/16166681233612/16166682041574.jpg" alt=""/></p>
+
+<p>原因很简单，是因为 TypeScript 并不知道我们的 toastr 对象，这时候需要声明一下这个对象：</p>
+
+<pre><code class="language-typescript">declare let toastr: any;
+</code></pre>
+
+<p>这时候就可以顺利使用 toastr 库中的成员方法来弹出我们的消息提示框了。</p>
+
+<h3 id="toc_4">添加 toastr 服务</h3>
+
+<p>在一个工程中，我们肯定会不止一次的进行 HTTP 请求或者其他一些需要弹出消息提示框的情况，但每次都需要声明一个 toastr 对象有点太麻烦了，我们可以创建下面这个类注册为我们的服务：</p>
+
+<pre><code class="language-typescript">import { Injectable } from &#39;@angular/core&#39;;
+
+declare let toastr: any;
+
+@Injectable()
+export class ToastrService {
+    success(message: string, title?: string) {
+        toastr.success(message, title);
+    }
+    info(message: string, title?: string) {
+        toastr.info(message, title);
+    }
+    warning(message: string, title?: string) {
+        toastr.warning(message, title);
+    }
+    error(message: string, title?: string) {
+        toastr.error(message, title);
+    }
+}
+</code></pre>
+
+<p>这样我们也能过滤掉 toastr 中其他不必要的成员方法，方便项目中的同事使用。</p>
+
+<h3 id="toc_5">InjectionToken 注册服务</h3>
+
+<p>回顾一下上文中 Angular 的服务：</p>
+
+<blockquote>
+<p>我们创建一个 service 就直接创建一个 Class</p>
+</blockquote>
+
+<p>我们并没有创建一个可导出 toastr Class，并没有去用它作为 key 在我们的 Module 中注册它，我们不能在 Module 中导入 toastr，并将其添加到 providers 数组中。</p>
+
+<p>因此我们如下修改我们的 toastr.service.ts：</p>
+
+<pre><code class="language-typescript">import { InjectionToken } from &quot;@angular/core&quot;;
+
+export let TOASTR_TOKEN = new InjectionToken&lt;Toastr&gt;(&#39;toastr&#39;);
+
+export interface Toastr {
+    success(msg: string, title?: string): void;
+    info(msg: string, title?: string): void;
+    warning(msg: string, title?: string): void;
+    error(msg: string, title?: string): void;
+}
+</code></pre>
+
+<p>使用 InjectionToken 构造函数 new 一个 TOASTR_TOKEN 对象，并指定其接口构造。这样就创建了我们的 InjectionToken。</p>
+
+<p>然后在我们的 Module 中注册 toastr 服务：</p>
+
+<pre><code class="language-typescript">import { IToastr, TOASTR_TOKEN } from &#39;./common/toastr.service&#39;;
+
+declare let toastr: IToastr;
+
+@NgModule({
+  ...
+  providers: [
+    { provide: TOASTR_TOKEN, useValue: toastr }
+  ]
+  ...
+})
+</code></pre>
+
+<p>首先导入我们的 IToastr 接口和 TOASTR_TOKEN InjectionToken，声明 toastr 对象，在 providers 数组中注册，这里注册时没有像之前的 AuthService 服务，只使用了类型。AuthService 的注册其实只是 <code>{ provide: AuthService , useClass: AuthService }</code> 的简写（关于 useClass 和 userValue 后面再详细对比）。provide 的值就是 token，而 useValue 的值就是 Angular 为我们创建的实例。</p>
+
+<h3 id="toc_6">注入 InjectionToken 服务</h3>
+
+<p>接下来我们看看 InjectionToken 注册的服务如何使用。</p>
+
+<pre><code class="language-typescript">import { Component, OnInit, Inject } from &#39;@angular/core&#39;;
+import { IToastr, TOASTR_TOKEN } from &#39;../common/toastr.service&#39;;
+constructor(
+  private auth: AuthService,
+  private router: Router,
+  @Inject(TOASTR_TOKEN) private toastr: IToastr) {
+}
+</code></pre>
+
+<p>除了导入我们的接口 IToastr 和 TOASTR_TOKEN Token 之外，还需要从 <code>@angular/core</code> 中导入 Inject。</p>
+
+<pre><code class="language-typescript">/**
+ * Type of the Inject metadata.
+ *
+ * @publicApi
+ */
+export declare interface Inject {
+    /**
+     * A [DI token](guide/glossary#di-token) that maps to the dependency to be injected.
+     */
+    token: any;
+}
+</code></pre>
+
+<p>我们可以看到 Inject 的参数是 token，当我们注入参数 toastr 时，IToastr 并不是我们依赖注入的 Token，而只是用来智能感知。真正指定了 Token 的是装饰器 @Inject()。</p>
+
+<p>这样我就可以在我们的类中拿到 toastr 实例，像普通的 service 一样使用它：</p>
+
+<pre><code class="language-typescript">  saveProfile(profileFormValue) {
+    if (this.profileForm.valid) {
+      this.auth.updateUser(profileFormValue.firstName, profileFormValue.lastName);
+      this.toastr.success(&#39;Profile Saved&#39;);
+      this.router.navigate([&#39;/events&#39;]);
+    }
+  }
+</code></pre>
+
+<h2 id="toc_7">四种 Provider</h2>
+
+<p>上面我们已经见过两种 provider，useValue 和 useClass。</p>
+
+<p>在 Angular 的 DI 中一共有四种 provider：</p>
+
+<ul>
+<li><a href="https://angular.io/api/core/ValueProvider">ValueProvider</a></li>
+<li><a href="https://angular.io/api/core/ClassProvider">ClassProvider</a></li>
+<li><a href="https://angular.io/api/core/ExistingProvider">ExistingProvider</a></li>
+<li><a href="https://angular.io/api/core/FactoryProvider">FactoryProvider</a></li>
+</ul>
+
+<p>它们分别使用四种方式为 Token 提供一个实例。</p>
+
+<h2 id="toc_8">总结</h2>
+
+<p>Angular 是在注册时产生的实例，这样产生的实例将在注册所在作用域内存在。</p>
+
+<p>Angular 依赖注入时是通过 Token 来查找实例。</p>
+
+<p>常用的服务注入实际上是使用 ClassProvider 提供的实例，而其 Token 就是它的 Class，在依赖注入时，Angular 截获其 Class 并以它为 Token 寻找实例。</p>
+
+<p>相信我们都明了依赖注入的设计模式，也明确它的优势。可是在我们之前从 AngularJs 开始到 Angular 板砖的路程中没有过仔细学习 Angular 依赖注入的本质。这让我们在开发中只会复制粘贴代码，导致报错时让我们无从下手时，只能通过查阅文档的案例，来对比自己的代码中具体有哪些错误。但是当知道原理后，我们不但能清晰的写出依赖注入的代码，还可以灵活选用不同的 Provider，写出更漂亮的代码。</p>
+
+  </div>
+</div>
+<br /><br />
+<hr />
+<div class="row clearfix">
+  <div class="large-6 columns">
+    <div class="text-left" style="padding:15px 0px;">
+      
+    </div>
+  </div>
+  <div class="large-6 columns">
+    <div class="text-right" style="padding:15px 0px;">
+      
+      <a href="16164996860696.html" title="Next Post: Angular 变更检测——它到底是如何工作的？">Angular 变更检测——它到底是如何工作的？ &raquo;</a>
+      
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div style="padding:0px 0.93em;" class="share-comments">
+    
+  </div>
+</div>
+<script type="text/javascript">
+  $(function () {
+    var currentURL = '16166681233612.html';
+    $('#side-nav a').each(function () {
+      if ($(this).attr('href') == currentURL) {
+        $(this).parent().addClass('active');
+      }
+    });
+  });
+</script>  
+          </div>
+          <div class="large-3 medium-3 columns">
+            <div class="hide-for-small">
+              <div class="sidebar">
+                <nav>
+                  <ul id="side-nav" class="side-nav">
+                    
+                    <li class="side-title"><span>Angular</span></li>
+                    
+                    <li>
+                      <a title="Angular 中的 DI" href="16166681233612.html">Angular 中的 DI</a>
+                    </li>
+                    
+                    <li>
+                      <a title="Angular 变更检测——它到底是如何工作的？" href="16164996860696.html">Angular 变更检测——它到底是如何工作的？</a>
+                    </li>
+                    
+                    
+                    <li class="side-title"><span>JavaScript</span></li>
+                    
+                    <li>
+                      <a title="States and Fates" href="16129618605374.html">States and Fates</a>
+                    </li>
+                    
+                    <li>
+                      <a title="JavaScript 深浅拷贝" href="16124460113427.html">JavaScript 深浅拷贝</a>
+                    </li>
+                    
+                    <li>
+                      <a title="函数中的展开运算符和解构" href="16108495213063.html">函数中的展开运算符和解构</a>
+                    </li>
+                    
+                    <li>
+                      <a title="通过函数声明和调用掌握函数的 this 值" href="16107633205948.html">通过函数声明和调用掌握函数的 this 值</a>
+                    </li>
+                    
+                    <li>
+                      <a title="通过变量作用域深入了解 undefined" href="16088182648987.html">通过变量作用域深入了解 undefined</a>
+                    </li>
+                    
+                    <li>
+                      <a title="JavaScript 原型和原型链" href="16080322533005.html">JavaScript 原型和原型链</a>
+                    </li>
+                    
+                    
+                    <li class="side-title"><span>JavaScript权威指南第七版</span></li>
+                    
+                    <li>
+                      <a title="第 6 章 对象" href="16113218396407.html">第 6 章 对象</a>
+                    </li>
+                    
+                    <li>
+                      <a title="第 7 章 数组" href="16124375850406.html">第 7 章 数组</a>
+                    </li>
+                    
+                    <li>
+                      <a title="第 8 章 函数" href="16106664265983.html">第 8 章 函数</a>
+                    </li>
+                    
+                    <li>
+                      <a title="第 9 章 类" href="16118386693796.html">第 9 章 类</a>
+                    </li>
+                    
+                    <li>
+                      <a title="第 10 章 模块" href="16130963383709.html">第 10 章 模块</a>
+                    </li>
+                    
+                    <li>
+                      <a title="第 12 章 迭代器和生成器" href="16135261093456.html">第 12 章 迭代器和生成器</a>
+                    </li>
+                    
+                    <li>
+                      <a title="第 13 章 异步 JavaScript" href="16130963623880.html">第 13 章 异步 JavaScript</a>
+                    </li>
+                    
+                    
+                    <li class="side-title"><span>读书笔记</span></li>
+                    
+                    <li>
+                      <a title="第一章 让爱融入生活" href="16160615801436.html">第一章 让爱融入生活</a>
+                    </li>
+                    
+                    
+                  </ul>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="page-bottom">
+          <div class="row">
+            <hr />
+            <div class="small-9 columns">
+              <p class="copyright">Contact Me&nbsp;
+                Tel: +86 18641188786,&nbsp;
+                mail: 416376663@qq.com</p>
+            </div>
+            <div class="small-3 columns">
+              <p class="copyright text-right"><a href="#top">TOP</a></p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+  <script src="asset/js/foundation.min.js"></script>
+  <script src="asset/js/foundation/foundation.offcanvas.js"></script>
+  <script>
+    $(document).foundation();
+  </script>
+  
+  
+  
+</body>
+
+</html>
