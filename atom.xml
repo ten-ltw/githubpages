@@ -4,7 +4,7 @@
   <title><![CDATA[十]]></title>
   <link href="2019919.xyz/atom.xml" rel="self"/>
   <link href="2019919.xyz/"/>
-  <updated>2021-03-25T18:30:48+08:00</updated>
+  <updated>2021-04-05T10:51:40+08:00</updated>
   <id>2019919.xyz/</id>
   <author>
     <name><![CDATA[]]></name>
@@ -12,6 +12,388 @@
   </author>
   <generator uri="http://www.mweb.im">MWeb</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[ng-fundamentals 基础内容查缺补漏]]></title>
+    <link href="2019919.xyz/16175910817779.html"/>
+    <updated>2021-04-05T10:51:21+08:00</updated>
+    <id>2019919.xyz/16175910817779.html</id>
+    <content type="html"><![CDATA[
+<h2 id="toc_0">组件</h2>
+
+<pre><code class="language-javascript">@Component({
+  selector: &#39;events-app&#39;,
+  template: `
+    &lt;h2&gt;Hello world&lt;/h2&gt;
+    &lt;img src=&quot;/assets/images/basic-shield.png&quot;/&gt;
+  `
+})
+</code></pre>
+
+<p>资源路径相对于 index.html，不能使用静态路径访问文件。</p>
+
+<p>webpack 需要在编译 app 时知道哪一个文件要被捆绑，在 angular.json 中设置：</p>
+
+<pre><code class="language-javascript">&quot;options&quot;: {
+    &quot;outputPath&quot;: &quot;dist/ng-fundamentals&quot;,
+    &quot;index&quot;: &quot;src/index.html&quot;,
+    &quot;main&quot;: &quot;src/main.ts&quot;,
+    &quot;polyfills&quot;: &quot;src/polyfills.ts&quot;,
+    &quot;tsConfig&quot;: &quot;tsconfig.app.json&quot;,
+    &quot;aot&quot;: true,
+    &quot;assets&quot;: [
+        &quot;src/favicon.ico&quot;,
+        &quot;src/assets&quot;
+    ],
+</code></pre>
+
+<p>组件需要在模块上注册 angular 才知道去哪里获取组件资源。</p>
+
+<p>组件有一个 class 包含所有组件逻辑和内容。</p>
+
+<h2 id="toc_1">Angular 模板语法</h2>
+
+<h3 id="toc_2">模板变量</h3>
+
+<p><code>#标识符</code> 模板变量可以在模板的任何位置访问：</p>
+
+<pre><code class="language-markup">&lt;event-thumbnail #thumbnnail [event]=&quot;events&quot; (eventClick)=&quot;handleEventClicked($event)&quot;&gt;&lt;/event-thumbnail&gt;
+&lt;button class=&quot;btn btn-primary&quot; (click)=&quot;thumbnnail.logFoo()&quot;&gt;Log me some foo&lt;/button&gt;
+</code></pre>
+
+<p>可以在 HTML 中通过组件的模板变量访问子组件中的成员变量和成员方法。</p>
+
+<h3 id="toc_3">结构指令</h3>
+
+<p>* 星号代表结构指令</p>
+
+<p>结构指令改变 DOM 的形状，它不是隐藏 DOM 而是添加或删除 DOM。</p>
+
+<blockquote>
+<p>safe navigation operator ?</p>
+
+<p>?. 以这种操作符绑定数据，预防 undefined</p>
+</blockquote>
+
+<p>*ngIf 在画面屡次显示隐藏 DOM 时会消耗过大，这时候应该使用 hidden 属性，画面初始化后不变选用 *ngIf。</p>
+
+<h3 id="toc_4">ng 绑定 class</h3>
+
+<h4 id="toc_5">class binding</h4>
+
+<pre><code class="language-markup">&lt;span [class.green]=&quot;event?.time === &#39;8:00 am&#39;&quot;&gt;{{event?.time}}&lt;/span&gt;
+</code></pre>
+
+<h4 id="toc_6">ngClass</h4>
+
+<pre><code class="language-markup">&lt;span [ngClass]=&quot;{green: event?.time === &#39;8:00 am&#39;, bold: event?.time === &#39;8:00 am&#39;}&quot;&gt;{{event?.time}}&lt;/span&gt;
+</code></pre>
+
+<p>ngClass 参数可以是函数，函数返回一个对象 {classKey：boolean,…} 或空格分隔字符串 &#39;green bold&#39; 或者 class 数组 [&#39;green&#39; , &#39;bold&#39;]。</p>
+
+<h3 id="toc_7">ng 绑定 style</h3>
+
+<h4 id="toc_8">style binding</h4>
+
+<pre><code class="language-markup">&lt;span [style.color]=&quot;event?.time === &#39;8:00 am&#39; ? &#39;#003300&#39; : &#39;#bbb&#39;&quot;&gt;{{event?.time}}&lt;/span&gt;
+</code></pre>
+
+<h4 id="toc_9">ngStyle</h4>
+
+<p>[ngStyle] 后面接对象 {三元运算，三元运算}，也可以使用函数返回样式对象。</p>
+
+<h3 id="toc_10">模板表达式约束</h3>
+
+<p>以下内容不允许使用：</p>
+
+<ul>
+<li>Assignment（=,+=,==,etc）</li>
+<li>new Keyword</li>
+<li>Expression Chaining With ;</li>
+<li>Global Namespace</li>
+</ul>
+
+<p>总结来说就是不允许产生副作用，不允许使用 global 命名空间内的成员。</p>
+
+<h2 id="toc_11">服务</h2>
+
+<h3 id="toc_12">服务</h3>
+
+<pre><code class="language-typescript">@Injectable()
+constructor(private eventService: EventService) {    
+}
+</code></pre>
+
+<p>这里的实际上是个简写，全文：</p>
+
+<pre><code class="language-typescript">@Injectable()
+private eventService: EventService;
+constructor(private _eventService: EventService) {
+    this.eventService = _eventService;
+}
+</code></pre>
+
+<p>不要在组件构造函数中添加过多逻辑，应该将逻辑放到生命周期方法中。</p>
+
+<p><code>implements OnInit</code> 是 typeScript，只是语法上严谨，并不是必须的。</p>
+
+<h3 id="toc_13">引入第三方库</h3>
+
+<p>引入 toastr 时，在上面声明了一个 toastr ：</p>
+
+<pre><code class="language-typescript">declare let toastr: any;
+</code></pre>
+
+<p>实际上，在 angular.json 中已经添加了 toastr 的 Js 包，使其在 window 对象中添加了 toaster 变量，我们已经知道了 toastr object 是什么，我们可以直接使用这个对象中的接口，但是 typeScript 编译器不知道，所以只需要声明一个变量，让编译器通过编译即可。</p>
+
+<p>在使用时，不要在使用的组件中直接声明 toastr 对象去使用，这样不容易 mock，不方便单元测试，取而代之的时提供一个可复用的服务。</p>
+
+<p>目前，已经有了 ngx-toastr 库提供了 ToastrServie 接口供 angular 使用。</p>
+
+<h3 id="toc_14">记录状态</h3>
+
+<p>service 还有个功能是记录状态。例如身份认证。</p>
+
+<h2 id="toc_15">路由</h2>
+
+<p>组件都有 selector 属性，是因为其会被用在 html 的内部，当组件被作为路由使用时，则不需要 selector 属性。</p>
+
+<pre><code class="language-typescript">import { Routes } from &quot;@angular/router&quot;;
+</code></pre>
+
+<p>路由只是一个<strong>数组</strong>配置（它是有序的，从上往下查找匹配路由）,这里导入 Routes 也同样只是为了 typeScript 的静态类型 check。</p>
+
+<p>真正让这个数组奏效的是在模块中通过路由模块的根路由对该数组的载入：</p>
+
+<pre><code class="language-type">RouterModule.forRoot(appRoutes)
+</code></pre>
+
+<pre><code class="language-typescript">{ path: &#39;&#39;, redirectTo: &#39;events&#39;, pathMatch: &#39;full&#39; }
+</code></pre>
+
+<p>注意添加默认路由。</p>
+
+<p>pathMatch：path-matching 策略，默认 prefix，还有一个选项是 full</p>
+
+<ul>
+<li>prefix 以指定的 path 开始的 URL</li>
+<li>full 完全符合指定 path 的 URL</li>
+</ul>
+
+<h3 id="toc_16">路由的步骤</h3>
+
+<ol>
+<li>添加一个 router-outlet</li>
+<li>定义路由（一个常量数组）包含一个默认路由</li>
+<li>在 module 中使用 RouterModule 载入路由</li>
+<li>&lt;base href=&quot;/&quot;&gt;</li>
+</ol>
+
+<h3 id="toc_17">路由参数</h3>
+
+<h4 id="toc_18">定义参数</h4>
+
+<p>冒号提示 Angular 这是一个 URL 参数。</p>
+
+<h4 id="toc_19">获取参数</h4>
+
+<pre><code class="language-typescript">import { ActivatedRoute } from &quot;@angular/router&quot;;
+</code></pre>
+
+<p>注入 ActivateRoute service 获取参数。</p>
+
+<pre><code class="language-typescript">+this.route.snapshot.params[&#39;id&#39;]
+</code></pre>
+
+<p>这里获取到的参数是字符串，需要转成 number</p>
+
+<h3 id="toc_20">HTML 链接路由</h3>
+
+<pre><code class="language-typescript">[routerLink]=&quot;[&#39;/events&#39;, event.id]&quot;
+</code></pre>
+
+<p>[routerLink] 的参数是数组，第一个元素是字符串路由地址，第二个元素是参数。</p>
+
+<h3 id="toc_21">Code 导航页面</h3>
+
+<pre><code class="language-typescript">Router.navigate([&#39;/events&#39;, event.id])
+</code></pre>
+
+<p>参数同上</p>
+
+<h3 id="toc_22">Route Guards</h3>
+
+<p>守卫即可以使用方法，也可以使用服务。</p>
+
+<p>它既可以组织进入某个页面，也可以阻止离开某个页面。</p>
+
+<h4 id="toc_23">canActivate</h4>
+
+<p>通过服务实现 canActivate</p>
+
+<pre><code class="language-typescript">{ path: &#39;events/:id&#39;, component: EventDetailsComponent, canActivate: [EventRouteActivator] },
+</code></pre>
+
+<pre><code class="language-typescript">@Injectable()
+export class EventRouteActivator implements CanActivate {
+    constructor(private eventService: EventService, private router: Router) {
+    }
+    
+    canActivate(route: ActivatedRouteSnapshot) {
+        const eventExists = !!this.eventService.getEvent(+route.params[&#39;id&#39;]);
+        if (!eventExists)
+            this.router.navigate([&#39;/404&#39;]);
+        return eventExists;
+    }
+}
+</code></pre>
+
+<p>canActivate 最后返回 boolean 值。</p>
+
+<h4 id="toc_24">canDeactivate</h4>
+
+<p>通过方法实现 canDeactivate</p>
+
+<pre><code class="language-typescript">{ path: &#39;events/new&#39;, component: CreateEventComponent, canDeactivate: [&#39;canDeactivateCreateEvent&#39;] },
+</code></pre>
+
+<p>方法需要注入 providers，且不能使用缩写:</p>
+
+<pre><code class="language-typescript">  providers: [
+    {
+      provide: &#39;canDeactivateCreateEvent&#39;,
+      useValue: checkDirytState
+    }
+  ]
+</code></pre>
+
+<p>useValue 是方法，方法可以放在任何文件里：</p>
+
+<pre><code class="language-typescript">export function checkDirytState(component: CreateEventComponent) {
+  if (component.isDirty) {
+    return window.confirm(&#39;You have not saved this event, do you really want to cancel?&#39;)
+  }
+  return true;
+}
+</code></pre>
+
+<h3 id="toc_25">active link</h3>
+
+<pre><code class="language-markup">&lt;a [routerLink]=&quot;[&#39;/events&#39;]&quot; routerLinkActive=&quot;active&quot; [routerLinkActiveOptions]=&quot;{exact:true}&quot;&gt;All Events&lt;/a&gt;
+</code></pre>
+
+<p>routerLinkActive=&quot;active&quot; 添加在含有 routerlink 的标签上，当路由与标签指定的路由匹配，则添加 active class。</p>
+
+<p>默认匹配路由字符串策略是 start with。</p>
+
+<p>添加 <code>[routerLinkActiveOptions]=&quot;{exact:true}&quot;</code> 是完全符合。</p>
+
+<h3 id="toc_26">feature module 或 lazy loadable module</h3>
+
+<p>与 appModule 的区别：</p>
+
+<ol>
+<li>不导入 BrowserModule</li>
+<li>导入的 RouterModule 调用 forChild 方法</li>
+</ol>
+
+<h2 id="toc_27">表单</h2>
+
+<p>分为两种：</p>
+
+<ol>
+<li>Template-based</li>
+<li>Model-based 也称 reactive forms</li>
+</ol>
+
+<p>表单如果都通过事件绑定的方式太复杂，所以引入 ngModel。</p>
+
+<p>[(ngModel)] 双向绑定使用双括号 banana box</p>
+
+<p>使用时根据需要决定如何绑定。</p>
+
+<h3 id="toc_28">Template-based Form</h3>
+
+<p>需要引入 FormsModule 注册到 module 中。</p>
+
+<pre><code class="language-markup">&lt;form #loginForm=&quot;ngForm&quot; (ngSubmit)=&quot;login(loginForm.value)&quot; autocomplete=&quot;off&quot;&gt;
+    &lt;input (ngModel)=&quot;userName&quot; name=&quot;userName&quot; id=&quot;userName&quot; type=&quot;text&quot; class=&quot;form-control&quot; placeholder=&quot;User Name...&quot; /&gt;
+&lt;/form&gt;
+</code></pre>
+
+<p>通过模板变量声明 Form，<code>#loginForm=&quot;ngForm&quot;</code> 指定该 Form 为 Angular 表单。</p>
+
+<p>使用 ngSubmit 提交，参数是模板变量的值 <code>loginForm.value</code>。</p>
+
+<p>用 name 声明 Form 中的成员属性。</p>
+
+<h4 id="toc_29">表单验证</h4>
+
+<pre><code class="language-markup">&lt;em *ngIf=&quot;newEventForm.controls.date?.invalid &amp;&amp; (newEventForm.controls.date?.touched)&quot;&gt;Required&lt;/em&gt;
+</code></pre>
+
+<p>基于模板的表单验证特别长，因为 formControl 不是 public 类型，它是 Form 的属性，所以在表单验证时特别繁琐。</p>
+
+<h3 id="toc_30">Model-based Form</h3>
+
+<p>还需要引入 ReactiveFormsModule 注册到 module 中。</p>
+
+<p>步骤如下：</p>
+
+<ol>
+<li>创建每个 FormControl</li>
+<li>创建一个 FormGroup</li>
+<li>为 FormGroup 配置 FormControl</li>
+<li>给 HTML 中的 form 绑定 FormGroup</li>
+<li>给 HTML 中的 field 绑定 FormControlName</li>
+</ol>
+
+<p>formControlName 绑定时不需要带任何括号，只是指定属性名</p>
+
+<h4 id="toc_31">表单验证</h4>
+
+<p>表单验证是 FormControl 的第二个参数：</p>
+
+<pre><code class="language-typescript">let firstName = new FormControl(this.auth.currentUser.firstName, Validators.required);
+</code></pre>
+
+<p>如果有多个验证使用数组。</p>
+
+<h3 id="toc_32">自定义表单验证</h3>
+
+<h4 id="toc_33">validator 是什么</h4>
+
+<p>validator 就是一个函数：</p>
+
+<ul>
+<li>返回 null 时 valid</li>
+<li>返回 error 对象时 invalid</li>
+</ul>
+
+<p>error 对象 { key: value }</p>
+
+<h4 id="toc_34">自定义表单验证方法</h4>
+
+<pre><code class="language-typescript">export function restrictedWords(...words) {
+  return (control: FormControl): { [key: string]: any } =&gt; {
+    if (!words) {
+      return null;
+    }
+    let invalidWords = words.map(w =&gt; control.value.includes(w) ? w : null)
+      .filter(w =&gt; w !== null);
+    return invalidWords &amp;&amp; invalidWords.length &gt; 0
+      ? { &#39;restrictedWords&#39;: invalidWords.join(&#39;, &#39;) }
+      : null;
+  }
+}
+</code></pre>
+
+<p>这里为了使用 FormControl 使用了闭包。</p>
+
+<p>注意 key 值 <code>restrictedWords</code> 与方法名一致。</p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Angular 中的 DI]]></title>
