@@ -1,0 +1,804 @@
+<!doctype html>
+<html class="no-js" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>
+    
+    Angular 中 RXJS 的应用 - 十
+    
+  </title>
+  <meta name="description" content="">
+  <link href="atom.xml" rel="alternate" title="十" type="application/atom+xml">
+  <link rel="stylesheet" href="asset/css/foundation.min.css" />
+  <link rel="stylesheet" href="asset/css/docs.css" />
+  <script src="asset/js/vendor/modernizr.js"></script>
+  <script src="asset/js/vendor/jquery.js"></script>
+  <script src="asset/highlightjs/highlight.pack.js"></script>
+  <link href="asset/highlightjs/styles/github.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script>
+    hljs.initHighlightingOnLoad();
+  </script>
+</head>
+
+<body class="antialiased hide-extras">
+  <div class="marketing off-canvas-wrap" data-offcanvas>
+    <div class="inner-wrap">
+      <nav class="top-bar docs-bar hide-for-small" data-topbar>
+        <div id="header">
+          <h3><a href="index.html">十的对称 十的完美</a></h1>
+        </div>
+      </nav>
+      <nav class="tab-bar show-for-small">
+        <a href="javascript:void(0)" class="left-off-canvas-toggle menu-icon">
+          <span> &nbsp;</span>
+        </a>
+        <div id="header">
+          <h3><a href="index.html">十的对称 十的完美</a></h1>
+        </div>
+      </nav>
+      <aside class="left-off-canvas-menu">
+        <ul class="off-canvas-list">
+          <li><a href="index.html">关于我</a></li>
+          
+          <li class="divider"></li>
+          <li><label>Angular</label></li>
+          
+          <li><a title="Angular 中 RXJS 的应用" href="16178761821381.html">Angular 中 RXJS 的应用</a></li>
+          
+          <li><a title="ng-fundamentals 基础内容查缺补漏" href="16175910817779.html">ng-fundamentals 基础内容查缺补漏</a></li>
+          
+          <li><a title="Angular 中的 DI" href="16166681233612.html">Angular 中的 DI</a></li>
+          
+          <li><a title="Angular 变更检测——它到底是如何工作的？" href="16164996860696.html">Angular 变更检测——它到底是如何工作的？</a></li>
+          
+          
+          <li class="divider"></li>
+          <li><label>JavaScript</label></li>
+          
+          <li><a title="States and Fates" href="16129618605374.html">States and Fates</a></li>
+          
+          <li><a title="JavaScript 深浅拷贝" href="16124460113427.html">JavaScript 深浅拷贝</a></li>
+          
+          <li><a title="函数中的展开运算符和解构" href="16108495213063.html">函数中的展开运算符和解构</a></li>
+          
+          <li><a title="通过函数声明和调用掌握函数的 this 值" href="16107633205948.html">通过函数声明和调用掌握函数的 this 值</a></li>
+          
+          <li><a title="通过变量作用域深入了解 undefined" href="16088182648987.html">通过变量作用域深入了解 undefined</a></li>
+          
+          <li><a title="JavaScript 原型和原型链" href="16080322533005.html">JavaScript 原型和原型链</a></li>
+          
+          
+          <li class="divider"></li>
+          <li><label>JavaScript权威指南第七版</label></li>
+          
+          <li><a title="第 6 章 对象" href="16113218396407.html">第 6 章 对象</a></li>
+          
+          <li><a title="第 7 章 数组" href="16124375850406.html">第 7 章 数组</a></li>
+          
+          <li><a title="第 8 章 函数" href="16106664265983.html">第 8 章 函数</a></li>
+          
+          <li><a title="第 9 章 类" href="16118386693796.html">第 9 章 类</a></li>
+          
+          <li><a title="第 10 章 模块" href="16130963383709.html">第 10 章 模块</a></li>
+          
+          <li><a title="第 12 章 迭代器和生成器" href="16135261093456.html">第 12 章 迭代器和生成器</a></li>
+          
+          <li><a title="第 13 章 异步 JavaScript" href="16130963623880.html">第 13 章 异步 JavaScript</a></li>
+          
+          
+        </ul>
+      </aside>
+      <a class="exit-off-canvas" href="#"></a>
+      <section id="main-content" role="main" class="scroll-container">
+        <div class="row">
+          <div class="large-9 medium-9 columns">
+  <div class="markdown-body">
+  <div class="markdown-inside">
+    <h1>Angular 中 RXJS 的应用</h1>
+    <time class="article-date" datetime="2021-04-08T18:03:02+08:00">发布于2021/04/08</time>
+    <p>跟随 Acme Product Management 工程来理解 RxJS 在 Angular 中的响应式编程。</p>
+
+<h2 id="toc_0">初步接触 Reactive</h2>
+
+<p>在 Angular 的使用中，我们常常使用编程式模式（procedural pattern）实现从后端服务器获取数据，接下来让我们尝试声明式和响应式来实现这个功能。</p>
+
+<h3 id="toc_1">使用 Async Pipe</h3>
+
+<p>component.ts：</p>
+
+<pre><code class="language-typescript">export class ProductListComponent implements OnInit, OnDestroy {
+  pageTitle = &#39;Product List&#39;;
+  errorMessage = &#39;&#39;;
+
+  products: Product[] = [];
+  sub: Subscription;
+
+  constructor(private productService: ProductService) { }
+
+  ngOnInit(): void {
+    this.sub = this.productService.getProducts()
+      .subscribe(
+        products =&gt; this.products = products,
+        error =&gt; this.errorMessage = error
+      );
+  }
+
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
+  }
+}
+</code></pre>
+
+<p>component.html：</p>
+
+<pre><code class="language-markup">      &lt;table class=&quot;table mb-0&quot;
+             *ngIf=&quot;products&quot;&gt;
+        &lt;thead&gt;
+          &lt;tr&gt;
+            &lt;th&gt;Product&lt;/th&gt;
+            &lt;th&gt;Code&lt;/th&gt;
+            &lt;th&gt;Category&lt;/th&gt;
+            &lt;th&gt;Price&lt;/th&gt;
+            &lt;th&gt;In Stock&lt;/th&gt;
+          &lt;/tr&gt;
+        &lt;/thead&gt;
+        &lt;tbody *ngFor=&quot;let product of products&quot;&gt;
+          &lt;tr&gt;
+            &lt;td&gt;{{ product.productName }}&lt;/td&gt;
+            &lt;td&gt;{{ product.productCode }}&lt;/td&gt;
+            &lt;td&gt;{{ product.categoryId }}&lt;/td&gt;
+            &lt;td&gt;{{ product.price | currency:&quot;USD&quot;:&quot;symbol&quot;:&quot;1.2-2&quot; }}&lt;/td&gt;
+            &lt;td&gt;{{ product.quantityInStock }}&lt;/td&gt;
+          &lt;/tr&gt;
+        &lt;/tbody&gt;
+      &lt;/table&gt;
+</code></pre>
+
+<p>在不使用 RxJS 的情况下，需要 subscribe 服务中获取的 Observable，在其 emit 数据时，将去得到的数据绑定到变量 products 上，模板跟随变量改变而渲染。</p>
+
+<p>在使用 RxJS 时可以使用 angular 的 async pipe 直接将 Observable 绑定到模板中，变更检测识别到 emit 时，会自动渲染画面。</p>
+
+<p>component.ts：</p>
+
+<pre><code class="language-typescript">export class ProductListComponent implements OnInit, OnDestroy {
+  pageTitle = &#39;Product List&#39;;
+  errorMessage = &#39;&#39;;
+
+  products$: Observable&lt;Product[]&gt;
+
+  constructor(private productService: ProductService) { }
+
+  ngOnInit(): void {
+    this.products$ = this.productService.getProducts();
+  }
+}
+</code></pre>
+
+<p>component.html：</p>
+
+<pre><code class="language-markup">      &lt;table class=&quot;table mb-0&quot;
+             *ngIf=&quot;products$ | async as products&quot;&gt;
+        &lt;thead&gt;
+          &lt;tr&gt;
+            &lt;th&gt;Product&lt;/th&gt;
+            &lt;th&gt;Code&lt;/th&gt;
+            &lt;th&gt;Category&lt;/th&gt;
+            &lt;th&gt;Price&lt;/th&gt;
+            &lt;th&gt;In Stock&lt;/th&gt;
+          &lt;/tr&gt;
+        &lt;/thead&gt;
+        &lt;tbody *ngFor=&quot;let product of products&quot;&gt;
+          &lt;tr&gt;
+            &lt;td&gt;{{ product.productName }}&lt;/td&gt;
+            &lt;td&gt;{{ product.productCode }}&lt;/td&gt;
+            &lt;td&gt;{{ product.categoryId }}&lt;/td&gt;
+            &lt;td&gt;{{ product.price | currency:&quot;USD&quot;:&quot;symbol&quot;:&quot;1.2-2&quot; }}&lt;/td&gt;
+            &lt;td&gt;{{ product.quantityInStock }}&lt;/td&gt;
+          &lt;/tr&gt;
+        &lt;/tbody&gt;
+      &lt;/table&gt;
+</code></pre>
+
+<p>使用 async pipe 的优点有如下几点：</p>
+
+<ul>
+<li>Observable 会在组件初始化时被 subscribe。</li>
+<li>返回每次被 emit 的值。</li>
+<li>当一个新的项目被 emit 时，无论任何变更检测策略，Angular 都会感知到变更并作出响应的画面渲染。</li>
+<li>当组件销毁时自动 unsubscribe。</li>
+</ul>
+
+<p>这就是为什么上个实例中使用 async pipe 后不在需要 OnDestroy Hook 的原因，我们不再需要手动 unsubscribe。</p>
+
+<p>在未使用 async pipe 时，subscribe 的 callback 中的异常处理直接通过 Observer 的 error 回调来处理，直接在捕获到异常时将异常 message 赋值到一个 errorMessage 变量中，以插值的方式显示在模板中，那使用 RxJS 的异常处理该如何实现呢？</p>
+
+<h3 id="toc_2">异常处理</h3>
+
+<p>在 Observable 发生任何异常时，catchError 可以捕获到异常，使用这个操作符我们可以：</p>
+
+<ul>
+<li>捕获异常后重新抛出一个异常。</li>
+<li>也可以在异常发生时替换掉异常的 Observable 使操作继续进行。</li>
+</ul>
+
+<h4 id="toc_3">替换异常</h4>
+
+<p>service.ts：</p>
+
+<pre><code class="language-typescript">  public getProducts(): Observable&lt;Product[]&gt; {
+    return this.http.get&lt;Product[]&gt;(this.productsUrl)
+      .pipe(
+        catchError(err =&gt; {
+          console.log(err);
+          return of([{ id: 1, productName: &#39;cart&#39; },
+                     { id: 2, productName: &#39;hammer&#39; }]);
+        })
+      );
+  }
+</code></pre>
+
+<p>如上在获取 product 数据时，如果发生异常可以捕获后返回一组新的数据的 Observable，使get 请求异常时仍然能够获取到一组假数据。</p>
+
+<blockquote>
+<p>of 和 from 都能够创建 Observable</p>
+
+<ul>
+<li>of 创建的 Observable 会 emit 每一个实参</li>
+<li>from 的期待实参是一个数组，它创建的 Observable 会 emit 数组中每一个元素</li>
+</ul>
+
+<p><code>of(...apples)</code> 等价于 <code>from(apples)</code></p>
+</blockquote>
+
+<h4 id="toc_4">重新抛出异常</h4>
+
+<p>service.ts：</p>
+
+<pre><code class="language-typescript">  public getProducts(): Observable&lt;Product[]&gt; {
+    return this.http.get&lt;Product[]&gt;(this.productsUrl)
+      .pipe(
+        catchError(err =&gt; {
+          console.log(err);
+          return throwError(err);
+        })
+      );
+  }
+</code></pre>
+
+<p>throwError 实际上也是个创建 Observable 函数，它创建的 Observable 没有任何项目，只 emit 一个异常通知，所以它也是变相的替换异常。</p>
+
+<h4 id="toc_5">使用 async pipe 后如何赋值 errorMessage</h4>
+
+<p>component.ts</p>
+
+<pre><code class="language-typescript">    this.products$ = this.productService.getProducts()
+      .pipe(
+        catchError(err =&gt; {
+          this.errorMessage = err;
+          return EMPTY;
+        })
+      );
+</code></pre>
+
+<p>在初始化时，将 service 的 products\( 赋值给组件的 products\) 时可以添加 catchError 操作符，这时当捕获异常时，将 service 处理后的异常信息赋值给 errorMessage变量并显示在画面中。</p>
+
+<p>这里返回了 EMPTY，它是空的 Observable，是 RxJS 中的常量。</p>
+
+<pre><code class="language-typescript">import { EMPTY } from &#39;rxjs&#39;;
+</code></pre>
+
+<h3 id="toc_6">OnPush 变更检查策略</h3>
+
+<pre><code class="language-typescript">@Component({
+  templateUrl: &#39;./product-list.component.html&#39;,
+  styleUrls: [&#39;./product-list.component.css&#39;],
+  changeDetection: ChangeDetectionStrategy.OnPush
+})
+</code></pre>
+
+<p>参照<a href="">变更检测</a></p>
+
+<p>当改变为 OnPush 变更检查策略时，通过绑定变量的模板就无法跟随变量变更而进行渲染画面。</p>
+
+<p>这时需要为 errorMessage 也创建一个 Observable。这在后面做 reacting to Action 时再进行修改。</p>
+
+<h3 id="toc_7">代码重构</h3>
+
+<p>这里代码是程序式编程实现的，如果使用声明式编程会有怎样的效果呢？</p>
+
+<p>service.ts：</p>
+
+<pre><code class="language-typescript">  public products$: Observable&lt;Product[]&gt; = this.http.get&lt;Product[]&gt;(this.productsUrl)
+    .pipe(
+      catchError(this.handleError)
+    );
+</code></pre>
+
+<p>component.ts</p>
+
+<pre><code class="language-typescript">export class ProductListComponent {
+  pageTitle = &#39;Product List&#39;;
+  errorMessage = &#39;&#39;;
+
+  products$ = this.productService.products$
+    .pipe(
+      catchError(err =&gt; {
+        this.errorMessage = err;
+        return EMPTY;
+      })
+    );
+
+  constructor(private productService: ProductService) { }
+
+  onAdd(): void {
+    console.log(&#39;Not yet implemented&#39;);
+  }
+
+  onSelected(categoryId: string): void {
+    console.log(&#39;Not yet implemented&#39;);
+  }
+}
+</code></pre>
+
+<p>我们在 service 中声明 products\( Observable，它是用来获取 products 的数据，并为其添加了异常处理管道。然后，在组件中我们声明可以供模板使用的 products\) 并将其引用指向 service 声明的 products\(，同时也再次为组件中的 products\) 添加异常处理管道获取异常信息以供模板显示。</p>
+
+<p>可以看到，我们不但省略了之前的 OnDestroy Hook，现在连 OnInit Hook 也可以省略了，代码也变得清晰。</p>
+
+<h2 id="toc_8">构造数据</h2>
+
+<p>很多时候，从后端服务器获得的数据并不完全是我们想要的，比如下面的我们如果想在获取的数据中，让 Price 上浮 50%。这时候就用到了 map 操作符。</p>
+
+<h3 id="toc_9">Mapping an Http Response</h3>
+
+<p>RxJS 的 map 就像 JavaScript 的 Array.prototype.map 方法一样：</p>
+
+<pre><code class="language-javascript">[1,2,3].map(num =&gt; num * 2) // [2,4,6]
+</code></pre>
+
+<p>首先我们要了解一个 Http Response Observable 会返回什么数据。</p>
+
+<pre><code class="language-typescript">this.http.get&lt;Product[]&gt;(this.productsUrl)
+</code></pre>
+
+<p>通过 Http get 请求会返回一个 Response，也就是说这个 Http Response Observable 只会 emit 一个 item——Response。那么我们直接使用 map 将无法得到 Product：</p>
+
+<p><img src="2.png" alt=""/><img src="media/16178761821381/16178763228978.jpg" alt=""/></p>
+
+<p>可以看到 item 是 Product[] 类型，所以 IDE 报错。也就是说我们需要再将 Product 数组通过 Array.prototype.map 方法进行 price 上浮 50%：</p>
+
+<pre><code class="language-typescript">  public products$: Observable&lt;Product[]&gt; = this.http.get&lt;Product[]&gt;(this.productsUrl)
+    .pipe(
+      map(products =&gt; products.map(
+        product =&gt; product.price * 1.5
+      ))
+      catchError(this.handleError)
+    );
+</code></pre>
+
+<p>回顾一下 map 方法，它的返回值是回调函数返回值组成的数组，这里的 callback 返回值是 <code>product.price * 1.5</code>，也就是说现在 products$ 的类型是 Observable<number[]>，果然 IDE 也再次报错，那这回我们如何修改呢？</p>
+
+<h3 id="toc_10">改造数组元素</h3>
+
+<p>我们需要的是 Array.prototype.map 的 callback 返回 Product，而不是 number，那我们需要将其返回值构造成 Product 类型：</p>
+
+<pre><code class="language-typescript">  public products$: Observable&lt;Product[]&gt; = this.http.get&lt;Product[]&gt;(this.productsUrl)
+    .pipe(
+      map(products =&gt; products.map(
+        product =&gt; ({
+          ...product,
+          price: product.price * 1.5,
+          searchKey: [product.productName],
+        }) as Product
+      )),
+      catchError(this.handleError)
+    );
+</code></pre>
+
+<p>这里使用了对象字面量的展开操作符 <code>...</code>，将 product 展开到对象字面量中，并重写 price 属性。 </p>
+
+<h2 id="toc_11">组合 Streams</h2>
+
+<p>有时我们需要多个数据集合，并组合它们的 Observable 数据流为同一个数据流。</p>
+
+<p>如下面这个场景的 Category：</p>
+
+<p><img src="media/16178761821381/16178762876466.jpg" alt=""/></p>
+
+<p>我们的 Products 数据流中有 Category 的 Id，但是在画面显示中，我们想要获 Id 所对应的字符串，这时候就需要将 Products 数据流和 Categories 的数据流组合到一起。</p>
+
+<blockquote>
+<p>Combining Function：</p>
+
+<ul>
+<li>combineLatest</li>
+<li>forkJoin</li>
+</ul>
+
+<p>Combining Operator：</p>
+
+<ul>
+<li>withLatestFrom</li>
+</ul>
+</blockquote>
+
+<h3 id="toc_12">将 Id 映射为 String</h3>
+
+<p>这里使用 Http get Request 获取 Categorise 数据：</p>
+
+<pre><code class="language-typescript">public productCategories$ = this.http.get&lt;ProductCategory[]&gt;(this.productCategoriesUrl);
+</code></pre>
+
+<p>可以看出用上面三种组合方式都会得到同样的结果：</p>
+
+<p><img src="media/16178761821381/16178763640436.jpg" alt=""/></p>
+
+<p>使用 combineLatest 方法组合两个 Observable：</p>
+
+<pre><code class="language-typescript">  public productsWithCategory$ = combineLatest([
+    this.products$,
+    this.productCategoryService.productCategories$
+  ]).pipe(
+    map(([products, categories]) =&gt; products.map(
+      product =&gt; ({
+        ...product,
+        price: product.price * 1.5,
+        category: categories.find(c =&gt; product.categoryId === c.id).name,
+        searchKey: [product.productName],
+      }) as Product
+    ))
+  )
+</code></pre>
+
+<p>这里 <code>map(([products, categories]) =&gt; {})</code> 使用了解构的新特性，直接用数组 [products, categories] 映射了接收到的结果。</p>
+
+<h2 id="toc_13">活动响应</h2>
+
+<p>应用程序会有很多用户活动响应，比如用户点击按钮，选择标签等。在这个 APM 实例中，如果想要在列表中进行过滤，那就需要我们的列表数据流响应用户的下拉列表框的选择行为，接下来学习 RxJS 的活动响应。</p>
+
+<h3 id="toc_14">过滤响应</h3>
+
+<h4 id="toc_15">为 products 添加 filter</h4>
+
+<p>根据前面的 RxJS 的 map 操作符嵌套 Array.prototype.map，这次使用 Array.prototype.filter 来做 products 的数据过滤代码如下：</p>
+
+<p>component.ts:</p>
+
+<pre><code class="language-typescript">  productsSimpleFilter$ = this.productService.productsWithCategory$
+    .pipe(
+      map(products =&gt; products.filter(product =&gt;
+        this.selectedCategoryId ? product.categoryId === this.selectedCategoryId : true
+      ))
+    )
+
+  private selectedCategoryId: number = 1;
+</code></pre>
+
+<p>定义 selectedCategoryId 变量用来获取画面用户 action 值，并通过 filter 过滤结果，这里使用三元运算符来防止 selectedCategoryId 为空，当其为 null 或 undefined 时不添加过滤。</p>
+
+<p>在模板中绑定 productsSimpleFilter$ 后，果然画面上能够过滤掉 categoryId 不等于 1 的数据。</p>
+
+<h4 id="toc_16">绑定 Categories 数据</h4>
+
+<p>根据上面所学绑定 Category select 标签的 option。</p>
+
+<p>component.ts：</p>
+
+<pre><code class="language-typescript">  categories$ = this.productCategoryService.productCategories$
+    .pipe(
+      catchError(err =&gt; {
+        this.errorMessage = err;
+        return EMPTY;
+      })
+    );
+...
+  onSelected(categoryId: string): void {
+    this.selectedCategoryId = +categoryId;
+  }
+
+</code></pre>
+
+<p>component.html：</p>
+
+<pre><code class="language-markup">&lt;select class=&quot;form-control&quot;
+        (change)=&quot;onSelected($event.target.value)&quot;&gt;
+    &lt;option value=&quot;0&quot;&gt;- Display All -&lt;/option&gt;
+    &lt;option *ngFor=&quot;let category of categories$ | async&quot;
+        [value]=&quot;category.id&quot;&gt;{{ category.name }}&lt;/option&gt;
+&lt;/select&gt;
+</code></pre>
+
+<p>为 select 添加 onSelected 事件方法，这里使用 <code>+</code> 号将字符串隐式转换为数字。</p>
+
+<p>但是画面刷新后发现 select 选择不同的 category 时并不能使列表数据变更，那我们该如何通知我们的 stream 来响应用户的活动呢？</p>
+
+<h4 id="toc_17">Data Stream 和 Action Stream</h4>
+
+<p>以 Http 请求获取数据时，我们得到一个 Response，它只有一个 Item，这时这个 Observable 基本上说已经结束了它的使命，有了数据后我们不再需要它，这种 Stream 我们称为 Data Stream。</p>
+
+<p>在用户使用过程中，一个活动可能频繁触发，我们需要一直订阅这种 Observable，响应每次用户的活动，这种 Stream 我们称为 Action Stream。</p>
+
+<p>combineLatest 的特点是：</p>
+
+<ul>
+<li>会等到所有的 Observable 都 emit 一次数据之后才开始 emit 数据。</li>
+<li>在收集完一次数据之后，任何一个 Observable emit 数据，都会 emit 数据，并不会再次等待所有 Observable 再次 emit 数据。</li>
+</ul>
+
+<p>弹珠图如下：</p>
+
+<p><img src="media/16178761821381/16178764373479.jpg" alt=""/></p>
+
+<p>这样就能同时封装 Data Stream 和 Action Stream。</p>
+
+<p>创建 Action Stream 有以下三种方式：</p>
+
+<ol>
+<li>使用内置 stream，例如 form 表单的 value changes。</li>
+<li>fromEvent</li>
+<li>Subject/BehaviorSubject</li>
+</ol>
+
+<p>第三种是最常用的方式。</p>
+
+<h4 id="toc_18">Subject 和 BehaviorSubject</h4>
+
+<p>Subject 是的特殊 Observable，也是一个 Observer ，它可以多播。</p>
+
+<p>BehaviorSubject 是特殊的 Subject，它在构造时必须有初始值。</p>
+
+<p>接下来我们用 combineLatest 组合 Data Stream 和 Subject 创建的 Action Stream。</p>
+
+<p>component.ts</p>
+
+<pre><code class="language-typescript">  private categorySelectedSubject = new Subject&lt;number&gt;();
+  categorySelectedAction$ = this.categorySelectedSubject.asObservable();
+
+  products$ = combineLatest([
+    this.productService.productsWithCategory$,
+    this.categorySelectedAction$
+  ])
+    .pipe(
+      map(([products, selectedCategoryId]) =&gt; products.filter(product =&gt;
+        selectedCategoryId ? product.categoryId === selectedCategoryId : true
+      )),
+      catchError(err =&gt; {
+        this.errorMessage = err;
+        return EMPTY;
+      })
+    );
+
+  onSelected(categoryId: string): void {
+    this.categorySelectedSubject.next(+categoryId);
+  }
+</code></pre>
+
+<p>绑定 Data Stream 和 Action Stream 的三部：</p>
+
+<ol>
+<li>创建可播的 Observable。</li>
+<li>组合 Data Stream 和 Action Stream。</li>
+<li>触发 Action 的 next 方法。</li>
+</ol>
+
+<p>刷新画面已经可以看到在 select 标签选择不同的 category 时，列表中的数据已经能够过滤，但是画面初始化时没有数据。</p>
+
+<p>回顾下 combineLatest 的弹珠图，必须每个 Observable 都 emit 时，组合后 Stream 才会 emit 项目，而我们没有选择 option 时，Action Stream 并没有 emit 任何项目，所以我们不会接收到数据。接下来学习如何设置初始值。</p>
+
+<h4 id="toc_19">设置初始值</h4>
+
+<p>startWith 操作符，可以直接为 Action Stream 添加 startWith 操作的管道：</p>
+
+<pre><code class="language-typescript">this.categorySelectedAction$.pipe(startWith(0))
+</code></pre>
+
+<p>果然这回画面初始化时就能显示所有的 products 了。</p>
+
+<p>BehaviorSubject 是有初始值的 Subject，这里同样也可以使用 BehaviorSubject 来实现：</p>
+
+<pre><code class="language-typescript">  private categorySelectedSubject = new BehaviorSubject&lt;number&gt;(0);
+  categorySelectedAction$ = this.categorySelectedSubject.asObservable();
+</code></pre>
+
+<p>刷新画面，同样也成功修复此功能。</p>
+
+<h3 id="toc_20">响应异常</h3>
+
+<p>前面将变更检测策略改为了 OnPush，导致我们绑定的变量已经不能被检测器所检测，那么就需要将变量编程一个 Observable。</p>
+
+<p>我们的 errorMessage 不会像 Data Stream 一样只使用一次，而是一个会频繁发生的 Action Stream，所以这里选择使用 Subject 来实现。</p>
+
+<p>component.ts</p>
+
+<pre><code class="language-typescript">  private errorMessageSubject = new Subject();
+  public errorMessageAction$ = this.errorMessageSubject.asObservable();
+
+  public products$ = this.productService.productsWithCategory$
+    .pipe(
+      catchError(err =&gt; {
+        this.errorMessageSubject.next(err);
+        return EMPTY;
+      })
+    );
+</code></pre>
+
+<p>component.html</p>
+
+<pre><code class="language-typescript">&lt;div class=&quot;alert alert-danger&quot;
+     *ngIf=&quot;errorMessageAction$ | async as errorMessage&quot;&gt;
+  {{errorMessage}}
+&lt;/div&gt;
+</code></pre>
+
+<h3 id="toc_21">添加响应</h3>
+
+<p>应用 merge 组合函数和 scan 操作符。<br/>
+merge 将 products 的 Data Stream 和添加操作的 Action Stream 连成一串，emit 的第一个项目是取回的全部数据，emit 的第二个项目是添加的新 product 数据。通过 scan 操作符将第二个项目添加到第一个项目中并输出。</p>
+
+<p>service.ts</p>
+
+<pre><code class="language-typescript">  public productsWithAdd$ = merge(this.productsWithCategory$, this.productInsertedAction$)
+    .pipe(
+      scan((products: Product[], insertedProduct: Product) =&gt; [...products, insertedProduct])
+    )
+</code></pre>
+
+<p>这里使用了数组的展开操作符 <code>...</code> 将 products 拷贝到新的数组中。</p>
+
+<h2 id="toc_22">最后</h2>
+
+<p><a href="https://github.com/ten-ltw/Angular-RXJS">代码</a></p>
+
+<p><a href="https://github.com/WangYuLue/simple-rxjs">RxJS模拟实现</a></p>
+
+  </div>
+</div>
+<br /><br />
+<hr />
+<div class="row clearfix">
+  <div class="large-6 columns">
+    <div class="text-left" style="padding:15px 0px;">
+      
+    </div>
+  </div>
+  <div class="large-6 columns">
+    <div class="text-right" style="padding:15px 0px;">
+      
+      <a href="16175910817779.html" title="Next Post: ng-fundamentals 基础内容查缺补漏">ng-fundamentals 基础内容查缺补漏 &raquo;</a>
+      
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div style="padding:0px 0.93em;" class="share-comments">
+    
+  </div>
+</div>
+<script type="text/javascript">
+  $(function () {
+    var currentURL = '16178761821381.html';
+    $('#side-nav a').each(function () {
+      if ($(this).attr('href') == currentURL) {
+        $(this).parent().addClass('active');
+      }
+    });
+  });
+</script>  
+          </div>
+          <div class="large-3 medium-3 columns">
+            <div class="hide-for-small">
+              <div class="sidebar">
+                <nav>
+                  <ul id="side-nav" class="side-nav">
+                    
+                    <li class="side-title"><span>Angular</span></li>
+                    
+                    <li>
+                      <a title="Angular 中 RXJS 的应用" href="16178761821381.html">Angular 中 RXJS 的应用</a>
+                    </li>
+                    
+                    <li>
+                      <a title="ng-fundamentals 基础内容查缺补漏" href="16175910817779.html">ng-fundamentals 基础内容查缺补漏</a>
+                    </li>
+                    
+                    <li>
+                      <a title="Angular 中的 DI" href="16166681233612.html">Angular 中的 DI</a>
+                    </li>
+                    
+                    <li>
+                      <a title="Angular 变更检测——它到底是如何工作的？" href="16164996860696.html">Angular 变更检测——它到底是如何工作的？</a>
+                    </li>
+                    
+                    
+                    <li class="side-title"><span>JavaScript</span></li>
+                    
+                    <li>
+                      <a title="States and Fates" href="16129618605374.html">States and Fates</a>
+                    </li>
+                    
+                    <li>
+                      <a title="JavaScript 深浅拷贝" href="16124460113427.html">JavaScript 深浅拷贝</a>
+                    </li>
+                    
+                    <li>
+                      <a title="函数中的展开运算符和解构" href="16108495213063.html">函数中的展开运算符和解构</a>
+                    </li>
+                    
+                    <li>
+                      <a title="通过函数声明和调用掌握函数的 this 值" href="16107633205948.html">通过函数声明和调用掌握函数的 this 值</a>
+                    </li>
+                    
+                    <li>
+                      <a title="通过变量作用域深入了解 undefined" href="16088182648987.html">通过变量作用域深入了解 undefined</a>
+                    </li>
+                    
+                    <li>
+                      <a title="JavaScript 原型和原型链" href="16080322533005.html">JavaScript 原型和原型链</a>
+                    </li>
+                    
+                    
+                    <li class="side-title"><span>JavaScript权威指南第七版</span></li>
+                    
+                    <li>
+                      <a title="第 6 章 对象" href="16113218396407.html">第 6 章 对象</a>
+                    </li>
+                    
+                    <li>
+                      <a title="第 7 章 数组" href="16124375850406.html">第 7 章 数组</a>
+                    </li>
+                    
+                    <li>
+                      <a title="第 8 章 函数" href="16106664265983.html">第 8 章 函数</a>
+                    </li>
+                    
+                    <li>
+                      <a title="第 9 章 类" href="16118386693796.html">第 9 章 类</a>
+                    </li>
+                    
+                    <li>
+                      <a title="第 10 章 模块" href="16130963383709.html">第 10 章 模块</a>
+                    </li>
+                    
+                    <li>
+                      <a title="第 12 章 迭代器和生成器" href="16135261093456.html">第 12 章 迭代器和生成器</a>
+                    </li>
+                    
+                    <li>
+                      <a title="第 13 章 异步 JavaScript" href="16130963623880.html">第 13 章 异步 JavaScript</a>
+                    </li>
+                    
+                    
+                  </ul>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="page-bottom">
+          <div class="row">
+            <hr />
+            <div class="small-9 columns">
+              <p class="copyright">Contact Me&nbsp;
+                Tel: +86 18641188786,&nbsp;
+                mail: 416376663@qq.com</p>
+            </div>
+            <div class="small-3 columns">
+              <p class="copyright text-right"><a href="#top">TOP</a></p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+  <script src="asset/js/foundation.min.js"></script>
+  <script src="asset/js/foundation/foundation.offcanvas.js"></script>
+  <script>
+    $(document).foundation();
+  </script>
+  
+  
+  
+</body>
+
+</html>
