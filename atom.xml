@@ -4,7 +4,7 @@
   <title><![CDATA[十]]></title>
   <link href="2019919.xyz/atom.xml" rel="self"/>
   <link href="2019919.xyz/"/>
-  <updated>2021-04-08T18:14:25+08:00</updated>
+  <updated>2021-04-10T11:54:34+08:00</updated>
   <id>2019919.xyz/</id>
   <author>
     <name><![CDATA[]]></name>
@@ -1729,16 +1729,6 @@ copy[0].a; // =&gt; 10
 <h2 id="toc_2"> 总结</h2>
 
 <p>这次的错误理解的根源是对基本概念掌握的不够牢固，这里展开运算符只是将初始数组中的元素展开到一个新的数组字面量中，因此并不是拷贝整个数组，而是拷贝数组中的每个元素，所以深浅拷贝的描述对象也是数组中的元素。</p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[函数中的展开运算符和解构]]></title>
-    <link href="2019919.xyz/16108495213063.html"/>
-    <updated>2021-01-17T10:12:01+08:00</updated>
-    <id>2019919.xyz/16108495213063.html</id>
-    <content type="html"><![CDATA[
 
 ]]></content>
   </entry>
