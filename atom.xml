@@ -4,7 +4,7 @@
   <title><![CDATA[十]]></title>
   <link href="2019919.xyz/atom.xml" rel="self"/>
   <link href="2019919.xyz/"/>
-  <updated>2021-04-11T09:05:13+08:00</updated>
+  <updated>2021-04-16T17:44:59+08:00</updated>
   <id>2019919.xyz/</id>
   <author>
     <name><![CDATA[]]></name>
@@ -77,7 +77,7 @@
       &lt;/table&gt;
 </code></pre>
 
-<p>在不使用 RxJS 的情况下，需要 subscribe 服务中获取的 Observable，在其 emit 数据时，将去得到的数据绑定到变量 products 上，模板跟随变量改变而渲染。</p>
+<p>在不使用 RxJS 的情况下，需要 subscribe 服务中获取的 Observable，在其 emit 数据时，将取得到的数据绑定到变量 products 上，模板跟随变量改变而渲染。</p>
 
 <p>在使用 RxJS 时可以使用 angular 的 async pipe 直接将 Observable 绑定到模板中，变更检测识别到 emit 时，会自动渲染画面。</p>
 
@@ -1525,9 +1525,7 @@ export class AppModule {}
 <p>本文档阐明围绕 Promise 的各种形容词，把它们分为两部分：<strong>状态</strong>和<strong>命运</strong>。</p>
 </blockquote>
 
-<h2 id="toc_0">Overview and Operational Definitions</h2>
-
-<h3 id="toc_1">States</h3>
+<h2 id="toc_0">States</h2>
 
 <p>Promises have three possible mutually exclusive states: fulfilled, rejected, and pending.</p>
 
@@ -1571,7 +1569,7 @@ export class AppModule {}
 <p>如果 promise 不是待定状态，我们说它<em>已敲定</em>，无论它是已兑现还是已拒绝。已敲定不是一个状态，知识一个语言上的便利。</p>
 </blockquote>
 
-<h3 id="toc_2">Fates</h3>
+<h2 id="toc_1">Fates</h2>
 
 <p>Promises have two possible mutually exclusive fates: resolved, and unresolved.</p>
 
@@ -1594,30 +1592,8 @@ export class AppModule {}
 </ul>
 
 <blockquote>
-<p>如果</p>
+<p>如果 promise 未决议，如果尝试兑现或拒绝会对 promise 产生影响。</p>
 </blockquote>
-
-<p>A promise can be &quot;resolved to&quot; either a promise or thenable, in which case it will store the promise or thenable for later unwrapping; or it can be resolved to a non-promise value, in which case it is fulfilled with that value.</p>
-
-<h3 id="toc_3">Relating States and Fates</h3>
-
-<p>A promise whose fate is resolved can be in any of the three states:</p>
-
-<ul>
-<li>Fulfilled, if it has been resolved to a non-promise value, or resolved to a thenable which will call any passed fulfillment handler back as soon as possible, or resolved to another promise that is fulfilled.</li>
-<li>Rejected, if it has been rejected directly, or resolved to a thenable which will call any passed rejection handler back as soon as possible, or resolved to another promise that is rejected.</li>
-<li>Pending, if it has been resolved to a thenable which will call neither handler back as soon as possible, or resolved to another promise that is pending.</li>
-</ul>
-
-<p>A promise whose fate is unresolved is necessarily pending.</p>
-
-<p>Note that these relations are recursive, e.g. a promise that has been resolved to a thenable which will call its fulfillment handler with a promise that has been rejected is itself rejected.</p>
-
-<h2 id="toc_4">Relation to the Spec</h2>
-
-<p>A promise&#39;s state is reflected in its [[PromiseState]] internal slot.</p>
-
-<p>A promise&#39;s fate is stored implicitly as part of its &quot;resolving functions.&quot;</p>
 
 ]]></content>
   </entry>
@@ -6540,14 +6516,14 @@ BitSet.masks = new Uint8Array([~1, ~2, ~4, ~8, ~16, ~32, ~64, ~128]);
     <updated>2020-12-15T19:37:33+08:00</updated>
     <id>2019919.xyz/16080322533005.html</id>
     <content type="html"><![CDATA[
-<p>今天刚开始学习【重学前端】的课程，讲到装箱转换的时候提到了函数的 call 方法，而 call 方法在我的印象中就只有 call 约等于 apply ，然后就再没有然后了。在我想深入了解下 call 方法的时候又发现了有人在同时讲解原型，而于此同时我看到了知乎上的一个贴<a href="https://www.zhihu.com/question/60165921">面试一个5年的前端，却连原型链也搞不清楚，满口都是Vue，React之类的实现，这样的人该用吗？</a>，这我不看内容我就惊呆了，这标题不就是在说我吗。带着各种心情赶紧学习下到底什么是原型和原型链。</p>
+<p>今天刚开始学习【重学前端】的课程，讲到装箱转换的时候提到了函数的 call 方法，而 call 方法在我的印象中就只有 call 约等于 apply ，然后就再没有然后了。在我想深入了解下 call 方法的时候又发现了有人在同时讲解原型，带着各种心情赶紧学习下到底什么是原型和原型链。</p>
 
 <h2 id="toc_0">原型</h2>
 
 <pre><code class="language-text">prototype  [ˈproʊtətaɪp]  原型
 </code></pre>
 
-<p>下面这个图很多大神都有画过，下面记录下我自己的理解和实验。</p>
+<p>下面这个图很多大神都有画过，记录下我自己的理解和实验。  </p>
 
 <p><img src="media/16080322533005/16080400429560.jpg" alt="" style="width:450px;"/></p>
 
