@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>
     
-    JavaScript 原型和原型链 - 十
+    Managing Complexity - 十
     
   </title>
   <meta name="description" content="">
@@ -114,105 +114,64 @@
           <div class="large-9 medium-9 columns">
   <div class="markdown-body">
   <div class="markdown-inside">
-    <h1>JavaScript 原型和原型链</h1>
-    <time class="article-date" datetime="2020-12-15T19:37:33+08:00">发布于2020/12/15</time>
-    <p>今天刚开始学习【重学前端】的课程，讲到装箱转换的时候提到了函数的 call 方法，而 call 方法在我的印象中就只有 call 约等于 apply ，然后就再没有然后了。在我想深入了解下 call 方法的时候又发现了有人在同时讲解原型，带着各种心情赶紧学习下到底什么是原型和原型链。</p>
+    <h1>Managing Complexity</h1>
+    <time class="article-date" datetime="2021-05-07T18:10:07+08:00">发布于2021/05/07</time>
+    <p>Make it work</p>
 
-<h2 id="toc_0">原型</h2>
+<p>Make it known</p>
 
-<pre><code class="language-text">prototype  [ˈproʊtətaɪp]  原型
-</code></pre>
+<p>Make it right</p>
 
-<p>下面这个图很多大神都有画过，记录下我自己的理解和实验。  </p>
+<p>Make it fast</p>
 
-<p><img src="media/16080322533005/16080400429560.jpg" alt="" style="width:450px;"/></p>
+<p>You shouldn&#39;t even be programming if you&#39;re not doing test driven development.</p>
 
-<h3 id="toc_1">构造函数视角</h3>
+<p>Not only unit tests.</p>
 
-<p>函数可以用来做构造器，也就是 constructor，而构造器也可以称为类。<br/>
-通过构造器 Apple 来创建一个对象对象 apple。</p>
+<p>Until you know what you&#39;re building, it just doesn&#39;t make sense to invest a ton of money or resources into building something that your users may not even want.</p>
 
-<p><img src="media/16080322533005/16080397593797.jpg" alt="" style="width:198px;"/></p>
-
-<p><strong>构造函数创建了实例对象</strong>，这是构造函数与实例对象的关系。</p>
-
-<hr/>
-
-<p><strong>构造函数有一个属性叫做 propotype，他指向了原型对象。</strong></p>
-
-<p><img src="media/16080322533005/16080405364424.jpg" alt="" style="width:299px;"/></p>
-
-<p>这里的原型对象写做 [[propotype]]，这里我猜测是为了区分 propotype 的属性。<br/>
-现在我知道了，原来这里两个中括号是 ECMA 文档中的书写方式。</p>
-
-<h3 id="toc_2">原型对象视角</h3>
-
-<p><strong>原型对象的 constructor 属性指向了构造函数</strong>。</p>
-
-<p><img src="media/16080322533005/16080407735350.jpg" alt="" style="width:382px;"/></p>
-
-<p>这里用构造器的原型对象的 constructor 方法来创建一个 badApple ，会发现它和 apple 的类型是相等的。</p>
-
-<h3 id="toc_3">实例对象视角</h3>
-
-<p>对象也有一个属性 __propo__，这是一个隐式属性，<strong>对象的 __propo__ 指向了他的构造函数的原型对象。</strong>也就是说 Apple 的 propotype 属性和 apple、badApple 的 __propo__ 指向了同一个地址。</p>
-
-<p><img src="media/16080322533005/16080419126552.jpg" alt="" style="width:318px;"/></p>
-
-<h3 id="toc_4">由函数引出原型链</h3>
-
-<p>函数是 JS 中的第一类对象，在 Javascript 中，对象所拥有的函数也同样拥有，也就是说构造函数 Apple 也同样会有 __propo__ 属性去指向他的父类的原型对象，为了理清这乱七八糟的关系，就有了下面“对象-函数-构造函数-实例对象”这样的一个关系图，也就是原型链图。</p>
-
-<h2 id="toc_5">原型链</h2>
-
-<p><img src="media/16080322533005/16080423510561.jpg" alt=""/></p>
-
-<p>这张图理解了上面的内容之后就感觉容易多了，总结一下有以下几点需要注意。</p>
+<p>So I believe at the onset, start with user testing, and then move into automated testing.</p>
 
 <ul>
-<li>任何函数的父类都是 Function 构造函数，也就是任何函数的 __proto__ 指向 Function.prototype，这里同样包含了 Function 构造函数自己。</li>
-<li>Object 构造函数它也是函数，它的的 __proto__ 也指向 Function.prototype。</li>
-<li>Function.prototype 的 __proto__ 指向 Object.prototype，这也就是为什么说函数也是对象。</li>
-<li>Object.prototype 的 __proto__ 是 null。</li>
+<li>Code should be fine grained meaning code should do one thing. 解耦</li>
+<li>Code should be self documenting. 代码每一个部件都要有意义</li>
+<li>Favor pure, immutable functions. 缩减 state 管理所占用的空间</li>
 </ul>
 
-<h2 id="toc_6"> ES6 中的类</h2>
+<p>Abstractions should:</p>
 
-<p>类的写法也是由原型运行时来承载的，逻辑上 JavaScript 认为每个类是有共同原型的一组对象，类中定义的方法和属性会被卸载原型对象之上。此外最重要的是类提供了继承能力。</p>
+<ul>
+<li>reduce complexity  减少复杂度</li>
+<li>reduce coupling  减少相互影响</li>
+<li>increase cohesion  增加凝聚力 逻辑是否是一个 Group</li>
+<li>increase portability  轻便，减少影响增加凝聚</li>
+</ul>
 
-<pre><code class="language-javascript">class Animal { 
-  constructor(name) {
-    this.name = name;
-  }
-  
-  speak() {
-    console.log(this.name + &#39; makes a noise.&#39;);
-  }
-}
-class Dog extends Animal {
-  constructor(name) {
-    super(name); // call the super class constructor and pass in the name parameter
-  }
-  speak() {
-    console.log(this.name + &#39; barks.&#39;);
-  }
-}
-let d = new Dog(&#39;Mitzie&#39;);
-d.speak(); // Mitzie barks.
-</code></pre>
+<p>Refactor through promotion：重构</p>
 
-<p>以上代码创造了 Animal 类，并且通过 extends 关键字让 Dog 继承了它，展示了最终调用子类的 speak 方法获取了父类的 name。比起早期的原型模拟方式，使用 extends 关键字自动设置了 constructor，并且会自动调用父类的构造函数，这是一种更少坑的设计。所以当我们使用类的思想来设计代码时，应该尽量使用 class 来声明类，而不是用旧语法，拿函数来模拟对象。</p>
+<p>Composition over inheritance</p>
 
-<blockquote>
-<p>super 关键字用于访问和调用一个对象的父对象上的函数。<br/>
-在构造函数中使用时，super 关键字将单独出现，并且必须在使用this关键字之前使用。</p>
-</blockquote>
+<p>Do not confuse convention for repetition：做一个确切的事情要用同一个方法去实现</p>
 
-<pre><code class="language-javascript">super([arguments]);
-// 调用 父对象/父类 的构造函数
-super.functionOnParent([arguments]);
-// 调用 父对象/父类 上的方法
-</code></pre>
+<p>Well-structured code will naturally have a larger surface area</p>
+
+<h2 id="toc_0">Team rules for managing complexity</h2>
+
+<ul>
+<li><p>Be mindful over the limitations of your entire team and optimize around that.</p></li>
+<li><p>Favor best practices over introducing idioms however clever they may be.</p></li>
+<li><p>Consistency is better than righteousness.</p></li>
+<li><p>Follow the style guide until it doesn&#39;t make sense for your situation.</p></li>
+</ul>
+
+<h2 id="toc_1">Tactical rules for managing complexity</h2>
+
+<ul>
+<li>Eliminate hidden state in functions. 函数中有因为参数值的改变会发生不同的作用，这在测试时候很难处理。</li>
+<li>Do not break the Single Responsibility Principle.</li>
+<li>Extracting to a method is one of the most effective refactoring strategies available.</li>
+<li>If you need to clarify your code with comments then it is probably too complex.如果有需要的要提取到参数去描述。</li>
+</ul>
 
   </div>
 </div>
@@ -222,15 +181,12 @@ super.functionOnParent([arguments]);
   <div class="large-6 columns">
     <div class="text-left" style="padding:15px 0px;">
       
-      <a href="16118386693796.html" title="Previous Post: 第 9 章 类">&laquo;
-        第 9 章 类</a>
-      
     </div>
   </div>
   <div class="large-6 columns">
     <div class="text-right" style="padding:15px 0px;">
       
-      <a href="16130963383709.html" title="Next Post: 第 10 章 模块">第 10 章 模块 &raquo;</a>
+      <a href="16203819997302.html" title="Next Post: TypeScript">TypeScript &raquo;</a>
       
     </div>
   </div>
@@ -242,7 +198,7 @@ super.functionOnParent([arguments]);
 </div>
 <script type="text/javascript">
   $(function () {
-    var currentURL = '16080322533005.html';
+    var currentURL = '16203822077854.html';
     $('#side-nav a').each(function () {
       if ($(this).attr('href') == currentURL) {
         $(this).parent().addClass('active');

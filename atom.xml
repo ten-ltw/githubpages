@@ -4,7 +4,7 @@
   <title><![CDATA[十]]></title>
   <link href="2019919.xyz/atom.xml" rel="self"/>
   <link href="2019919.xyz/"/>
-  <updated>2021-05-07T18:07:17+08:00</updated>
+  <updated>2021-05-07T18:10:41+08:00</updated>
   <id>2019919.xyz/</id>
   <author>
     <name><![CDATA[]]></name>
@@ -12,6 +12,72 @@
   </author>
   <generator uri="http://www.mweb.im">MWeb</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Managing Complexity]]></title>
+    <link href="2019919.xyz/16203822077854.html"/>
+    <updated>2021-05-07T18:10:07+08:00</updated>
+    <id>2019919.xyz/16203822077854.html</id>
+    <content type="html"><![CDATA[
+<p>Make it work</p>
+
+<p>Make it known</p>
+
+<p>Make it right</p>
+
+<p>Make it fast</p>
+
+<p>You shouldn&#39;t even be programming if you&#39;re not doing test driven development.</p>
+
+<p>Not only unit tests.</p>
+
+<p>Until you know what you&#39;re building, it just doesn&#39;t make sense to invest a ton of money or resources into building something that your users may not even want.</p>
+
+<p>So I believe at the onset, start with user testing, and then move into automated testing.</p>
+
+<ul>
+<li>Code should be fine grained meaning code should do one thing. 解耦</li>
+<li>Code should be self documenting. 代码每一个部件都要有意义</li>
+<li>Favor pure, immutable functions. 缩减 state 管理所占用的空间</li>
+</ul>
+
+<p>Abstractions should:</p>
+
+<ul>
+<li>reduce complexity  减少复杂度</li>
+<li>reduce coupling  减少相互影响</li>
+<li>increase cohesion  增加凝聚力 逻辑是否是一个 Group</li>
+<li>increase portability  轻便，减少影响增加凝聚</li>
+</ul>
+
+<p>Refactor through promotion：重构</p>
+
+<p>Composition over inheritance</p>
+
+<p>Do not confuse convention for repetition：做一个确切的事情要用同一个方法去实现</p>
+
+<p>Well-structured code will naturally have a larger surface area</p>
+
+<h2 id="toc_0">Team rules for managing complexity</h2>
+
+<ul>
+<li><p>Be mindful over the limitations of your entire team and optimize around that.</p></li>
+<li><p>Favor best practices over introducing idioms however clever they may be.</p></li>
+<li><p>Consistency is better than righteousness.</p></li>
+<li><p>Follow the style guide until it doesn&#39;t make sense for your situation.</p></li>
+</ul>
+
+<h2 id="toc_1">Tactical rules for managing complexity</h2>
+
+<ul>
+<li>Eliminate hidden state in functions. 函数中有因为参数值的改变会发生不同的作用，这在测试时候很难处理。</li>
+<li>Do not break the Single Responsibility Principle.</li>
+<li>Extracting to a method is one of the most effective refactoring strategies available.</li>
+<li>If you need to clarify your code with comments then it is probably too complex.如果有需要的要提取到参数去描述。</li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[TypeScript]]></title>
