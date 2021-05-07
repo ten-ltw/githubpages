@@ -2,7 +2,22 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
   <loc>2019919.xyz/</loc>
-  <lastmod>2021-04-16T17:45:09+08:00</lastmod>
+  <lastmod>2021-05-07T18:07:21+08:00</lastmod>
+</url>
+
+<url>
+  <loc>2019919.xyz/16203819997302.html</loc>
+  <lastmod>2021-05-07T18:06:39+08:00</lastmod>
+</url>
+
+<url>
+  <loc>2019919.xyz/16201149334405.html</loc>
+  <lastmod>2021-05-04T15:55:33+08:00</lastmod>
+</url>
+
+<url>
+  <loc>2019919.xyz/16200327308578.html</loc>
+  <lastmod>2021-05-03T17:05:30+08:00</lastmod>
 </url>
 
 <url>
@@ -86,6 +101,14 @@
 </url>
 
 
+
+<url>
+  <loc>2019919.xyz/HomeAssistant.html</loc>
+</url>
+
+<url>
+  <loc>2019919.xyz/TypeScript.html</loc>
+</url>
 
 <url>
   <loc>2019919.xyz/Angular.html</loc>

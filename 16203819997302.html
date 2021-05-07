@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>
     
-    通过变量作用域深入了解 undefined - 十
+    TypeScript - 十
     
   </title>
   <meta name="description" content="">
@@ -108,248 +108,309 @@
           <div class="large-9 medium-9 columns">
   <div class="markdown-body">
   <div class="markdown-inside">
-    <h1>通过变量作用域深入了解 undefined</h1>
-    <time class="article-date" datetime="2020-12-24T21:57:44+08:00">发布于2020/12/24</time>
-    <p>undefined 是一个变量，它有可能被篡改，所以使用void（0）来代替他，但是在做实验的时候发现虽然给它赋值不报错，取值时候 undefined 却并没有改变。</p>
+    <h1>TypeScript</h1>
+    <time class="article-date" datetime="2021-05-07T18:06:39+08:00">发布于2021/05/07</time>
+    <h2 id="toc_0">TypeScript 基础</h2>
 
-<pre><code class="language-javascript">    undefined = 0
-    // 0
-    undefined
-    // undefined
+<h3 id="toc_1">函数签名和重载 Signature Overloading</h3>
+
+<pre><code class="language-typescript">function contactPeople(method: &quot;email&quot;, ...people: HasEmail[]): void;
+function contactPeople(method: &quot;phone&quot;, ...people: HasPhoneNumber[]): void;
+function contactPeople(method: &quot;email&quot; | &quot;phone&quot;, ...people: (HasEmail | HasPhoneNumber)[]): void {
+}
 </code></pre>
 
-<p>这回学习到了变量作用域，再结合之前学的对象的属性，深入了解下 undefined 到底什么时候会被篡改。</p>
+<h3 id="toc_2">词法作用域 Lexical Scope</h3>
 
-<h2 id="toc_0">函数作用域和声明提前</h2>
+<h4 id="toc_3">TODO</h4>
 
-<p>别的语言一般为块级作用域，JavaScript 取而代之使用了函数作用域：变量在声明它们的函数体以及这个函数体嵌套的任意函数体内都是有定义的。</p>
+<h2 id="toc_4">Interfaces 和 type aliases</h2>
 
-<pre><code class="language-javascript">    var a = function test(o){
-        var i = 0;                          // i在整个函数体内均是有定义的
-        if(typeof o == &quot;object&quot;){
-            var j = 4;                      // j在函数体内是有定义的，不仅仅是在这个代码段内
-            for(var k=0; k &lt; 3; k++){       // k在函数体内是有定义的，不仅仅是在循环内
-                console.log(k);             // 输出数字0～2
-            }
-            console.log(k);                 // k已经定义了，输出3
-        }
-        console.log(k);                     // k已经定义了，输出3
-        console.log(j);                     // j已经定义了，输出4
-    };
+<h4 id="toc_5">TODO</h4>
+
+<h2 id="toc_6">泛型 Generics</h2>
+
+<h3 id="toc_7">泛型使用</h3>
+
+<pre><code class="language-typescript">interface WrappedValue&lt;T&gt; {
+  value: T;
+}
+let val: WrappedValue&lt;string[]&gt; = { value: [] };
+val.value;
 </code></pre>
 
-<p>JavaScript 的这个特性被非正式地称为声明提前（hoisting），即 JavaScript 函数里声明的所有变量（但不涉及赋值）都被“提前”至函数体的顶部。</p>
-
-<pre><code class="language-javascript">    var a = &#39;1&#39;;
-    function f(){
-        console.log(a);
-        var a = &#39;2&#39;;
-        console.log(a);
-    }
-</code></pre>
-
-<p>由于函数作用域的特性，变量 a 的声明被提前到了整个函数体最前面，声明了但是没赋值，所以第一次 console 是 undefined。执行到 var 语句时才被赋值，这应该也是为什么可以一个变量多次 var 声明的原因，后面每一次 var 只是起到了赋值的作用。</p>
-
-<h2 id="toc_1">ES6 块作用域</h2>
-
-<p>ES6 弥补了这这个概念，追加了 let 和 const，也就有了 {} 块作用域的概念，const 用来声明常量，这个就不提了，用上面的例子感受一下 let 和 var 的区别。</p>
-
-<pre><code class="language-javascript">    var a = function test(o){
-        var i = 0;                          // i在整个函数体内均是有定义的
-        if(typeof o == &quot;object&quot;){
-            let j = 4;                      // j在if块内是有定义的
-            for(var k=0; k &lt; 3; k++){       // k在函数体内是有定义的，不仅仅是在循环内
-                console.log(k);             // 输出数字0～2
-                console.log(j);             // j已经定义了，输出4
-            }
-            console.log(k);                 // k已经定义了，输出3
-        }
-        console.log(k);                     // k已经定义了，输出3
-        console.log(j);                     // j在块外，抛出异常Uncaught ReferenceError: j is not defined
-    };
-</code></pre>
-
-<p>let 和 const 只有在块内是被声明的。</p>
-
-<h2 id="toc_2">全局变量的本质</h2>
-
-<p>当声明一个 JavaScript 全局变量时，实际上是定义了全局对象的一个属性。当使用 var 声明一个变量时，创建的这个属性是不可配置的，无法通过 delete 运算符删除。</p>
-
-<pre><code class="language-javascript">    test =1
-    // 1
-    window.test
-    // 1
-    delete test
-    // true
-    window.test
-    // undefined
-    var test = 1
-    // undefined
-    window.test
-    // 1
-    delete test
-    // false
-    window.test
-    // 1
-</code></pre>
-
-<p>可以看到当定义一个全局变量的时候他变成了 window 的属性。<br/>
-JavaScript 可以允许使用 this 关键字来引用全局对象，但是不能引用局部变量中存放的对象。</p>
-
-<pre><code class="language-javascript">    this.test
-    // 1
-</code></pre>
-
-<h2 id="toc_3">深入理解 undefined 的本质</h2>
-
-<p>undefined 明明是个变量为什么赋值后无法使用呢。任何地方都可以直接使用 undefined，那他是一个全局变量一个全局的属性，事实也果然如此。</p>
-
-<pre><code class="language-javascript">    window.undefined == undefined
-    // true
-</code></pre>
-
-<p>而属性分两类，他们的特征如下：</p>
-
-<ul>
-<li>数据属性
-<ul>
-<li>value：就是属性的值。</li>
-<li>writable：决定属性是否能被赋值。</li>
-<li>enumerable：决定 for in 能否枚举该属性。</li>
-<li>configurable：决定该属性能否被删除或者改变特征值。</li>
-</ul></li>
-<li>访问器属性（getter/setter）
-<ul>
-<li>getter：函数或 undefined，在取属性值时被调用。</li>
-<li>setter：函数或 undefined，在设置属性值时被调用。</li>
-<li>enumerable：决定 for in 能否枚举该属性。</li>
-<li>configurable：决定该属性能否被删除或者改变特征值。<br/>
-查看下全局属性 undefined 的属性特征。</li>
-</ul></li>
-</ul>
-
-<pre><code class="language-javascript">    console.log(Object.getOwnPropertyDescriptor(window,&#39;undefined&#39;));
-    // configurable: false
-    // enumerable: false
-    // value: undefined
-    // writable: false
-</code></pre>
-
-<p>writable：false，就是这个原因 undefined 虽然是个全局变量，但是我们赋值之后他并没有被改变。那为什么还需要用 void(0) 来代替 undefined 呢？结合上面的函数作用域再做一个实验。</p>
-
-<pre><code class="language-javascript">    function test() {
-        var undefined = 100; 
-        console.log(undefined);
-        var obj = {a : undefined}; 
-        console.log(Object.getOwnPropertyDescriptor(obj,&#39;a&#39;));
-    }
-    test();
-    // 100
-    // configurable: true
-    // enumerable: true
-    // value: 100
-    // writable: true
-</code></pre>
-
-<p>在函数作用域中，undefined 被从声明并赋值为 100，无论是直接 console 它自己还是去查看 undefined 属性特性都能看出，undefined 变量被修改了。这也就说在函数作用域内 undefined 可以被修改。</p>
-
-<pre><code class="language-javascript">    function test() {
-        const undefined = 100; 
-        console.log(undefined);
-        const obj = {a : undefined}; 
-        console.log(Object.getOwnPropertyDescriptor(obj,&#39;a&#39;));
-        test();
-    }
-    // 100
-    // configurable: true
-    // enumerable: true
-    // value: 100
-    // writable: true
-</code></pre>
-
-<p>块作用域内也一样可以被修改，得出结论 undefined 是一个类似 var 声明一样可以被重复声明的全局属性，而他的属性特性 writable 是 false，所以不能被修改，但是在非全局作用域内，他是可以被篡改的，这时候就要注意用 void (0) 来替代 undefined。</p>
-
-<h2 id="toc_4">作用域链<sup>1</sup></h2>
-
-<p>以书中的角度用对象属性去看作用域链：</p>
-
-<ul>
-<li>JavaScript最顶层的代码，其作用域链只有一个全局对象。</li>
-</ul>
-
-<table>
-    <tr>
-        <th colspan=2>Scope chain</th>
-    </tr>
-    <tr>
-        <td>0</td><td>Global object</td>
-    <tr>
-</table>
-
-<ul>
-<li>不包含嵌套的函数，其作用域两个对象：函数自身的变量对象和全局对象。</li>
-</ul>
-
-<table>
-    <tr>
-        <th colspan=2>Scope chain</th>
-    </tr>
-    <tr>
-        <td>0</td><td>Activation object</td>
-    <tr>
-    <tr>
-        <td>1</td><td>Global object</td>
-    <tr>
-</table>
+<p>鼠标悬停在 <code>val.value</code> 的 <code>value</code> 上可以看到：</p>
 
 <blockquote>
-<p>活动对象(activation object)，该对象包含了函数的所有局部变量、命名参数、参数集合以及this，然后此对象会被推入作用域链的前端</p>
+<p>(property) WrappedValue<string[]>.value: string[]</p>
 </blockquote>
 
-<ul>
-<li>对于包含了嵌套函数的函数，其作用域包含至少三个对象：自身的变量对象，外层的变量对象（将自身嵌套的函数），全局变量对象。</li>
-</ul>
+<p>在各种类库的描述文件中也经常能够看到泛型的应用：</p>
 
-<table>
-    <tr>
-        <th colspan=2>Scope chain</th>
-    </tr>
-    <tr>
-        <td>0</td><td>Sub activation object</td>
-    <tr>
-    <tr>
-        <td>1</td><td>Activation object</td>
-    <tr>
-    <tr>
-        <td>2</td><td>Global object</td>
-    <tr>
-</table>
-
-<p>作用域链给我的感觉类似原型链，将函数的上下文构成了链表的形式，而方法执行时一层一层往外找，所以为了方便链表从上到下查找属性，所以有了声明提前，链表最顶端为嵌套函数的最里层，链表最底端则是全局变量对象。</p>
-
-<pre><code class="language-javascript">    function test(){
-        var fun1,fun2;
-        for(var i=0;i&lt;2;i++){
-            if(i === 0){
-                fun1 = function(){console.log(&#39;fun1:i=&#39;+i)};
-            }
-            if(i === 1){
-                fun2 = function(){console.log(&#39;fun2:i=&#39;+i)};
-            }
-        };
-        fun1();
-        fun2();
-    }∫
-    test();
-    // fun1:i=2
-    // fun2:i=2
+<pre><code class="language-typescript">interface MapLike&lt;T&gt; {
+    [index: string]: T;
+}
+interface SortedReadonlyArray&lt;T&gt; extends ReadonlyArray&lt;T&gt; {
+    &quot; __sortedArrayBrand&quot;: any;
+}
+interface SortedArray&lt;T&gt; extends Array&lt;T&gt; {
+    &quot; __sortedArrayBrand&quot;: any;
+}
 </code></pre>
 
-<h2 id="toc_5">注</h2>
+<h3 id="toc_8">泛型参数</h3>
+
+<p>上述方式在使用 WrappedValue 时必须添加泛型参数，如果不添加使用会报错：</p>
+
+<blockquote>
+<p>Generic type &#39;WrappedValue<T>&#39; requires 1 type argument(s).</p>
+</blockquote>
+
+<p>这里可以看到 WrappedValue 需要一个实参，那么我们也可以为其设置参数默认值，就可以不提供类型参数也能使用 WrappedValue：</p>
+
+<pre><code class="language-typescript">interface WrappedValue&lt;T = any&gt; {
+  value: T;
+}
+let val: WrappedValue = { value: [] };
+val.value;
+</code></pre>
+
+<p>下面是一个常用的泛型做参数的情况：</p>
+
+<pre><code class="language-typescript">function resolveOrTimeout&lt;T&gt;(promise: Promise&lt;T&gt;, timeout: number): Promise&lt;T&gt; { // =&gt; 1
+  return new Promise&lt;T&gt;((resolve, reject) =&gt; { // =&gt; 2
+    // start the timeout, reject when it triggers
+    const task = setTimeout(() =&gt; reject(&quot;time up!&quot;), timeout); // =&gt; 3
+
+    promise.then(val =&gt; {
+      // cancel the timeout
+      clearTimeout(task); // =&gt; 4                                    
+
+      // resolve with the value // =&gt; 5
+      resolve(val);                                            
+    });
+  });
+}
+</code></pre>
 
 <ol>
-<li>在看 JavaScript 权威指南第七版第八章时发现作者将原来的作用域链的“链”字都删除了，变成了作用域，但是还没有看前面作用域相关内容，应该有新的理解，在完成翻译后再继续补全。</li>
+<li>泛型 T 设定后，会传递一个类型为 Promise&lt;T&gt; 名为 promise 的参数。</li>
+<li>这个方法返回一个类型为 Promise&lt;T&gt; 的新 Promise。</li>
+<li>根据 timeout 时间设置定时，如果时间到了，执行 callback，也就是新创建的 Promise 将 rejected。</li>
+<li>如果 timeout 设定的时间没终止，传入的参数 promise 提前 fulfilled，那么直接清除延时。</li>
+<li>将 fulfilled 的值 resolve 到新创建的 Promise 中。</li>
 </ol>
+
+<p>这是一个典型的 Http 请求超时的解决方案。</p>
+
+<h3 id="toc_9">约束和作用域 Constraints Scope</h3>
+
+<p>可以通过 extends 来约束泛型：</p>
+
+<pre><code class="language-typescript">function arrayToDict&lt;T extends { id: string }&gt;(array: T[]): { [k: string]: T } {
+  const out: { [k: string]: T } = {};
+  array.forEach(val =&gt; {
+    out[val.id] = val;
+  });
+  return out;
+}
+</code></pre>
+
+<p>如果用以下代码将不带有 id 属性对象的数组作为 arrayToDict 的参数：</p>
+
+<pre><code class="language-typescript">const myDict = arrayToDict([
+  { foo: &quot;foo&quot; }
+]);
+</code></pre>
+
+<p>就会出现以下错误：</p>
+
+<blockquote>
+<p>Type &#39;{ foo: string; }&#39; is not assignable to type &#39;{ id: string; }&#39;.<br/>
+  Object literal may only specify known properties, and &#39;foo&#39; does not exist in type &#39;{ id: string; }&#39;.</p>
+</blockquote>
+
+<p>这里限制了泛型 T 内必须有 string 类型的 id 属性，所以我们可以使用 <code>val.id</code>。如果将约束 <code>extends { id: string }</code> 删除，就会看到 <code>val.id</code> 出现下面的错误：</p>
+
+<blockquote>
+<p>Property &#39;id&#39; does not exist on type &#39;T&#39;.</p>
+</blockquote>
+
+<p>泛型类似参数，同样享有函数参数同样的作用域，也可以应用在闭包中：</p>
+
+<pre><code class="language-typescript">function firstTuple&lt;T&gt;(firstElement: T) {
+  return function finishTuple&lt;U&gt;(b: U) {
+    return [a, b] as [T, U];
+  };
+}
+const myTuple = startTuple([&quot;first&quot;])(42);
+</code></pre>
+
+<p>鼠标悬停在 myTuple 上可以看到该元组的类型：</p>
+
+<blockquote>
+<p><strong>const</strong> myTuple: [string[], number]</p>
+</blockquote>
+
+<h3 id="toc_10">泛型的使用</h3>
+
+<p>泛型只有在 input 和 output 同时需要时才使用，下面是一个没有必要用泛型的例子：</p>
+
+<pre><code class="language-typescript">interface Shape {
+  draw();
+}
+
+interface Circle extends Shape {
+  radius: number;
+}
+
+function drawShapes1&lt;S extends Shape&gt;(shapes: S[]) {
+  shapes.forEach(s =&gt; s.draw());
+}
+
+function drawShapes2(shapes: Shape[]) {
+  // this is simpler. Above type param is not necessary
+  shapes.forEach(s =&gt; s.draw());
+}
+</code></pre>
+
+<p>方法 2 和方法 1 起到了同样的效果，但是输出不再需要泛型。</p>
+
+<p>但是如果有这样一个需求，Shape 中不但有 draw 方法，还有是否已经绘制的 Flag，并且我要在绘制之后将 Shape 对象返回，就可以使用泛型：</p>
+
+<pre><code class="language-typescript">interface Shape {
+  draw();
+  isDrawn: boolean;
+}
+
+interface Circle extends Shape {
+  radius: number;
+}
+
+function drawShapes&lt;S extends Shape&gt;(shapes: S[]): S[] {
+  return shapes.map(s =&gt; {
+    s.draw;
+    s.isDrawn = true;
+    return s;
+  })
+}
+</code></pre>
+
+<h2 id="toc_11">顶层类型和底层类型</h2>
+
+<h3 id="toc_12">Top Types</h3>
+
+<ul>
+<li>any</li>
+<li>unknow</li>
+</ul>
+
+<p>顶层类型可以接收任何类型的值。</p>
+
+<p>unknow 在不确定类型时无法获取它的值。</p>
+
+<pre><code class="language-typescript">let myUnknown: unknown = &quot;hello, unknown&quot;;
+
+if (typeof myUnknown === &quot;string&quot;) {
+  // in here, myUnknown is of type string
+  myUnknown.split(&quot;, &quot;); // 
+}
+if (myUnknown instanceof Promise) {
+  // in here, myUnknown is of type Promise&lt;any&gt;
+  myUnknown.then(x =&gt; console.log(x));
+}
+</code></pre>
+
+<blockquote>
+<p>typeof 在判断 null、array、object 时都是 object，需要用 instanceof 来判断原型链。</p>
+</blockquote>
+
+<h3 id="toc_13">Type Guards</h3>
+
+<p>TypeScript 的类型判断自上而下进行，无法反向推断类型，比如函数的参数，如果没有定义类型，即使在后面赋值 string，参数类型仍然是 any。</p>
+
+<p>可以用以下方式确认复杂类型：</p>
+
+<pre><code class="language-typescript">function isHasEmail(x: any): x is HasEmail {
+  return typeof x.name === &quot;string&quot; &amp;&amp; typeof x.email === &quot;string&quot;;
+}
+if (isHasEmail(myUnknown)) {
+  // In here, myUnknown is of type HasEmail
+  console.log(myUnknown.name, myUnknown.email);
+}
+</code></pre>
+
+<p>同理利用泛型有了下面这种通用的类型守卫：</p>
+
+<pre><code class="language-typescript">function isDefined&lt;T&gt;(arg: T | undefined): arg is T {
+  return typeof arg !== &quot;undefined&quot;;
+}
+</code></pre>
+
+<h3 id="toc_14">Branded Types</h3>
+
+<h4 id="toc_15">TODO</h4>
+
+<h3 id="toc_16">Bottom Types</h3>
+
+<p>never 个人感觉没啥用。</p>
+
+<h2 id="toc_17">高级类型</h2>
+
+<h3 id="toc_18">keyof 和 typeof</h3>
+
+<p>typeof 是 JavaScript 就有的特性。</p>
+
+<p>keyof 可以直接获取接口的属性名。</p>
+
+<p>接口也可以用属性表达式来获取对应属性的类型。</p>
+
+<pre><code class="language-typescript">interface CommunicationMethods {
+  email: HasEmail;
+  phone: HasPhoneNumber;
+  fax: { fax: number };
+}
+
+function contact&lt;K extends keyof CommunicationMethods&gt;(
+  method: K,
+  contact: CommunicationMethods[K] // 💡turning key into value -- a *mapped type*
+) {
+  //...
+}
+type AllType = keyof CommunicationMethods;
+let x: AllType = &#39;email&#39;;
+type Email = CommunicationMethods[&#39;email&#39;];
+</code></pre>
+
+<h3 id="toc_19">Built-In 类型</h3>
+
+<h4 id="toc_20">Partial</h4>
+
+<pre><code class="language-typescript">/**
+ * Make all properties in T optional
+ */
+type Partial&lt;T&gt; = {
+    [P in keyof T]?: T[P];
+};
+</code></pre>
+
+<p>返回新的类型，并且所有的参数都是可选项。</p>
+
+<h4 id="toc_21">Pick</h4>
+
+<pre><code class="language-typescript">type HasThen&lt;T&gt; = Pick&lt;Promise&lt;T&gt;, &quot;then&quot; | &quot;catch&quot;&gt;;
+
+let hasThen: HasThen&lt;number&gt; = Promise.resolve(4);
+hasThen.then;
+</code></pre>
+
+<p>返回一个类型，指定允许访问的属性。</p>
+
+<h4 id="toc_22">Extract</h4>
+
+<h4 id="toc_23">Exclude</h4>
+
+<h4 id="toc_24">Record</h4>
 
   </div>
 </div>
@@ -359,15 +420,12 @@ JavaScript 可以允许使用 this 关键字来引用全局对象，但是不能
   <div class="large-6 columns">
     <div class="text-left" style="padding:15px 0px;">
       
-      <a href="16107633205948.html" title="Previous Post: 通过函数声明和调用掌握函数的 this 值">&laquo;
-        通过函数声明和调用掌握函数的 this 值</a>
-      
     </div>
   </div>
   <div class="large-6 columns">
     <div class="text-right" style="padding:15px 0px;">
       
-      <a href="16113218396407.html" title="Next Post: 第 6 章 对象">第 6 章 对象 &raquo;</a>
+      <a href="16201149334405.html" title="Next Post: Ubuntu 20.04Lts 安装 HA">Ubuntu 20.04Lts 安装 HA &raquo;</a>
       
     </div>
   </div>
@@ -379,7 +437,7 @@ JavaScript 可以允许使用 this 关键字来引用全局对象，但是不能
 </div>
 <script type="text/javascript">
   $(function () {
-    var currentURL = '16088182648987.html';
+    var currentURL = '16203819997302.html';
     $('#side-nav a').each(function () {
       if ($(this).attr('href') == currentURL) {
         $(this).parent().addClass('active');

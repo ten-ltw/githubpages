@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>
     
-    JavaScript - 十
+    Ubuntu 20.04Lts 安装 HA - 十
     
   </title>
   <meta name="description" content="">
@@ -108,20 +108,68 @@
           <div class="large-9 medium-9 columns">
   <div class="markdown-body">
   <div class="markdown-inside">
-    <h1>关于我</h1>
-    <time class="article-date">发布于明天</time>
-    <br>
-    <p>★★★★☆  JavaScript ES6+</p>
-    <p>★★★★☆  Angular2+</p>
-    <p>★★★☆☆  AngularJs</p>
-    <p>★★★☆☆  css</p>
-    <p>★★★☆☆  C#、.net core</p>
-    <p>★★★☆☆  msSql、Oracle、PostgreSql</p>
-    <br>
-    <br>
-    <p>尽快将上面的星填满！</p>
+    <h1>Ubuntu 20.04Lts 安装 HA</h1>
+    <time class="article-date" datetime="2021-05-04T15:55:33+08:00">发布于2021/05/04</time>
+    <h2 id="toc_0">虚拟机 Hyper-V</h2>
+
+<p>安装 SSH server<br/>
+<code>sudo apt-get install openssh-server</code><br/>
+关闭图形化界面，为啥没下 server 版的...<br/>
+<code>sudo apt-get install openssh-server</code></p>
+
+<h2 id="toc_1">安装 HA</h2>
+
+<p><a href="https://www.home-assistant.io/installation/linux#install-home-assistant-core">官方安装</a></p>
+
+<p>切换用户<br/>
+<code>sudo -u homeassistant -H -s</code></p>
+
+<h2 id="toc_2">第二天无法找到 command</h2>
+
+<p><code>export PATH=$PATH:/srv/homeassistant/bin</code><br/>
+添加指令路径到环境变量。<br/>
+只是临时添加，在下面文件下添加 USER 环境变量<br/>
+vi ~/.bashrc</p>
+
+<p>重启<br/>
+<code>systemctl reboot -i</code></p>
+
   </div>
-</div>  
+</div>
+<br /><br />
+<hr />
+<div class="row clearfix">
+  <div class="large-6 columns">
+    <div class="text-left" style="padding:15px 0px;">
+      
+      <a href="16203819997302.html" title="Previous Post: TypeScript">&laquo;
+        TypeScript</a>
+      
+    </div>
+  </div>
+  <div class="large-6 columns">
+    <div class="text-right" style="padding:15px 0px;">
+      
+      <a href="16200327308578.html" title="Next Post: Windows10 安装 HomeAssistant">Windows10 安装 HomeAssistant &raquo;</a>
+      
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div style="padding:0px 0.93em;" class="share-comments">
+    
+  </div>
+</div>
+<script type="text/javascript">
+  $(function () {
+    var currentURL = '16201149334405.html';
+    $('#side-nav a').each(function () {
+      if ($(this).attr('href') == currentURL) {
+        $(this).parent().addClass('active');
+      }
+    });
+  });
+</script>  
           </div>
           <div class="large-3 medium-3 columns">
             <div class="hide-for-small">

@@ -4,7 +4,7 @@
   <title><![CDATA[十]]></title>
   <link href="2019919.xyz/atom.xml" rel="self"/>
   <link href="2019919.xyz/"/>
-  <updated>2021-04-16T17:44:59+08:00</updated>
+  <updated>2021-05-07T18:07:17+08:00</updated>
   <id>2019919.xyz/</id>
   <author>
     <name><![CDATA[]]></name>
@@ -12,6 +12,449 @@
   </author>
   <generator uri="http://www.mweb.im">MWeb</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[TypeScript]]></title>
+    <link href="2019919.xyz/16203819997302.html"/>
+    <updated>2021-05-07T18:06:39+08:00</updated>
+    <id>2019919.xyz/16203819997302.html</id>
+    <content type="html"><![CDATA[
+<h2 id="toc_0">TypeScript 基础</h2>
+
+<h3 id="toc_1">函数签名和重载 Signature Overloading</h3>
+
+<pre><code class="language-typescript">function contactPeople(method: &quot;email&quot;, ...people: HasEmail[]): void;
+function contactPeople(method: &quot;phone&quot;, ...people: HasPhoneNumber[]): void;
+function contactPeople(method: &quot;email&quot; | &quot;phone&quot;, ...people: (HasEmail | HasPhoneNumber)[]): void {
+}
+</code></pre>
+
+<h3 id="toc_2">词法作用域 Lexical Scope</h3>
+
+<h4 id="toc_3">TODO</h4>
+
+<h2 id="toc_4">Interfaces 和 type aliases</h2>
+
+<h4 id="toc_5">TODO</h4>
+
+<h2 id="toc_6">泛型 Generics</h2>
+
+<h3 id="toc_7">泛型使用</h3>
+
+<pre><code class="language-typescript">interface WrappedValue&lt;T&gt; {
+  value: T;
+}
+let val: WrappedValue&lt;string[]&gt; = { value: [] };
+val.value;
+</code></pre>
+
+<p>鼠标悬停在 <code>val.value</code> 的 <code>value</code> 上可以看到：</p>
+
+<blockquote>
+<p>(property) WrappedValue<string[]>.value: string[]</p>
+</blockquote>
+
+<p>在各种类库的描述文件中也经常能够看到泛型的应用：</p>
+
+<pre><code class="language-typescript">interface MapLike&lt;T&gt; {
+    [index: string]: T;
+}
+interface SortedReadonlyArray&lt;T&gt; extends ReadonlyArray&lt;T&gt; {
+    &quot; __sortedArrayBrand&quot;: any;
+}
+interface SortedArray&lt;T&gt; extends Array&lt;T&gt; {
+    &quot; __sortedArrayBrand&quot;: any;
+}
+</code></pre>
+
+<h3 id="toc_8">泛型参数</h3>
+
+<p>上述方式在使用 WrappedValue 时必须添加泛型参数，如果不添加使用会报错：</p>
+
+<blockquote>
+<p>Generic type &#39;WrappedValue<T>&#39; requires 1 type argument(s).</p>
+</blockquote>
+
+<p>这里可以看到 WrappedValue 需要一个实参，那么我们也可以为其设置参数默认值，就可以不提供类型参数也能使用 WrappedValue：</p>
+
+<pre><code class="language-typescript">interface WrappedValue&lt;T = any&gt; {
+  value: T;
+}
+let val: WrappedValue = { value: [] };
+val.value;
+</code></pre>
+
+<p>下面是一个常用的泛型做参数的情况：</p>
+
+<pre><code class="language-typescript">function resolveOrTimeout&lt;T&gt;(promise: Promise&lt;T&gt;, timeout: number): Promise&lt;T&gt; { // =&gt; 1
+  return new Promise&lt;T&gt;((resolve, reject) =&gt; { // =&gt; 2
+    // start the timeout, reject when it triggers
+    const task = setTimeout(() =&gt; reject(&quot;time up!&quot;), timeout); // =&gt; 3
+
+    promise.then(val =&gt; {
+      // cancel the timeout
+      clearTimeout(task); // =&gt; 4                                    
+
+      // resolve with the value // =&gt; 5
+      resolve(val);                                            
+    });
+  });
+}
+</code></pre>
+
+<ol>
+<li>泛型 T 设定后，会传递一个类型为 Promise&lt;T&gt; 名为 promise 的参数。</li>
+<li>这个方法返回一个类型为 Promise&lt;T&gt; 的新 Promise。</li>
+<li>根据 timeout 时间设置定时，如果时间到了，执行 callback，也就是新创建的 Promise 将 rejected。</li>
+<li>如果 timeout 设定的时间没终止，传入的参数 promise 提前 fulfilled，那么直接清除延时。</li>
+<li>将 fulfilled 的值 resolve 到新创建的 Promise 中。</li>
+</ol>
+
+<p>这是一个典型的 Http 请求超时的解决方案。</p>
+
+<h3 id="toc_9">约束和作用域 Constraints Scope</h3>
+
+<p>可以通过 extends 来约束泛型：</p>
+
+<pre><code class="language-typescript">function arrayToDict&lt;T extends { id: string }&gt;(array: T[]): { [k: string]: T } {
+  const out: { [k: string]: T } = {};
+  array.forEach(val =&gt; {
+    out[val.id] = val;
+  });
+  return out;
+}
+</code></pre>
+
+<p>如果用以下代码将不带有 id 属性对象的数组作为 arrayToDict 的参数：</p>
+
+<pre><code class="language-typescript">const myDict = arrayToDict([
+  { foo: &quot;foo&quot; }
+]);
+</code></pre>
+
+<p>就会出现以下错误：</p>
+
+<blockquote>
+<p>Type &#39;{ foo: string; }&#39; is not assignable to type &#39;{ id: string; }&#39;.<br/>
+  Object literal may only specify known properties, and &#39;foo&#39; does not exist in type &#39;{ id: string; }&#39;.</p>
+</blockquote>
+
+<p>这里限制了泛型 T 内必须有 string 类型的 id 属性，所以我们可以使用 <code>val.id</code>。如果将约束 <code>extends { id: string }</code> 删除，就会看到 <code>val.id</code> 出现下面的错误：</p>
+
+<blockquote>
+<p>Property &#39;id&#39; does not exist on type &#39;T&#39;.</p>
+</blockquote>
+
+<p>泛型类似参数，同样享有函数参数同样的作用域，也可以应用在闭包中：</p>
+
+<pre><code class="language-typescript">function firstTuple&lt;T&gt;(firstElement: T) {
+  return function finishTuple&lt;U&gt;(b: U) {
+    return [a, b] as [T, U];
+  };
+}
+const myTuple = startTuple([&quot;first&quot;])(42);
+</code></pre>
+
+<p>鼠标悬停在 myTuple 上可以看到该元组的类型：</p>
+
+<blockquote>
+<p><strong>const</strong> myTuple: [string[], number]</p>
+</blockquote>
+
+<h3 id="toc_10">泛型的使用</h3>
+
+<p>泛型只有在 input 和 output 同时需要时才使用，下面是一个没有必要用泛型的例子：</p>
+
+<pre><code class="language-typescript">interface Shape {
+  draw();
+}
+
+interface Circle extends Shape {
+  radius: number;
+}
+
+function drawShapes1&lt;S extends Shape&gt;(shapes: S[]) {
+  shapes.forEach(s =&gt; s.draw());
+}
+
+function drawShapes2(shapes: Shape[]) {
+  // this is simpler. Above type param is not necessary
+  shapes.forEach(s =&gt; s.draw());
+}
+</code></pre>
+
+<p>方法 2 和方法 1 起到了同样的效果，但是输出不再需要泛型。</p>
+
+<p>但是如果有这样一个需求，Shape 中不但有 draw 方法，还有是否已经绘制的 Flag，并且我要在绘制之后将 Shape 对象返回，就可以使用泛型：</p>
+
+<pre><code class="language-typescript">interface Shape {
+  draw();
+  isDrawn: boolean;
+}
+
+interface Circle extends Shape {
+  radius: number;
+}
+
+function drawShapes&lt;S extends Shape&gt;(shapes: S[]): S[] {
+  return shapes.map(s =&gt; {
+    s.draw;
+    s.isDrawn = true;
+    return s;
+  })
+}
+</code></pre>
+
+<h2 id="toc_11">顶层类型和底层类型</h2>
+
+<h3 id="toc_12">Top Types</h3>
+
+<ul>
+<li>any</li>
+<li>unknow</li>
+</ul>
+
+<p>顶层类型可以接收任何类型的值。</p>
+
+<p>unknow 在不确定类型时无法获取它的值。</p>
+
+<pre><code class="language-typescript">let myUnknown: unknown = &quot;hello, unknown&quot;;
+
+if (typeof myUnknown === &quot;string&quot;) {
+  // in here, myUnknown is of type string
+  myUnknown.split(&quot;, &quot;); // 
+}
+if (myUnknown instanceof Promise) {
+  // in here, myUnknown is of type Promise&lt;any&gt;
+  myUnknown.then(x =&gt; console.log(x));
+}
+</code></pre>
+
+<blockquote>
+<p>typeof 在判断 null、array、object 时都是 object，需要用 instanceof 来判断原型链。</p>
+</blockquote>
+
+<h3 id="toc_13">Type Guards</h3>
+
+<p>TypeScript 的类型判断自上而下进行，无法反向推断类型，比如函数的参数，如果没有定义类型，即使在后面赋值 string，参数类型仍然是 any。</p>
+
+<p>可以用以下方式确认复杂类型：</p>
+
+<pre><code class="language-typescript">function isHasEmail(x: any): x is HasEmail {
+  return typeof x.name === &quot;string&quot; &amp;&amp; typeof x.email === &quot;string&quot;;
+}
+if (isHasEmail(myUnknown)) {
+  // In here, myUnknown is of type HasEmail
+  console.log(myUnknown.name, myUnknown.email);
+}
+</code></pre>
+
+<p>同理利用泛型有了下面这种通用的类型守卫：</p>
+
+<pre><code class="language-typescript">function isDefined&lt;T&gt;(arg: T | undefined): arg is T {
+  return typeof arg !== &quot;undefined&quot;;
+}
+</code></pre>
+
+<h3 id="toc_14">Branded Types</h3>
+
+<h4 id="toc_15">TODO</h4>
+
+<h3 id="toc_16">Bottom Types</h3>
+
+<p>never 个人感觉没啥用。</p>
+
+<h2 id="toc_17">高级类型</h2>
+
+<h3 id="toc_18">keyof 和 typeof</h3>
+
+<p>typeof 是 JavaScript 就有的特性。</p>
+
+<p>keyof 可以直接获取接口的属性名。</p>
+
+<p>接口也可以用属性表达式来获取对应属性的类型。</p>
+
+<pre><code class="language-typescript">interface CommunicationMethods {
+  email: HasEmail;
+  phone: HasPhoneNumber;
+  fax: { fax: number };
+}
+
+function contact&lt;K extends keyof CommunicationMethods&gt;(
+  method: K,
+  contact: CommunicationMethods[K] // 💡turning key into value -- a *mapped type*
+) {
+  //...
+}
+type AllType = keyof CommunicationMethods;
+let x: AllType = &#39;email&#39;;
+type Email = CommunicationMethods[&#39;email&#39;];
+</code></pre>
+
+<h3 id="toc_19">Built-In 类型</h3>
+
+<h4 id="toc_20">Partial</h4>
+
+<pre><code class="language-typescript">/**
+ * Make all properties in T optional
+ */
+type Partial&lt;T&gt; = {
+    [P in keyof T]?: T[P];
+};
+</code></pre>
+
+<p>返回新的类型，并且所有的参数都是可选项。</p>
+
+<h4 id="toc_21">Pick</h4>
+
+<pre><code class="language-typescript">type HasThen&lt;T&gt; = Pick&lt;Promise&lt;T&gt;, &quot;then&quot; | &quot;catch&quot;&gt;;
+
+let hasThen: HasThen&lt;number&gt; = Promise.resolve(4);
+hasThen.then;
+</code></pre>
+
+<p>返回一个类型，指定允许访问的属性。</p>
+
+<h4 id="toc_22">Extract</h4>
+
+<h4 id="toc_23">Exclude</h4>
+
+<h4 id="toc_24">Record</h4>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Ubuntu 20.04Lts 安装 HA]]></title>
+    <link href="2019919.xyz/16201149334405.html"/>
+    <updated>2021-05-04T15:55:33+08:00</updated>
+    <id>2019919.xyz/16201149334405.html</id>
+    <content type="html"><![CDATA[
+<h2 id="toc_0">虚拟机 Hyper-V</h2>
+
+<p>安装 SSH server<br/>
+<code>sudo apt-get install openssh-server</code><br/>
+关闭图形化界面，为啥没下 server 版的...<br/>
+<code>sudo apt-get install openssh-server</code></p>
+
+<h2 id="toc_1">安装 HA</h2>
+
+<p><a href="https://www.home-assistant.io/installation/linux#install-home-assistant-core">官方安装</a></p>
+
+<p>切换用户<br/>
+<code>sudo -u homeassistant -H -s</code></p>
+
+<h2 id="toc_2">第二天无法找到 command</h2>
+
+<p><code>export PATH=$PATH:/srv/homeassistant/bin</code><br/>
+添加指令路径到环境变量。<br/>
+只是临时添加，在下面文件下添加 USER 环境变量<br/>
+vi ~/.bashrc</p>
+
+<p>重启<br/>
+<code>systemctl reboot -i</code></p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Windows10 安装 HomeAssistant]]></title>
+    <link href="2019919.xyz/16200327308578.html"/>
+    <updated>2021-05-03T17:05:30+08:00</updated>
+    <id>2019919.xyz/16200327308578.html</id>
+    <content type="html"><![CDATA[
+<p>一直想动手的智能家居终于开始啦。<br/>
+家庭使用 SMB，用的 win10 做 service，因此直接在 win10 上进行安装，方便系统备份。</p>
+
+<h2 id="toc_0">安装排雷</h2>
+
+<p>这里还不会 python，不知道解决原因。</p>
+
+<h3 id="toc_1">python 环境安装</h3>
+
+<p><a href="https://www.python.org/downloads/">python 下载</a><br/>
+注意安装时添加环境变量。</p>
+
+<h3 id="toc_2">HomeAssistant 安装</h3>
+
+<p><code>pip3 install homeassistant</code></p>
+
+<p>报错：</p>
+
+<pre><code class="language-text">Microsoft Visual C++ 14.0 is required
+</code></pre>
+
+<p>下载 <a href="https://visualstudio.microsoft.com/zh-hans/visual-cpp-build-tools/">C++ 生成工具</a>，并安装默认选中所有内容——4G+。</p>
+
+<p>再次报错：</p>
+
+<pre><code class="language-text">ERROR: After October 2020 you may experience errors when installing or updating package
+s. This is because pip will change the way that it resolves dependency conflicts. 
+
+We recommend you use --use-feature=2020-resolver to test your packages with the new res
+olver before it becomes the default.
+</code></pre>
+
+<p>好的这回解决办法都告诉了，执行：<br/>
+<code>pip3 install homeassistant --use-feature=2020-resolver</code></p>
+
+<p>安装成功！</p>
+
+<h2 id="toc_3">HomeAssistant 启动</h2>
+
+<h3 id="toc_4">安装 HomeAssistant Frontend</h3>
+
+<p><code>pip3 install home-assistant-frontend</code></p>
+
+<h3 id="toc_5">启动并设置开机启动</h3>
+
+<p><code>py -m homeassistant --open-ui</code></p>
+
+<h2 id="toc_6">排除警告和错误</h2>
+
+<p>在配置的日志中查看异常。</p>
+
+<h3 id="toc_7">警告</h3>
+
+<pre><code class="language-text">WARNING (MainThread) [scapy.runtime] No libpcap provider available ! pcap won&#39;t be used
+</code></pre>
+
+<p><a href="https://www.winpcap.org/install/default.htm">winpcap</a> 代替 Linux 的 libpcap。<br/>
+安装后：</p>
+
+<pre><code class="language-text">WARNING (MainThread) [scapy.runtime] WinPcap is now deprecated (not maintained). Please use Npcap instead
+</code></pre>
+
+<p>又要使用 <a href="https://nmap.org/npcap/#download">Npcap</a> 替代，关闭服务卸载 Winpcap 后安装并重新启动服务。</p>
+
+<h3 id="toc_8">错误</h3>
+
+<pre><code class="language-text">Unable to install package PyNaCl==1.3.0: ERROR: Command errored out with exit status 1: command:
+</code></pre>
+
+<p>解决方案：<br/>
+<code>pip uninstall typing</code><br/>
+<code>pip install pynacl==1.3.0</code></p>
+
+<pre><code class="language-text">ERROR: Could not build wheels for pynacl which use PEP 517 and cannot be installed directly
+</code></pre>
+
+<p><code>pip install pep517</code></p>
+
+<h3 id="toc_9">手机 App</h3>
+
+<p>手机 app 无法登陆，提示：</p>
+
+<blockquote>
+<p>未加载 mobile_app 组件。请将其添加到您的配置中，重新启动 Home Assistant，然后重试。</p>
+</blockquote>
+
+<p>进入系统发现提示配置 mobile_app：<a href="https://www.home-assistant.io/integrations/mobile_app">DOC 路径</a></p>
+
+<h3 id="toc_10">无法安装 HACS 换 linux</h3>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Angular 中 RXJS 的应用]]></title>
