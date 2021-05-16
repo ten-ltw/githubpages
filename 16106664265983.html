@@ -45,6 +45,8 @@
           <li class="divider"></li>
           <li><label>HomeAssistant</label></li>
           
+          <li><a title="梅林配置" href="16211303812539.html">梅林配置</a></li>
+          
           <li><a title="Ubuntu 20.04Lts 安装 HA" href="16201149334405.html">Ubuntu 20.04Lts 安装 HA</a></li>
           
           <li><a title="Windows10 安装 HomeAssistant" href="16200327308578.html">Windows10 安装 HomeAssistant</a></li>
@@ -283,7 +285,7 @@
 
 <p>下面是一些函数声明的例子:</p>
 
-<pre><code class="language-javascript">// Print the name and value of each property of o.  Return undefined.
+<pre class="line-numbers"><code class="language-javascript">// Print the name and value of each property of o.  Return undefined.
 function printprops(o) {
     for(let p in o) {
         console.log(`${p}: ${o[p]}\n`);
@@ -319,7 +321,7 @@ function factorial(x) {
 
 <p>下面是一些函数表达式的例子：</p>
 
-<pre><code class="language-javascript">// This function expression defines a function that squares its argument.
+<pre class="line-numbers"><code class="language-javascript">// This function expression defines a function that squares its argument.
 // Note that we assign it to a variable
 const square = function(x) { return x*x; };
 
@@ -343,29 +345,29 @@ let tensquared = (function(x) {return x*x;}(10));
 
 <p>在 ES6 之后，你可以用一个特别简洁的语法来定义函数，被称为“箭头函数”。这个语法联想到数学符号，用一个 =&gt; &quot;箭头&quot;来分隔函数的参数和函数体。function 关键字未使用，并且，由于箭头函数是表达式而不是声明语句，也不需要一个函数名称。一般箭头函数用圆括号包含一个逗号分隔的参数列表，接一个 =&gt; 箭头，后面是花括号包含的函数体。</p>
 
-<pre><code class="language-javascript">const sum = (x, y) =&gt; { return x + y; };
+<pre class="line-numbers"><code class="language-javascript">const sum = (x, y) =&gt; { return x + y; };
 </code></pre>
 
 <p>但是箭头函数支持更加简洁的语法。如果函数体只有一个简单的 return 语句，你可以省略 return 关键字，分号和花括号都一起省略，将函数体写成一个计算返回值的表达式。</p>
 
-<pre><code class="language-javascript">const sum = (x, y) =&gt; x + y;
+<pre class="line-numbers"><code class="language-javascript">const sum = (x, y) =&gt; x + y;
 </code></pre>
 
 <p>而且，如果一个箭头函数只有一个参数，你可以省略参数列表的圆括号。</p>
 
-<pre><code class="language-javascript">const polynomial = x =&gt; x*x + 2*x + 3;
+<pre class="line-numbers"><code class="language-javascript">const polynomial = x =&gt; x*x + 2*x + 3;
 </code></pre>
 
 <p>注意，如果箭头函数没有参数，必须写一对空圆括号。</p>
 
-<pre><code class="language-javascript">const constantFunc = () =&gt; 42;
+<pre class="line-numbers"><code class="language-javascript">const constantFunc = () =&gt; 42;
 </code></pre>
 
 <p>注意，当写一个箭头函数时，函数参数和箭头之间不能换行。否则，可能会直接在赋值后中止，就像 <code>const polynomial = x</code>，因为它本身是一个语法上合法的赋值语句。</p>
 
 <p>此外，如果箭头函数体是一个单一的 return 语句，而且他返回的是一个对象字面量，那必须将对象字面量用圆括号包起来，避免将对象字面量的大括号误解成函数体的大括号。</p>
 
-<pre><code class="language-javascript">const f = x =&gt; { return { value: x }; };  // Good: f() returns an object
+<pre class="line-numbers"><code class="language-javascript">const f = x =&gt; { return { value: x }; };  // Good: f() returns an object
 const g = x =&gt; ({ value: x });            // Good: g() returns an object
 const h = x =&gt; { value: x };              // Bad: h() returns nothing
 const i = x =&gt; { v: x, w: x };            // Bad: Syntax Error
@@ -375,7 +377,7 @@ const i = x =&gt; { v: x, w: x };            // Bad: Syntax Error
 
 <p>简洁的箭头函数可以完美的传递一个函数给另外一个函数，比如一些数组的常规操作方法 map()，filter() 和 reduce()（见 §7.8.1），例如：</p>
 
-<pre><code class="language-javascript">// Make a copy of an array with null elements removed.
+<pre class="line-numbers"><code class="language-javascript">// Make a copy of an array with null elements removed.
 let filtered = [1,null,2,3].filter(x =&gt; x !== null); // filtered == [1,2,3]
 // Square some numbers:
 let squares = [1,2,3,4].map(x =&gt; x*x);               // squares == [1,4,9,16]
@@ -387,7 +389,7 @@ let squares = [1,2,3,4].map(x =&gt; x*x);               // squares == [1,4,9,16]
 
 <p>在 JavaScript 中，函数可以嵌套在其他函数内。例如：</p>
 
-<pre><code class="language-javascript">function hypotenuse(a, b) {
+<pre class="line-numbers"><code class="language-javascript">function hypotenuse(a, b) {
     function square(x) { return x*x; }
     return Math.sqrt(square(a) + square(b));
 }
@@ -411,7 +413,7 @@ let squares = [1,2,3,4].map(x =&gt; x*x);               // squares == [1,4,9,16]
 
 <p>函数或方法通过调用表达式（§4.5）被调用。调用表达式由以下部分组成，计算函数对象的函数表达式，一个开放圆括号，逗号分隔的零个或多个实参表达式列表，一个闭合圆括号。如果函数表达式是属性访问表达式（函数是一个对象的属性或者一个数组的元素）那么它是一个方法调用表达式。这种情况会通过下面的例子说明，接下来这个代码包含了一些常规的函数调用表达式：</p>
 
-<pre><code class="language-javascript">printprops({x: 1});
+<pre class="line-numbers"><code class="language-javascript">printprops({x: 1});
 let total = distance(0,0,2,1) + distance(2,1,3,5);
 let probability = factorial(5)/factorial(13);
 </code></pre>
@@ -424,7 +426,7 @@ let probability = factorial(5)/factorial(13);
 
 <p>在 ES2020 中你可以通过在函数表达式和圆括号之间插入 ?. 符号，使函数只有在不为 null 和 undefined 时候再调用。表达式 f?.(x) 等价（假设没有副作用）于：</p>
 
-<pre><code class="language-javascript">(f !== null &amp;&amp; f !== undefined) ? f(x) : undefined
+<pre class="line-numbers"><code class="language-javascript">(f !== null &amp;&amp; f !== undefined) ? f(x) : undefined
 </code></pre>
 
 <p>详细的条件执行语法描述在 §4.5.1。</p>
@@ -433,7 +435,7 @@ let probability = factorial(5)/factorial(13);
 
 <p>以函数形式调用的函数通常不使用 this 关键字。不过，this 关键字可以用来判断当前是否是严格模式。</p>
 
-<pre><code class="language-javascript">// Define and invoke a function to determine if we&#39;re in strict mode.
+<pre class="line-numbers"><code class="language-javascript">// Define and invoke a function to determine if we&#39;re in strict mode.
 const strict = (function() { return !this; }());
 </code></pre>
 
@@ -445,24 +447,24 @@ const strict = (function() { return !this; }());
 
 <p>方法只不过是对象属性函数。如果有一个函数 f 和一个对象 o，可以用下面的代码给对象 o 定义一个名为 m 的方法：</p>
 
-<pre><code class="language-javascript">o.m = f;
+<pre class="line-numbers"><code class="language-javascript">o.m = f;
 </code></pre>
 
 <p>给对象 o 定义了方法 m()，用这种方式调用它：</p>
 
-<pre><code class="language-javascript">o.m();
+<pre class="line-numbers"><code class="language-javascript">o.m();
 </code></pre>
 
 <p>或者 m() 需要两个实参，可以这样调用它：</p>
 
-<pre><code class="language-javascript">o.m(x, y);
+<pre class="line-numbers"><code class="language-javascript">o.m(x, y);
 </code></pre>
 
 <p>例子中的代码是一个调用表达式：它包含一个函数表达式 o.m 和两个实参表达式 x 和 y。函数表达式本身是一个属性访问表达式，这意味着该函数被当作一个方法调用，而不是一个普通的函数。</p>
 
 <p>对方法调用的参数和返回值的处理，和上面所描述的普通函数调用完全一致。但是，方法调用和函数调用有一个重要的区别，即：调用上下文。属性访问表达式由两部分组成：一个对象（本例中的 o）和属性名称（m）。在像这样的方法调用表达式里，对象 o 成为调用上下文，函数体可以使用关键字this引用该对象。下面是一个具体的例子：</p>
 
-<pre><code class="language-javascript">let calculator = { // An object literal
+<pre class="line-numbers"><code class="language-javascript">let calculator = { // An object literal
     operand1: 1,
     operand2: 1,
     add() {        // We&#39;re using method shorthand syntax for this function
@@ -476,19 +478,19 @@ calculator.result  // =&gt; 2
 
 <p>大多数方法调用使用点符号来访问属性，使用方括号（属性访问表达式）也可以进行属性访问操作。下面两个例子都是函数调用：</p>
 
-<pre><code class="language-javascript">o[&quot;m&quot;](x,y);   // Another way to write o.m(x,y).
+<pre class="line-numbers"><code class="language-javascript">o[&quot;m&quot;](x,y);   // Another way to write o.m(x,y).
 a[0](z)        // Also a method invocation (assuming a[0] is a function).
 </code></pre>
 
 <p>方法调用可能包括更复杂的属性访问表达式：</p>
 
-<pre><code class="language-javascript">customer.surname.toUpperCase(); // Invoke method on customer.surname
+<pre class="line-numbers"><code class="language-javascript">customer.surname.toUpperCase(); // Invoke method on customer.surname
 f().m();                        // Invoke method m() on return value of f()
 </code></pre>
 
 <p>方法和 this 关键字是面向对象编程范式的核心。任何函数只要作为方法调用实际上都会传入一个隐式的实参对象，就是调用这个方法对象本身。通常来讲，方法执行就是对象的某种操作，方法调用的语法也清晰的表达了它是操作对象的函数，比较下面两行代码：</p>
 
-<pre><code class="language-javascript">rect.setSize(width, height);
+<pre class="line-numbers"><code class="language-javascript">rect.setSize(width, height);
 setRectSize(rect, width, height);
 </code></pre>
 
@@ -498,20 +500,20 @@ setRectSize(rect, width, height);
 
 <p>当方法返回一个对象，这个对象还可以再调用它的方法。这种方法调用序列中（或“链”）每次的调用结果都是另外一个表达式的组成部分。比如，基于 Promise 的异步操作（参见第13章），我们常常会这样写代码：</p>
 
-<pre><code class="language-javascript">// Run three asynchronous operations in sequence, handling errors.
+<pre class="line-numbers"><code class="language-javascript">// Run three asynchronous operations in sequence, handling errors.
 doStepOne().then(doStepTwo).then(doStepThree).catch(handleErrors);
 </code></pre>
 
 <p>当方法并不需要返回值时，最好直接返回 this。如果在设计的 API 中一直采用这种方式，使用 API 就可以用方法链 <sup id="fnref1"><a href="#fn1" rel="footnote">1</a></sup> 风格的编程，在这种编程风格中，只要指定一次要调用的对象即可，余下的方法都可以基于此进行调用：</p>
 
-<pre><code class="language-javascript">new Square().x(100).y(100).size(50).outline(&quot;red&quot;).fill(&quot;blue&quot;).draw();
+<pre class="line-numbers"><code class="language-javascript">new Square().x(100).y(100).size(50).outline(&quot;red&quot;).fill(&quot;blue&quot;).draw();
 </code></pre>
 
 <p>需要注意的是，this 是一个关键字，不是变量，也不是属性名。JavaScript 的语法不允许给 this 赋值。</p>
 
 <p>关键字 this 没有变量作用域的限制，除了箭头函数，嵌套函数不会从包含它的函数中继承 this。如果嵌套函数作为方法调用，其 this 的值指向调用它的对象。如果嵌套的函数作为函数调用（不包含箭头函数），其 this 值不是全局对象（非严格模式下）就是undefined（严格模式下）。很多人误以为在一个方法中的函数声明并以函数调用的方式去执行可以用 this 来获取方法的执行上下文。下面这个例子说明了这个问题：</p>
 
-<pre><code class="language-javascript">let o = {                 // An object o.
+<pre class="line-numbers"><code class="language-javascript">let o = {                 // An object o.
     m: function() {       // Method m of the object.
         let self = this;  // Save the &quot;this&quot; value in a variable.
         this === o        // =&gt; true: &quot;this&quot; is the object o.
@@ -530,7 +532,7 @@ o.m();                    // Invoke the method m on the object o.
 
 <p>在 ES6 之后，有另外一种解决方案来解决这个问题，将嵌套函数 f 转换成箭头函数，它会正确的继承 this 值：</p>
 
-<pre><code class="language-javascript">const f = () =&gt; {
+<pre class="line-numbers"><code class="language-javascript">const f = () =&gt; {
     this === o  // true, since arrow functions inherit this
 };
 </code></pre>
@@ -539,7 +541,7 @@ o.m();                    // Invoke the method m on the object o.
 
 <p>另外还可以用嵌套函数的 bind() 方法，在指定对象上隐式调用一个新的函数：</p>
 
-<pre><code class="language-javascript">const f = (function() {
+<pre class="line-numbers"><code class="language-javascript">const f = (function() {
     this === o  // true, since we bound this function to the outer this
 }).bind(this);
 </code></pre>
@@ -552,7 +554,7 @@ o.m();                    // Invoke the method m on the object o.
 
 <p>如果构造函数调用在圆括号内包含一组实参列表，先计算这些实参表达式，然后传入函数内，这和函数调用和方法调用是一致的。但如果构造函数没有形参，JavaScript 构造函数调用的语法是允许省略实参列表和圆括号的。凡是没有形参的构造函数调用都可以省略圆括号，比如，下面这两行代码就是等价的：</p>
 
-<pre><code class="language-javascript">o = new Object();
+<pre class="line-numbers"><code class="language-javascript">o = new Object();
 o = new Object;
 </code></pre>
 
@@ -588,7 +590,7 @@ o = new Object;
 
 <p>当调用函数的时候传入的实参比函数声明时指定的形参个数要少，剩下的形参都将设置为 undefined 值。所以一些参数设置成可选的是非常实用的。看下面这个例子：</p>
 
-<pre><code class="language-javascript">// Append the names of the enumerable properties of object o to the
+<pre class="line-numbers"><code class="language-javascript">// Append the names of the enumerable properties of object o to the
 // array a, and return a.  If a is omitted, create and return a new array.
 function getPropertyNames(o, a) {
     if (a === undefined) a = [];  // If undefined, use a new array
@@ -604,7 +606,7 @@ getPropertyNames(p, a);      // a == [&quot;x&quot;,&quot;y&quot;,&quot;z&quot;]
 
 <p>第一行代码中可以使用 || 运算符来代替一个 if 语句，这是一种习惯用法：</p>
 
-<pre><code class="language-javascript">a = a || [];
+<pre class="line-numbers"><code class="language-javascript">a = a || [];
 </code></pre>
 
 <p>回忆一下，§4.10.2 介绍了“||”运算符，如果第一个实参是真值的话就返回第一个实参；否则返回第二个实参。在这个场景下，如果作为第二个实参传入任意对象，那么函数就会使用这个对象。如果省略掉第二个实参（或者传递 null 以及其他任何假值），那么就新创建一个空数组，并赋值给 a。</p>
@@ -613,7 +615,7 @@ getPropertyNames(p, a);      // a == [&quot;x&quot;,&quot;y&quot;,&quot;z&quot;]
 
 <p>在 ES6 之后，可以直接在函数的参数列表中为每个函数参数定义默认值。直接在参数名后面接一个等号再接一个默认值（用于没有实参提供给参数时参数的值）：</p>
 
-<pre><code class="language-javascript">// Append the names of the enumerable properties of object o to the
+<pre class="line-numbers"><code class="language-javascript">// Append the names of the enumerable properties of object o to the
 // array a, and return a.  If a is omitted, create and return a new array.
 function getPropertyNames(o, a = []) {
     for(let property in o) a.push(property);
@@ -623,7 +625,7 @@ function getPropertyNames(o, a = []) {
 
 <p>默认参数表达式只有在函数调用时进行计算，而不是在它定义时，所以每一次 getPropertyNames() 函数只传一个实参调用时，一个新的空数组被创建并传给参数。<sup id="fnref2"><a href="#fn2" rel="footnote">2</a></sup> 最容易理解的就是参数默认值是常量（或者字面量表达式 [] 和 {}）。但这并不是必须的：举个例子，你可以用变量或者函数调用，计算一个默认参数的值。一个很有趣的情况是，对于有多个参数的函数，可以用前面的参数值来定义后面的参数默认值。</p>
 
-<pre><code class="language-javascript">// This function returns an object representing a rectangle&#39;s dimensions.
+<pre class="line-numbers"><code class="language-javascript">// This function returns an object representing a rectangle&#39;s dimensions.
 // If only width is supplied, make it twice as high as it is wide.
 const rectangle = (width, height=width*2) =&gt; ({width, height});
 rectangle(1)  // =&gt; { width: 1, height: 2 }
@@ -635,7 +637,7 @@ rectangle(1)  // =&gt; { width: 1, height: 2 }
 
 <p>调用函数时允许传入的实参比函数声明时指定的形参个数少。剩余参数允许相反的情况：它允许我们在调用函数时，传入比型参多任意个数的实参。下面是一个可以传入一个或多个数值型实参的例子，并且返回其中最大的数：</p>
 
-<pre><code class="language-javascript">function max(first=-Infinity, ...rest) {
+<pre class="line-numbers"><code class="language-javascript">function max(first=-Infinity, ...rest) {
     let maxValue = first; // Start by assuming the first arg is biggest
     // Then loop through the rest of the arguments, looking for bigger
     for(let n of rest) {
@@ -660,7 +662,7 @@ max(1, 10, 100, 2, 3, 1000, 4, 5, 6)  // =&gt; 1000
 
 <p>剩余参数是在 ES6 中加入的概念。在这之前，不定实参函数是用 Arguments 对象实现的：在函数体中，标识符 Arguments 是指向实参对象的引用。Arguments 对象是一个类数组对象（参照 §7.9），这样可以通过数字下标就能访问传入函数的实参值，而不用非要通过名字来得到实参。下面的 max() 函数就是以前用 Arguments 对象代替剩余参数的例子：</p>
 
-<pre><code class="language-javascript">function max(x) {
+<pre class="line-numbers"><code class="language-javascript">function max(x) {
     let maxValue = -Infinity;
     // Loop through the arguments, looking for, and remembering, the biggest.
     for(let i = 0; i &lt; arguments.length; i++) {
@@ -679,7 +681,7 @@ max(1, 10, 100, 2, 3, 1000, 4, 5, 6)  // =&gt; 1000
 
 <p>当需要单个值时，... 展开运算符用来拆包，或者说将元素从数组（或者其他的任何和迭代对象，例如字符串）中“展开”到上下文。我们已经在 §7.1.2 见到了展开运算符在数组字面量上的使用。展开运算符可以在函数调用中以同样方式使用：</p>
 
-<pre><code class="language-javascript">let numbers = [5, 2, 10, -1, 9, 100, 1];
+<pre class="line-numbers"><code class="language-javascript">let numbers = [5, 2, 10, -1, 9, 100, 1];
 Math.min(...numbers)  // =&gt; -1
 </code></pre>
 
@@ -687,7 +689,7 @@ Math.min(...numbers)  // =&gt; -1
 
 <p>在函数定义和函数调用中使用相同的 ... 语法时，和展开运算符有着相仿的效果。在 §8.3.2 中我们看到函数定义使用 ... 将复数个函数实参合并到一个数组中。剩余参数和展开运算符经常一同使用，就像下面这个函数：</p>
 
-<pre><code class="language-javascript">// This function takes a function and returns a wrapped version
+<pre class="line-numbers"><code class="language-javascript">// This function takes a function and returns a wrapped version
 function timed(f) {
     return function(...args) {  // Collect args into a rest parameter array
         console.log(`Entering function ${f.name}`);
@@ -720,7 +722,7 @@ timed(benchmark)(1000000) // =&gt; 500000500000; this is the sum of the numbers
 
 <p>如果一个函数的参数带有方括号，就说明函数要给每一个方括号传一个数组。在一个调用进程中，数组实参会被拆包传递给对应的参数。例如，假设我们将 2D 矢量表示为两个数字的数组，其中第一个元素是 X 坐标，第二个元素是 Y 坐标。用这个简单的数据结构，编写下面这个函数计算两个矢量的和：</p>
 
-<pre><code class="language-javascript">function vectorAdd(v1, v2) {
+<pre class="line-numbers"><code class="language-javascript">function vectorAdd(v1, v2) {
     return [v1[0] + v2[0], v1[1] + v2[1]];
 }
 vectorAdd([1,2], [3,4])  // =&gt; [4,6]
@@ -728,7 +730,7 @@ vectorAdd([1,2], [3,4])  // =&gt; [4,6]
 
 <p>如果下面这种方式解构这两个矢量实参，这段代码将更容易理解：</p>
 
-<pre><code class="language-javascript">function vectorAdd([x1,y1], [x2,y2]) { // Unpack 2 arguments into 4 parameters
+<pre class="line-numbers"><code class="language-javascript">function vectorAdd([x1,y1], [x2,y2]) { // Unpack 2 arguments into 4 parameters
     return [x1 + x2, y1 + y2];
 }
 vectorAdd([1,2], [3,4])  // =&gt; [4,6]
@@ -736,7 +738,7 @@ vectorAdd([1,2], [3,4])  // =&gt; [4,6]
 
 <p>同样，如果定义一个函数时需要对象实参，你能对这个对象进行参数解构。再次实用矢量的例子，这一次，我们用 x 和 y 参数包装成对象来描述矢量：</p>
 
-<pre><code class="language-javascript">// Multiply the vector {x,y} by a scalar value
+<pre class="line-numbers"><code class="language-javascript">// Multiply the vector {x,y} by a scalar value
 function vectorMultiply({x, y}, scalar) {
     return { x: x*scalar, y: y*scalar };
 }
@@ -745,7 +747,7 @@ vectorMultiply({x: 1, y: 2}, 2)  // =&gt; {x: 2, y: 4}
 
 <p>这个例子将一个简单的对象实参解构成两个参数是很简单的，因为参数的名字和我们在对象中使用的属性名是匹配的。当您需要将同一个名称的属性解构为具有不同名称的参数时，语法更加冗长和难懂。下面是一个矢量加法的例子，基于对象矢量的实现：</p>
 
-<pre><code class="language-javascript">function vectorAdd(
+<pre class="line-numbers"><code class="language-javascript">function vectorAdd(
     {x: x1, y: y1}, // Unpack 1st object into x1 and y1 params
     {x: x2, y: y2}  // Unpack 2nd object into x2 and y2 params
 )
@@ -759,7 +761,7 @@ vectorAdd({x: 1, y: 2}, {x: 3, y: 4})  // =&gt; {x: 4, y: 6}
 
 <p>可以使用解构参数定义参数默认值。下面是适用于 2D 或 3D 矢量的矢量乘法：</p>
 
-<pre><code class="language-javascript">// Multiply the vector {x,y} or {x,y,z} by a scalar value
+<pre class="line-numbers"><code class="language-javascript">// Multiply the vector {x,y} or {x,y,z} by a scalar value
 function vectorMultiply({x, y, z=0}, scalar) {
     return { x: x*scalar, y: y*scalar, z: z*scalar };
 }
@@ -768,7 +770,7 @@ vectorMultiply({x: 1, y: 2}, 2)  // =&gt; {x: 2, y: 4, z: 0}
 
 <p>一些语言（像 Python）允许函数的调用者以 <code>name=value</code> 型式指定实参，这在有很多可选实参或者参数列表长到难以记住正确的顺序时是非常方便的。JavaScript 不允许直接这样做，但可以通过解构对象实参到函数参数中。构思一个函数将指定数量的元素从一个数组复制到另一个数组中，可以随意地为每个数组指定起始偏移量。如下有五个可传入参数，其中一些有默认值，并且调用者很难记住参数的顺序来传递实参，可以像这样定义和调用 arraycopy() 方法：</p>
 
-<pre><code class="language-javascript">function arraycopy({from, to=from, n=from.length, fromIndex=0, toIndex=0}) {
+<pre class="line-numbers"><code class="language-javascript">function arraycopy({from, to=from, n=from.length, fromIndex=0, toIndex=0}) {
     let valuesToCopy = from.slice(fromIndex, fromIndex + n);
     to.splice(toIndex, 0, ...valuesToCopy);
     return to;
@@ -779,7 +781,7 @@ arraycopy({from: a, n: 3, to: b, toIndex: 4}) // =&gt; [9,8,7,6,1,2,3,5]
 
 <p>当解构一个数组，在其被拆包时，可以定义一个剩余参数将其余值放在数组中。 在方括号中的剩余参数和真正的函数中的剩余参数是完全不同的：</p>
 
-<pre><code class="language-javascript">// This function expects an array argument. The first two elements of that
+<pre class="line-numbers"><code class="language-javascript">// This function expects an array argument. The first two elements of that
 // array are unpacked into the x and y parameters. Any remaining elements
 // are stored in the coords array. And any arguments after the first array
 // are packed into the rest array.
@@ -791,7 +793,7 @@ f([1, 2, 3, 4], 5, 6)   // =&gt; [3, 5, 6, 3, 4]
 
 <p>在 ES2018，也可以用剩余参数解构对象。剩余参数是一个没有解构的属性的对象。对象剩余参数经常与对象展开运算符连用，这是 ES2018 的新特性：</p>
 
-<pre><code class="language-javascript">// Multiply the vector {x,y} or {x,y,z} by a scalar value, retain other props
+<pre class="line-numbers"><code class="language-javascript">// Multiply the vector {x,y} or {x,y,z} by a scalar value, retain other props
 function vectorMultiply({x, y, z=0, ...props}, scalar) {
     return { x: x*scalar, y: y*scalar, z: z*scalar, ...props };
 }
@@ -800,7 +802,7 @@ vectorMultiply({x: 1, y: 2, w: -1}, 2)  // =&gt; {x: 2, y: 4, z: 0, w: -1}
 
 <p>最后，请记住，除了可以解构实参对象和数组，也可以解构数组对象，对象有数组属性，并且对象还有对象的属性。构思一个将圆表示为具有 x、y、半径和颜色属性的对象的图形代码，颜色属性是一个数组由 RGB 组成。你可以定义一个函数，该函数希望将单个圆对象传递给它，但其解构为六个单独的参数：</p>
 
-<pre><code class="language-javascript">function drawCircle({x, y, radius, color: [r, g, b]}) {
+<pre class="line-numbers"><code class="language-javascript">function drawCircle({x, y, radius, color: [r, g, b]}) {
     // Not yet implemented
 }
 </code></pre>
@@ -815,7 +817,7 @@ vectorMultiply({x: 1, y: 2, w: -1}, 2)  // =&gt; {x: 2, y: 4, z: 0, w: -1}
 
 <p>然而事情不总是这样，回头看一下刚才提到的 arraycopy() 方法。这个方法期望获得一个或两个实参，并且这些实参的类型错误会导致函数执行失败。除非所写的私有函数只会被附近的代码调用，你应当添加类似的实参类型检查逻辑。因为宁愿程序在传入非法值时报错，也不愿非法值导致程序在执行时报错，相比而言，逻辑执行时的报错消息不甚清晰且更难处理。下面这个例子中的函数就做了这种类型检查：</p>
 
-<pre><code class="language-javascript">// Return the sum of the elements an iterable object a.
+<pre class="line-numbers"><code class="language-javascript">// Return the sum of the elements an iterable object a.
 // The elements of a must all be numbers.
 function sum(a) {
     let total = 0;
@@ -842,25 +844,25 @@ sum([1,2,&quot;3&quot;]); // !TypeError: element 2 is not a number
 <p>为了便于理解 JavaScript 中的函数是如何用做 Javascript 数据以及 JavaScript 语法的，来看一下这样一个函数定义：</p>
 </blockquote>
 
-<pre><code class="language-javascript">function square(x) { return x*x; }
+<pre class="line-numbers"><code class="language-javascript">function square(x) { return x*x; }
 </code></pre>
 
 <p>这个定义创建一个新的函数对象，并将其赋值给变量 square。函数的名字实际上是无形的，它（square）仅仅是变量的名称，这个变量是函数对象的引用。函数还可以赋值给其他的变量，并且仍可以正常工作：</p>
 
-<pre><code class="language-javascript">let s = square;  // Now s refers to the same function that square does
+<pre class="line-numbers"><code class="language-javascript">let s = square;  // Now s refers to the same function that square does
 square(4)        // =&gt; 16
 s(4)             // =&gt; 16
 </code></pre>
 
 <p>除了可以将函数赋值给变量，同样可以将函数赋值给对象的属性。当函数作为对象的属性调用时，函数就称为“方法”：</p>
 
-<pre><code class="language-javascript">let o = {square: function(x) { return x*x; }}; // An object literal
+<pre class="line-numbers"><code class="language-javascript">let o = {square: function(x) { return x*x; }}; // An object literal
 let y = o.square(16);                          // y == 256
 </code></pre>
 
 <p>函数甚至不需要带名字，就像把它们赋值给数组元素：</p>
 
-<pre><code class="language-javascript">let a = [x =&gt; x*x, 20]; // An array literal
+<pre class="line-numbers"><code class="language-javascript">let a = [x =&gt; x*x, 20]; // An array literal
 a[0](a[1])              // =&gt; 400
 </code></pre>
 
@@ -872,7 +874,7 @@ a[0](a[1])              // =&gt; 400
 
 <p>例 8-1：用函数做值</p>
 
-<pre><code class="language-javascript">// We define some simple functions here
+<pre class="line-numbers"><code class="language-javascript">// We define some simple functions here
 function add(x,y) { return x + y; }
 function subtract(x,y) { return x - y; }
 function multiply(x,y) { return x * y; }
@@ -915,7 +917,7 @@ operate2(&quot;pow&quot;, 10, 2)  // =&gt; 100
 
 <p>JavaScript 中的函数并不是原始值，而是一种特殊的对象，也就是说，函数可以拥有属性。当函数需要一个“静态”变量来在调用时保持某个值不变，最方便的方式就是给函数定义属性，而不是定义全局变量，显然定义全局变量会让命名空间变得更加杂乱无章。比如，假设你想写一个返回一个唯一整数的函数，不管在哪里调用函数都会返回这个整数。而函数不能两次返回同一个值，为了做到这一点，函数必须能够跟踪它每次返回的值，而且这些值的信息需要在不同的函数调过程中持久化。可以将这些信息存放到全局变量中，但这并不是必需的，因为这个信息仅仅是函数本身用到的。最好将这个信息保存到函数对象的一个属性中，下面这个例子就实现了这样一个函数，每次调用函数都会返回一个唯一的整数：</p>
 
-<pre><code class="language-javascript">// Initialize the counter property of the function object.
+<pre class="line-numbers"><code class="language-javascript">// Initialize the counter property of the function object.
 // Function declarations are hoisted so we really can
 // do this assignment before the function declaration.
 uniqueInteger.counter = 0;
@@ -931,7 +933,7 @@ uniqueInteger()  // =&gt; 1
 
 <p>来看另外一个例子，下面这个函数 factorial() 使用了自身的属性（将自身当做数组来对待）来缓存上一次的计算结果：</p>
 
-<pre><code class="language-javascript">// Compute factorials and cache results as properties of the function itself.
+<pre class="line-numbers"><code class="language-javascript">// Compute factorials and cache results as properties of the function itself.
 function factorial(n) {
     if (Number.isInteger(n) &amp;&amp; n &gt; 0) {           // Positive integers only
         if (!(n in factorial)) {                  // If no cached result
@@ -953,7 +955,7 @@ factorial[5]  // =&gt; 120; the call above caches this value
 
 <p>比如，假设你写了一段 JavaScript 模块代码，这段代码将要用在不同的 JavaScript 程序中（对于客户端 JavaScript 来讲通常是用在各种各样的网页中）。和大多数代码一样，假定这段代码定义了一个用以存储中间计算结果的变量。这样问题就来了，当模块代码放到不同的程序中运行时，你无法得知这个变量是否已经创建了，如果已经存在这个变量，那么将会和代码发生冲突。解决办法当然是将代码放入一个函数内，然后调用这个函数。这样全局变量就变成了函数内的局部变量：</p>
 
-<pre><code class="language-javascript">function chunkNamespace() {
+<pre class="line-numbers"><code class="language-javascript">function chunkNamespace() {
     // Chunk of code goes here
     // Any variables defined in the chunk are local to this function
     // instead of cluttering up the global namespace.
@@ -963,7 +965,7 @@ chunkNamespace();  // But don&#39;t forget to invoke the function!
 
 <p>这段代码仅仅定义了一个单独的全局变量：名为 chunkNamespace 的函数。如果还是太麻烦，可以用一个单独的表达式定义一个匿名函数并调用它：</p>
 
-<pre><code class="language-javascript">(function() {  // chunkNamespace() function rewritten as an unnamed expression.
+<pre class="line-numbers"><code class="language-javascript">(function() {  // chunkNamespace() function rewritten as an unnamed expression.
     // Chunk of code goes here
 }());          // End the function literal and invoke it now.
 </code></pre>
@@ -980,7 +982,7 @@ chunkNamespace();  // But don&#39;t forget to invoke the function!
 
 <p>理解闭包首先要了解嵌套函数的词法作用域规则。看一下这段代码：</p>
 
-<pre><code class="language-javascript">let scope = &quot;global scope&quot;;          // A global variable
+<pre class="line-numbers"><code class="language-javascript">let scope = &quot;global scope&quot;;          // A global variable
 function checkscope() {
     let scope = &quot;local scope&quot;;       // A local variable
     function f() { return scope; }   // Return the value in scope here
@@ -991,7 +993,7 @@ checkscope()                         // =&gt; &quot;local scope&quot;
 
 <p>checkscope() 函数声明了一个局部变量，然后定义并执行了一个函数 f() ，函数 f() 返回了这个变量的值，最后将函数 f() 的执行结果返回。你应当非常清楚为什么调用 checkscope() 会返回 local scope。现在我们对这段代码做一点改动。你知道这段代码返回什么吗？</p>
 
-<pre><code class="language-javascript">let scope = &quot;global scope&quot;;          // A global variable
+<pre class="line-numbers"><code class="language-javascript">let scope = &quot;global scope&quot;;          // A global variable
 function checkscope() {
     let scope = &quot;local scope&quot;;       // A local variable
     function f() { return scope; }   // Return the value in scope here
@@ -1006,7 +1008,7 @@ let s = checkscope()();              // What does this return?
 
 <p>在 §8.4.1 中定义了 uniqueInteger() 函数，这个函数使用自身的一个属性来保存每次返回的值，以便每次调用都能跟踪上次的返回值。但这种做法有一个问题，就是恶意代码可能将计数器重置或者把一个非整数赋值给它，导致 uniquenterger() 函数不一定能产生“唯一”的“整数”。而闭包可以捕捉到单个函数调用的局部变量，并将这些局部变量用做私有状态。下面是如何用立即调用函数表达式重写 uniqueInteger() 来定义命名空间和闭包来保持其状态私有化：</p>
 
-<pre><code class="language-javascript">let uniqueInteger = (function() {  // Define and invoke
+<pre class="line-numbers"><code class="language-javascript">let uniqueInteger = (function() {  // Define and invoke
     let counter = 0;               // Private state of function below
     return function() { return counter++; };
 }());
@@ -1018,7 +1020,7 @@ uniqueInteger()  // =&gt; 1
 
 <p>像 counter 一样的私有变量不是只能用在一个单独的闭包内，在同一个外部函数内定义的多个嵌套函数也可以访问它，这多个嵌套函数都共享一个作用域，看一下这段代码：</p>
 
-<pre><code class="language-javascript">function counter() {
+<pre class="line-numbers"><code class="language-javascript">function counter() {
     let n = 0;
     return {
         count: function() { return n++; },
@@ -1038,7 +1040,7 @@ d.count()                           // =&gt; 1: d was not reset
 
 <p>从技术角度看，其实可以将这个闭包合并为属性存取器方法 getter 和 setter。下面这段代码所示的 counter() 函数的版本是 §6.10.6 中代码的变种，所不同的是，这里私有状态的实现是利用了闭包，而不是利用普通的对象属性来实现：</p>
 
-<pre><code class="language-javascript">function counter(n) {  // Function argument n is the private variable
+<pre class="line-numbers"><code class="language-javascript">function counter(n) {  // Function argument n is the private variable
     return {
         // Property getter method returns and increments private counter var.
         get count() { return n++; },
@@ -1064,7 +1066,7 @@ c.count = 2000;    // !Error: count can only be set to a larger value
 
 <p>例 8-2：利用闭包实现的私有属性存取器方法</p>
 
-<pre><code class="language-javascript">// This function adds property accessor methods for a property with
+<pre class="line-numbers"><code class="language-javascript">// This function adds property accessor methods for a property with
 // the specified name to the object o. The methods are named get&lt;name&gt;
 // and set&lt;name&gt;. If a predicate function is supplied, the setter
 // method uses it to test its argument for validity before storing it.
@@ -1108,7 +1110,7 @@ o.setName(0);             // !TypeError: try to set a value of the wrong type
 
 <p>我们已经看到了很多例子，在同一个作用域中定义两个闭包，这两个闭包共享同样的私有变量或变量。这是一种非常重要的技术，但还是要特别小心那些不希望共享的变量往往不经意间共享给了其他的闭包，了解这一点也很重要。看一下下面这段代码：</p>
 
-<pre><code class="language-javascript">// This function returns a function that always returns v
+<pre class="line-numbers"><code class="language-javascript">// This function returns a function that always returns v
 function constfunc(v) { return () =&gt; v; }
 
 // Create an array of constant functions:
@@ -1121,7 +1123,7 @@ funcs[5]()    // =&gt; 5
 
 <p>这段代码利用循环创建了很多个闭包，当写类似这种代码的时候往往会犯一个错误：那就是试图将循环代码移入定义这个闭包的函数之内，看一下这段代码：</p>
 
-<pre><code class="language-javascript">// Return an array of functions that return the values 0-9
+<pre class="line-numbers"><code class="language-javascript">// Return an array of functions that return the values 0-9
 function constfuncs() {
     let funcs = [];
     for(var i = 0; i &lt; 10; i++) {
@@ -1138,7 +1140,7 @@ funcs[5]()    // =&gt; 10; Why doesn&#39;t this return 5?
 
 <p>书写闭包的时候还需注意一件事情，this 是 JavaScript 的关键字，而不是变量。正如之前讨论的，箭头函数从包含它们的函数中继承 this 值，但是用 function 关键字定义的函数不是。所以如果写一个闭包需要使用包含它的函数的 this 值，要在闭包返回之前使用箭头函数或者用调用 bind()，或者将 this 值赋值给一个变量，这样你的闭包会继承它：</p>
 
-<pre><code class="language-javascript">const self = this;  // Make the this value available to nested functions
+<pre class="line-numbers"><code class="language-javascript">const self = this;  // Make the this value available to nested functions
 </code></pre>
 
 <h2 id="toc_25">8.7 函数属性、方法、和构造函数</h2>
@@ -1161,13 +1163,13 @@ funcs[5]()    // =&gt; 10; Why doesn&#39;t this return 5?
 
 <p>我们可以将 call() 和 apply () 看做是某个对象的方法，通过调用方法的形式来间接调用（见 §8.2.4）函数。call() 和 apply() 的第一个实参是要调用函数的母对象，它是调用上下文，在函数体内变成 this 关键字的值。要想以对象 o 的方法来调用函数 f()（没有实参传递），可以这样使用 call() 和 apply()：</p>
 
-<pre><code class="language-javascript">f.call(o);
+<pre class="line-numbers"><code class="language-javascript">f.call(o);
 f.apply(o);
 </code></pre>
 
 <p>每行代码和下面代码的功能类似（假设对象 o 中预先不存在名为 m 的属性）:</p>
 
-<pre><code class="language-javascript">o.m = f;     // Make f a temporary method of o.
+<pre class="line-numbers"><code class="language-javascript">o.m = f;     // Make f a temporary method of o.
 o.m();       // Invoke it, passing no arguments.
 delete o.m;  // Remove the temporary method.
 </code></pre>
@@ -1176,22 +1178,22 @@ delete o.m;  // Remove the temporary method.
 
 <p>对于 call() 来说，除了第一个作为调用上下文实参，之后的所有实参就是要传入待调用函数的值（并且，这部分实参对于箭头函数来说不被忽略）。比如，以对象 o 的方法的形式调用函数 f()，并传入两个数，可以使用这样的代码：</p>
 
-<pre><code class="language-javascript">f.call(o, 1, 2);
+<pre class="line-numbers"><code class="language-javascript">f.call(o, 1, 2);
 </code></pre>
 
 <p>apply() 方法和 call() 类似，但传入实参的形式和 call() 有所不同，它的实参都放入一个数组中：</p>
 
-<pre><code class="language-javascript">f.apply(o, [1,2]);
+<pre class="line-numbers"><code class="language-javascript">f.apply(o, [1,2]);
 </code></pre>
 
 <p>如果一个函数的实参可以是任意数量，用 apply() 方法允许你传入的参数数组可以是任意长度的。在 ES6 之后，我们可以用展开运算符，但是在 ES5 的代码中你可以看到这种情况是用 apply() 来替代。比如，不用展开运算符找出数组中最大的数值元素，调用 Math.max() 方法的时候可以给  apply() 传入一个包含任意个元素的数组：</p>
 
-<pre><code class="language-javascript">let biggest = Math.max.apply(Math, arrayOfNumbers);
+<pre class="line-numbers"><code class="language-javascript">let biggest = Math.max.apply(Math, arrayOfNumbers);
 </code></pre>
 
 <p>下面定义的 trace() 与 §8.3.4 中定义的 timed() 函数类似，但是它对方法有效而不是函数。它使用 apply() 方法而不是展开运算符，通过这样做，它能够调用具有相同参数和与被包装方法相同的 this 值的包装方法。</p>
 
-<pre><code class="language-javascript">// Replace the method named m of the object o with a version that logs
+<pre class="line-numbers"><code class="language-javascript">// Replace the method named m of the object o with a version that logs
 // messages before and after invoking the original method.
 function trace(o, m) {
     let original = o[m];         // Remember original method in the closure.
@@ -1212,7 +1214,7 @@ function trace(o, m) {
 <p>bind() 方法的主要作用就是将函数绑定至某个对象。当在函数 f() 上调用 bind() 方法并传入一个对象 o 作为参数，这个方法将返回一个新的函数。（以函数调用的方式）调用新的函数将会把原始的函数 f() 当做 o 的方法来调用。传入新函数的任何实参都将传入原始函数，比如：</p>
 </blockquote>
 
-<pre><code class="language-javascript">function f(y) { return this.x + y; } // This function needs to be bound
+<pre class="line-numbers"><code class="language-javascript">function f(y) { return this.x + y; } // This function needs to be bound
 let o = { x: 1 };                    // An object we&#39;ll bind to
 let g = f.bind(o);                   // Calling g(x) invokes f() on o
 g(2)                                 // =&gt; 3
@@ -1224,7 +1226,7 @@ p.g(2)                               // =&gt; 3: g is still bound to o, not p.
 
 <p>但是 bind() 方法不仅仅是将函数绑定至一个对象。它还附带一些其他应用：除了第一个实参之外，传入 bind() 的实参也会绑定至 this 值。这个附带的应用在箭头函数上也同样生效。是一种常见的函数式编程技术，有时也被称为“柯里化”。参照下面这个例子中的 bind() 方法的实现：</p>
 
-<pre><code class="language-javascript">let sum = (x,y) =&gt; x + y;      // Return the sum of 2 args
+<pre class="line-numbers"><code class="language-javascript">let sum = (x,y) =&gt; x + y;      // Return the sum of 2 args
 let succ = sum.bind(null, 1);  // Bind the first argument to 1
 succ(2)  // =&gt; 3: x is bound to 1, and we pass 2 for the y argument
 
@@ -1243,12 +1245,12 @@ g(3)     // =&gt; 6: this.x is bound to 1, y is bound to 2 and z is 3
 
 <p>因为函数是对象，有一个 Function() 构造函数可以用来创建新的函数：</p>
 
-<pre><code class="language-javascript">const f = new Function(&quot;x&quot;, &quot;y&quot;, &quot;return x*y;&quot;);
+<pre class="line-numbers"><code class="language-javascript">const f = new Function(&quot;x&quot;, &quot;y&quot;, &quot;return x*y;&quot;);
 </code></pre>
 
 <p>这一行代码创建一个新的函数，这个函数和通过下面代码定义的函数几乎等价：</p>
 
-<pre><code class="language-javascript">const f = function(x, y) { return x*y; };
+<pre class="line-numbers"><code class="language-javascript">const f = function(x, y) { return x*y; };
 </code></pre>
 
 <p>Function() 构造函数可以传入任意数量的字符串实参，最后一个实参所表示的文本就是函数体；它可以包含任意的 JavaScript 语句，每两条语句之间用分号分隔。传入构造函数的其他所有的实参字符串是指定函数的形参名字的字符串。如果定义的函数不包含任何参数，只须给构造函数简单地传入一个字符串——函数体——即可。</p>
@@ -1263,7 +1265,7 @@ g(3)     // =&gt; 6: this.x is bound to 1, y is bound to 2 and z is 3
 
 <p>最后一点，也是关于 Function() 构造函数非常重要的一点，就是它所创建的函数并不是使用词法作用域，相反，函数体代码的编译类似顶层函数，如下面代码所示：</p>
 
-<pre><code class="language-javascript">let scope = &quot;global&quot;;
+<pre class="line-numbers"><code class="language-javascript">let scope = &quot;global&quot;;
 function constructFunction() {
     let scope = &quot;local&quot;;
     return new Function(&quot;return scope&quot;);  // Doesn&#39;t capture local scope!
@@ -1283,7 +1285,7 @@ constructFunction()()  // =&gt; &quot;global&quot;
 
 <p>假设有一个数组，数组元素都是数字，我们想要计算这些元素的平均值和标准差。若使用非函数式编程风格的话，代码会是这样：</p>
 
-<pre><code class="language-javascript">let data = [1,1,3,5,5];  // This is our array of numbers
+<pre class="line-numbers"><code class="language-javascript">let data = [1,1,3,5,5];  // This is our array of numbers
 
 // The mean is the sum of the elements divided by the number of elements
 let total = 0;
@@ -1302,7 +1304,7 @@ let stddev = Math.sqrt(total/(data.length-1));  // stddev == 2
 
 <p>可以使用数组方法 map() 和 reduce() 来实现同样的计算，这种实现极其简洁（参照 §7.8.1 来查看这些方法）：</p>
 
-<pre><code class="language-javascript">// First, define two simple functions
+<pre class="line-numbers"><code class="language-javascript">// First, define two simple functions
 const sum = (x,y) =&gt; x+y;
 const square = x =&gt; x*x;
 
@@ -1316,13 +1318,13 @@ stddev  // =&gt; 2
 
 <p>这个新版本的代码看起来跟第一版有很大不同，但是它仍然调用对象的方法，所以它还是面向对象编程。接下来用函数版本的 map() 和 reduce() 方法：</p>
 
-<pre><code class="language-javascript">const map = function(a, ...args) { return a.map(...args); };
+<pre class="line-numbers"><code class="language-javascript">const map = function(a, ...args) { return a.map(...args); };
 const reduce = function(a, ...args) { return a.reduce(...args); };
 </code></pre>
 
 <p>用这两个函数定义了 map() 和 reduce()，我们计算平均值和标准差变成这样：</p>
 
-<pre><code class="language-javascript">const sum = (x,y) =&gt; x+y;
+<pre class="line-numbers"><code class="language-javascript">const sum = (x,y) =&gt; x+y;
 const square = x =&gt; x*x;
 
 let data = [1,1,3,5,5];
@@ -1336,7 +1338,7 @@ stddev  // =&gt; 2
 
 <p>所谓高阶函数就是操作函数的函数，它接收一个或多个函数作为参数，并返回一个新函数。来看这个例子：</p>
 
-<pre><code class="language-javascript">// This higher-order function returns a new function that passes its
+<pre class="line-numbers"><code class="language-javascript">// This higher-order function returns a new function that passes its
 // arguments to f and returns the logical negation of f&#39;s return value;
 function not(f) {
     return function(...args) {             // Return a new function
@@ -1352,7 +1354,7 @@ const odd = not(even);         // A new function that does the opposite
 
 <p>上面的 not() 函数就是一个高阶函数，因为它接收一个函数作为参数，并返回一个新函数。另外一个例子，来看下面的 mapper() 函数，它也是接收一个函数作为实参，并返回一个新函数，这个新函数将一个数组映射到另一个使用这个函数的数组上。这个函数使用了之前定义的 map() 函数，但要首先理解这两个函数有哪里不 同，理解这一点至关重要：</p>
 
-<pre><code class="language-javascript">// Return a function that expects an array argument and applies f to
+<pre class="line-numbers"><code class="language-javascript">// Return a function that expects an array argument and applies f to
 // each element, returning the array of return values.
 // Contrast this with the map() function from earlier.
 function mapper(f) {
@@ -1366,7 +1368,7 @@ incrementAll([1,2,3])  // =&gt; [2,3,4]
 
 <p>这里是一个更常见的例子，它接收两个函数 f() 和 g()，并返回一个新的函数用以计算 f(g())：</p>
 
-<pre><code class="language-javascript">// Return a new function that computes f(g(...)).
+<pre class="line-numbers"><code class="language-javascript">// Return a new function that computes f(g(...)).
 // The returned function h passes all of its arguments to g, then passes
 // the return value of g to f, then returns the return value of f.
 // Both f and g are invoked with the same this value as h was invoked with.
@@ -1389,7 +1391,7 @@ compose(square, sum)(2,3)  // =&gt; 25; the square of the sum
 
 <p>函数 f()（见 §8.7.5）的 bind() 方法返回一个新函数，给新函数传入特定的上下文和一组指定的参数，然后调用函数 f()。我们说它把函数“绑定至”对象并传入一部分参数。bind() 方法只是将实参放在（完整实参列表的）左侧，也就是说传入 bind() 的实参都是放在传入原始函数的实参列表开始的位置，但有时我们期望将传入 bind() 的实参放在（完整实参列表的）右侧：</p>
 
-<pre><code class="language-javascript">// The arguments to this function are passed on the left
+<pre class="line-numbers"><code class="language-javascript">// The arguments to this function are passed on the left
 function partialLeft(f, ...outerArgs) {
     return function(...innerArgs) { // Return this function
         let args = [...outerArgs, ...innerArgs]; // Build the argument list
@@ -1431,14 +1433,14 @@ partial(f, undefined, 2)(3,4)  // =&gt; -6: Bind middle argument: 3 * (2 - 4)
 
 <p>利用这种不完全函数的编程技巧，可以编写一些有意思的代码，利用已有的函数来定义新的函数，参照下面这个例子：</p>
 
-<pre><code class="language-javascript">const increment = partialLeft(sum, 1);
+<pre class="line-numbers"><code class="language-javascript">const increment = partialLeft(sum, 1);
 const cuberoot = partialRight(Math.pow, 1/3);
 cuberoot(increment(26))  // =&gt; 3
 </code></pre>
 
 <p>当将不完全调用和其他高阶函数整合在一起的时候，事情就变得格外有趣了。比如，这里的例子定义了 not() 函数，它用到了刚才提到的不完全调用：</p>
 
-<pre><code class="language-javascript">const not = partialLeft(compose, x =&gt; !x);
+<pre class="line-numbers"><code class="language-javascript">const not = partialLeft(compose, x =&gt; !x);
 const even = x =&gt; x % 2 === 0;
 const odd = not(even);
 const isNumber = not(isNaN);
@@ -1447,7 +1449,7 @@ odd(3) &amp;&amp; isNumber(2)  // =&gt; true
 
 <p>我们也可以使用不完全调用的组合来重新组织求平均数和标准差的代码，这种编码风格是非常纯粹的函数式编程：</p>
 
-<pre><code class="language-javascript">// sum() and square() functions are defined above. Here are some more:
+<pre class="line-numbers"><code class="language-javascript">// sum() and square() functions are defined above. Here are some more:
 const product = (x,y) =&gt; x*y;
 const neg = partial(product, -1);
 const sqrt = partial(Math.pow, undefined, .5);
@@ -1470,7 +1472,7 @@ let stddev = sqrt(product(reduce(map(data,
 
 <p>在 §8.4.1 中定义了一个阶乘函数，它可以将上次的计算结果缓存起来。在函数式编程当中，这种缓存技巧叫做“记忆”（memorization）。下面的代码展示了一个高阶函数，memorize() 接收一个函数作为实参，并返回带有记忆能力的函数:</p>
 
-<pre><code class="language-javascript">// Return a memoized version of f.
+<pre class="line-numbers"><code class="language-javascript">// Return a memoized version of f.
 // It only works if arguments to f all have distinct string representations.
 function memoize(f) {
     const cache = new Map();  // Value cache stored in the closure.
@@ -1491,7 +1493,7 @@ function memoize(f) {
 
 <p>memorize() 函数创建一个新的对象，这个对象被当做缓存（的宿主）并赋值给一个局部变量，因此对于返回的函数来说它是私有的（在闭包中）。所返回的函数将它的实参数组转换成字符串，并将字符串用做缓存对象的属性名。如果在缓存中存在这个值，则直接返回它。否则，就调用既定的函数对实参进行计算，将计算结果缓存起来并返回，下面的代码展示了如何使用 memorize()：</p>
 
-<pre><code class="language-javascript">// Return the Greatest Common Divisor of two integers using the Euclidian
+<pre class="line-numbers"><code class="language-javascript">// Return the Greatest Common Divisor of two integers using the Euclidian
 // algorithm: http://en.wikipedia.org/wiki/Euclidean_algorithm
 function gcd(a,b) {  // Type checking for a and b has been omitted
     if (a &lt; b) {           // Ensure that a &gt;= b when we start
@@ -1590,6 +1592,10 @@ factorial(5)      // =&gt; 120: also caches values for 4, 3, 2 and 1.
                   <ul id="side-nav" class="side-nav">
                     
                     <li class="side-title"><span>HomeAssistant</span></li>
+                    
+                    <li>
+                      <a title="梅林配置" href="16211303812539.html">梅林配置</a>
+                    </li>
                     
                     <li>
                       <a title="Ubuntu 20.04Lts 安装 HA" href="16201149334405.html">Ubuntu 20.04Lts 安装 HA</a>

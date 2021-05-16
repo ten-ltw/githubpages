@@ -45,6 +45,8 @@
           <li class="divider"></li>
           <li><label>HomeAssistant</label></li>
           
+          <li><a title="梅林配置" href="16211303812539.html">梅林配置</a></li>
+          
           <li><a title="Ubuntu 20.04Lts 安装 HA" href="16201149334405.html">Ubuntu 20.04Lts 安装 HA</a></li>
           
           <li><a title="Windows10 安装 HomeAssistant" href="16200327308578.html">Windows10 安装 HomeAssistant</a></li>
@@ -120,7 +122,7 @@
 
 <h3 id="toc_1">函数签名和重载 Signature Overloading</h3>
 
-<pre><code class="language-typescript">function contactPeople(method: &quot;email&quot;, ...people: HasEmail[]): void;
+<pre class="line-numbers"><code class="language-typescript">function contactPeople(method: &quot;email&quot;, ...people: HasEmail[]): void;
 function contactPeople(method: &quot;phone&quot;, ...people: HasPhoneNumber[]): void;
 function contactPeople(method: &quot;email&quot; | &quot;phone&quot;, ...people: (HasEmail | HasPhoneNumber)[]): void {
 }
@@ -138,7 +140,7 @@ function contactPeople(method: &quot;email&quot; | &quot;phone&quot;, ...people:
 
 <h3 id="toc_7">泛型使用</h3>
 
-<pre><code class="language-typescript">interface WrappedValue&lt;T&gt; {
+<pre class="line-numbers"><code class="language-typescript">interface WrappedValue&lt;T&gt; {
   value: T;
 }
 let val: WrappedValue&lt;string[]&gt; = { value: [] };
@@ -153,7 +155,7 @@ val.value;
 
 <p>在各种类库的描述文件中也经常能够看到泛型的应用：</p>
 
-<pre><code class="language-typescript">interface MapLike&lt;T&gt; {
+<pre class="line-numbers"><code class="language-typescript">interface MapLike&lt;T&gt; {
     [index: string]: T;
 }
 interface SortedReadonlyArray&lt;T&gt; extends ReadonlyArray&lt;T&gt; {
@@ -174,7 +176,7 @@ interface SortedArray&lt;T&gt; extends Array&lt;T&gt; {
 
 <p>这里可以看到 WrappedValue 需要一个实参，那么我们也可以为其设置参数默认值，就可以不提供类型参数也能使用 WrappedValue：</p>
 
-<pre><code class="language-typescript">interface WrappedValue&lt;T = any&gt; {
+<pre class="line-numbers"><code class="language-typescript">interface WrappedValue&lt;T = any&gt; {
   value: T;
 }
 let val: WrappedValue = { value: [] };
@@ -183,7 +185,7 @@ val.value;
 
 <p>下面是一个常用的泛型做参数的情况：</p>
 
-<pre><code class="language-typescript">function resolveOrTimeout&lt;T&gt;(promise: Promise&lt;T&gt;, timeout: number): Promise&lt;T&gt; { // =&gt; 1
+<pre class="line-numbers"><code class="language-typescript">function resolveOrTimeout&lt;T&gt;(promise: Promise&lt;T&gt;, timeout: number): Promise&lt;T&gt; { // =&gt; 1
   return new Promise&lt;T&gt;((resolve, reject) =&gt; { // =&gt; 2
     // start the timeout, reject when it triggers
     const task = setTimeout(() =&gt; reject(&quot;time up!&quot;), timeout); // =&gt; 3
@@ -213,7 +215,7 @@ val.value;
 
 <p>可以通过 extends 来约束泛型：</p>
 
-<pre><code class="language-typescript">function arrayToDict&lt;T extends { id: string }&gt;(array: T[]): { [k: string]: T } {
+<pre class="line-numbers"><code class="language-typescript">function arrayToDict&lt;T extends { id: string }&gt;(array: T[]): { [k: string]: T } {
   const out: { [k: string]: T } = {};
   array.forEach(val =&gt; {
     out[val.id] = val;
@@ -224,7 +226,7 @@ val.value;
 
 <p>如果用以下代码将不带有 id 属性对象的数组作为 arrayToDict 的参数：</p>
 
-<pre><code class="language-typescript">const myDict = arrayToDict([
+<pre class="line-numbers"><code class="language-typescript">const myDict = arrayToDict([
   { foo: &quot;foo&quot; }
 ]);
 </code></pre>
@@ -244,7 +246,7 @@ val.value;
 
 <p>泛型类似参数，同样享有函数参数同样的作用域，也可以应用在闭包中：</p>
 
-<pre><code class="language-typescript">function firstTuple&lt;T&gt;(firstElement: T) {
+<pre class="line-numbers"><code class="language-typescript">function firstTuple&lt;T&gt;(firstElement: T) {
   return function finishTuple&lt;U&gt;(b: U) {
     return [a, b] as [T, U];
   };
@@ -262,7 +264,7 @@ const myTuple = startTuple([&quot;first&quot;])(42);
 
 <p>泛型只有在 input 和 output 同时需要时才使用，下面是一个没有必要用泛型的例子：</p>
 
-<pre><code class="language-typescript">interface Shape {
+<pre class="line-numbers"><code class="language-typescript">interface Shape {
   draw();
 }
 
@@ -284,7 +286,7 @@ function drawShapes2(shapes: Shape[]) {
 
 <p>但是如果有这样一个需求，Shape 中不但有 draw 方法，还有是否已经绘制的 Flag，并且我要在绘制之后将 Shape 对象返回，就可以使用泛型：</p>
 
-<pre><code class="language-typescript">interface Shape {
+<pre class="line-numbers"><code class="language-typescript">interface Shape {
   draw();
   isDrawn: boolean;
 }
@@ -315,7 +317,7 @@ function drawShapes&lt;S extends Shape&gt;(shapes: S[]): S[] {
 
 <p>unknow 在不确定类型时无法获取它的值。</p>
 
-<pre><code class="language-typescript">let myUnknown: unknown = &quot;hello, unknown&quot;;
+<pre class="line-numbers"><code class="language-typescript">let myUnknown: unknown = &quot;hello, unknown&quot;;
 
 if (typeof myUnknown === &quot;string&quot;) {
   // in here, myUnknown is of type string
@@ -337,7 +339,7 @@ if (myUnknown instanceof Promise) {
 
 <p>可以用以下方式确认复杂类型：</p>
 
-<pre><code class="language-typescript">function isHasEmail(x: any): x is HasEmail {
+<pre class="line-numbers"><code class="language-typescript">function isHasEmail(x: any): x is HasEmail {
   return typeof x.name === &quot;string&quot; &amp;&amp; typeof x.email === &quot;string&quot;;
 }
 if (isHasEmail(myUnknown)) {
@@ -348,7 +350,7 @@ if (isHasEmail(myUnknown)) {
 
 <p>同理利用泛型有了下面这种通用的类型守卫：</p>
 
-<pre><code class="language-typescript">function isDefined&lt;T&gt;(arg: T | undefined): arg is T {
+<pre class="line-numbers"><code class="language-typescript">function isDefined&lt;T&gt;(arg: T | undefined): arg is T {
   return typeof arg !== &quot;undefined&quot;;
 }
 </code></pre>
@@ -371,7 +373,7 @@ if (isHasEmail(myUnknown)) {
 
 <p>接口也可以用属性表达式来获取对应属性的类型。</p>
 
-<pre><code class="language-typescript">interface CommunicationMethods {
+<pre class="line-numbers"><code class="language-typescript">interface CommunicationMethods {
   email: HasEmail;
   phone: HasPhoneNumber;
   fax: { fax: number };
@@ -392,7 +394,7 @@ type Email = CommunicationMethods[&#39;email&#39;];
 
 <h4 id="toc_20">Partial</h4>
 
-<pre><code class="language-typescript">/**
+<pre class="line-numbers"><code class="language-typescript">/**
  * Make all properties in T optional
  */
 type Partial&lt;T&gt; = {
@@ -404,7 +406,7 @@ type Partial&lt;T&gt; = {
 
 <h4 id="toc_21">Pick</h4>
 
-<pre><code class="language-typescript">type HasThen&lt;T&gt; = Pick&lt;Promise&lt;T&gt;, &quot;then&quot; | &quot;catch&quot;&gt;;
+<pre class="line-numbers"><code class="language-typescript">type HasThen&lt;T&gt; = Pick&lt;Promise&lt;T&gt;, &quot;then&quot; | &quot;catch&quot;&gt;;
 
 let hasThen: HasThen&lt;number&gt; = Promise.resolve(4);
 hasThen.then;
@@ -462,6 +464,10 @@ hasThen.then;
                   <ul id="side-nav" class="side-nav">
                     
                     <li class="side-title"><span>HomeAssistant</span></li>
+                    
+                    <li>
+                      <a title="梅林配置" href="16211303812539.html">梅林配置</a>
+                    </li>
                     
                     <li>
                       <a title="Ubuntu 20.04Lts 安装 HA" href="16201149334405.html">Ubuntu 20.04Lts 安装 HA</a>

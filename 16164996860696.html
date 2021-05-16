@@ -45,6 +45,8 @@
           <li class="divider"></li>
           <li><label>HomeAssistant</label></li>
           
+          <li><a title="梅林配置" href="16211303812539.html">梅林配置</a></li>
+          
           <li><a title="Ubuntu 20.04Lts 安装 HA" href="16201149334405.html">Ubuntu 20.04Lts 安装 HA</a></li>
           
           <li><a title="Windows10 安装 HomeAssistant" href="16200327308578.html">Windows10 安装 HomeAssistant</a></li>
@@ -143,7 +145,7 @@
 
 <p>Angular 在启动时会修补几个低级浏览器 API，例如 <code>addEventListener</code>，这是用于注册所有浏览器事件（包括单击处理程序）的浏览器功能。Angular 会用下面等效的新版本替换 <code>addEventListener</code>：</p>
 
-<pre><code class="language-javascript">// this is the new version of addEventListener
+<pre class="line-numbers"><code class="language-javascript">// this is the new version of addEventListener
 function addEventListener(eventName, callback) {
      // call the real addEventListener
      callRealAddEventListener(eventName, function() {
@@ -186,7 +188,7 @@ function addEventListener(eventName, callback) {
 
 <p>每个 Angular 组件都有一个关联的创建于应用程序启动时的变更检测器。例如下面 <code>TodoItem</code> 组件：</p>
 
-<pre><code class="language-javascript">@Component({
+<pre class="line-numbers"><code class="language-javascript">@Component({
     selector: &#39;todo-item&#39;,
     template: `&lt;span class=&quot;todo noselect&quot; 
        (click)=&quot;onToggle()&quot;&gt;{{todo.owner.firstname}} - {{todo.description}}
@@ -207,7 +209,7 @@ export class TodoItem {
 
 <p>如果切换 Todo 状态，则此组件将接收 Todo 对象作为输入并发生事件。为了使示例更有趣，<a href="https://github.com/jhades/blog.angular-university.io/blob/master/ng2-change-detection/src/todo.ts#L11">Todo 类</a>包含嵌套对象：</p>
 
-<pre><code class="language-javascript">export class Todo {
+<pre class="line-numbers"><code class="language-javascript">export class Todo {
     constructor(public id: number, 
         public description: string, 
         public completed: boolean, 
@@ -284,7 +286,7 @@ export class TodoItem {
 
 <p>如果我们的 Todo list 真的很大，我们可以配置 <a href="https://github.com/jhades/blog.angular-university.io/blob/master/ng2-change-detection/src/todo_list.ts">TodoList</a> 组件仅在 Todo list 变更时才进行更新。这可以通过将组件变更检测策略改为 <code>OnPush</code> 来完成：</p>
 
-<pre><code class="language-javascript">@Component({
+<pre class="line-numbers"><code class="language-javascript">@Component({
     selector: &#39;todo-list&#39;,
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: ...
@@ -296,7 +298,7 @@ export class TodoList {
 
 <p>现在让我们给应用程序添加一对按钮：一个按钮通过直接对列表的第一条进行改变来切换，另一个按钮将 Todo 添加到整个列表中。代码如下：</p>
 
-<pre><code class="language-javascript">@Component({
+<pre class="line-numbers"><code class="language-javascript">@Component({
     selector: &#39;app&#39;,
     template: `&lt;div&gt;
                     &lt;todo-list [todos]=&quot;todos&quot;&gt;&lt;/todo-list&gt;
@@ -367,7 +369,7 @@ export class App {
 
 <p>一种方法是使用生命周期回调。例如，在 <a href="https://github.com/jhades/blog.angular-university.io/blob/master/ng2-change-detection/src/todo_list.ts#L46">TodoList</a> 组件中，我们可以触发回调到另一个组件改变其中一个绑定：</p>
 
-<pre><code class="language-javascript">ngAfterViewChecked() {
+<pre class="line-numbers"><code class="language-javascript">ngAfterViewChecked() {
     if (this.callback &amp;&amp; this.clicked) {
         console.log(&quot;changing status ...&quot;);
         this.callback(Math.random());
@@ -377,12 +379,12 @@ export class App {
 
 <p>错误消息将显示在控制台中：</p>
 
-<pre><code class="language-text">EXCEPTION: Expression &#39;{{message}} in App@3:20&#39; has changed after it was checked
+<pre class="line-numbers"><code class="language-text">EXCEPTION: Expression &#39;{{message}} in App@3:20&#39; has changed after it was checked
 </code></pre>
 
 <p>仅当我们在开发模式下运行 Angular 时，才会引发此错误消息。如果启用生产模式会怎样？</p>
 
-<pre><code class="language-javascript">@NgModule({
+<pre class="line-numbers"><code class="language-javascript">@NgModule({
     declarations: [App],
     imports: [BrowserModule],
     bootstrap: [App]
@@ -402,7 +404,7 @@ export class AppModule {}
 
 <p>在某些特殊情况下，我们确实希望关闭变更检测。想象一下一种情况，其中大量数据通过 Websocket 从后端到达。我们可能只想每 5 秒更新一次 UI 的特定部分。为此，我们首先将变更检测器注入到组件中：</p>
 
-<pre><code class="language-javascript">constructor(private ref: ChangeDetectorRef) {
+<pre class="line-numbers"><code class="language-javascript">constructor(private ref: ChangeDetectorRef) {
     ref.detach();
     setInterval(() =&gt; {
       this.ref.detectChanges();
@@ -490,6 +492,10 @@ export class AppModule {}
                   <ul id="side-nav" class="side-nav">
                     
                     <li class="side-title"><span>HomeAssistant</span></li>
+                    
+                    <li>
+                      <a title="梅林配置" href="16211303812539.html">梅林配置</a>
+                    </li>
                     
                     <li>
                       <a title="Ubuntu 20.04Lts 安装 HA" href="16201149334405.html">Ubuntu 20.04Lts 安装 HA</a>

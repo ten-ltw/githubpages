@@ -45,6 +45,8 @@
           <li class="divider"></li>
           <li><label>HomeAssistant</label></li>
           
+          <li><a title="梅林配置" href="16211303812539.html">梅林配置</a></li>
+          
           <li><a title="Ubuntu 20.04Lts 安装 HA" href="16201149334405.html">Ubuntu 20.04Lts 安装 HA</a></li>
           
           <li><a title="Windows10 安装 HomeAssistant" href="16200327308578.html">Windows10 安装 HomeAssistant</a></li>
@@ -190,7 +192,7 @@
 
 <p>示例 9-1：一个简单的 JavaScript 类</p>
 
-<pre><code class="language-javascript">// This is a factory function that returns a new range object.
+<pre class="line-numbers"><code class="language-javascript">// This is a factory function that returns a new range object.
 function range(from, to) {
     // Use Object.create() to create an object that inherits from the
     // prototype object defined below.  The prototype object is stored as
@@ -250,7 +252,7 @@ r.toString()             // =&gt; &quot;(1...3)&quot;
 
 <p>示例 9-2：使用构造函数的 Range 类</p>
 
-<pre><code class="language-javascript">// This is a constructor function that initializes new Range objects.
+<pre class="line-numbers"><code class="language-javascript">// This is a constructor function that initializes new Range objects.
 // Note that it does not create or return the object. It just initializes this.
 function Range(from, to) {
     // Store the start and end points (state) of this new range object.
@@ -293,7 +295,7 @@ r.toString()              // =&gt; &quot;(1...3)&quot;
 
 <p>如果 new.target 是 undefined，那么包含它的函数是作为函数调用的，没有使用 new 关键字。JavaScript 很多异常构造函数可以不使用 new 来调用，如果想模仿这个特性可以这样写：</p>
 
-<pre><code class="language-javascript">function C() {
+<pre class="line-numbers"><code class="language-javascript">function C() {
     if (!new.target) return new C();
     // initialization code goes here
 }
@@ -315,14 +317,14 @@ r.toString()              // =&gt; &quot;(1...3)&quot;
 
 <p>尽管构造函数不像原型那样重要，但是构造函数充当 class 的大众脸。最明显的是，构造函数的名称通常用作类的名称。例如，我们说 Range() 构造函数创建 Range 对象。然而，更重要的是测试类中对象的成员关系，构造函数在右边被用作 instanceof 运算符的操作数。如果有一个对象 r，并且想知道它是不是一个 Range 对象，可以这样写：</p>
 
-<pre><code class="language-javascript">r instanceof Range   // =&gt; true: r inherits from Range.prototype
+<pre class="line-numbers"><code class="language-javascript">r instanceof Range   // =&gt; true: r inherits from Range.prototype
 </code></pre>
 
 <p>instanceof 运算符在 §4.9.4 中有描述。左边的操作数是想要测试的对象，右边的操作数是命名类的构造函数。表达式 <code>o instanceof C</code> 计算结果为 true 时，o 继承自 C.prototype。不需要直接继承：如果 o 继承于一个继承了 C.prototype 的对象，表达式的计算结果也仍会是 true。</p>
 
 <p>从技术上讲，在上一个代码示例中，instanceof 运算符的实例没有检查 r 是否实际由 Range 构造函数初始化。相反，它是检查 r 是否继承 Range.prototype。如果我们定义一个函数 Strange() 并将其原型设置与 Range.prototype 相同，则使用新 Strange() 创建的对象用 instanceof 运算符将算作 Range 对象（但是，它们实际上不会作为 Range 对象工作，因为它们的 from 和 to 属性尚未初始化）：</p>
 
-<pre><code class="language-javascript">function Strange() {}
+<pre class="line-numbers"><code class="language-javascript">function Strange() {}
 Strange.prototype = Range.prototype;
 new Strange() instanceof Range   // =&gt; true
 </code></pre>
@@ -331,14 +333,14 @@ new Strange() instanceof Range   // =&gt; true
 
 <p>如果要为特定原型测试对象的原型链，并且不想将构造函数用作媒介，可以使用 isPrototypeOf() 方法。例如，在示例 9-1 中，我们定义了一个没有构造函数的类，因此无法将 instanceof 与该类一起使用。但是，我们可以测试对象 r 是否是具有此代码的无构造函数类的成员：</p>
 
-<pre><code class="language-javascript">range.methods.isPrototypeOf(r);  // range.methods is the prototype object.
+<pre class="line-numbers"><code class="language-javascript">range.methods.isPrototypeOf(r);  // range.methods is the prototype object.
 </code></pre>
 
 <h3 id="toc_3">9.2.2 constructor 属性</h3>
 
 <p>在示例 9-2 中，将 Range.prototype 定义为一个新对象，这个对象包含类所需要的方法。其实没有必要新创建一个对象，用单个对象字面量的属性就可以方便地定义原型上的方法。任何普通 JavaScript 函数（除箭头函数、生成器函数和异步函数之外）都可以用做构造函数，并且调用构造函数是需要一个 prototype 属性的。因此，每个 JavaScript 函数都自动拥有一个 prototype 属性。这个属性的值是一个对象，这个对象包含唯一一个不可枚举属性 constructor。constructor 属性的值是一个函数对象：</p>
 
-<pre><code class="language-javascript">let F = function() {}; // This is a function object.
+<pre class="line-numbers"><code class="language-javascript">let F = function() {}; // This is a function object.
 let p = F.prototype;   // This is the prototype object associated with F.
 let c = p.constructor; // This is the function associated with the prototype.
 c === F                // =&gt; true: F.prototype.constructor === F for any F
@@ -346,7 +348,7 @@ c === F                // =&gt; true: F.prototype.constructor === F for any F
 
 <p>可以看到构造函数的原型中存在预先定义好的 constructor 属性，这意味着对象通常继承的 constructor 是它们的构造函数的引用。由于构造函数是类的“公共标识”， 因此这个 constructor 属性为对象提供了类。</p>
 
-<pre><code class="language-javascript">let o = new F();      // Create an object o of class F
+<pre class="line-numbers"><code class="language-javascript">let o = new F();      // Create an object o of class F
 o.constructor === F   // =&gt; true: the constructor property specifies the class
 </code></pre>
 
@@ -358,7 +360,7 @@ o.constructor === F   // =&gt; true: the constructor property specifies the clas
 
 <p>需要注意的是，图 9-1 用 Range() 构造函数作为示例。但实际上，示例 9-2 中定义的 Range 类使用它自身的一个新对象重写了预定义的 Range.prototype 对象。这个新定义的原型对象不含有 constructor 属性。因此 Range 类的实例也不含有 constructor 属性。我们可以通过补救措施来修正这个问题，显式给原型添加一个构造函数：</p>
 
-<pre><code class="language-javascript">Range.prototype = {
+<pre class="line-numbers"><code class="language-javascript">Range.prototype = {
     constructor: Range,  // Explicitly set the constructor back-reference
 
     /* method definitions go here */
@@ -367,7 +369,7 @@ o.constructor === F   // =&gt; true: the constructor property specifies the clas
 
 <p>另一种常见的解决办法是使用预定义的原型对象，预定义的原型对象包含 constructor 属性，然后依次给原型对象添加方法：</p>
 
-<pre><code class="language-javascript">// Extend the predefined Range.prototype object so we don&#39;t overwrite
+<pre class="line-numbers"><code class="language-javascript">// Extend the predefined Range.prototype object so we don&#39;t overwrite
 // the automatically created Range.prototype.constructor property.
 Range.prototype.includes = function(x) {
     return this.from &lt;= x &amp;&amp; x &lt;= this.to;
@@ -383,7 +385,7 @@ Range.prototype.toString = function() {
 
 <p>示例 9-3：使用 class 编写 Range 类</p>
 
-<pre><code class="language-javascript">class Range {
+<pre class="line-numbers"><code class="language-javascript">class Range {
     constructor(from, to) {
         // Store the start and end points (state) of this new range object.
         // These are noninherited properties that are unique to this object.
@@ -426,7 +428,7 @@ r.toString()              // =&gt; &quot;(1...3)&quot;
 
 <p>如果要定义子类（或继承来自另一个类的类），可以使用 extends 关键字与 class 关键字：</p>
 
-<pre><code class="language-javascript">// A Span is like a Range, but instead of initializing it with
+<pre class="line-numbers"><code class="language-javascript">// A Span is like a Range, but instead of initializing it with
 // a start and an end, we initialize it with a start and a length
 class Span extends Range {
     constructor(start, length) {
@@ -443,7 +445,7 @@ class Span extends Range {
 
 <p>与函数声明一样，类声明同时具有语句和表达式形式。正如我们可以写：</p>
 
-<pre><code class="language-javascript">let square = function(x) { return x * x; };
+<pre class="line-numbers"><code class="language-javascript">let square = function(x) { return x * x; };
 square(3)  // =&gt; 9
 we can also write:
 
@@ -467,7 +469,7 @@ new Square(3).area  // =&gt; 9
 
 <p>例如，假设我们将以下代码添加到示例 9-3 中：</p>
 
-<pre><code class="language-javascript">static parse(s) {
+<pre class="line-numbers"><code class="language-javascript">static parse(s) {
     let matches = s.match(/^\((\d+)\.\.\.(\d+)\)$/);
     if (!matches) {
         throw new TypeError(`Cannot parse Range from &quot;${s}&quot;.`)
@@ -478,7 +480,7 @@ new Square(3).area  // =&gt; 9
 
 <p>此代码定义的方法是 Range.parse()， 而不是 Range.prototype.parse()， 必须通过构造函数而不是通过实例调用它：</p>
 
-<pre><code class="language-javascript">let r = Range.parse(&#39;(1...10)&#39;); // Returns a new Range object
+<pre class="line-numbers"><code class="language-javascript">let r = Range.parse(&#39;(1...10)&#39;); // Returns a new Range object
 r.parse(&#39;(1...10)&#39;);             // TypeError: r.parse is not a function
 </code></pre>
 
@@ -492,7 +494,7 @@ r.parse(&#39;(1...10)&#39;);             // TypeError: r.parse is not a function
 
 <p>通常，对象字面量中允许的所有速记方法定义语法也允许在类正文中使用。这包括生成器方法（用 * 标记）和名称为方括号中表达式值的方法。事实上，已经看到了（在示例 9-3 中）具有计算名称的生成器方法，该方法使 Range 类可重复：</p>
 
-<pre><code class="language-javascript">*[Symbol.iterator]() {
+<pre class="line-numbers"><code class="language-javascript">*[Symbol.iterator]() {
     for(let x = Math.ceil(this.from); x &lt;= this.to; x++) yield x;
 }
 </code></pre>
@@ -505,7 +507,7 @@ r.parse(&#39;(1...10)&#39;);             // TypeError: r.parse is not a function
 
 <p>假设你正在编写一个这样的类，其中一个构造函数初始化了三个字段：</p>
 
-<pre><code class="language-javascript">class Buffer {
+<pre class="line-numbers"><code class="language-javascript">class Buffer {
     constructor() {
         this.size = 0;
         this.capacity = 4096;
@@ -516,7 +518,7 @@ r.parse(&#39;(1...10)&#39;);             // TypeError: r.parse is not a function
 
 <p>使用可能标准化的新实例字段语法，可以这样编写：</p>
 
-<pre><code class="language-javascript">class Buffer {
+<pre class="line-numbers"><code class="language-javascript">class Buffer {
     size = 0;
     capacity = 4096;
     buffer = new Uint8Array(this.capacity);
@@ -529,7 +531,7 @@ r.parse(&#39;(1...10)&#39;);             // TypeError: r.parse is not a function
 
 <p>标准化中的实例字段同时也定义了私有实例字段。如果使用上例中所示的实例字段初始化语法来定义其名称以 # 开头的字段（在 JavaScript 标识符中通常不是合法字符），则该字段在类正文中可用（使用 # 前缀），但对类正文之外的任何代码不可见且不可访问（因此不可变）。如果对于前面的 Buffer 类，要确保类的用户不会无意中修改实例的 size 字段，可以改为使用私有 #size 字段，然后定义 getter 函数以提供对值的只读访问：</p>
 
-<pre><code class="language-javascript">class Buffer {
+<pre class="line-numbers"><code class="language-javascript">class Buffer {
     #size = 0;
     get size() { return this.#size; }
 }
@@ -539,7 +541,7 @@ r.parse(&#39;(1...10)&#39;);             // TypeError: r.parse is not a function
 
 <p>最后，在标准化过程中相关建议字段使用 static 关键字。如果在公有或私有字段声明之前添加静态字段，这些字段将创建为构造函数的属性，而不是实例的属性。思考我们定义的静态 Range.parse() 方法。它包括一个相当复杂的正则表达式，将其拆分到它自有的静态字段中可能会更好。使用建议的新静态字段语法，我们可以这编写：</p>
 
-<pre><code class="language-javascript">static integerRangePattern = /^\((\d+)\.\.\.(\d+)\)$/;
+<pre class="line-numbers"><code class="language-javascript">static integerRangePattern = /^\((\d+)\.\.\.(\d+)\)$/;
 static parse(s) {
     let matches = s.match(Range.integerRangePattern);
     if (!matches) {
@@ -557,7 +559,7 @@ static parse(s) {
 
 <p>示例 9-4：Complex.js：一个复数类</p>
 
-<pre><code class="language-javascript">/**
+<pre class="line-numbers"><code class="language-javascript">/**
  * Instances of this Complex class represent complex numbers.
  * Recall that a complex number is the sum of a real number and an
  * imaginary number and that the imaginary number i is the square root of -1.
@@ -625,7 +627,7 @@ Complex.I = new Complex(0,1);
 
 <p>定义了示例 9-4 的 Complex 类后，我们可以将构造函数、实例字段、实例方法、类字段和类方法如下使用：</p>
 
-<pre><code class="language-javascript">let c = new Complex(2, 3);     // Create a new object with the constructor
+<pre class="line-numbers"><code class="language-javascript">let c = new Complex(2, 3);     // Create a new object with the constructor
 let d = new Complex(c.i, c.r); // Use instance fields of c
 c.plus(d).toString()           // =&gt; &quot;{5,5}&quot;; use instance methods
 c.magnitude                    // =&gt; Math.hypot(2,3); use a getter function
@@ -639,13 +641,13 @@ Complex.ZERO.toString()        // =&gt; &quot;{0,0}&quot;; a static property
 
 <p>例如，下面是将计算共轭复数的方法添加到示例 9-4 的 Complex 类的代码：</p>
 
-<pre><code class="language-javascript">// Return a complex number that is the complex conjugate of this one.
+<pre class="line-numbers"><code class="language-javascript">// Return a complex number that is the complex conjugate of this one.
 Complex.prototype.conj = function() { return new Complex(this.r, -this.i); };
 </code></pre>
 
 <p>JavaScript 类内置的原型对象也是这样展现的，这意味着我们可以向数字、字符串、数组、函数等添加方法。这对于在旧版本的语言中实现新特性非常有用：</p>
 
-<pre><code class="language-javascript">// If the new String method startsWith() is not already defined...
+<pre class="line-numbers"><code class="language-javascript">// If the new String method startsWith() is not already defined...
 if (!String.prototype.startsWith) {
     // ...then define it like this using the older indexOf() method.
     String.prototype.startsWith = function(s) {
@@ -656,7 +658,7 @@ if (!String.prototype.startsWith) {
 
 <p>这是另外一个例子：</p>
 
-<pre><code class="language-javascript">// Invoke the function f this many times, passing the iteration number
+<pre class="line-numbers"><code class="language-javascript">// Invoke the function f this many times, passing the iteration number
 // For example, to print &quot;hello&quot; 3 times:
 //     let n = 3;
 //     n.times(i =&gt; { console.log(`hello ${i}`); });
@@ -680,7 +682,7 @@ Number.prototype.times = function(f, context) {
 
 <p>实例 9-5：Span.js：Range 一个简单的子类</p>
 
-<pre><code class="language-javascript">// This is the constructor function for our subclass
+<pre class="line-numbers"><code class="language-javascript">// This is the constructor function for our subclass
 function Span(start, span) {
     if (span &gt;= 0) {
         this.from = start;
@@ -707,7 +709,7 @@ Span.prototype.toString = function() {
 
 <p>为了使 Span 成为 Range 的子类，我们需要使 Span.prototype 从 Range.prototype 继承。前面示例中的关键代码行是此代码行，如果能理解子类使如何工作的，它是非常有意义的：</p>
 
-<pre><code class="language-javascript">Span.prototype = Object.create(Range.prototype);
+<pre class="line-numbers"><code class="language-javascript">Span.prototype = Object.create(Range.prototype);
 </code></pre>
 
 <p>使用 Span() 构造函数创建的对象将从 Span.prototype 对象继承。但是，我们创建了该对象并继承 Range.prototype，因此 Span 对象将同时从 Span.prototype 和 Range.prototype 继承。</p>
@@ -720,7 +722,7 @@ Span.prototype.toString = function() {
 
 <p>在 ES6 之后，可以简单的在类声明时接一个 extends 从句添加一个父类，即使对于内置类也可以这样做：</p>
 
-<pre><code class="language-javascript">// A trivial Array subclass that adds getters for the first and last elements.
+<pre class="line-numbers"><code class="language-javascript">// A trivial Array subclass that adds getters for the first and last elements.
 class EZArray extends Array {
     get first() { return this[0]; }
     get last() { return this[this.length-1]; }
@@ -740,7 +742,7 @@ EZArray.isArray(a)    // =&gt; true: subclass inherits static methods, too!
 
 <p>EZArray 子类定义了两个简单的 getter 方法。EZArray 实例的行为类似于普通数组，我们可以使用继承的方法和属性，如 push()、pop() 和 length。但是，我们也可以使用子类中定义的 first 和 last getter 方法。不仅继承实例方法如 pop() ，也继承 Array.isArray 等静态方法。这是 ES6 类语法启用的新特性：EZArray() 是一个函数，但它从 Array() 继承：</p>
 
-<pre><code class="language-javascript">// EZArray inherits instance methods because EZArray.prototype
+<pre class="line-numbers"><code class="language-javascript">// EZArray inherits instance methods because EZArray.prototype
 // inherits from Array.prototype
 Array.prototype.isPrototypeOf(EZArray.prototype) // =&gt; true
 
@@ -754,7 +756,7 @@ Array.isPrototypeOf(EZArray) // =&gt; true
 
 <p>示例 9-6：TypedMap.js：一个检测 key 和 value 类型的 Map 子类</p>
 
-<pre><code class="language-javascript">class TypedMap extends Map {
+<pre class="line-numbers"><code class="language-javascript">class TypedMap extends Map {
     constructor(keyType, valueType, entries) {
         // If entries are specified, check their types
         if (entries) {
@@ -820,7 +822,7 @@ Array.isPrototypeOf(EZArray) // =&gt; true
 
 <p>示例 9-7：Histogram.js：使用委托实现一个类似 Set 的类</p>
 
-<pre><code class="language-javascript">/**
+<pre class="line-numbers"><code class="language-javascript">/**
  * A Set-like class that keeps track of how many times a value has
  * been added. Call add() and remove() like you would for a Set, and
  * call count() to find out how many times a given value has been added.
@@ -879,7 +881,7 @@ class Histogram {
 
 <p>示例 9-8：Sets.js：抽象类和实体类的层次</p>
 
-<pre><code class="language-javascript">/**
+<pre class="line-numbers"><code class="language-javascript">/**
  * The AbstractSet class defines a single abstract method, has().
  */
 class AbstractSet {
@@ -1151,6 +1153,10 @@ BitSet.masks = new Uint8Array([~1, ~2, ~4, ~8, ~16, ~32, ~64, ~128]);
                   <ul id="side-nav" class="side-nav">
                     
                     <li class="side-title"><span>HomeAssistant</span></li>
+                    
+                    <li>
+                      <a title="梅林配置" href="16211303812539.html">梅林配置</a>
+                    </li>
                     
                     <li>
                       <a title="Ubuntu 20.04Lts 安装 HA" href="16201149334405.html">Ubuntu 20.04Lts 安装 HA</a>

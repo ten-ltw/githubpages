@@ -45,6 +45,8 @@
           <li class="divider"></li>
           <li><label>HomeAssistant</label></li>
           
+          <li><a title="梅林配置" href="16211303812539.html">梅林配置</a></li>
+          
           <li><a title="Ubuntu 20.04Lts 安装 HA" href="16201149334405.html">Ubuntu 20.04Lts 安装 HA</a></li>
           
           <li><a title="Windows10 安装 HomeAssistant" href="16200327308578.html">Windows10 安装 HomeAssistant</a></li>
@@ -241,14 +243,14 @@
 
 <p>当希望在经过一定时间后运行某些代码是一种最简单的异步类型。正如我们在 §11.10 中看到的，可以通过 setTimeout() 函数来做到这一点：</p>
 
-<pre><code class="language-javascript">setTimeout(checkForUpdates, 60000);
+<pre class="line-numbers"><code class="language-javascript">setTimeout(checkForUpdates, 60000);
 </code></pre>
 
 <p>setTimeout() 的第一个实参是一个函数，第二个实参是一个以毫秒为单位的时间间隔。前面的代码中，在 setTimeout() 调用后 60,000 毫秒（1分钟）后，将调用一个假定的 checkForUpdates() 函数。checkForUpdates() 是程序定义的一个回调函数，而 setTimeout() 是用于注册回调函数并指定应该在什么异步条件下调用它的函数。</p>
 
 <p>setTimeout() 调用一次指定的回调函数，不传递任何实参，然后忘记它。如果正在编写一个检查更新的函数，可能希望它重复运行。可以使用 setInterval() 来代替 setTimeout()：</p>
 
-<pre><code class="language-javascript">// Call checkForUpdates in one minute and then again every minute after that
+<pre class="line-numbers"><code class="language-javascript">// Call checkForUpdates in one minute and then again every minute after that
 let updateIntervalId = setInterval(checkForUpdates, 60000);
 
 // setInterval() returns a value that we can use to stop the repeated
@@ -263,7 +265,7 @@ function stopCheckingForUpdates() {
 
 <p>客户端 JavaScript 程序几乎都是由事件驱动的：它们通常不等待用户执行某种预定的计算，而是等待用户执行某些操作，然后响应用户的操作。当用户按下键盘上的键，移动鼠标，单击鼠标按钮或触摸触摸屏设备时，Web 浏览器会发生事件。事件驱动的 JavaScript 程序在指定的上下文中为指定类型的事件注册回调函数，并且只要指定事件发生，Web 浏览器就会调用这些函数。这些回调函数称为事件句柄或事件监听器，并且使用 addEventListener() 注册：</p>
 
-<pre><code class="language-javascript">// Ask the web browser to return an object representing the HTML
+<pre class="line-numbers"><code class="language-javascript">// Ask the web browser to return an object representing the HTML
 // &lt;button&gt; element that matches this CSS selector
 let okay = document.querySelector(&#39;#confirmUpdateDialog button.okay&#39;);
 
@@ -278,7 +280,7 @@ okay.addEventListener(&#39;click&#39;, applyUpdate);
 
 <p>JavaScript 编程中异步的另一个常见来源是网络请求。在浏览器中运行的 JavaScript 可以使用以下代码从 Web 服务器获取数据：</p>
 
-<pre><code class="language-javascript">function getCurrentVersionNumber(versionCallback) { // Note callback argument
+<pre class="line-numbers"><code class="language-javascript">function getCurrentVersionNumber(versionCallback) { // Note callback argument
     // Make a scripted HTTP request to a backend version API
     let request = new XMLHttpRequest();
     request.open(&quot;GET&quot;, &quot;http://www.example.com/api/version&quot;);
@@ -312,7 +314,7 @@ okay.addEventListener(&#39;click&#39;, applyUpdate);
 
 <p>The Node.js server-side JavaScript environment is deeply asynchronous and defines many APIs that use callbacks and events. The default API for reading the contents of a file, for example, is asynchronous and invokes a callback function when the contents of the file have been read:</p>
 
-<pre><code class="language-javascript">const fs = require(&quot;fs&quot;); // The &quot;fs&quot; module has filesystem-related APIs
+<pre class="line-numbers"><code class="language-javascript">const fs = require(&quot;fs&quot;); // The &quot;fs&quot; module has filesystem-related APIs
 let options = {           // An object to hold options for our program
     // default options would go here
 };
@@ -336,7 +338,7 @@ fs.readFile(&quot;config.json&quot;, &quot;utf-8&quot;, (err, text) =&gt; {
 
 <p>Node also defines a number of event-based APIs. The following function shows how to make an HTTP request for the contents of a URL in Node. It has two layers of asynchronous code handled with event listeners. Notice that Node uses an on() method to register event listeners instead of addEventListener():</p>
 
-<pre><code class="language-javascript">const https = require(&quot;https&quot;);
+<pre class="line-numbers"><code class="language-javascript">const https = require(&quot;https&quot;);
 
 // Read the text content of the URL and asynchronously pass it to the callback.
 function getText(url, callback) {
@@ -400,7 +402,7 @@ Promise 一开始似乎很简单，并且 Promise 的基本用例实际上也是
 
 <p>随着核心 JavaScript 语言中 Promise 的出现，Web 浏览器已经开始实现基于 Promise 的 API。在上一节中，我们实现了一个 getText() 函数，该函数发出一个异步 HTTP 请求，并将 HTTP 响应的主体作为字符串传递给指定的回调函数。想象一下该函数的一个变体 getJSON()，它可以解析主体 HTTP 响应的形式为 JSON，并返回 Promise 而不是接受回调参数。我们将在本章稍后实现 getJSON() 函数，但现在，让我们看一下如何使用返回 Promise 功能程序函数：</p>
 
-<pre><code class="language-javascript">getJSON(url).then(jsonData =&gt; {
+<pre class="line-numbers"><code class="language-javascript">getJSON(url).then(jsonData =&gt; {
     // This is a callback function that will be asynchronously
     // invoked with the parsed JSON value when it becomes available.
 });
@@ -416,7 +418,7 @@ Promise 一开始似乎很简单，并且 Promise 的基本用例实际上也是
 
 <p>常用带有动词命名返回 Promise 的函数和使用 Promise 结果的函数，这些常用语使代码特别容易阅读：</p>
 
-<pre><code class="language-javascript">// Suppose you have a function like this to display a user profile
+<pre class="line-numbers"><code class="language-javascript">// Suppose you have a function like this to display a user profile
 function displayUserProfile(profile) { /* implementation omitted */ }
 
 // Here&#39;s how you might use that function with a Promise.
@@ -430,7 +432,7 @@ getJSON(&quot;/api/user/profile&quot;).then(displayUserProfile);
 
 <p>对于 Promise，我们可以通过将第二个函数传递给 then() 方法来实现：</p>
 
-<pre><code class="language-javascript">getJSON(&quot;/api/user/profile&quot;).then(displayUserProfile, handleProfileError);
+<pre class="line-numbers"><code class="language-javascript">getJSON(&quot;/api/user/profile&quot;).then(displayUserProfile, handleProfileError);
 </code></pre>
 
 <p>Promise 描述在 Promise 对象创建之后发生的异步计算的未来结果。由于计算是在 Promise 对象返回给我们之后执行的，因此该计算无法传统地返回值或引发我们可以捕获的异常。我们传递给 then() 的函数提供了替代方案。当同步计算正常完成时，它仅将其结果返回给其调用者。当基于 Promise 的异步计算正常完成时，它将其结果传递给 then() 的第一个实参函数。</p>
@@ -443,7 +445,7 @@ getJSON(&quot;/api/user/profile&quot;).then(displayUserProfile);
 
 <p>如下所示，处理此代码中异常的更常用方式：</p>
 
-<pre><code class="language-javascript">getJSON(&quot;/api/user/profile&quot;).then(displayUserProfile).catch(handleProfileError);
+<pre class="line-numbers"><code class="language-javascript">getJSON(&quot;/api/user/profile&quot;).then(displayUserProfile).catch(handleProfileError);
 </code></pre>
 
 <p>使用此代码，getJSON() 的正常结果仍会传递给 displayUserProfile()，但是 getJSON() 或 displayUserProfile() 中的任何异常（包括 displayUserProfile 抛出的任何异常）都将传递给 handleProfileError()。调用 then() 第一个实参为空，指定的异常处理函数为第二个实参，catch() 方法只是其简写。</p>
@@ -462,7 +464,7 @@ getJSON(&quot;/api/user/profile&quot;).then(displayUserProfile);
 
 <p>Promise 的最重要的好处之一是，它们提供了一种自然的方式来表达一系列异步操作，表示 then() 方法调用的线性链，而不必将每个操作嵌套在前一个回调中。例如，一个假设的 Promise 链：</p>
 
-<pre><code class="language-javascript">fetch(documentURL)                      // Make an HTTP request
+<pre class="line-numbers"><code class="language-javascript">fetch(documentURL)                      // Make an HTTP request
     .then(response =&gt; response.json())  // Ask for the JSON body of the response
     .then(document =&gt; {                 // When we get the parsed JSON
         return render(document);        // display the document to the user
@@ -477,7 +479,7 @@ getJSON(&quot;/api/user/profile&quot;).then(displayUserProfile);
 
 <p>在本章的前面，我们看到了 XMLHttpRequest 对象，该对象用于在 JavaScript 中发出 HTTP 请求。这个奇怪命名的对象具有一个旧且笨拙的 API，并且在很大程度上已被较新的基于 Promise 的 Fetch API（§15.11.1）所取代。以最简单的形式，这个新的 HTTP API 只是 fetch() 函数。给它传递一个 URL，然后返回一个 Promise。当 HTTP 开始收到响应并且 HTTP 状态和标头可用时，这个 promise 已兑现：</p>
 
-<pre><code class="language-javascript">fetch(&quot;/api/user/profile&quot;).then(response =&gt; {
+<pre class="line-numbers"><code class="language-javascript">fetch(&quot;/api/user/profile&quot;).then(response =&gt; {
     // When the promise resolves, we have status and headers
     if (response.ok &amp;&amp;
         response.headers.get(&quot;Content-Type&quot;) === &quot;application/json&quot;) {
@@ -488,7 +490,7 @@ getJSON(&quot;/api/user/profile&quot;).then(displayUserProfile);
 
 <p>当 fetch() 返回的 Promise 已兑现时，它将 Response 对象传递给传递给 then() 方法的函数。此响应对象可以访问请求状态和标头，并且还定义了诸如 text() 和 json() 之类的方法，这些方法可以分别以文本和 JSON 的形式访问响应的正文。但是，尽管最初的 Promise 已兑现，但响应的主体可能尚未到达。因此，这些用于访问响应正文的 text() 和 json() 方法本身返回 Promise。这是使用 fetch() 和 response.json() 方法获取 HTTP Response 响应正文的一种简单方法： </p>
 
-<pre><code class="language-javascript">fetch(&quot;/api/user/profile&quot;).then(response =&gt; {
+<pre class="line-numbers"><code class="language-javascript">fetch(&quot;/api/user/profile&quot;).then(response =&gt; {
     response.json().then(profile =&gt; {  // Ask for the JSON-parsed body
         // When the body of the response arrives, it will be automatically
         // parsed as JSON and passed to this function.
@@ -499,7 +501,7 @@ getJSON(&quot;/api/user/profile&quot;).then(displayUserProfile);
 
 <p>这是 Promise 一种没经验的使用方式，因为我们像回调一样嵌套了它们，这违背了目的。首选常用方法是在顺序链中使用 Promise，其代码如下所示： </p>
 
-<pre><code class="language-javascript">fetch(&quot;/api/user/profile&quot;)
+<pre class="line-numbers"><code class="language-javascript">fetch(&quot;/api/user/profile&quot;)
     .then(response =&gt; {
         return response.json();
     })
@@ -510,7 +512,7 @@ getJSON(&quot;/api/user/profile&quot;).then(displayUserProfile);
 
 <p>让我们看一下这段代码中的方法调用，忽略传递给方法的参数： </p>
 
-<pre><code class="language-javascript">fetch().then().then()
+<pre class="line-numbers"><code class="language-javascript">fetch().then().then()
 </code></pre>
 
 <p>当像这样在单个表达式中调用多个方法时，我们将其称为方法链。我们知道 fetch() 函数返回一个 Promise 对象，并且可以看到该链中的第一个 .then() 作为返回的 Promise 对象的方法调用。但是链中还有第二个 .then()，这意味着 then() 方法的第一次调用本身一定返回 Promise。</p>
@@ -519,7 +521,7 @@ getJSON(&quot;/api/user/profile&quot;).then(displayUserProfile);
 
 <p>让我们回到上面原始 fetch() 链的简化形式。如果我们在其他地方定义传递给 then() 调用的函数，则可以将代码重构为如下形式：</p>
 
-<pre><code class="language-javascript">fetch(theURL)          // task 1; returns promise 1
+<pre class="line-numbers"><code class="language-javascript">fetch(theURL)          // task 1; returns promise 1
     .then(callback1)   // task 2; returns promise 2
     .then(callback2);  // task 3; returns promise 3
 </code></pre>
@@ -545,7 +547,7 @@ getJSON(&quot;/api/user/profile&quot;).then(displayUserProfile);
 
 <p>让我们以冗长且非常用方式再次重写 URL-fetching 代码，使回调和 Promise 明确化：</p>
 
-<pre><code class="language-javascript">function c1(response) {               // callback 1
+<pre class="line-numbers"><code class="language-javascript">function c1(response) {               // callback 1
     let p4 = response.json();
     return p4;                        // returns promise 4
 }
@@ -578,7 +580,7 @@ let p3 = p2.then(c2);                 // promise 3, task 3
 
 <p>.then() 可以处理异常，使用 null 为第一个实参，而异常处理回调为第二个实参，Promise 的 .catch() 方法只是这种 .then() 调用的一种简便写法。给定 Promise p 和回调 c，以下两行代码是等效的：</p>
 
-<pre><code class="language-javascript">p.then(null, c);
+<pre class="line-numbers"><code class="language-javascript">p.then(null, c);
 p.catch(c);
 </code></pre>
 
@@ -588,7 +590,7 @@ p.catch(c);
 
 <p>我们在上一节中研究的 URL-fetching 代码没有任何异常处理。现在，使用更可行的代码版本进行更正：</p>
 
-<pre><code class="language-javascript">fetch(&quot;/api/user/profile&quot;)    // Start the HTTP request
+<pre class="line-numbers"><code class="language-javascript">fetch(&quot;/api/user/profile&quot;)    // Start the HTTP request
     .then(response =&gt; {       // Call this when status and headers are ready
         if (!response.ok) {   // If we got a 404 Not Found or similar error
             return null;      // Maybe user is logged out; return null profile
@@ -642,7 +644,7 @@ p.catch(c);
 
 <p>在我们结束异常处理主题之前，我想指出，尽管习惯于在每个 Promise 链中添加一个 .catch() 来清理（或至少记录日志）该链中发生的任何异常，但是在 Promise 链中的其他位置使用 .catch() 也完全有效。如果 Promise 链中的某一阶段可能因异常而失败，并且该异常是某种可恢复的异常，并且该异常不会阻止链的其余部分运行，则可以在链中插入 .catch() 调用，代码可能如下所示：</p>
 
-<pre><code class="language-javascript">startAsyncOperation()
+<pre class="line-numbers"><code class="language-javascript">startAsyncOperation()
     .then(doStageTwo)
     .catch(recoverFromStageTwoError)
     .then(doStageThree)
@@ -656,14 +658,14 @@ p.catch(c);
 
 <p>有时，在复杂的网络环境中，异常可能会或多或少地随机发生，并且可以通过简单地重试异步请求来处理这些异常。假设编写了一个基于 Promise 的操作来查询数据库：</p>
 
-<pre><code class="language-javascript">queryDatabase()
+<pre class="line-numbers"><code class="language-javascript">queryDatabase()
     .then(displayTable)
     .catch(displayDatabaseError);
 </code></pre>
 
 <p>现在，假设大约 1％ 的概率瞬态网络负载问题导致其失败。一个简单的解决方案可能是使用 .catch() 调用重试查询：</p>
 
-<pre><code class="language-javascript">queryDatabase()
+<pre class="line-numbers"><code class="language-javascript">queryDatabase()
     .catch(e =&gt; wait(500).then(queryDatabase))  // On failure, wait and retry
     .then(displayTable)
     .catch(displayDatabaseError);
@@ -677,12 +679,12 @@ p.catch(c);
 
 <p>在 Promise 链中，在链的一个阶段返回（或抛出）的值成为链的下一阶段的输入，因此正确实现这一点至关重要。实际上，回调函数忘记返回值是与 Promise 相关的常见错误，而 JavaScript 的箭头函数快捷语法会加剧这种情况。回想一下我们之前看到的以下代码行：</p>
 
-<pre><code class="language-javascript">.catch(e =&gt; wait(500).then(queryDatabase))
+<pre class="line-numbers"><code class="language-javascript">.catch(e =&gt; wait(500).then(queryDatabase))
 </code></pre>
 
 <p>回顾第 8 章，箭头函数提供了许多快捷方式。由于仅存在一个参数（异常值），因此我们可以省略括号。由于函数的主体是单个表达式，因此我们可以省略函数主体周围的花括号，并且表达式的值成为函数的返回值。由于这些快捷方式，前面的代码是正确的。但是考虑一下这种无害的变化：</p>
 
-<pre><code class="language-javascript">.catch(e =&gt; { wait(500).then(queryDatabase) })
+<pre class="line-numbers"><code class="language-javascript">.catch(e =&gt; { wait(500).then(queryDatabase) })
 </code></pre>
 
 <p>通过添加花括号，我们不再获得自动返回。现在，此函数返回 undefined 而不是返回 Promise，这意味着将以 undefined 作为输入而不是重试查询的结果来调用此 Promise 链中的下一个阶段。这是一个细微的错误，可能不容易调试。</p>
@@ -691,7 +693,7 @@ p.catch(c);
 
 <p>我们花了很多时间讨论 Promise 链，这些链可按顺序运行较大的异步的操作步骤。但是，有时我们想并行执行许多异步操作。函数 Promise.all() 可以做到这一点。Promise.all() 将 Promise 对象数组作为其输入，并返回 Promise。如果任何输入的 Promise 中有一个是已拒绝状态，则返回的 Promise 将被拒绝。否则，它将使用每个输入 Promise 的兑现值组成的数组来被兑现。因此，例如，如果要获取多个 URL 的文本内容，则可以使用如下代码：</p>
 
-<pre><code class="language-javascript">// We start with an array of URLs
+<pre class="line-numbers"><code class="language-javascript">// We start with an array of URLs
 const urls = [ /* zero or more URLs here */ ];
 // And convert it to an array of Promise objects
 promises = urls.map(url =&gt; fetch(url).then(r =&gt; r.text()));
@@ -705,7 +707,7 @@ Promise.all(promises)
 
 <p>当任何输入的 Promise 被拒绝时，Promise.all() 返回的 Promise 也会被拒绝。这在第一次拒绝时立即发生，可能其他输入 Promise 仍是待定状态。在 ES2020 中，Promise.allSettled() 接受输入的 Promise 数组，并返回 Promise，就像 Promise.all() 一样。但是 Promise.allSettled() 永远不会拒绝返回的 Promise，并且不会兑现这个 Promise，直到所有输入 Promise 全部已敲定。Promise 解析为一组对象，每个输入 Promise 都有一个对象。每个返回的对象中有一个状态属性设置为“已兑现”或“已拒绝”。如果状态为“已兑现”，则对象还将具有一个 value 属性，该属性提供兑现值。并且，如果状态为“已拒绝”，则对象还将具有一个 reason 属性，该属性给出相应的 Promise 的异常或拒绝值：</p>
 
-<pre><code class="language-javascript">Promise.allSettled([Promise.resolve(1), Promise.reject(2), 3]).then(results =&gt; {
+<pre class="line-numbers"><code class="language-javascript">Promise.allSettled([Promise.resolve(1), Promise.reject(2), 3]).then(results =&gt; {
     results[0]  // =&gt; { status: &quot;fulfilled&quot;, value: 1 }
     results[1]  // =&gt; { status: &quot;rejected&quot;, reason: 2 }
     results[2]  // =&gt; { status: &quot;fulfilled&quot;, value: 3 }
@@ -722,7 +724,7 @@ Promise.all(promises)
 
 <p>如果以 Promise 返回函数作为开头来写一个返回 Promise 的函数是很容易的。有了 Promise，总是可以通过调用 .then() 创建（并返回）一个新的 Promise。因此，如果我们使用现有的 fetch() 函数作为起点，则可以这样编写 getJSON()：</p>
 
-<pre><code class="language-javascript">function getJSON(url) {
+<pre class="line-numbers"><code class="language-javascript">function getJSON(url) {
     return fetch(url).then(response =&gt; response.json());
 }
 </code></pre>
@@ -731,7 +733,7 @@ Promise.all(promises)
 
 <p>让我们编写另一个 Promise 返回函数，这次使用 getJSON() 作为初始 Promise 的来源：</p>
 
-<pre><code class="language-javascript">function getHighScore() {
+<pre class="line-numbers"><code class="language-javascript">function getHighScore() {
     return getJSON(&quot;/api/user/profile&quot;).then(profile =&gt; profile.highScore);
 }
 </code></pre>
@@ -752,7 +754,7 @@ Promise.all(promises)
 
 <p>仅仅阅读一下很难理解传递给构造函数的函数，但是希望有一些例子可以使这一点变得清楚。这是在本章前面的各种示例中使用的基于 Promise 的 wait() 函数的编写方法：</p>
 
-<pre><code class="language-javascript">function wait(duration) {
+<pre class="line-numbers"><code class="language-javascript">function wait(duration) {
     // Create and return a new Promise
     return new Promise((resolve, reject) =&gt; { // These control the Promise
         // If the argument is invalid, reject the Promise
@@ -773,7 +775,7 @@ Promise.all(promises)
 
 <p>示例 13-1 异步 getJSON() 函数</p>
 
-<pre><code class="language-javascript">const http = require(&quot;http&quot;);
+<pre class="line-numbers"><code class="language-javascript">const http = require(&quot;http&quot;);
 
 function getJSON(url) {
     // Create and return a new Promise
@@ -821,7 +823,7 @@ function getJSON(url) {
 
 <p>Promise.all() 使得并行运行任意数量的 Promise 变得容易。Promise 链使表达固定数量的 Promise 序列变得容易。但是，依次执行任意数量的 Promise 会比较棘手。例如，假设您要获取一组 URL，但是为了避免网络过载，希望一次获取一个 URL。如果数组的长度是任意的且内容未知，则无法提前写出 Promise 链，因此需要使用以下代码动态构建一个：</p>
 
-<pre><code class="language-javascript">function fetchSequentially(urls) {
+<pre class="line-numbers"><code class="language-javascript">function fetchSequentially(urls) {
     // We&#39;ll store the URL bodies here as we fetch them
     const bodies = [];
 
@@ -855,7 +857,7 @@ function getJSON(url) {
 
 <p>定义了这个 fetchSequentially() 函数之后，我们可以用一个代码一次来获取多个 URL，就像我们之前用来演示 Promise.all() 的并行获取代码一样：</p>
 
-<pre><code class="language-javascript">fetchSequentially(urls)
+<pre class="line-numbers"><code class="language-javascript">fetchSequentially(urls)
     .then(bodies =&gt; { /* do something with the array of strings */ })
     .catch(e =&gt; console.error(e));
 </code></pre>
@@ -864,7 +866,7 @@ function getJSON(url) {
 
 <p>我们可以采用另一种方法（可能更优雅）。除了提前创建 Promise 外，我们还可以为每个 Promise 创建回调，并返回下一个 Promise。也就是说，我们没有创建和链接一堆 Promise，而是创建了决议于其他承诺的承诺。与其创建类似多米诺骨牌的 Promise 链，不如创建一系列彼此嵌套在一起的 Promise 序列，就像俄罗斯套娃一样。使用这种方法，我们的代码可以知道第一个（最外面的）Promise 最终将兑现（或拒绝！），使其返回序列中最后一个（最里面的）Promise 相同的值。后面是通用的 promiseSequence() 函数，并不特定于 URL 提取。因为它很复杂，所以将它放在我们对 Promise 的讨论的结尾。但是，如果仔细阅读了本章，希望能理解它的工作原理。特别要注意的是，promiseSequence() 中的嵌套函数类似递归地调用自身，但是由于“递归”调用是通过 then() 方法进行的，因此实际上没有发生任何传统的递归：</p>
 
-<pre><code class="language-javascript">// This function takes an array of input values and a &quot;promiseMaker&quot; function.
+<pre class="line-numbers"><code class="language-javascript">// This function takes an array of input values and a &quot;promiseMaker&quot; function.
 // For any input value x in the array, promiseMaker(x) should return a Promise
 // that will fulfill to an output value. This function returns a Promise
 // that fulfills to an array of the computed output values.
@@ -906,7 +908,7 @@ function promiseSequence(inputs, promiseMaker) {
 
 <p>promiseSequence() 函数是通用的。我们可以使用它通过以下代码来获取 URL：</p>
 
-<pre><code class="language-javascript">// Given a URL, return a Promise that fulfills to the URL body text
+<pre class="line-numbers"><code class="language-javascript">// Given a URL, return a Promise that fulfills to the URL body text
 function fetchBody(url) { return fetch(url).then(r =&gt; r.text()); }
 // Use it to sequentially fetch a bunch of URL bodies
 promiseSequence(urls, fetchBody)
@@ -924,7 +926,7 @@ promiseSequence(urls, fetchBody)
 
 <p>关键字 await 接受一个 Promise，并将其转换为返回值或引发的异常。给定一个 Promise 对象 p，表达式 await p 等待直到 p 敲定。如果 p 兑现，则等待 p 的值就是 p 的兑现值。另一方面，如果 p 被拒绝，则 await p 表达式将抛出 p 的拒绝值。我们通常不将 await 与保存 Promise 的变量一起使用；相反，我们在调用返回 Promise 的函数之前使用它：</p>
 
-<pre><code class="language-javascript">let response = await fetch(&quot;/api/user/profile&quot;);
+<pre class="line-numbers"><code class="language-javascript">let response = await fetch(&quot;/api/user/profile&quot;);
 let profile = await response.json();
 </code></pre>
 
@@ -934,7 +936,7 @@ let profile = await response.json();
 
 <p>因为任何使用 await 的代码都是异步的，所以有一个关键规则：只能在使用 async 关键字声明的函数中使用 await 关键字。下面是本章前面的 getHighScore() 函数的一个版本，使用 async 和 await 重写：</p>
 
-<pre><code class="language-javascript">async function getHighScore() {
+<pre class="line-numbers"><code class="language-javascript">async function getHighScore() {
     let response = await fetch(&quot;/api/user/profile&quot;);
     let profile = await response.json();
     return profile.highScore;
@@ -945,12 +947,12 @@ let profile = await response.json();
 
 <p>getHighScore() 函数被声明为异步，因此它返回一个承诺。因为它返回一个承诺，所以我们可以使用 await 关键字：</p>
 
-<pre><code class="language-javascript">displayHighScore(await getHighScore());
+<pre class="line-numbers"><code class="language-javascript">displayHighScore(await getHighScore());
 </code></pre>
 
 <p>但是请记住，只有在另一个异步函数中，该行代码才有效！可以根据需要在异步函数中嵌套任何层 await 表达式。但是，如果处于最高级别 <sup id="fnref2"><a href="#fn2" rel="footnote">2</a></sup> 或由于某种原因而处于不异步的函数内，那么您无法使用 await 并且必须以常规方式处理返回的 Promise： </p>
 
-<pre><code class="language-javascript">getHighScore().then(displayHighScore).catch(console.error);
+<pre class="line-numbers"><code class="language-javascript">getHighScore().then(displayHighScore).catch(console.error);
 </code></pre>
 
 <p>可以将 async 关键字与任何函数一起使用。它用作于 function 关键字作为语句或表达式。它可与箭头函数以及类和对象字面量中的速记方法方式一起使用。（有关如何编写函数的各种方法，请参见第 8 章。） </p>
@@ -959,7 +961,7 @@ let profile = await response.json();
 
 <p>假设我们已经使用 async 编写了 getJSON() 函数： </p>
 
-<pre><code class="language-javascript">async function getJSON(url) {
+<pre class="line-numbers"><code class="language-javascript">async function getJSON(url) {
     let response = await fetch(url);
     let body = await response.json();
     return body;
@@ -968,13 +970,13 @@ let profile = await response.json();
 
 <p>并且现在假设我们要用这个方法获取两个 JSON 值：</p>
 
-<pre><code class="language-javascript">let value1 = await getJSON(url1);
+<pre class="line-numbers"><code class="language-javascript">let value1 = await getJSON(url1);
 let value2 = await getJSON(url2);
 </code></pre>
 
 <p>此代码的问题在于，它不必要地是连续的：第二个 URL 的获取要等到第一次获取完成后才能开始。如果第二个 URL 不依赖于从第一个 URL 获得的值，那么我们可能应该尝试同时获取两个值。这是基于 Promise 的异步函数本质的一种情况。为了等待一组并发执行的异步函数，我们使用 Promise.all() 就像直接使用 Promise 一样： </p>
 
-<pre><code class="language-javascript">let [value1, value2] = await Promise.all([getJSON(url1), getJSON(url2)]);
+<pre class="line-numbers"><code class="language-javascript">let [value1, value2] = await Promise.all([getJSON(url1), getJSON(url2)]);
 </code></pre>
 
 <h3 id="toc_24">13.3.4 实现详细</h3>
@@ -983,12 +985,12 @@ let value2 = await getJSON(url2);
 
 <p>假设写这样的一个异步函数：</p>
 
-<pre><code class="language-javascript">async function f(x) { /* body */ }
+<pre class="line-numbers"><code class="language-javascript">async function f(x) { /* body */ }
 </code></pre>
 
 <p>可以将其视为包装原始函数主体的 Promise 返回函数：</p>
 
-<pre><code class="language-javascript">function f(x) {
+<pre class="line-numbers"><code class="language-javascript">function f(x) {
     return new Promise(function(resolve, reject) {
         try {
             resolve((function(x) { /* body */ })(x));
@@ -1012,7 +1014,7 @@ let value2 = await getJSON(url2);
 
 <p>Node 12 使其可读流可以异步迭代。这意味着可以使用如下所示的 for/await 循环从流中读取连续的数据块：</p>
 
-<pre><code class="language-javascript">const fs = require(&quot;fs&quot;);
+<pre class="line-numbers"><code class="language-javascript">const fs = require(&quot;fs&quot;);
 
 async function parseFile(filename) {
     let stream = fs.createReadStream(filename, { encoding: &quot;utf-8&quot;});
@@ -1026,17 +1028,17 @@ async function parseFile(filename) {
 
 <p>假设有一个 URL 数组：</p>
 
-<pre><code class="language-javascript">const urls = [url1, url2, url3];
+<pre class="line-numbers"><code class="language-javascript">const urls = [url1, url2, url3];
 </code></pre>
 
 <p>可以在每个 URL 上调用 fetch() 以获取一个 promise 数组：</p>
 
-<pre><code class="language-javascript">const promises = urls.map(url =&gt; fetch(url));
+<pre class="line-numbers"><code class="language-javascript">const promises = urls.map(url =&gt; fetch(url));
 </code></pre>
 
 <p>我们在本章的前面已经看到，我们现在可以使用 Promise.all() 等待数组中的所有 promise 都已兌現。但是，假设我们希望第一个提取的结果尽快可用，并且不想等待所有 URL 都被获取。（当然，第一次获取可能比其他任何获取都要花费更长的时间，因此不一定比使用 Promise.all() 更快。）数组是可迭代的，因此我们可以使用常规的 for/of 对数组进行遍历：</p>
 
-<pre><code class="language-javascript">for(const promise of promises) {
+<pre class="line-numbers"><code class="language-javascript">for(const promise of promises) {
     response = await promise;
     handle(response);
 }
@@ -1044,7 +1046,7 @@ async function parseFile(filename) {
 
 <p>此示例代码使用 for/of 循环遍历常规迭代器。但是因为此迭代器返回 Promise，所以我们还可以将新的 for/await 稍微简化下代码：</p>
 
-<pre><code class="language-javascript">for await (const response of promises) {
+<pre class="line-numbers"><code class="language-javascript">for await (const response of promises) {
     handle(response);
 }
 </code></pre>
@@ -1067,7 +1069,7 @@ async function parseFile(filename) {
 
 <p>正如我们在第 12 章中看到的那样，实现迭代器的最简单方法通常是使用生成器。异步迭代器也是如此，我们可以使用声明为异步的生成器函数来实现。异步生成器具有异步特性和生成器特性：可以像在常规异步函数中一样使用 await，并且可以像在常规生成器中一样使用 yield。但是，产生的值会自动包装在 Promise 中。甚至异步生成器的语法也是一个组合：异步函数和 function* 组合为 async function*。这是一个示例，描述如何使用异步生成器和 for/await 循环代替 setInterval() 回调函数以固定的间隔重复运行代码：</p>
 
-<pre><code class="language-javascript">// A Promise-based wrapper around setTimeout() that we can use await with.
+<pre class="line-numbers"><code class="language-javascript">// A Promise-based wrapper around setTimeout() that we can use await with.
 // Returns a Promise that fulfills in the specified number of milliseconds
 function elapsedTime(ms) {
     return new Promise(resolve =&gt; setTimeout(resolve, ms));
@@ -1094,7 +1096,7 @@ async function test() {                       // Async so we can use for/await
 
 <p>除了使用异步生成器来实现异步迭代器外，还可以通过使用 Symbol.asyncIterator() 方法定义一个对象来直接实现它们，而 Symbol.asyncIterator() 方法将返回一个对象，而 next() 方法将返回一个决议为迭代器结果对象的 Promise。在下面的代码中，我们重新实现了上一个示例中的 clock() 函数，因此它不是生成器，而仅是返回一个异步可迭代的对象。请注意，此示例中的 next() 方法未明确返回 Promise；相反，我们只声明 next() 是异步的：</p>
 
-<pre><code class="language-javascript">function clock(interval, max=Infinity) {
+<pre class="line-numbers"><code class="language-javascript">function clock(interval, max=Infinity) {
     // A Promise-ified version of setTimeout that we can use await with.
     // Note that this takes an absolute time instead of an interval.
     function until(time) {
@@ -1130,7 +1132,7 @@ async function test() {                       // Async so we can use for/await
 
 <p>请注意，AsyncQueue 的实现不使用异步或等待，而是直接与 Promise 一起使用。该代码有些复杂，可以使用它来测试对本长篇文章所涉及内容的理解。即使您不完全了解 AsyncQueue 的实现，也请看一下它后面的简短示例：它在 AsyncQueue 之上实现了一个简单但非常有趣的异步迭代器。</p>
 
-<pre><code class="language-javascript">/**
+<pre class="line-numbers"><code class="language-javascript">/**
  * An asynchronously iterable queue class. Add values with enqueue()
  * and remove them with dequeue(). dequeue() returns a Promise, which
  * means that values can be dequeued before they are enqueued. The
@@ -1212,7 +1214,7 @@ AsyncQueue.EOS = Symbol(&quot;end-of-stream&quot;);
 
 <p>因为 AsyncQueue 类定义了异步迭代基础，所以我们可以简单地通过异步排队值来创建更有趣的自定义异步迭代器。这是一个使用 AsyncQueue 生成可通过 for/await 循环处理的 web 浏览器事件流的示例：</p>
 
-<pre><code class="language-javascript">// Push events of the specified type on the specified document element
+<pre class="line-numbers"><code class="language-javascript">// Push events of the specified type on the specified document element
 // onto an AsyncQueue object, and return the queue for use as an event stream
 function eventStream(elt, type) {
     const q = new AsyncQueue();                  // Create a queue
@@ -1303,6 +1305,10 @@ async function handleKeys() {
                   <ul id="side-nav" class="side-nav">
                     
                     <li class="side-title"><span>HomeAssistant</span></li>
+                    
+                    <li>
+                      <a title="梅林配置" href="16211303812539.html">梅林配置</a>
+                    </li>
                     
                     <li>
                       <a title="Ubuntu 20.04Lts 安装 HA" href="16201149334405.html">Ubuntu 20.04Lts 安装 HA</a>

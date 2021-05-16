@@ -45,6 +45,8 @@
           <li class="divider"></li>
           <li><label>HomeAssistant</label></li>
           
+          <li><a title="梅林配置" href="16211303812539.html">梅林配置</a></li>
+          
           <li><a title="Ubuntu 20.04Lts 安装 HA" href="16201149334405.html">Ubuntu 20.04Lts 安装 HA</a></li>
           
           <li><a title="Windows10 安装 HomeAssistant" href="16200327308578.html">Windows10 安装 HomeAssistant</a></li>
@@ -193,7 +195,7 @@
 
 <p>正如我们在 §8.6 中看到的，在函数中声明的局部变量和嵌套函数是该函数私有的。这意味着我们可以使用立即调用函数表达式来实现一种模块化，方法是将实现细节和实用函数隐藏在封装的函数中，而将模块的公共 API 作为函数的返回值。在 BitSet 类的情况下，我们可以像这样构造模块:</p>
 
-<pre><code class="language-javascript">const BitSet = (function() { // Set BitSet to the return value of this function
+<pre class="line-numbers"><code class="language-javascript">const BitSet = (function() { // Set BitSet to the return value of this function
     // Private implementation details here
     function isValid(set, n) { ... }
     function has(set, byte, bit) { ... }
@@ -211,7 +213,7 @@
 
 <p>当模块中有多个条目时，这种模块化方法就变得更有趣了。例如，下面的代码定义了一个迷你统计模块，它导出 mean() 和 stddev() 函数，同时隐藏实现细节:</p>
 
-<pre><code class="language-javascript">// This is how we could define a stats module
+<pre class="line-numbers"><code class="language-javascript">// This is how we could define a stats module
 const stats = (function() {
     // Utility functions private to the module
     const sum = (x, y) =&gt; x + y;
@@ -245,7 +247,7 @@ stats.stddev([1, 3, 5, 7, 9]) // =&gt; Math.sqrt(10)
 
 <p>想象一下一个工具，它需要一组文件，将每个文件的内容包装在立即调用的函数表达式中，跟踪每个函数的返回值，并将所有内容连接到一个大文件中。结果可能看起来像这样：</p>
 
-<pre><code class="language-javascript">const modules = {};
+<pre class="line-numbers"><code class="language-javascript">const modules = {};
 function require(moduleName) { return modules[moduleName]; }
 
 modules[&quot;sets.js&quot;] = (function() {
@@ -272,7 +274,7 @@ modules[&quot;stats.js&quot;] = (function() {
 
 <p>如上一个示例所示，将模块捆绑到单个文件中，可以想象编写如下代码来利用这些模块：</p>
 
-<pre><code class="language-javascript">// Get references to the modules (or the module content) that we need
+<pre class="line-numbers"><code class="language-javascript">// Get references to the modules (or the module content) that we need
 const stats = require(&quot;stats.js&quot;);
 const BitSet = require(&quot;sets.js&quot;).BitSet;
 
@@ -298,7 +300,7 @@ let average = stats.mean([...s]); // average is 20
 
 <p>Node defines a global exports object that is always defined. If you are writing a Node module that exports multiple values, you can simply assign them to the properties of this object:</p>
 
-<pre><code class="language-javascript">const sum = (x, y) =&gt; x + y;
+<pre class="line-numbers"><code class="language-javascript">const sum = (x, y) =&gt; x + y;
 const square = x =&gt; x * x;
 
 exports.mean = data =&gt; data.reduce(sum)/data.length;
@@ -310,14 +312,14 @@ exports.stddev = function(d) {
 
 <p>Often, however, you want to define a module that exports only a single function or class rather than an object full of functions or classes. To do this, you simply assign the single value you want to export to module.exports:</p>
 
-<pre><code class="language-javascript">module.exports = class BitSet extends AbstractWritableSet {
+<pre class="line-numbers"><code class="language-javascript">module.exports = class BitSet extends AbstractWritableSet {
     // implementation omitted
 };
 </code></pre>
 
 <p>The default value of module.exports is the same object that exports refers to. In the previous stats module, we could have assigned the mean function to module.exports.mean instead of exports.mean. Another approach with modules like the stats module is to export a single object at the end of the module rather than exporting functions one by one as you go:</p>
 
-<pre><code class="language-javascript">// Define all the functions, public and private
+<pre class="line-numbers"><code class="language-javascript">// Define all the functions, public and private
 const sum = (x, y) =&gt; x + y;
 const square = x =&gt; x * x;
 const mean = data =&gt; data.reduce(sum)/data.length;
@@ -336,7 +338,7 @@ module.exports = { mean, stddev };
 
 <p>If you want to import a system module built in to Node or a module that you have installed on your system via a package manager, then you simply use the unqualified name of the module, without any “/” characters that would turn it into a filesystem path:</p>
 
-<pre><code class="language-javascript">// These modules are built in to Node
+<pre class="line-numbers"><code class="language-javascript">// These modules are built in to Node
 const fs = require(&quot;fs&quot;);           // The built-in filesystem module
 const http = require(&quot;http&quot;);       // The built-in HTTP module
 
@@ -347,7 +349,7 @@ const express = require(&quot;express&quot;);
 
 <p>When you want to import a module of your own code, the module name should be the path to the file that contains that code, relative to the current module’s file. It is legal to use absolute paths that begin with a / character, but typically, when importing modules that are part of your own program, the module names will begin with ./ or sometimes ../ to indicate that they are relative to the current directory or the parent directory. For example:</p>
 
-<pre><code class="language-javascript">const stats = require(&#39;./stats.js&#39;);
+<pre class="line-numbers"><code class="language-javascript">const stats = require(&#39;./stats.js&#39;);
 const BitSet = require(&#39;./utils/bitset.js&#39;);
 </code></pre>
 
@@ -355,7 +357,7 @@ const BitSet = require(&#39;./utils/bitset.js&#39;);
 
 <p>When a module exports just a single function or class, all you have to do is require it. When a module exports an object with multiple properties, you have a choice: you can import the entire object, or just import the specific properties (using destructuring assignment) of the object that you plan to use. Compare these two approaches:</p>
 
-<pre><code class="language-javascript">// Import the entire stats object, with all of its functions
+<pre class="line-numbers"><code class="language-javascript">// Import the entire stats object, with all of its functions
 const stats = require(&#39;./stats.js&#39;);
 
 // We&#39;ve got more functions than we need, but they&#39;re neatly
@@ -393,7 +395,7 @@ let sd = stddev(data);
 
 <p>要从 ES6 模块导出常量，变量，函数或类，只需在声明之前添加关键字 export：</p>
 
-<pre><code class="language-javascript">export const PI = Math.PI;
+<pre class="line-numbers"><code class="language-javascript">export const PI = Math.PI;
 
 export function degreesToRadians(d) { return d * PI / 180; }
 
@@ -405,14 +407,14 @@ export class Circle {
 
 <p>作为在整个模块中散播 export 关键字的替代方法，可以像平常一样定义常量、变量、函数和类，无需导出语句，然后（通常在模块末尾）编写一个导出语句，在一个位置精确的声明要导出的所有内容。因此，我们可以在末尾写入一行代码，而不是在上述代码中编写三个单独的导出：</p>
 
-<pre><code class="language-javascript">export { Circle, degreesToRadians, PI };
+<pre class="line-numbers"><code class="language-javascript">export { Circle, degreesToRadians, PI };
 </code></pre>
 
 <p>这种语法看起来像导出关键字，后跟对象字面量（使用速记符号）。但在这种情况下，花括号实际上并不是定义对象字面量。此导出语法只需要在大括号中的标识符列表用逗号分隔。</p>
 
 <p>编写只导出一个值（通常是一个函数或类）的模块是很常见的，在这种情况下，我们通常使用 export default 而不是 export：</p>
 
-<pre><code class="language-javascript">export default class BitSet {
+<pre class="line-numbers"><code class="language-javascript">export default class BitSet {
     // implementation omitted
 }
 </code></pre>
@@ -429,7 +431,7 @@ export class Circle {
 
 <p>使用 import 关键字导入其他模块导出的值。最简单的导入形式是导入默认导出定义的模块：</p>
 
-<pre><code class="language-javascript">import BitSet from &#39;./bitset.js&#39;;
+<pre class="line-numbers"><code class="language-javascript">import BitSet from &#39;./bitset.js&#39;;
 </code></pre>
 
 <p>import 关键字后面跟一个标识符，然后是 from 关键字，后接要导入的默认导出字符串字面量模块名称。模块指定的默认导出值将编程当前模块内指定的标识符的值。</p>
@@ -440,26 +442,26 @@ export class Circle {
 
 <p>到目前为止，我们仅考虑了从使用默认导出的模块中导入单个值的情况。要从导出多个值的模块导入值，我们使用略有不同的语法：</p>
 
-<pre><code class="language-javascript">import { mean, stddev } from &quot;./stats.js&quot;;
+<pre class="line-numbers"><code class="language-javascript">import { mean, stddev } from &quot;./stats.js&quot;;
 </code></pre>
 
 <p>回想一下，默认导出不需要在定义它们的模块中具有名称。而是在导入这些值时提供一个本地名称。但是，模块的非默认导出在导出模块中具有名称，并且当我们导入这些值时，我们通过这些名称来引用它们。导出模块可以导出任意数量的命名值。导入语句引用模块，可以简单地通过在花括号中列出它们的名称来导入这些名称对应的值的任何子集。花括号使这种导入语句看起来像是一个解构赋值，而解构赋值实际上是很好的案例来解释导入的这种风格。花括号中的标识符都被提前到导入模块的顶部，并且行为如同常量。</p>
 
 <p>有时，风格指南建议显示导入模块将使用的每个符号。但是，从定义许多导出的模块进行导入时，可以使用如下的 import 语句轻松导入所有内容：</p>
 
-<pre><code class="language-javascript">import * as stats from &quot;./stats.js&quot;;
+<pre class="line-numbers"><code class="language-javascript">import * as stats from &quot;./stats.js&quot;;
 </code></pre>
 
 <p>像这样的导入语句创建一个对象并将其赋值给一个名为 stats 的常量。模块中每一个非默认导出被导入成 stats 对象的一个属性。非默认导出始终有名称，在对象中它们被用作属性名。那些属性实际上是常量：它们不能被重写或删除。通过前面例子中展示的通配符导入，导入的模块通过 stats 对象使用 mean() 和 stddev() 函数，用 stats.mean() 和 stats.stddev() 来调用它们。</p>
 
 <p>模块通常定义一个默认导出或者多个命名导出。模块内同时使用导出和默认导出是合法的，但是不常见。但是当一个模块这样做了，可以通过下面这种方式将默认值和命名值通过一个导入语句导入：</p>
 
-<pre><code class="language-javascript">import Histogram, { mean, stddev } from &quot;./histogram-stats.js&quot;;
+<pre class="line-numbers"><code class="language-javascript">import Histogram, { mean, stddev } from &quot;./histogram-stats.js&quot;;
 </code></pre>
 
 <p>到目前为止，我们已经了解了如何从具有默认导出的模块以及具有非默认或命名导出的模块导入。但是 import 语句还有另一种形式，可以用于没有导出的模块。要将无导出模块包含到程序中，只需使用 import 关键字和模块说明符：</p>
 
-<pre><code class="language-javascript">import &quot;./analytics.js&quot;;
+<pre class="line-numbers"><code class="language-javascript">import &quot;./analytics.js&quot;;
 </code></pre>
 
 <p>这样的模块在首次运行时导入。（并且随后的导入不执行任何操作。）仅定义函数的模块只有在导出至少一个函数时才有用。但是，如果模块运行一些代码，那么即使没有符号也可以导入。Web 应用程序的分析模块可能会运行代码来注册各种事件处理器，然后使用这些事件处理程序在适当的时间将遥测数据发送回服务器。该模块是独立的，不需要导出任何东西，但是我们仍然需要导入它，以便它实际上可以作为程序的一部分运行。</p>
@@ -470,7 +472,7 @@ export class Circle {
 
 <p>如果两个模块使用相同的名称导出两个不同的值，并且要导入这两个值，则在导入时必须重命名一个或两个值。同样，如果模块要导入值的名称已在模块中使用，则需要重命名导入的值。可以在命名导入中使用 as 关键字，以在导入它们时重命名它们：</p>
 
-<pre><code class="language-javascript">import { render as renderImage } from &quot;./imageutils.js&quot;;
+<pre class="line-numbers"><code class="language-javascript">import { render as renderImage } from &quot;./imageutils.js&quot;;
 import { render as renderUI } from &quot;./ui.js&quot;;
 </code></pre>
 
@@ -480,14 +482,14 @@ import { render as renderUI } from &quot;./ui.js&quot;;
 
 <p>话虽如此，导入重命名的可能性提供另外一种导入，从模块导入同时定义默认导出和命名导出。回顾上一节中的“ ./histogram-stats.js”模块。这是同时导入该模块的默认导出和命名导出的另一种方法：</p>
 
-<pre><code class="language-javascript">import { default as Histogram, mean, stddev } from &quot;./histogram-stats.js&quot;;
+<pre class="line-numbers"><code class="language-javascript">import { default as Histogram, mean, stddev } from &quot;./histogram-stats.js&quot;;
 </code></pre>
 
 <p>在这种情况下，JavaScript 关键字 default 用作占位符，并允许我们指示我们要导入并为模块的默认导出提供名称。</p>
 
 <p>也可以在导出时重命名值，但仅在使用 export 语句的花括号时才可以。这样做通常并不常见，但是如果选择在模块内部使用简短的简短名称，则可能更喜欢使用描述性较强的名称导出值，这些名称不太可能与其他模块发生冲突。与导入一样，可以使用 as 关键字执行此操作：</p>
 
-<pre><code class="language-javascript">export {
+<pre class="line-numbers"><code class="language-javascript">export {
     layout as calculateLayout,
     render as renderLayout
 };
@@ -495,7 +497,7 @@ import { render as renderUI } from &quot;./ui.js&quot;;
 
 <p>请记住，尽管花括号看起来像对象字面量，但实际上并非如此，并且 export 关键字期望在 as 之前有一个标识符，而不是表达式。不幸的是，这意味着不能像这样使用导出重命名：</p>
 
-<pre><code class="language-javascript">export { Math.sin as sin, Math.cos as cos }; // SyntaxError
+<pre class="line-numbers"><code class="language-javascript">export { Math.sin as sin, Math.cos as cos }; // SyntaxError
 </code></pre>
 
 <h3 id="toc_10">10.3.4 再导出</h3>
@@ -506,45 +508,45 @@ import { render as renderUI } from &quot;./ui.js&quot;;
 
 <p>鉴于实现现在位于单独的文件中，因此定义这样的“./stat.js”模块会非常简单：</p>
 
-<pre><code class="language-javascript">import { mean } from &quot;./stats/mean.js&quot;;
+<pre class="line-numbers"><code class="language-javascript">import { mean } from &quot;./stats/mean.js&quot;;
 import { stddev } from &quot;./stats/stddev.js&quot;;
 export { mean, stdev };
 </code></pre>
 
 <p>ES6 模块预见了这种使用场景，并为此提供了一种特殊的语法。可以使用 export 和 from 关键字合并导入和导出到一个单独的“再导出”语句中，而不是简单地再次导入即可导入符号：</p>
 
-<pre><code class="language-javascript">export { mean } from &quot;./stats/mean.js&quot;;
+<pre class="line-numbers"><code class="language-javascript">export { mean } from &quot;./stats/mean.js&quot;;
 export { stddev } from &quot;./stats/stddev.js&quot;;
 </code></pre>
 
 <p>请注意，此代码中并未实际使用名称 mean 和 stddev。如果我们不选择再导出，而只是想从另一个模块中导出所有命名值，则可以使用通配符：</p>
 
-<pre><code class="language-javascript">export * from &quot;./stats/mean.js&quot;;
+<pre class="line-numbers"><code class="language-javascript">export * from &quot;./stats/mean.js&quot;;
 export * from &quot;./stats/stddev.js&quot;;
 </code></pre>
 
 <p>再导出语法允许重命名，就像常规的导入和导出语句一样。 假设我们要再导出 mean() 函数，但还要将该函数定义为 average()。 我们可以这样做：</p>
 
-<pre><code class="language-javascript">export { mean, mean as average } from &quot;./stats/mean.js&quot;;
+<pre class="line-numbers"><code class="language-javascript">export { mean, mean as average } from &quot;./stats/mean.js&quot;;
 export { stddev } from &quot;./stats/stddev.js&quot;;
 </code></pre>
 
 <p>所有的再导出示例中，“./stats/mean.js”和“./stats/stddev.js”模块都使用导出而不是默认导出来导出它们的函数。但是，实际上，由于这些模块仅具有单个导出，因此使用导出默认定义它们是更明智的。如果我们这样做，那么再导出语法会稍微复杂一点，因为它需要为未命名的默认导出定义一个名称。 我们可以这样做：</p>
 
-<pre><code class="language-javascript">export { default as mean } from &quot;./stats/mean.js&quot;;
+<pre class="line-numbers"><code class="language-javascript">export { default as mean } from &quot;./stats/mean.js&quot;;
 export { default as stddev } from &quot;./stats/stddev.js&quot;;
 </code></pre>
 
 <p>如果要从另一个模块中再导出命名符号作为模块的默认导出，则可以先进行导入，然后再默认导出，或者可以将以下两个语句组合在一起：</p>
 
-<pre><code class="language-javascript">// Import the mean() function from ./stats.js and make it the
+<pre class="line-numbers"><code class="language-javascript">// Import the mean() function from ./stats.js and make it the
 // default export of this module
 export { mean as default } from &quot;./stats.js&quot;
 </code></pre>
 
 <p>最后，要将另一个模块的默认导出再导出为模块的默认导出（尽管不清楚为什么要这样做，因为用户可以直接导入另一个模块），可以这样编写：</p>
 
-<pre><code class="language-javascript">// The average.js module simply re-exports the stats/mean.js default export
+<pre class="line-numbers"><code class="language-javascript">// The average.js module simply re-exports the stats/mean.js default export
 export { default } from &quot;./stats/mean.js&quot;
 </code></pre>
 
@@ -570,7 +572,7 @@ export { default } from &quot;./stats/mean.js&quot;
 
 <p>One of the nice features of ES6 modules is that each module has a static set of imports. So given a single starting module, a web browser can load all of its imported modules and then load all of the modules imported by that first batch of modules, and so on, until a complete program has been loaded. We’ve seen that the module specifier in an import statement can be treated as a relative URL. A <code>&lt;script type=&quot;module&quot;&gt;</code> tag marks the starting point of a modular program. None of the modules it imports are expected to be in <code>&lt;script&gt;</code> tags, however: instead, they are loaded on demand as regular JavaScript files and are executed in strict mode as regular ES6 modules. Using a <code>&lt;script type=&quot;module&quot;&gt;</code> tag to define the main entry point for a modular JavaScript program can be as simple as this:</p>
 
-<pre><code class="language-javascript">&lt;script type=&quot;module&quot;&gt;import &quot;./main.js&quot;;&lt;/script&gt;
+<pre class="line-numbers"><code class="language-javascript">&lt;script type=&quot;module&quot;&gt;import &quot;./main.js&quot;;&lt;/script&gt;
 </code></pre>
 
 <p>Code inside an inline <code>&lt;script type=&quot;module&quot;&gt;</code> tag is an ES6 module, and as such can use the export statement. There is not any point in doing so, however, because the HTML <code>&lt;script&gt;</code> tag syntax does not provide any way to define a name for inline modules, so even if such a module does export a value, there is no way for another module to import it.</p>
@@ -597,7 +599,7 @@ export { default } from &quot;./stats/mean.js&quot;
 
 <p>So instead of importing the “./stats.js” module statically, like this:</p>
 
-<pre><code class="language-javascript">import * as stats from &quot;./stats.js&quot;;
+<pre class="line-numbers"><code class="language-javascript">import * as stats from &quot;./stats.js&quot;;
 we might import it and use it dynamically, like this:
 
 import(&quot;./stats.js&quot;).then(stats =&gt; {
@@ -607,7 +609,7 @@ import(&quot;./stats.js&quot;).then(stats =&gt; {
 
 <p>Or, in an async function (again, you may need to read Chapter 13 before you’ll understand this code), we can simplify the code with await:</p>
 
-<pre><code class="language-javascript">async analyzeData(data) {
+<pre class="line-numbers"><code class="language-javascript">async analyzeData(data) {
     let stats = await import(&quot;./stats.js&quot;);
     return {
         average: stats.mean(data),
@@ -628,7 +630,7 @@ import(&quot;./stats.js&quot;).then(stats =&gt; {
 
 <p>The primary use case of import.meta.url is to be able to refer to images, data files, or other resources that are stored in the same directory as (or relative to) the module. The URL() constructor makes it easy to resolve a relative URL against an absolute URL like import.meta.url. Suppose, for example, that you have written a module that includes strings that need to be localized and that the localization files are stored in an l10n/ directory, which is in the same directory as the module itself. Your module could load its strings using a URL created with a function, like this:</p>
 
-<pre><code class="language-javascript">function localStringsURL(locale) {
+<pre class="line-numbers"><code class="language-javascript">function localStringsURL(locale) {
     return new URL(`l10n/${locale}.json`, import.meta.url);
 }
 </code></pre>
@@ -693,6 +695,10 @@ import(&quot;./stats.js&quot;).then(stats =&gt; {
                   <ul id="side-nav" class="side-nav">
                     
                     <li class="side-title"><span>HomeAssistant</span></li>
+                    
+                    <li>
+                      <a title="梅林配置" href="16211303812539.html">梅林配置</a>
+                    </li>
                     
                     <li>
                       <a title="Ubuntu 20.04Lts 安装 HA" href="16201149334405.html">Ubuntu 20.04Lts 安装 HA</a>

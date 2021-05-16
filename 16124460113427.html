@@ -45,6 +45,8 @@
           <li class="divider"></li>
           <li><label>HomeAssistant</label></li>
           
+          <li><a title="梅林配置" href="16211303812539.html">梅林配置</a></li>
+          
           <li><a title="Ubuntu 20.04Lts 安装 HA" href="16201149334405.html">Ubuntu 20.04Lts 安装 HA</a></li>
           
           <li><a title="Windows10 安装 HomeAssistant" href="16200327308578.html">Windows10 安装 HomeAssistant</a></li>
@@ -122,7 +124,7 @@
 <p>The spread operator is a convenient way to create a (shallow) copy of an array:</p>
 </blockquote>
 
-<pre><code class="language-javascript">let original = [1,2,3];
+<pre class="line-numbers"><code class="language-javascript">let original = [1,2,3];
 let copy = [...original];
 copy[0] = 0;  // Modifying the copy does not change the original
 original[0]   // =&gt; 1
@@ -139,7 +141,7 @@ original[0]   // =&gt; 1
 
 <p>但是这个实例中，作者只测试了拷贝先的修改，我又做了如下测试：</p>
 
-<pre><code class="language-javascript">let original = [1,2,3];
+<pre class="line-numbers"><code class="language-javascript">let original = [1,2,3];
 let copy = [...original];
 original[0] = 10;
 copy[0]  // =&gt; 1
@@ -157,7 +159,7 @@ copy[0]  // =&gt; 1
 <li>六个数据类型</li>
 </ul>
 
-<pre><code class="language-javascript">typeof undefined === &#39;undefined&#39;;
+<pre class="line-numbers"><code class="language-javascript">typeof undefined === &#39;undefined&#39;;
 typeof true === &#39;boolean&#39;;
 typeof 123 === &#39;number&#39;;
 typeof &#39;str&#39; === &#39;string&#39;;
@@ -169,7 +171,7 @@ typeof Symbol(&#39;symbol&#39;) === &#39;symbol&#39;;
 <li>两个结构类型</li>
 </ul>
 
-<pre><code class="language-javascript">typeof {} === &#39;object&#39;;
+<pre class="line-numbers"><code class="language-javascript">typeof {} === &#39;object&#39;;
 typeof (() =&gt; {}) === &#39;function&#39;;
 </code></pre>
 
@@ -177,7 +179,7 @@ typeof (() =&gt; {}) === &#39;function&#39;;
 <li>结构根</li>
 </ul>
 
-<pre><code class="language-javascript">typeof null === &#39;object&#39;;
+<pre class="line-numbers"><code class="language-javascript">typeof null === &#39;object&#39;;
 </code></pre>
 
 <p>以上九种类型又分为原始值（Primitive Value）和对象（Object）：</p>
@@ -206,7 +208,7 @@ typeof (() =&gt; {}) === &#39;function&#39;;
 
 <p>了解了这些后，针对引用类型做一个实验：</p>
 
-<pre><code class="language-javascript">let original = [{a:1},2,3];
+<pre class="line-numbers"><code class="language-javascript">let original = [{a:1},2,3];
 let copy = [...original];
 original[0].a = 10;
 copy[0].a; // =&gt; 10
@@ -262,6 +264,10 @@ copy[0].a; // =&gt; 10
                   <ul id="side-nav" class="side-nav">
                     
                     <li class="side-title"><span>HomeAssistant</span></li>
+                    
+                    <li>
+                      <a title="梅林配置" href="16211303812539.html">梅林配置</a>
+                    </li>
                     
                     <li>
                       <a title="Ubuntu 20.04Lts 安装 HA" href="16201149334405.html">Ubuntu 20.04Lts 安装 HA</a>

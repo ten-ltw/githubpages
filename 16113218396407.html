@@ -45,6 +45,8 @@
           <li class="divider"></li>
           <li><label>HomeAssistant</label></li>
           
+          <li><a title="梅林配置" href="16211303812539.html">梅林配置</a></li>
+          
           <li><a title="Ubuntu 20.04Lts 安装 HA" href="16201149334405.html">Ubuntu 20.04Lts 安装 HA</a></li>
           
           <li><a title="Windows10 安装 HomeAssistant" href="16200327308578.html">Windows10 安装 HomeAssistant</a></li>
@@ -253,7 +255,7 @@
 
 <p>创建对象最简单的方式就是在 JavaScript 代码中使用对象直接量。对象直接量是由若干名/值对组成的映射表，名/值对中间用冒号分隔，名/值对之间用逗号分隔，整个映射表用花括号括起来。属性名可以是 JavaScript 标识符也可以是字符串字面量（包括空字符串）。属性的值可以是任意类型的 JavaScript 表达式；表达式的值（可以是原始值也可以是对象值）变成这个属性的值。下面有一些例子：</p>
 
-<pre><code class="language-javascript">let empty = {};                          // An object with no properties
+<pre class="line-numbers"><code class="language-javascript">let empty = {};                          // An object with no properties
 let point = { x: 0, y: 0 };              // Two numeric properties
 let p2 = { x: point.x, y: point.y+1 };   // More complex values
 let book = {
@@ -277,7 +279,7 @@ let book = {
 
 <p>new 运算符创建并初始化一个新的对象。new 关键字必须紧跟一个函数调用。这种方式使用函数叫做构造函数调用，其提供初始化一个新创建的对象的服务。在 JavaScript 中，内置类型都包含相对应的构造函数。例如：</p>
 
-<pre><code class="language-javascript">let o = new Object();  // Create an empty object: same as {}.
+<pre class="line-numbers"><code class="language-javascript">let o = new Object();  // Create an empty object: same as {}.
 let a = new Array();   // Create an empty array: same as [].
 let d = new Date();    // Create a Date object representing the current time
 let r = new Map();     // Create a Map object for key/value mapping
@@ -299,25 +301,25 @@ let r = new Map();     // Create a Map object for key/value mapping
 
 <p>Object.create() 创建一个新的对象，用第一个实参作为它的原型：</p>
 
-<pre><code class="language-javascript">let o1 = Object.create({x: 1, y: 2});     // o1 inherits properties x and y.
+<pre class="line-numbers"><code class="language-javascript">let o1 = Object.create({x: 1, y: 2});     // o1 inherits properties x and y.
 o1.x + o1.y                               // =&gt; 3
 </code></pre>
 
 <p>可以通过传入参数 null 来创建一个没有原型的新对象，但通过这种方式创建的对象不会继承任何东西，甚至不包括基础方法，比如 toString()，也就是说，它将不能和“+”运算符一起正常工作：</p>
 
-<pre><code class="language-javascript">let o2 = Object.create(null);             // o2 inherits no props or methods.
+<pre class="line-numbers"><code class="language-javascript">let o2 = Object.create(null);             // o2 inherits no props or methods.
 </code></pre>
 
 <p>如果想创建一个普通的空对象（像通过 {} 或 new Object() 创建的对象），需要传入 Object.prototype：</p>
 
-<pre><code class="language-javascript">let o3 = Object.create(Object.prototype); // o3 is like {} or new Object().
+<pre class="line-numbers"><code class="language-javascript">let o3 = Object.create(Object.prototype); // o3 is like {} or new Object().
 </code></pre>
 
 <p>可以通过任意原型创建新对象，这是一个强大的特性，并且本章我们会在很多地方使用 Object.create()。（Object.create() 也可以传入第二个可选实参来描述这个新的对象的属性。第二个实参是一个高级特性，在  §14.1 再进行描述。）</p>
 
 <p>Object.create() 其中一个用途是预防对象无意间（非恶意地）被无法支配的库函数篡改。可以创建一个继承它的对象来传递给函数，而不是将其直接传递给函数。当函数读取继承对象的属性时，实际上读取的是继承来的值。如果给继承对象的属性赋值，则这些属性只会影响这个继承对象自身，而不是原始对象：</p>
 
-<pre><code class="language-javascript">let o = { x: &quot;don&#39;t change this value&quot; };
+<pre class="line-numbers"><code class="language-javascript">let o = { x: &quot;don&#39;t change this value&quot; };
 library.function(Object.create(o));  // Guard against accidental modifications
 </code></pre>
 
@@ -327,14 +329,14 @@ library.function(Object.create(o));  // Guard against accidental modifications
 
 <p>§4.4 已经提到，可以通过点（.）或方括号（[]）运算符来获取属性的值。运算符左侧应当是一个表达式，它返回一个对象。如果使用点运算符，右侧必须是一个以属性名称命名的简单标识符。如果使用方括号，方括号内必须是一个计算结果为字符串的表达式，这个字符串就是属性的名字：</p>
 
-<pre><code class="language-javascript">let author = book.author;       // Get the &quot;author&quot; property of the book.
+<pre class="line-numbers"><code class="language-javascript">let author = book.author;       // Get the &quot;author&quot; property of the book.
 let name = author.surname;      // Get the &quot;surname&quot; property of the author.
 let title = book[&quot;main title&quot;]; // Get the &quot;main title&quot; property of the book.
 </code></pre>
 
 <p>和查询属性值的写法一样，通过点和方括号也可以创建属性或给属性赋值，但需要将它们放在赋值表达式的左侧：</p>
 
-<pre><code class="language-javascript">book.edition = 7;                   // Create an &quot;edition&quot; property of book.
+<pre class="line-numbers"><code class="language-javascript">book.edition = 7;                   // Create an &quot;edition&quot; property of book.
 book[&quot;main title&quot;] = &quot;ECMAScript&quot;;  // Change the &quot;main title&quot; property.
 </code></pre>
 
@@ -344,7 +346,7 @@ book[&quot;main title&quot;] = &quot;ECMAScript&quot;;  // Change the &quot;main
 
 <p>上文提到，下面两个表达式有相同的值：</p>
 
-<pre><code class="language-javascript">object.property
+<pre class="line-numbers"><code class="language-javascript">object.property
 object[&quot;property&quot;]
 </code></pre>
 
@@ -354,7 +356,7 @@ object[&quot;property&quot;]
 
 <p>另一种方式，当通过 [] 来访问对象的属性时，属性名通过字符串来表示。字符串是 JavaScript 的数据类型，在程序运行时可以修改和创建它们。因此，可以在 JavaScript 中使用下面这种代码：</p>
 
-<pre><code class="language-javascript">let addr = &quot;&quot;;
+<pre class="line-numbers"><code class="language-javascript">let addr = &quot;&quot;;
 for(let i = 0; i &lt; 4; i++) {
     addr += customer[`address${i}`] + &quot;\n&quot;;
 }
@@ -366,7 +368,7 @@ for(let i = 0; i &lt; 4; i++) {
 
 <p>下面是程序的部分代码，这个函数用来给 portifolio 添加新的股票：</p>
 
-<pre><code class="language-javascript">function addstock(portfolio, stockname, shares) {
+<pre class="line-numbers"><code class="language-javascript">function addstock(portfolio, stockname, shares) {
     portfolio[stockname] = shares;
 }
 </code></pre>
@@ -375,7 +377,7 @@ for(let i = 0; i &lt; 4; i++) {
 
 <p>第 5 章介绍了 for/in 循环（§6.6 节还会进一步介绍）。当使用 for/in 循环遍历关联数组时，就可以清晰地体会到 for/in 的强大之处。下面的例子就是利用 for/in 计算  portfolio 的合计值：</p>
 
-<pre><code class="language-javascript">function computeValue(portfolio) {
+<pre class="line-numbers"><code class="language-javascript">function computeValue(portfolio) {
     let total = 0.0;
     for(let stock in portfolio) {       // For each stock in the portfolio:
         let shares = portfolio[stock];  // get the number of shares
@@ -394,7 +396,7 @@ for(let i = 0; i &lt; 4; i++) {
 
 <p>假设要查询对象 o 的属性 x。如果 o 中不存在 x 名称的自由属性，那么将会继续在 o 的原型对象中查询属性 x。如果原型对象中也没有 x，但这个原型对象也有原型，那么继续在这个原型对象的原型上执行查询，直到找到 x 或者查找到一个原型是 null 的对象为止。可以看到，对象的原型属性构成了一个“链”，通过这个“链”可以实现属性的继承。</p>
 
-<pre><code class="language-javascript">let o = {};               // o inherits object methods from Object.prototype
+<pre class="line-numbers"><code class="language-javascript">let o = {};               // o inherits object methods from Object.prototype
 o.x = 1;                  // and it now has an own property x.
 let p = Object.create(o); // p inherits properties from o and Object.prototype
 p.y = 2;                  // and has an own property y.
@@ -408,7 +410,7 @@ q.x + q.y                 // =&gt; 3; x and y are inherited from o and p
 
 <p>属性赋值操作检查原型链只是判断是否允许赋值操作。例如，如果 o 继承自一个只读属性 x，那么赋值操作是不允许的（§6.3.3 将对此进行详细讨论）。 如果允许属性赋值操作，它也总是在原始对象上创建属性或对已有的属性赋值，而不会去修改原型链。在 JavaScript 中，只有在查询属性时才会体会到继承的存在，而设置属性则和继承无关，这是 JavaScript 的一个重要特性，该特性让程序员可以有选择地重写继承的属性。</p>
 
-<pre><code class="language-javascript">let unitcircle = { r: 1 };         // An object to inherit from
+<pre class="line-numbers"><code class="language-javascript">let unitcircle = { r: 1 };         // An object to inherit from
 let c = Object.create(unitcircle); // c inherits the property r
 c.x = 1; c.y = 1;                  // c defines two properties of its own
 c.r = 2;                           // c overrides its inherited property
@@ -423,17 +425,17 @@ unitcircle.r                       // =&gt; 1: the prototype is not affected
 
 <p>查询一个不存在的属性并不会报错，如果在对象 o 自身的属性或继承的属性中均未找到属性 x，属性访问表达式 o.x 返回 undefined。回想一下我们的 book 对象有属性“sub-title”，而没有属性“subtitle”：</p>
 
-<pre><code class="language-javascript">book.subtitle    // =&gt; undefined: property doesn&#39;t exist
+<pre class="line-numbers"><code class="language-javascript">book.subtitle    // =&gt; undefined: property doesn&#39;t exist
 </code></pre>
 
 <p>但是，如果对象不存在，那么试图查询这个不存在的对象的属性就会报错。null 和 undefined 值都没有属性，因此查询这些值的属性会报错，接上例：</p>
 
-<pre><code class="language-javascript">let len = book.subtitle.length; // !TypeError: undefined doesn&#39;t have length
+<pre class="line-numbers"><code class="language-javascript">let len = book.subtitle.length; // !TypeError: undefined doesn&#39;t have length
 </code></pre>
 
 <p>如果 . 的左边是 null 或 undefined 时，其属性表达式会失败。所以当写一个像 book.author.surname 一样的表达式时，如果你不确定 book 和 book.author 确实被定义就要小心了。下面提供了两种避免出错的方法：</p>
 
-<pre><code class="language-javascript">// A verbose and explicit technique
+<pre class="line-numbers"><code class="language-javascript">// A verbose and explicit technique
 let surname = undefined;
 if (book) {
     if (book.author) {
@@ -449,7 +451,7 @@ surname = book &amp;&amp; book.author &amp;&amp; book.author.surname;
 
 <p>如 §4.4.1 中所描述，ES2020 支持用 ?. 条件属性访问，它允许这样重写上面的赋值表达式：</p>
 
-<pre><code class="language-javascript">let surname = book?.author?.surname;
+<pre class="line-numbers"><code class="language-javascript">let surname = book?.author?.surname;
 </code></pre>
 
 <p>当然，给 null 和 undefined 设置属性也会报类型错误。给其他值设置属性也不总是成功，有一些属性是只读的，不能重新赋值，有一些对象不允许新增属性。在严格模式下（§5.6.3），属性设定失败时会抛出 TypeError 异常。在非严格模式下，这些失败的处理经常没有任何反应。</p>
@@ -466,7 +468,7 @@ surname = book &amp;&amp; book.author &amp;&amp; book.author.surname;
 
 <p>删除运算符（§4.13.4）能删除对象中的属性。它的操作数应当是一个属性访问表达式。令人意外的是，delete 没有操作属性的值，而是操作属性的属性：</p>
 
-<pre><code class="language-javascript">delete book.author;          // The book object now has no author property.
+<pre class="line-numbers"><code class="language-javascript">delete book.author;          // The book object now has no author property.
 delete book[&quot;main title&quot;];   // Now it doesn&#39;t have &quot;main title&quot;, either.
 </code></pre>
 
@@ -474,7 +476,7 @@ delete book[&quot;main title&quot;];   // Now it doesn&#39;t have &quot;main tit
 
 <p>如果删除成功或删除没有任何影响时删除表达式计算结果是 true（如删除不存在的属性）。delete 作用于非属性访问表达式（无用代码）时也返回 true。</p>
 
-<pre><code class="language-javascript">let o = {x: 1};    // o has own property x and inherits property toString
+<pre class="line-numbers"><code class="language-javascript">let o = {x: 1};    // o has own property x and inherits property toString
 delete o.x         // =&gt; true: deletes property x
 delete o.x         // =&gt; true: does nothing (x doesn&#39;t exist) but true anyway
 delete o.toString  // =&gt; true: does nothing (toString isn&#39;t an own property)
@@ -483,7 +485,7 @@ delete 1           // =&gt; true: nonsense, but true anyway
 
 <p>delete 不能删除那些可配置性为 false 的属性。某些内置对象的属性是不可配置的，比如通过变量声明和函数声明创建的全局对象的属性。在严格模式中，删除一个不可配置属性会报一个类型错误。在非严格模式中，在这些情况下的 delete 操作会返回 false：</p>
 
-<pre><code class="language-javascript">// In strict mode, all these deletions throw TypeError instead of returning false
+<pre class="line-numbers"><code class="language-javascript">// In strict mode, all these deletions throw TypeError instead of returning false
 delete Object.prototype // =&gt; false: property is non-configurable
 var x = 1;              // Declare a global variable
 delete globalThis.x     // =&gt; false: can&#39;t delete this property
@@ -493,13 +495,13 @@ delete globalThis.f     // =&gt; false: can&#39;t delete this property either
 
 <p>当在非严格模式中删除全局对象的可配值属性时，可以省略对全局对象的引用，直接在 delete 操作符后跟随要删除的属性名即可：</p>
 
-<pre><code class="language-javascript">globalThis.x = 1;       // Create a configurable global property (no let or var)
+<pre class="line-numbers"><code class="language-javascript">globalThis.x = 1;       // Create a configurable global property (no let or var)
 delete x                // =&gt; true: this property can be deleted
 </code></pre>
 
 <p>然而在严格模式中，delete 后跟随一个非法的操作数（比如 x），则会报一个语法错误，因此必须显式指定对象及其属性：</p>
 
-<pre><code class="language-javascript">delete x;               // SyntaxError in strict mode
+<pre class="line-numbers"><code class="language-javascript">delete x;               // SyntaxError in strict mode
 delete globalThis.x;    // This works
 </code></pre>
 
@@ -509,7 +511,7 @@ delete globalThis.x;    // This works
 
 <p>in 运算符的左侧是属性名，右侧是对象。如果对象的自有属性或继承属性中包含这个属性则返回 true：</p>
 
-<pre><code class="language-javascript">let o = { x: 1 };
+<pre class="line-numbers"><code class="language-javascript">let o = { x: 1 };
 &quot;x&quot; in o         // =&gt; true: o has an own property &quot;x&quot;
 &quot;y&quot; in o         // =&gt; false: o doesn&#39;t have a property &quot;y&quot;
 &quot;toString&quot; in o  // =&gt; true: o inherits a toString property
@@ -517,7 +519,7 @@ delete globalThis.x;    // This works
 
 <p>对象的 hasOwnProperty() 方法用来检测给定的名字是否是对象的自有属性。对于继承属性它将返回 false：</p>
 
-<pre><code class="language-javascript">let o = { x: 1 };
+<pre class="line-numbers"><code class="language-javascript">let o = { x: 1 };
 o.hasOwnProperty(&quot;x&quot;)        // =&gt; true: o has an own property x
 o.hasOwnProperty(&quot;y&quot;)        // =&gt; false: o doesn&#39;t have a property y
 o.hasOwnProperty(&quot;toString&quot;) // =&gt; false: toString is an inherited property
@@ -525,7 +527,7 @@ o.hasOwnProperty(&quot;toString&quot;) // =&gt; false: toString is an inherited 
 
 <p>propertyIsEnumerable() 是 hasOwnProperty() 的增强版。只有检测到是自有属性且这个属性的可枚举性为 true 时它才返回 true。某些内置属性是不可枚举的。通常由 JavaScript 代码创建的属性都是可枚举的，除非使用  §14.1 中介绍的技术来让它们不可枚举。</p>
 
-<pre><code class="language-javascript">let o = { x: 1 };
+<pre class="line-numbers"><code class="language-javascript">let o = { x: 1 };
 o.propertyIsEnumerable(&quot;x&quot;)  // =&gt; true: o has an own enumerable property x
 o.propertyIsEnumerable(&quot;toString&quot;)  // =&gt; false: not an own property
 Object.prototype.propertyIsEnumerable(&quot;toString&quot;) // =&gt; false: not enumerable
@@ -533,7 +535,7 @@ Object.prototype.propertyIsEnumerable(&quot;toString&quot;) // =&gt; false: not 
 
 <p>除了使用 in 运算符之外，另一种更简便的方法是使用 !== 判断一个属性是否是 undefined：</p>
 
-<pre><code class="language-javascript">let o = { x: 1 };
+<pre class="line-numbers"><code class="language-javascript">let o = { x: 1 };
 o.x !== undefined        // =&gt; true: o has a property x
 o.y !== undefined        // =&gt; false: o doesn&#39;t have a property y
 o.toString !== undefined // =&gt; true: o inherits a toString property
@@ -541,7 +543,7 @@ o.toString !== undefined // =&gt; true: o inherits a toString property
 
 <p>然而有一种场景只能使用 in 运算符而不能使用上述属性访问的方式。in 可以区分不存在的属性和存在但值为 undefined 的属性。例如下面的代码：</p>
 
-<pre><code class="language-javascript">let o = { x: undefined };  // Property is explicitly set to undefined
+<pre class="line-numbers"><code class="language-javascript">let o = { x: undefined };  // Property is explicitly set to undefined
 o.x !== undefined          // =&gt; false: property exists but is undefined
 o.y !== undefined          // =&gt; false: property doesn&#39;t even exist
 &quot;x&quot; in o                   // =&gt; true: the property exists
@@ -556,7 +558,7 @@ delete o.x;                // Delete the property x
 
 <p>§5.4.5 讨论过 for/in 循环，其可以在循环体中遍历指定对象中所有可枚举的属性（包括自有属性和继承的属性），把属性名称赋值给循环变量。对象继承的 内置方法不可枚举的，但在代码中给对象添加的属性都是可枚举的（除非用下文中提到的一个方法将它们转换为不可枚举的）。例如：</p>
 
-<pre><code class="language-javascript">let o = {x: 1, y: 2, z: 3};          // Three enumerable own properties
+<pre class="line-numbers"><code class="language-javascript">let o = {x: 1, y: 2, z: 3};          // Three enumerable own properties
 o.propertyIsEnumerable(&quot;toString&quot;)   // =&gt; false: not enumerable
 for(let p in o) {                    // Loop through the properties
     console.log(p);                  // Prints x, y, and z, but not toString
@@ -565,7 +567,7 @@ for(let p in o) {                    // Loop through the properties
 
 <p>为了防止 for/in 枚举到继承属性，可以在循环中添加显示检查：</p>
 
-<pre><code class="language-javascript">for(let p in o) {
+<pre class="line-numbers"><code class="language-javascript">for(let p in o) {
     if (!o.hasOwnProperty(p)) continue;       // Skip inherited properties
 }
 
@@ -602,7 +604,7 @@ for(let p in o) {
 
 <p>在 JavaScript 代码中有一个很常见的操作，需要将一个对象中的属性拷贝到另外一个对象。以下面的代码很容易实现：</p>
 
-<pre><code class="language-javascript">let target = {x: 1}, source = {y: 2, z: 3};
+<pre class="line-numbers"><code class="language-javascript">let target = {x: 1}, source = {y: 2, z: 3};
 for(let key of Object.keys(source)) {
     target[key] = source[key];
 }
@@ -617,22 +619,22 @@ target  // =&gt; {x: 1, y: 2, z: 3}
 
 <p>看这样一个场景，有一个对象定义许多属性的默认值，希望将这些默认属性中不存在于目标对象中的属性复制到目标对象中，使用 Object.assign() 不会得到想要的结果：</p>
 
-<pre><code class="language-javascript">Object.assign(o, defaults);  // overwrites everything in o with defaults
+<pre class="line-numbers"><code class="language-javascript">Object.assign(o, defaults);  // overwrites everything in o with defaults
 </code></pre>
 
 <p>想得到这个效果需要创建一个新的对象，将默认值拷贝到其中，然后用 o 的属性重写默认值中的属性：</p>
 
-<pre><code class="language-javascript">o = Object.assign({}, defaults, o);
+<pre class="line-numbers"><code class="language-javascript">o = Object.assign({}, defaults, o);
 </code></pre>
 
 <p>我们会在 §6.10.4 见到，可以用 ... 展开操作符如下操作这个对象拷贝并重写：</p>
 
-<pre><code class="language-javascript">o = {...defaults, ...o};
+<pre class="line-numbers"><code class="language-javascript">o = {...defaults, ...o};
 </code></pre>
 
 <p>为了避免对象创建和复制的额外开销，我们还可以通过编写一个 Object.assign() 仅在缺少属性时复制属性：</p>
 
-<pre><code class="language-javascript">// Like Object.assign() but doesn&#39;t override existing properties
+<pre class="line-numbers"><code class="language-javascript">// Like Object.assign() but doesn&#39;t override existing properties
 // (and also doesn&#39;t handle Symbol properties)
 function merge(target, ...sources) {
     for(let source of sources) {
@@ -654,7 +656,7 @@ merge({x: 1}, {x: 2, y: 2}, {y: 3, z: 4})          // =&gt; {x: 1, y: 2, z: 4}
 
 <p>对象序列化（serialization）是指将对象的状态转换为字符串，也可将字符串还原为对象。函数 JSON.stringify() 和 JSON.parse() 用来序列化和还原 JavaScript 对象。这些方法都使用 JSON 作为数据交换格式，JSON 的全称是“JavaScript Object Notation”——JavaScript 对象表示法，它的语法和 JavaScript 对象与数组字面量的语法非常相近：</p>
 
-<pre><code class="language-javascript">let o = {x: 1, y: {z: [false, null, &quot;&quot;]}}; // Define a test object
+<pre class="line-numbers"><code class="language-javascript">let o = {x: 1, y: {z: [false, null, &quot;&quot;]}}; // Define a test object
 let s = JSON.stringify(o);   // s == &#39;{&quot;x&quot;:1,&quot;y&quot;:{&quot;z&quot;:[false,null,&quot;&quot;]}}&#39;
 let p = JSON.parse(s);       // p == {x: 1, y: {z: [false, null, &quot;&quot;]}}
 </code></pre>
@@ -671,12 +673,12 @@ let p = JSON.parse(s);       // p == {x: 1, y: {z: [false, null, &quot;&quot;]}}
 
 <p>默认的 toString() 方法的返回值带有的信息量很少（尽管它在检测对象的类型时非常有用，参照 §14.4.3），例如，下面这行代码的计算结果为字符串”[object Object]”：</p>
 
-<pre><code class="language-javascript">let s = { x: 1, y: 1 }.toString();  // s == &quot;[object Object]&quot;
+<pre class="line-numbers"><code class="language-javascript">let s = { x: 1, y: 1 }.toString();  // s == &quot;[object Object]&quot;
 </code></pre>
 
 <p>由于默认的 toString() 方法并不会输出很多有用的信息，因此很多类都带有自定义的 toString()。例如，当数组转换为字符串的时候，结果是一个数组元素列表，只是每个元素都转换成了字符串，再比如，当函数转换为字符串的时候，得到函数的源代码。可以像下面这样自定义 toString() 方法：</p>
 
-<pre><code class="language-javascript">let point = {
+<pre class="line-numbers"><code class="language-javascript">let point = {
     x: 1,
     y: 2,
     toString: function() { return `(${this.x}, ${this.y})`; }
@@ -688,7 +690,7 @@ String(point)    // =&gt; &quot;(1, 2)&quot;: toString() is used for string conv
 
 <p>除了基本的 toString() 方法之外，对象都包含 toLocaleString() 方法，这个方法返回一个表示这个对象的本地化字符串。Object 中默认的 toLocaleString() 方法并不做任何本地化自身的操作，它仅调用 toString() 方法并返回对应值。Date 和 Number 类对 toLocaleString() 方法做了定制，可以用它对数字、日期和时间做本地化的转换。 Array 类的 toLocaleString() 方法和 toString() 方法很像，唯一的不同是每个数组元素会调用 toLocaleString() 方法转换为字符串，而不是调用各自的 toString() 方法。可以像这样使用 point 对象做到同样的效果：</p>
 
-<pre><code class="language-javascript">let point = {
+<pre class="line-numbers"><code class="language-javascript">let point = {
     x: 1000,
     y: 2000,
     toString: function() { return `(${this.x}, ${this.y})`; },
@@ -706,7 +708,7 @@ point.toLocaleString()  // =&gt; &quot;(1,000, 2,000)&quot;: note thousands sepa
 
 <p>valueOf() 方法和 toString() 方法非常类似，但往往当 JavaScript 需要将对象转换为某种原始值而非字符串的时候才会调用它，尤其是转换为数字的时候。如果在需要使用原始值的上下文中使用了对象，JavaScript 就会自动调用这个方法。默认的 valueOf() 方法不足为奇，但有些内置类自定义了 valueOf() 方法. Date 类定义 valueOf() 将日期转化成数值型，并且这允许 Date 对象使用 &lt; 和 &gt; 按时间先手顺序比较。可以对 point 对象做同样的事，定义一个 valueOf() 方法返回原点到点的距离：</p>
 
-<pre><code class="language-javascript">let point = {
+<pre class="line-numbers"><code class="language-javascript">let point = {
     x: 3,
     y: 4,
     valueOf: function() { return Math.hypot(this.x, this.y); }
@@ -721,7 +723,7 @@ point &lt; 6      // =&gt; true
 
 <p>Object.prototype 实际上没有定义 toJSON() 方法，但对于需要执行序列化的对象来说，JSON.stringify() 方法（见 §6.8）会调用 toJSON() 方法。如果在待序列化的对象中存在这 个方法，则调用它，返回值即是序列化的结果，而不是原始的对象。Date 类（§11.4）定义了 toJSON() 方法返回日期的序列化字符串。我们可以这样对 point 对象做同样的事：</p>
 
-<pre><code class="language-javascript">let point = {
+<pre class="line-numbers"><code class="language-javascript">let point = {
     x: 1,
     y: 2,
     toString: function() { return `(${this.x}, ${this.y})`; },
@@ -738,7 +740,7 @@ JSON.stringify([point])   // =&gt; &#39;[&quot;(1, 2)&quot;]&#39;
 
 <p>假设值存储在变量 x 和 y 中，并且想要创建具有名为 x 和 y 的属性的对象，这些属性包含这些值。使用基本对象字面量语法，最终会重复每个标识符两次：</p>
 
-<pre><code class="language-javascript">let x = 1, y = 2;
+<pre class="line-numbers"><code class="language-javascript">let x = 1, y = 2;
 let o = {
     x: x,
     y: y
@@ -747,7 +749,7 @@ let o = {
 
 <p>在 ES6 之后，可以删除标识符的冒号和一个副本，最终使用更简单的代码：</p>
 
-<pre><code class="language-javascript">let x = 1, y = 2;
+<pre class="line-numbers"><code class="language-javascript">let x = 1, y = 2;
 let o = { x, y };
 o.x + o.y  // =&gt; 3
 </code></pre>
@@ -756,7 +758,7 @@ o.x + o.y  // =&gt; 3
 
 <p>有时需要创建具有特定属性的对象，但该属性的名称不是可以在源代码中键入的编译时常量。相反，需要的属性名称存储在变量中，或者是调用的函数的返回值。不能对此类属性使用基本对象字面量。而必须创建一个对象，通过额外的步骤，添加所需的属性：</p>
 
-<pre><code class="language-javascript">const PROPERTY_NAME = &quot;p1&quot;;
+<pre class="line-numbers"><code class="language-javascript">const PROPERTY_NAME = &quot;p1&quot;;
 function computePropertyName() { return &quot;p&quot; + 2; }
 
 let o = {};
@@ -766,7 +768,7 @@ o[computePropertyName()] = 2;
 
 <p>使用称为计算属性的 ES6 特性设置这样的对象要简单得多，该功能允许从前面的代码写入方括内并直接移动到对象字面量中：</p>
 
-<pre><code class="language-javascript">const PROPERTY_NAME = &quot;p1&quot;;
+<pre class="line-numbers"><code class="language-javascript">const PROPERTY_NAME = &quot;p1&quot;;
 function computePropertyName() { return &quot;p&quot; + 2; }
 
 let p = {
@@ -785,7 +787,7 @@ p.p1 + p.p2 // =&gt; 3
 
 <p>计算属性语法启用了另一个非常重要的对象字面量特性。在 ES6 之后，属性名称可以是字符串或 Symbol。如果将 Symbol 分配给变量或常量，则可以使用计算属性语法将该 Symbol 用作属性名称：</p>
 
-<pre><code class="language-javascript">const extension = Symbol(&quot;my extension symbol&quot;);
+<pre class="line-numbers"><code class="language-javascript">const extension = Symbol(&quot;my extension symbol&quot;);
 let o = {
     [extension]: { /* extension data stored in this object */ }
 };
@@ -800,7 +802,7 @@ o[extension].x = 0; // This won&#39;t conflict with other properties of o
 
 <p>在 ES2018 之后，可以使用展开运算符 ... 将现有的对象中的属性复制到新的对象中：</p>
 
-<pre><code class="language-javascript">let position = { x: 0, y: 0 };
+<pre class="line-numbers"><code class="language-javascript">let position = { x: 0, y: 0 };
 let dimensions = { width: 100, height: 75 };
 let rect = { ...position, ...dimensions };
 rect.x + rect.y + rect.width + rect.height // =&gt; 175
@@ -810,7 +812,7 @@ rect.x + rect.y + rect.width + rect.height // =&gt; 175
 
 <p>如果展开的目标对象和源对象中具有相同的名称，则该属性的值将是位置处于后面的值：</p>
 
-<pre><code class="language-javascript">let o = { x: 1 };
+<pre class="line-numbers"><code class="language-javascript">let o = { x: 1 };
 let p = { x: 0, ...o };
 p.x   // =&gt; 1: the value from object o overrides the initial value
 let q = { ...o, x: 2 };
@@ -819,7 +821,7 @@ q.x   // =&gt; 2: the value 2 overrides the previous value from o.
 
 <p>还有注意展开运算符只展开对象的自有属性，不展开继承属性：</p>
 
-<pre><code class="language-javascript">let o = Object.create({x: 1}); // o inherits the property x
+<pre class="line-numbers"><code class="language-javascript">let o = Object.create({x: 1}); // o inherits the property x
 let p = { ...o };
 p.x                            // =&gt; undefined
 </code></pre>
@@ -830,7 +832,7 @@ p.x                            // =&gt; undefined
 
 <p>当函数被定义为对象的属性时，我们称该函数为方法（我们将在第 8 章和第 9 章中对方法有更多的描述）。在 ES6 之前，在对象字面量中用函数定义表达式定义一个方法和在对象中定义其他属性一样：</p>
 
-<pre><code class="language-javascript">let square = {
+<pre class="line-numbers"><code class="language-javascript">let square = {
     area: function() { return this.side * this.side; },
     side: 10
 };
@@ -839,7 +841,7 @@ square.area() // =&gt; 100
 
 <p>但是，在 ES6 中，对象字面量语法（以及我们将在第 9 章中看到的类定义语法）已扩展成允许省略函数关键字和冒号的快捷方式，可以写成这样的代码：</p>
 
-<pre><code class="language-javascript">let square = {
+<pre class="line-numbers"><code class="language-javascript">let square = {
     area() { return this.side * this.side; },
     side: 10
 };
@@ -850,7 +852,7 @@ square.area() // =&gt; 100
 
 <p>使用此速记语法编写方法时，属性名称可以采用对象字面量中的任何合法形式：除了像上面的名称 area 这样的常规 JavaScript 标识符外，还可以使用字符串字面量和计算属性名称，包括 Symbol 属性名称：</p>
 
-<pre><code class="language-javascript">const METHOD_NAME = &quot;m&quot;;
+<pre class="line-numbers"><code class="language-javascript">const METHOD_NAME = &quot;m&quot;;
 const symbol = Symbol();
 let weirdMethods = {
     &quot;method With Spaces&quot;(x) { return x + 1; },
@@ -874,7 +876,7 @@ weirdMethods[symbol](1)                // =&gt; 4
 
 <p>存储器属性可以通过表达式在对象字面量语法中定义（不像我们在这里看到的其他 ES6 扩展，getter 和 setter 是 ES5 中的内容）：</p>
 
-<pre><code class="language-javascript">let o = {
+<pre class="line-numbers"><code class="language-javascript">let o = {
     // An ordinary data property
     dataProp: value,
 
@@ -888,7 +890,7 @@ weirdMethods[symbol](1)                // =&gt; 4
 
 <p>上面定义的存储器方法只需获取并设置数据属性的值，没有理由将存储器属性替换数据属性。但作为一个更有趣的示例，请考虑以下表示 2D 笛卡尔点的对象。它具有表示点的 x 和 y 坐标的普通数据属性，并且具有提供点等效极坐标的存储器属性：</p>
 
-<pre><code class="language-javascript">let p = {
+<pre class="line-numbers"><code class="language-javascript">let p = {
     // x and y are regular read-write data properties.
     x: 1.0,
     y: 1.0,
@@ -914,7 +916,7 @@ p.theta // =&gt; Math.PI / 4
 
 <p>存储器属性是可继承的，就像数据属性一样，因此可以使用上面定义的对象 p 作为其他点的原型。可以为新对象提供自有的 x 和 y 属性，它们将继承 r 和 theta 属性：</p>
 
-<pre><code class="language-javascript">let q = Object.create(p); // A new object that inherits getters and setters
+<pre class="line-numbers"><code class="language-javascript">let q = Object.create(p); // A new object that inherits getters and setters
 q.x = 3; q.y = 4;         // Create q&#39;s own data properties
 q.r                       // =&gt; 5: the inherited accessor properties work
 q.theta                   // =&gt; Math.atan2(4, 3)
@@ -922,7 +924,7 @@ q.theta                   // =&gt; Math.atan2(4, 3)
 
 <p>上述代码使用存储器属性定义一个 API，该 API 提供一组数据的两种表示形式（笛卡尔坐标和极坐标）。使用存储器属性的其他场景包括属性写入的稳健性检测以及在每个属性上返回不同的值：</p>
 
-<pre><code class="language-javascript">// This object generates strictly increasing serial numbers
+<pre class="line-numbers"><code class="language-javascript">// This object generates strictly increasing serial numbers
 const serialnum = {
     // This data property holds the next serial number.
     // The _ in the property name hints that it is for internal use only.
@@ -944,7 +946,7 @@ serialnum.next          // =&gt; 11: different value each time we get next
 
 <p>最后，下面是使用 getter 方法实现具有&quot;魔幻&quot;行为的属性的示例：</p>
 
-<pre><code class="language-javascript">// This object has accessor properties that return random numbers.
+<pre class="line-numbers"><code class="language-javascript">// This object has accessor properties that return random numbers.
 // The expression &quot;random.octet&quot;, for example, yields a random number
 // between 0 and 255 each time it is evaluated.
 const random = {
@@ -1011,6 +1013,10 @@ const random = {
                   <ul id="side-nav" class="side-nav">
                     
                     <li class="side-title"><span>HomeAssistant</span></li>
+                    
+                    <li>
+                      <a title="梅林配置" href="16211303812539.html">梅林配置</a>
+                    </li>
                     
                     <li>
                       <a title="Ubuntu 20.04Lts 安装 HA" href="16201149334405.html">Ubuntu 20.04Lts 安装 HA</a>

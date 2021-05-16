@@ -45,6 +45,8 @@
           <li class="divider"></li>
           <li><label>HomeAssistant</label></li>
           
+          <li><a title="梅林配置" href="16211303812539.html">梅林配置</a></li>
+          
           <li><a title="Ubuntu 20.04Lts 安装 HA" href="16201149334405.html">Ubuntu 20.04Lts 安装 HA</a></li>
           
           <li><a title="Windows10 安装 HomeAssistant" href="16200327308578.html">Windows10 安装 HomeAssistant</a></li>
@@ -118,7 +120,7 @@
     <time class="article-date" datetime="2021-04-05T10:51:21+08:00">发布于2021/04/05</time>
     <h2 id="toc_0">组件</h2>
 
-<pre><code class="language-javascript">@Component({
+<pre class="line-numbers"><code class="language-javascript">@Component({
   selector: &#39;events-app&#39;,
   template: `
     &lt;h2&gt;Hello world&lt;/h2&gt;
@@ -131,7 +133,7 @@
 
 <p>webpack 需要在编译 app 时知道哪一个文件要被捆绑，在 angular.json 中设置：</p>
 
-<pre><code class="language-javascript">&quot;options&quot;: {
+<pre class="line-numbers"><code class="language-javascript">&quot;options&quot;: {
     &quot;outputPath&quot;: &quot;dist/ng-fundamentals&quot;,
     &quot;index&quot;: &quot;src/index.html&quot;,
     &quot;main&quot;: &quot;src/main.ts&quot;,
@@ -154,7 +156,7 @@
 
 <p><code>#标识符</code> 模板变量可以在模板的任何位置访问：</p>
 
-<pre><code class="language-markup">&lt;event-thumbnail #thumbnnail [event]=&quot;events&quot; (eventClick)=&quot;handleEventClicked($event)&quot;&gt;&lt;/event-thumbnail&gt;
+<pre class="line-numbers"><code class="language-markup">&lt;event-thumbnail #thumbnnail [event]=&quot;events&quot; (eventClick)=&quot;handleEventClicked($event)&quot;&gt;&lt;/event-thumbnail&gt;
 &lt;button class=&quot;btn btn-primary&quot; (click)=&quot;thumbnnail.logFoo()&quot;&gt;Log me some foo&lt;/button&gt;
 </code></pre>
 
@@ -178,12 +180,12 @@
 
 <h4 id="toc_5">class binding</h4>
 
-<pre><code class="language-markup">&lt;span [class.green]=&quot;event?.time === &#39;8:00 am&#39;&quot;&gt;{{event?.time}}&lt;/span&gt;
+<pre class="line-numbers"><code class="language-markup">&lt;span [class.green]=&quot;event?.time === &#39;8:00 am&#39;&quot;&gt;{{event?.time}}&lt;/span&gt;
 </code></pre>
 
 <h4 id="toc_6">ngClass</h4>
 
-<pre><code class="language-markup">&lt;span [ngClass]=&quot;{green: event?.time === &#39;8:00 am&#39;, bold: event?.time === &#39;8:00 am&#39;}&quot;&gt;{{event?.time}}&lt;/span&gt;
+<pre class="line-numbers"><code class="language-markup">&lt;span [ngClass]=&quot;{green: event?.time === &#39;8:00 am&#39;, bold: event?.time === &#39;8:00 am&#39;}&quot;&gt;{{event?.time}}&lt;/span&gt;
 </code></pre>
 
 <p>ngClass 参数可以是函数，函数返回一个对象 {classKey：boolean,…} 或空格分隔字符串 &#39;green bold&#39; 或者 class 数组 [&#39;green&#39; , &#39;bold&#39;]。</p>
@@ -192,7 +194,7 @@
 
 <h4 id="toc_8">style binding</h4>
 
-<pre><code class="language-markup">&lt;span [style.color]=&quot;event?.time === &#39;8:00 am&#39; ? &#39;#003300&#39; : &#39;#bbb&#39;&quot;&gt;{{event?.time}}&lt;/span&gt;
+<pre class="line-numbers"><code class="language-markup">&lt;span [style.color]=&quot;event?.time === &#39;8:00 am&#39; ? &#39;#003300&#39; : &#39;#bbb&#39;&quot;&gt;{{event?.time}}&lt;/span&gt;
 </code></pre>
 
 <h4 id="toc_9">ngStyle</h4>
@@ -216,14 +218,14 @@
 
 <h3 id="toc_12">服务</h3>
 
-<pre><code class="language-typescript">@Injectable()
+<pre class="line-numbers"><code class="language-typescript">@Injectable()
 constructor(private eventService: EventService) {    
 }
 </code></pre>
 
 <p>这里的实际上是个简写，全文：</p>
 
-<pre><code class="language-typescript">@Injectable()
+<pre class="line-numbers"><code class="language-typescript">@Injectable()
 private eventService: EventService;
 constructor(private _eventService: EventService) {
     this.eventService = _eventService;
@@ -238,7 +240,7 @@ constructor(private _eventService: EventService) {
 
 <p>引入 toastr 时，在上面声明了一个 toastr ：</p>
 
-<pre><code class="language-typescript">declare let toastr: any;
+<pre class="line-numbers"><code class="language-typescript">declare let toastr: any;
 </code></pre>
 
 <p>实际上，在 angular.json 中已经添加了 toastr 的 Js 包，使其在 window 对象中添加了 toaster 变量，我们已经知道了 toastr object 是什么，我们可以直接使用这个对象中的接口，但是 typeScript 编译器不知道，所以只需要声明一个变量，让编译器通过编译即可。</p>
@@ -255,17 +257,17 @@ constructor(private _eventService: EventService) {
 
 <p>组件都有 selector 属性，是因为其会被用在 html 的内部，当组件被作为路由使用时，则不需要 selector 属性。</p>
 
-<pre><code class="language-typescript">import { Routes } from &quot;@angular/router&quot;;
+<pre class="line-numbers"><code class="language-typescript">import { Routes } from &quot;@angular/router&quot;;
 </code></pre>
 
 <p>路由只是一个<strong>数组</strong>配置（它是有序的，从上往下查找匹配路由）,这里导入 Routes 也同样只是为了 typeScript 的静态类型 check。</p>
 
 <p>真正让这个数组奏效的是在模块中通过路由模块的根路由对该数组的载入：</p>
 
-<pre><code class="language-type">RouterModule.forRoot(appRoutes)
+<pre class="line-numbers"><code class="language-type">RouterModule.forRoot(appRoutes)
 </code></pre>
 
-<pre><code class="language-typescript">{ path: &#39;&#39;, redirectTo: &#39;events&#39;, pathMatch: &#39;full&#39; }
+<pre class="line-numbers"><code class="language-typescript">{ path: &#39;&#39;, redirectTo: &#39;events&#39;, pathMatch: &#39;full&#39; }
 </code></pre>
 
 <p>注意添加默认路由。</p>
@@ -294,26 +296,26 @@ constructor(private _eventService: EventService) {
 
 <h4 id="toc_19">获取参数</h4>
 
-<pre><code class="language-typescript">import { ActivatedRoute } from &quot;@angular/router&quot;;
+<pre class="line-numbers"><code class="language-typescript">import { ActivatedRoute } from &quot;@angular/router&quot;;
 </code></pre>
 
 <p>注入 ActivateRoute service 获取参数。</p>
 
-<pre><code class="language-typescript">+this.route.snapshot.params[&#39;id&#39;]
+<pre class="line-numbers"><code class="language-typescript">+this.route.snapshot.params[&#39;id&#39;]
 </code></pre>
 
 <p>这里获取到的参数是字符串，需要转成 number</p>
 
 <h3 id="toc_20">HTML 链接路由</h3>
 
-<pre><code class="language-typescript">[routerLink]=&quot;[&#39;/events&#39;, event.id]&quot;
+<pre class="line-numbers"><code class="language-typescript">[routerLink]=&quot;[&#39;/events&#39;, event.id]&quot;
 </code></pre>
 
 <p>[routerLink] 的参数是数组，第一个元素是字符串路由地址，第二个元素是参数。</p>
 
 <h3 id="toc_21">Code 导航页面</h3>
 
-<pre><code class="language-typescript">Router.navigate([&#39;/events&#39;, event.id])
+<pre class="line-numbers"><code class="language-typescript">Router.navigate([&#39;/events&#39;, event.id])
 </code></pre>
 
 <p>参数同上</p>
@@ -328,10 +330,10 @@ constructor(private _eventService: EventService) {
 
 <p>通过服务实现 canActivate</p>
 
-<pre><code class="language-typescript">{ path: &#39;events/:id&#39;, component: EventDetailsComponent, canActivate: [EventRouteActivator] },
+<pre class="line-numbers"><code class="language-typescript">{ path: &#39;events/:id&#39;, component: EventDetailsComponent, canActivate: [EventRouteActivator] },
 </code></pre>
 
-<pre><code class="language-typescript">@Injectable()
+<pre class="line-numbers"><code class="language-typescript">@Injectable()
 export class EventRouteActivator implements CanActivate {
     constructor(private eventService: EventService, private router: Router) {
     }
@@ -351,12 +353,12 @@ export class EventRouteActivator implements CanActivate {
 
 <p>通过方法实现 canDeactivate</p>
 
-<pre><code class="language-typescript">{ path: &#39;events/new&#39;, component: CreateEventComponent, canDeactivate: [&#39;canDeactivateCreateEvent&#39;] },
+<pre class="line-numbers"><code class="language-typescript">{ path: &#39;events/new&#39;, component: CreateEventComponent, canDeactivate: [&#39;canDeactivateCreateEvent&#39;] },
 </code></pre>
 
 <p>方法需要注入 providers，且不能使用缩写:</p>
 
-<pre><code class="language-typescript">  providers: [
+<pre class="line-numbers"><code class="language-typescript">  providers: [
     {
       provide: &#39;canDeactivateCreateEvent&#39;,
       useValue: checkDirytState
@@ -366,7 +368,7 @@ export class EventRouteActivator implements CanActivate {
 
 <p>useValue 是方法，方法可以放在任何文件里：</p>
 
-<pre><code class="language-typescript">export function checkDirytState(component: CreateEventComponent) {
+<pre class="line-numbers"><code class="language-typescript">export function checkDirytState(component: CreateEventComponent) {
   if (component.isDirty) {
     return window.confirm(&#39;You have not saved this event, do you really want to cancel?&#39;)
   }
@@ -376,7 +378,7 @@ export class EventRouteActivator implements CanActivate {
 
 <h3 id="toc_25">active link</h3>
 
-<pre><code class="language-markup">&lt;a [routerLink]=&quot;[&#39;/events&#39;]&quot; routerLinkActive=&quot;active&quot; [routerLinkActiveOptions]=&quot;{exact:true}&quot;&gt;All Events&lt;/a&gt;
+<pre class="line-numbers"><code class="language-markup">&lt;a [routerLink]=&quot;[&#39;/events&#39;]&quot; routerLinkActive=&quot;active&quot; [routerLinkActiveOptions]=&quot;{exact:true}&quot;&gt;All Events&lt;/a&gt;
 </code></pre>
 
 <p>routerLinkActive=&quot;active&quot; 添加在含有 routerlink 的标签上，当路由与标签指定的路由匹配，则添加 active class。</p>
@@ -413,7 +415,7 @@ export class EventRouteActivator implements CanActivate {
 
 <p>需要引入 FormsModule 注册到 module 中。</p>
 
-<pre><code class="language-markup">&lt;form #loginForm=&quot;ngForm&quot; (ngSubmit)=&quot;login(loginForm.value)&quot; autocomplete=&quot;off&quot;&gt;
+<pre class="line-numbers"><code class="language-markup">&lt;form #loginForm=&quot;ngForm&quot; (ngSubmit)=&quot;login(loginForm.value)&quot; autocomplete=&quot;off&quot;&gt;
     &lt;input (ngModel)=&quot;userName&quot; name=&quot;userName&quot; id=&quot;userName&quot; type=&quot;text&quot; class=&quot;form-control&quot; placeholder=&quot;User Name...&quot; /&gt;
 &lt;/form&gt;
 </code></pre>
@@ -426,7 +428,7 @@ export class EventRouteActivator implements CanActivate {
 
 <h4 id="toc_29">表单验证</h4>
 
-<pre><code class="language-markup">&lt;em *ngIf=&quot;newEventForm.controls.date?.invalid &amp;&amp; (newEventForm.controls.date?.touched)&quot;&gt;Required&lt;/em&gt;
+<pre class="line-numbers"><code class="language-markup">&lt;em *ngIf=&quot;newEventForm.controls.date?.invalid &amp;&amp; (newEventForm.controls.date?.touched)&quot;&gt;Required&lt;/em&gt;
 </code></pre>
 
 <p>基于模板的表单验证特别长，因为 formControl 不是 public 类型，它是 Form 的属性，所以在表单验证时特别繁琐。</p>
@@ -451,7 +453,7 @@ export class EventRouteActivator implements CanActivate {
 
 <p>表单验证是 FormControl 的第二个参数：</p>
 
-<pre><code class="language-typescript">let firstName = new FormControl(this.auth.currentUser.firstName, Validators.required);
+<pre class="line-numbers"><code class="language-typescript">let firstName = new FormControl(this.auth.currentUser.firstName, Validators.required);
 </code></pre>
 
 <p>如果有多个验证使用数组。</p>
@@ -471,7 +473,7 @@ export class EventRouteActivator implements CanActivate {
 
 <h4 id="toc_34">自定义表单验证方法</h4>
 
-<pre><code class="language-typescript">export function restrictedWords(...words) {
+<pre class="line-numbers"><code class="language-typescript">export function restrictedWords(...words) {
   return (control: FormControl): { [key: string]: any } =&gt; {
     if (!words) {
       return null;
@@ -533,6 +535,10 @@ export class EventRouteActivator implements CanActivate {
                   <ul id="side-nav" class="side-nav">
                     
                     <li class="side-title"><span>HomeAssistant</span></li>
+                    
+                    <li>
+                      <a title="梅林配置" href="16211303812539.html">梅林配置</a>
+                    </li>
                     
                     <li>
                       <a title="Ubuntu 20.04Lts 安装 HA" href="16201149334405.html">Ubuntu 20.04Lts 安装 HA</a>

@@ -45,6 +45,8 @@
           <li class="divider"></li>
           <li><label>HomeAssistant</label></li>
           
+          <li><a title="梅林配置" href="16211303812539.html">梅林配置</a></li>
+          
           <li><a title="Ubuntu 20.04Lts 安装 HA" href="16201149334405.html">Ubuntu 20.04Lts 安装 HA</a></li>
           
           <li><a title="Windows10 安装 HomeAssistant" href="16200327308578.html">Windows10 安装 HomeAssistant</a></li>
@@ -134,14 +136,14 @@
 
 <p>报错：</p>
 
-<pre><code class="language-text">Microsoft Visual C++ 14.0 is required
+<pre class="line-numbers"><code class="language-text">Microsoft Visual C++ 14.0 is required
 </code></pre>
 
 <p>下载 <a href="https://visualstudio.microsoft.com/zh-hans/visual-cpp-build-tools/">C++ 生成工具</a>，并安装默认选中所有内容——4G+。</p>
 
 <p>再次报错：</p>
 
-<pre><code class="language-text">ERROR: After October 2020 you may experience errors when installing or updating package
+<pre class="line-numbers"><code class="language-text">ERROR: After October 2020 you may experience errors when installing or updating package
 s. This is because pip will change the way that it resolves dependency conflicts. 
 
 We recommend you use --use-feature=2020-resolver to test your packages with the new res
@@ -169,27 +171,27 @@ olver before it becomes the default.
 
 <h3 id="toc_7">警告</h3>
 
-<pre><code class="language-text">WARNING (MainThread) [scapy.runtime] No libpcap provider available ! pcap won&#39;t be used
+<pre class="line-numbers"><code class="language-text">WARNING (MainThread) [scapy.runtime] No libpcap provider available ! pcap won&#39;t be used
 </code></pre>
 
 <p><a href="https://www.winpcap.org/install/default.htm">winpcap</a> 代替 Linux 的 libpcap。<br/>
 安装后：</p>
 
-<pre><code class="language-text">WARNING (MainThread) [scapy.runtime] WinPcap is now deprecated (not maintained). Please use Npcap instead
+<pre class="line-numbers"><code class="language-text">WARNING (MainThread) [scapy.runtime] WinPcap is now deprecated (not maintained). Please use Npcap instead
 </code></pre>
 
 <p>又要使用 <a href="https://nmap.org/npcap/#download">Npcap</a> 替代，关闭服务卸载 Winpcap 后安装并重新启动服务。</p>
 
 <h3 id="toc_8">错误</h3>
 
-<pre><code class="language-text">Unable to install package PyNaCl==1.3.0: ERROR: Command errored out with exit status 1: command:
+<pre class="line-numbers"><code class="language-text">Unable to install package PyNaCl==1.3.0: ERROR: Command errored out with exit status 1: command:
 </code></pre>
 
 <p>解决方案：<br/>
 <code>pip uninstall typing</code><br/>
 <code>pip install pynacl==1.3.0</code></p>
 
-<pre><code class="language-text">ERROR: Could not build wheels for pynacl which use PEP 517 and cannot be installed directly
+<pre class="line-numbers"><code class="language-text">ERROR: Could not build wheels for pynacl which use PEP 517 and cannot be installed directly
 </code></pre>
 
 <p><code>pip install pep517</code></p>
@@ -250,6 +252,10 @@ olver before it becomes the default.
                   <ul id="side-nav" class="side-nav">
                     
                     <li class="side-title"><span>HomeAssistant</span></li>
+                    
+                    <li>
+                      <a title="梅林配置" href="16211303812539.html">梅林配置</a>
+                    </li>
                     
                     <li>
                       <a title="Ubuntu 20.04Lts 安装 HA" href="16201149334405.html">Ubuntu 20.04Lts 安装 HA</a>

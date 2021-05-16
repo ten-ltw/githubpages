@@ -45,6 +45,8 @@
           <li class="divider"></li>
           <li><label>HomeAssistant</label></li>
           
+          <li><a title="梅林配置" href="16211303812539.html">梅林配置</a></li>
+          
           <li><a title="Ubuntu 20.04Lts 安装 HA" href="16201149334405.html">Ubuntu 20.04Lts 安装 HA</a></li>
           
           <li><a title="Windows10 安装 HomeAssistant" href="16200327308578.html">Windows10 安装 HomeAssistant</a></li>
@@ -267,25 +269,25 @@
 
 <p>到目前为止使用数组字面量是创建数组最简单的方法，在方括号中将数组元素用逗号隔开即可。例如：</p>
 
-<pre><code class="language-javascript">let empty = [];                 // An array with no elements
+<pre class="line-numbers"><code class="language-javascript">let empty = [];                 // An array with no elements
 let primes = [2, 3, 5, 7, 11];  // An array with 5 numeric elements
 let misc = [ 1.1, true, &quot;a&quot;, ]; // 3 elements of various types + trailing comma
 </code></pre>
 
 <p>数组字面量中的值不一定要是常量；它们可以是任意的表达式：</p>
 
-<pre><code class="language-javascript">let base = 1024;
+<pre class="line-numbers"><code class="language-javascript">let base = 1024;
 let table = [base, base+1, base+2, base+3];
 </code></pre>
 
 <p>数组字面量可以包含对象字面量或其他数组字面量：</p>
 
-<pre><code class="language-javascript">let b = [[1, {x: 1, y: 2}], [2, {x: 3, y: 4}]];
+<pre class="line-numbers"><code class="language-javascript">let b = [[1, {x: 1, y: 2}], [2, {x: 3, y: 4}]];
 </code></pre>
 
 <p>如果数组字面量在一行中包含多个逗号，之间没有值，则数组是稀疏的（请参阅 §7.3）。省略值的数组元素不存在，但如果查询它们则返回 undefined：</p>
 
-<pre><code class="language-javascript">let count = [1,,3]; // Elements at indexes 0 and 2. No element at index 1
+<pre class="line-numbers"><code class="language-javascript">let count = [1,,3]; // Elements at indexes 0 and 2. No element at index 1
 let undefs = [,,];  // An array with no elements but a length of 2
 </code></pre>
 
@@ -295,7 +297,7 @@ let undefs = [,,];  // An array with no elements but a length of 2
 
 <p>ES6 之后，可以使用展开操作符 ... 将一个数组中的元素展开在数组字面量中：</p>
 
-<pre><code class="language-javascript">let a = [1, 2, 3];
+<pre class="line-numbers"><code class="language-javascript">let a = [1, 2, 3];
 let b = [0, ...a, 4];  // b == [0, 1, 2, 3, 4]
 </code></pre>
 
@@ -303,7 +305,7 @@ let b = [0, ...a, 4];  // b == [0, 1, 2, 3, 4]
 
 <p>展开运算符可以方便的创建一个数组的拷贝（浅拷贝）：</p>
 
-<pre><code class="language-javascript">let original = [1,2,3];
+<pre class="line-numbers"><code class="language-javascript">let original = [1,2,3];
 let copy = [...original];
 copy[0] = 0;  // Modifying the copy does not change the original
 original[0]   // =&gt; 1
@@ -311,13 +313,13 @@ original[0]   // =&gt; 1
 
 <p>展开运算符可以作用于任何可迭代对象。（可迭代对象是可以用 for/of 进行循环的对象；第一次在 §5.4.4 中提到，在第 12 章会看到更多关于它们的描述。）字符串是可迭代对象，所以可以使用展开操作符将字符串转换成单个字符的数组。</p>
 
-<pre><code class="language-javascript">let digits = [...&quot;0123456789ABCDEF&quot;];
+<pre class="line-numbers"><code class="language-javascript">let digits = [...&quot;0123456789ABCDEF&quot;];
 digits // =&gt; [&quot;0&quot;,&quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,&quot;5&quot;,&quot;6&quot;,&quot;7&quot;,&quot;8&quot;,&quot;9&quot;,&quot;A&quot;,&quot;B&quot;,&quot;C&quot;,&quot;D&quot;,&quot;E&quot;,&quot;F&quot;]
 </code></pre>
 
 <p>Set 对象（§11.1.1）是可迭代对象，所以数组去重有一种简单的方法是用展开运算符将数组转换成 set 然后再转成数组：</p>
 
-<pre><code class="language-javascript">let letters = [...&quot;hello world&quot;];
+<pre class="line-numbers"><code class="language-javascript">let letters = [...&quot;hello world&quot;];
 [...new Set(letters)]  // =&gt; [&quot;h&quot;,&quot;e&quot;,&quot;l&quot;,&quot;o&quot;,&quot; &quot;,&quot;w&quot;,&quot;r&quot;,&quot;d&quot;]
 </code></pre>
 
@@ -327,21 +329,21 @@ digits // =&gt; [&quot;0&quot;,&quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4
 
 <p>调用时没有实参：</p>
 
-<pre><code class="language-javascript">let a = new Array();
+<pre class="line-numbers"><code class="language-javascript">let a = new Array();
 </code></pre>
 
 <p>这个方法创建了一个没有元素的空数组，它等价于 [] 数组字面量。</p>
 
 <p>调用时有一个数值实参，它指定了数组的长度：</p>
 
-<pre><code class="language-javascript">let a = new Array(10);
+<pre class="line-numbers"><code class="language-javascript">let a = new Array(10);
 </code></pre>
 
 <p>该技术创建指定长度的数组。当预先知道所需元素个数时，这种形式的 Array() 构造函数可以用来预分配一个数组空间。注意，数组中没有存储值，甚至数组的索引属性“0”、“1”等还未定义。</p>
 
 <p>为数组显式指定两个或多个数组元素或者非数值元素：</p>
 
-<pre><code class="language-javascript">let a = new Array(5, 4, 3, 2, 1, &quot;testing, testing&quot;);
+<pre class="line-numbers"><code class="language-javascript">let a = new Array(5, 4, 3, 2, 1, &quot;testing, testing&quot;);
 </code></pre>
 
 <p>以这种形式，构造函数的实参将会成为新数组的元素。使用数组字面量比这样使用 Array() 构造函数要简单多了。</p>
@@ -352,7 +354,7 @@ digits // =&gt; [&quot;0&quot;,&quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4
 
 <p>在 ES6 中，Array.of() 函数修复了这个问题：它是一个将其实参值（无论有多少个实参）作为数组元素创建并返回一个新数组的工厂方法：</p>
 
-<pre><code class="language-javascript">Array.of()        // =&gt; []; returns empty array with no arguments
+<pre class="line-numbers"><code class="language-javascript">Array.of()        // =&gt; []; returns empty array with no arguments
 Array.of(10)      // =&gt; [10]; can create arrays with a single numeric argument
 Array.of(1,2,3)   // =&gt; [1, 2, 3]
 </code></pre>
@@ -361,12 +363,12 @@ Array.of(1,2,3)   // =&gt; [1, 2, 3]
 
 <p>Array.from 是 ES6 中另外一个数组工厂方法。它期望一个可迭代或类数组对象作为它的第一个实参，并返回一个包含对象中元素的新数组。使用一个可迭代实参，Array.from(iterable) 工作方式类似于展开运算符 [...iterable]。它也可以简单的拷贝一个数组：</p>
 
-<pre><code class="language-javascript">let copy = Array.from(original);
+<pre class="line-numbers"><code class="language-javascript">let copy = Array.from(original);
 </code></pre>
 
 <p>Array.from() 也很重要，因为它定义了一个将类数组对象拷贝成数组的方法。类数组对象是一个不是数组的对象，它有一个数值型的 length 属性，并且它的值碰巧保存在属性名为整数的属性中。当使用客户端 JavaScript 时，一些浏览器方法的返回值是类数组的，并且当将其转化成真正的数组后会更容易操作它们：</p>
 
-<pre><code class="language-javascript">let truearray = Array.from(arraylike);
+<pre class="line-numbers"><code class="language-javascript">let truearray = Array.from(arraylike);
 </code></pre>
 
 <p>Array.from() 第二个实参为可选实参。如果传递一个函数作为第二个实参，那么当新数组被创建，每一个元素都会被作为实参传入这个指定函数中，并且这个函数的每个返回值保存在数组中代替原来的值。（这很像后面会介绍的数组 map() 方法，但是，它会更加高效的执行映射，因其为没有创建数组，而是直接进行映射到另外一个数组。）</p>
@@ -375,7 +377,7 @@ Array.of(1,2,3)   // =&gt; [1, 2, 3]
 
 <p>使用 [] 运算符来访问数组中的一个元素。数组的引用位于方括号的左边。方括号中是一个返回非负整数值的任意表达式。使用该语法既可以读又可以写数组的一个元素。因此，如下代码都是合法的 JavaScript 语句：</p>
 
-<pre><code class="language-javascript">let a = [&quot;world&quot;];     // Start with a one-element array
+<pre class="line-numbers"><code class="language-javascript">let a = [&quot;world&quot;];     // Start with a one-element array
 let value = a[0];      // Read element 0
 a[1] = 3.14;           // Write element 1
 let i = 2;
@@ -386,12 +388,12 @@ a[a[i]] = a[0];        // Read elements 0 and 2, write element 3
 
 <p>数组特殊的是，当使用小于 2<sup>32</sup>–1 的非负整数属性名时，数组会自动维护 length 属性。例如，上文中我们创建了只有一个元素的数组 a。然后我们为其序列为 1、2 和 3 的元素进行赋值。数组 length 属性会自动改变：</p>
 
-<pre><code class="language-javascript">a.length       // =&gt; 4
+<pre class="line-numbers"><code class="language-javascript">a.length       // =&gt; 4
 </code></pre>
 
 <p>请记住，数组是对象的特殊形式。使用方括号访问数组元素就像用方括号访问对象的属性一样。JavaScript 将指定的数字索引值转换成字符串（索引值 1 变成“1”）然后将其作为属性名来使用。关于索引值从数字转换为字符串没什么特别之处：对常规对象也可以这么做：</p>
 
-<pre><code class="language-javascript">let o = {};    // Create a plain object
+<pre class="line-numbers"><code class="language-javascript">let o = {};    // Create a plain object
 o[1] = &quot;one&quot;;  // Index it with an integer
 o[&quot;1&quot;]         // =&gt; &quot;one&quot;; numeric and string property names are the same
 </code></pre>
@@ -400,14 +402,14 @@ o[&quot;1&quot;]         // =&gt; &quot;one&quot;; numeric and string property n
 
 <p>注意，可以使用负数或非整数来索引数组。这种情况下，数值转换为字符串，字符串作为属性名来用。既然名字不是非负整数，它就只能当做常规的对象属性，而非数组的索引。同样，如果凑巧使用了是非负整数的字符串，它就当做数组索引，而非对象属性。当使用的一个浮点数和一个整数相等时情况也是一样的：</p>
 
-<pre><code class="language-javascript">a[-1.23] = true;  // This creates a property named &quot;-1.23&quot;
+<pre class="line-numbers"><code class="language-javascript">a[-1.23] = true;  // This creates a property named &quot;-1.23&quot;
 a[&quot;1000&quot;] = 0;    // This the 1001st element of the array
 a[1.000] = 1;     // Array index 1. Same as a[1] = 1;
 </code></pre>
 
 <p>事实上数组索引仅仅是对象属性名的一种特殊类型，这意味着 JavaScript 数组没有“越界”错误的概念。当试图查询任何对象中不存在的属性时，都不会报错，只会得到 undefined 值。类似于对象，对于对象同样存在这种情况。</p>
 
-<pre><code class="language-javascript">let a = [true, false]; // This array has elements at indexes 0 and 1
+<pre class="line-numbers"><code class="language-javascript">let a = [true, false]; // This array has elements at indexes 0 and 1
 a[2]                   // =&gt; undefined; no element at this index.
 a[-1]                  // =&gt; undefined; no property with this name.
 </code></pre>
@@ -416,7 +418,7 @@ a[-1]                  // =&gt; undefined; no property with this name.
 
 <p>稀疏数组就是包含从 0 开始的不连续索引的数组。通常，数组的 length 属性值代表数组中元素的个数。如果数组是稀疏的，length 属性值大于元素的个数。可以用 Array() 构造函数或简单地指定数组的索引值大于当前的数组长度来创建稀疏数组。</p>
 
-<pre><code class="language-javascript">let a = new Array(5); // No elements, but a.length is 5.
+<pre class="line-numbers"><code class="language-javascript">let a = new Array(5); // No elements, but a.length is 5.
 a = [];               // Create an array with no elements and length = 0.
 a[1000] = 0;          // Assignment adds one element but sets length to 1001.
 </code></pre>
@@ -427,7 +429,7 @@ a[1000] = 0;          // Assignment adds one element but sets length to 1001.
 
 <p>注意，当在数组字面量中省略值时（像 [1,,3] 中使用重复的逗号）返回的是稀疏数组，省略掉的值是不存在的：</p>
 
-<pre><code class="language-javascript">let a1 = [,];           // This array has no elements and length 1
+<pre class="line-numbers"><code class="language-javascript">let a1 = [,];           // This array has no elements and length 1
 let a2 = [undefined];   // This array has one undefined element
 0 in a1                 // =&gt; false: a1 has no element with index 0
 0 in a2                 // =&gt; true: a2 has the undefined value at index 0
@@ -439,7 +441,7 @@ let a2 = [undefined];   // This array has one undefined element
 
 <p>每个数组有一个 length 属性，就是这个属性使其区别于常规的 JavaScript 对象。针对稠密（也就是非稀疏）数组，length 属性值代表数组中元素的个数。其值比数组中最大的索引大 1：</p>
 
-<pre><code class="language-javascript">[].length             // =&gt; 0: the array has no elements
+<pre class="line-numbers"><code class="language-javascript">[].length             // =&gt; 0: the array has no elements
 [&quot;a&quot;,&quot;b&quot;,&quot;c&quot;].length  // =&gt; 3: highest index is 2, length is 3
 </code></pre>
 
@@ -447,7 +449,7 @@ let a2 = [undefined];   // This array has one undefined element
 
 <p>第二个特殊的行为就是设置 length 属性为一个小于当前长度的非负整数n时，当前数组中那些索引值大于或等于 n 的元素将从中删除：</p>
 
-<pre><code class="language-javascript">a = [1,2,3,4,5];     // Start with a 5-element array.
+<pre class="line-numbers"><code class="language-javascript">a = [1,2,3,4,5];     // Start with a 5-element array.
 a.length = 3;        // a is now [1,2,3].
 a.length = 0;        // Delete all elements.  a is [].
 a.length = 5;        // Length is 5, but no elements, like new Array(5)
@@ -459,14 +461,14 @@ a.length = 5;        // Length is 5, but no elements, like new Array(5)
 
 <p>我们已经见过添加数组元素最简单的方法：为新索引赋值：</p>
 
-<pre><code class="language-javascript">let a = [];      // Start with an empty array.
+<pre class="line-numbers"><code class="language-javascript">let a = [];      // Start with an empty array.
 a[0] = &quot;zero&quot;;   // And add elements to it.
 a[1] = &quot;one&quot;;
 </code></pre>
 
 <p>也可以使用push()方法在数组末尾增加一个或多个元素：</p>
 
-<pre><code class="language-javascript">let a = [];           // Start with an empty array
+<pre class="line-numbers"><code class="language-javascript">let a = [];           // Start with an empty array
 a.push(&quot;zero&quot;);       // Add a value at the end.  a = [&quot;zero&quot;]
 a.push(&quot;one&quot;, &quot;two&quot;); // Add two more values.  a = [&quot;zero&quot;, &quot;one&quot;, &quot;two&quot;]
 </code></pre>
@@ -475,7 +477,7 @@ a.push(&quot;one&quot;, &quot;two&quot;); // Add two more values.  a = [&quot;ze
 
 <p>可以像删除对象属性一样使用 delete 运算符来删除数组元素：</p>
 
-<pre><code class="language-javascript">let a = [1,2,3];
+<pre class="line-numbers"><code class="language-javascript">let a = [1,2,3];
 delete a[2];   // a now has no element at index 2
 2 in a         // =&gt; false: no array index 2 is defined
 a.length       // =&gt; 3: delete does not affect array length
@@ -491,7 +493,7 @@ a.length       // =&gt; 3: delete does not affect array length
 
 <p>在 ES6 中，最容易遍历数组元素（或可迭代对象）的方法是 for/of 循环，在 §5.4.4 中详细介绍：</p>
 
-<pre><code class="language-javascript">let letters = [...&quot;Hello world&quot;];  // An array of letters
+<pre class="line-numbers"><code class="language-javascript">let letters = [...&quot;Hello world&quot;];  // An array of letters
 let string = &quot;&quot;;
 for(let letter of letters) {
     string += letter;
@@ -503,7 +505,7 @@ string  // =&gt; &quot;Hello world&quot;; we reassembled the original text
 
 <p>如果使用 for/of 循环一个数组时还需要知道每个元素的索引，可以像这样将数组的 entries() 方法和解构语句一同使用：</p>
 
-<pre><code class="language-javascript">let everyother = &quot;&quot;;
+<pre class="line-numbers"><code class="language-javascript">let everyother = &quot;&quot;;
 for(let [index, letter] of letters.entries()) {
     if (index % 2 === 0) everyother += letter;  // letters at even indexes
 }
@@ -512,7 +514,7 @@ everyother  // =&gt; &quot;Hlowrd&quot;
 
 <p>另一种不错的遍历数组方法是用 forEach()。这不是 for 循环的新形式，而是提供数组遍历功能方法的数组方法。可以给数组的 forEach() 方法传递一个函数，forEach() 会对数组中每一个元素调用这个方法：</p>
 
-<pre><code class="language-javascript">let uppercase = &quot;&quot;;
+<pre class="line-numbers"><code class="language-javascript">let uppercase = &quot;&quot;;
 letters.forEach(letter =&gt; {  // Note arrow function syntax here
     uppercase += letter.toUpperCase();
 });
@@ -525,7 +527,7 @@ uppercase  // =&gt; &quot;HELLO WORLD&quot;
 
 <p>也可以用一种非常老旧方式遍历数组的元素（§5.4.3）：</p>
 
-<pre><code class="language-javascript">let vowels = &quot;&quot;;
+<pre class="line-numbers"><code class="language-javascript">let vowels = &quot;&quot;;
 for(let i = 0; i &lt; letters.length; i++) { // For each index in the array
     let letter = letters[i];              // Get the element at that index
     if (/[aeiou]/.test(letter)) {         // Use a regular expression test
@@ -537,7 +539,7 @@ vowels  // =&gt; &quot;eoo&quot;
 
 <p>在嵌套循环或其他性能至关重要的上下文中，有时可能会看到这样的数组遍历，以便数组长度仅被查一次，而不是在每次循环都去查询。以下两种形式都是符合习惯的 for 循环，虽然不是特别常用，而且对于现代 JavaScript 解释器，它们是否对性能有任何影响尚不清楚：</p>
 
-<pre><code class="language-javascript">// Save the array length into a local variable
+<pre class="line-numbers"><code class="language-javascript">// Save the array length into a local variable
 for(let i = 0, len = letters.length; i &lt; len; i++) {
     // loop body remains the same
 }
@@ -550,7 +552,7 @@ for(let i = letters.length-1; i &gt;= 0; i--) {
 
 <p>这些示例假定数组是稠密的，并且所有元素都包含有效的数据。如果不是这样，应该在使用数组元素之前测试它们。如果要跳过 undefined 和不存在的元素，可以编写：</p>
 
-<pre><code class="language-javascript">for(let i = 0; i &lt; a.length; i++) {
+<pre class="line-numbers"><code class="language-javascript">for(let i = 0; i &lt; a.length; i++) {
     if (a[i] === undefined) continue; // Skip undefined + nonexistent elements
     // loop body here
 }
@@ -560,7 +562,7 @@ for(let i = letters.length-1; i &gt;= 0; i--) {
 
 <p>JavaScript 不支持真正的多维数组，但可以用数组的数组来近似。访问数组的数组中的元素，只要简单地使用两次 [] 操作符即可。例如，假设变量 matrix 是一个数组的数组，它的基本元素是数值，那么 matrix[x] 的每个元素是包含一个数值数组，访问数组中特定数值的代码为 matrix[x][y]。这里有一个具体的例子，它使用二维数组作为一个九九乘法表：</p>
 
-<pre><code class="language-javascript">// Create a multidimensional array
+<pre class="line-numbers"><code class="language-javascript">// Create a multidimensional array
 let table = new Array(10);               // 10 rows of the table
 for(let i = 0; i &lt; table.length; i++) {
     table[i] = new Array(10);            // Each row has 10 columns
@@ -607,7 +609,7 @@ table[5][7]  // =&gt; 35
 
 <p>forEach() 方法遍历数组，调用为每个元素指定的函数。正如我们已经描述的那样，将函数作为第一个实参传递给 forEach()。forEach() 然后使用三个实参调用函数：数组元素的值、数组元素的索引和数组本身。如果只关心数组元素的值，则编写一个只有一个实参的函数（将忽略其他实参）：</p>
 
-<pre><code class="language-javascript">let data = [1,2,3,4,5], sum = 0;
+<pre class="line-numbers"><code class="language-javascript">let data = [1,2,3,4,5], sum = 0;
 // Compute the sum of the elements of the array
 data.forEach(value =&gt; { sum += value; });          // sum == 15
 
@@ -621,7 +623,7 @@ data.forEach(function(v, i, a) { a[i] = v + 1; }); // data == [2,3,4,5,6]
 
 <p>map() 方法将调用数组的每个元素传递到指定的函数，并返回一个包含函数返回的值的数组。例如：</p>
 
-<pre><code class="language-javascript">let a = [1, 2, 3];
+<pre class="line-numbers"><code class="language-javascript">let a = [1, 2, 3];
 a.map(x =&gt; x*x)   // =&gt; [1, 4, 9]: the function takes input x and returns x*x
 </code></pre>
 
@@ -631,26 +633,26 @@ a.map(x =&gt; x*x)   // =&gt; [1, 4, 9]: the function takes input x and returns 
 
 <p>filter() 方法返回一个数组，其中包含调用该数组的数组元素的子集。传递给它的函数应该是断言：返回真或假的函数。断言函数的调用就像 forEach() 和 map() 调用一样。如果返回值为 true，或者能转换为 true 的值，则传递给断言的元素是子集的成员，并将添加到将成为返回值的数组中。例子：</p>
 
-<pre><code class="language-javascript">let a = [5, 4, 3, 2, 1];
+<pre class="line-numbers"><code class="language-javascript">let a = [5, 4, 3, 2, 1];
 a.filter(x =&gt; x &lt; 3)         // =&gt; [2, 1]; values less than 3
 a.filter((x,i) =&gt; i%2 === 0) // =&gt; [5, 3, 1]; every other value
 </code></pre>
 
 <p>注意 filter() 跳过稀疏数组中的丢失元素并且返回值也总是稠密的。要缩小稀疏数组的间距，可以这样做：</p>
 
-<pre><code class="language-javascript">let dense = sparse.filter(() =&gt; true);
+<pre class="line-numbers"><code class="language-javascript">let dense = sparse.filter(() =&gt; true);
 </code></pre>
 
 <p>要缩小间隙并移除 undefined 和 null 元素，可以用 filter 这样做：</p>
 
-<pre><code class="language-javascript">a = a.filter(x =&gt; x !== undefined &amp;&amp; x !== null);
+<pre class="line-numbers"><code class="language-javascript">a = a.filter(x =&gt; x !== undefined &amp;&amp; x !== null);
 </code></pre>
 
 <h4 id="toc_17">FIND() 和 FINDINDEX()</h4>
 
 <p>find() 和 findIndex() 方法就像 filter()，因为它们在数组中迭代，查找断言函数返回真实值的元素。但是，与 filter()不同，这两种方法在断言首次查找元素到时停止遍历。发生这种情况时，find() 返回匹配元素，而 findIndex() 返回匹配元素的索引。如果未找到匹配元素，find() 返回 undefined，findIndex() 返回 -1：</p>
 
-<pre><code class="language-javascript">let a = [1,2,3,4,5];
+<pre class="line-numbers"><code class="language-javascript">let a = [1,2,3,4,5];
 a.findIndex(x =&gt; x === 3)  // =&gt; 2; the value 3 appears at index 2
 a.findIndex(x =&gt; x &lt; 0)    // =&gt; -1; no negative numbers in the array
 a.find(x =&gt; x % 5 === 0)   // =&gt; 5: this is a multiple of 5
@@ -663,14 +665,14 @@ a.find(x =&gt; x % 7 === 0)   // =&gt; undefined: no multiples of 7 in the array
 
 <p>every() 方法与数学全称量化符号 ∀ 相似：如果数组中所有元素执行断言函数返回值都为 true，则返回 true：</p>
 
-<pre><code class="language-javascript">let a = [1,2,3,4,5];
+<pre class="line-numbers"><code class="language-javascript">let a = [1,2,3,4,5];
 a.every(x =&gt; x &lt; 10)      // =&gt; true: all values are &lt; 10.
 a.every(x =&gt; x % 2 === 0) // =&gt; false: not all values are even.
 </code></pre>
 
 <p>some() 方法与数学存在限定符 ∃ 相同：如果数组中存在至少有一个元素调用断言函数返回 true 的返回 true，仅在断言全部返回 false 时返回 false：</p>
 
-<pre><code class="language-javascript">let a = [1,2,3,4,5];
+<pre class="line-numbers"><code class="language-javascript">let a = [1,2,3,4,5];
 a.some(x =&gt; x%2===0)  // =&gt; true; a has some even numbers.
 a.some(isNaN)         // =&gt; false; a has no non-numbers.
 </code></pre>
@@ -681,7 +683,7 @@ a.some(isNaN)         // =&gt; false; a has no non-numbers.
 
 <p>reduce() 和 reduceRight() 方法使用指定的函数将数组元素进行组合，生成单个值。这在函数式编程中是常见的操作，也可以称为“注入”和“折叠”。举例说明它是如何工作的：</p>
 
-<pre><code class="language-javascript">let a = [1,2,3,4,5];
+<pre class="line-numbers"><code class="language-javascript">let a = [1,2,3,4,5];
 a.reduce((x,y) =&gt; x+y, 0)          // =&gt; 15; the sum of the values
 a.reduce((x,y) =&gt; x*y, 1)          // =&gt; 120; the product of the values
 a.reduce((x,y) =&gt; (x &gt; y) ? x : y) // =&gt; 5; the largest of the values
@@ -697,7 +699,7 @@ a.reduce((x,y) =&gt; (x &gt; y) ? x : y) // =&gt; 5; the largest of the values
 
 <p>reduceRight() 的工作原理和 reduce() 一样，不同的是它按照数组索引从高到低（从右到左）处理数组，而不是从低到高。如果 reduction 操作的优先顺序是从右到左，你可能想使用它，例如：</p>
 
-<pre><code class="language-javascript">// Compute 2^(3^4).  Exponentiation has right-to-left precedence
+<pre class="line-numbers"><code class="language-javascript">// Compute 2^(3^4).  Exponentiation has right-to-left precedence
 let a = [2, 3, 4];
 a.reduceRight((acc,val) =&gt; Math.pow(val,acc)) // =&gt; 2.4178516392292583e+24
 </code></pre>
@@ -710,13 +712,13 @@ a.reduceRight((acc,val) =&gt; Math.pow(val,acc)) // =&gt; 2.4178516392292583e+24
 
 <p>在 ES2019 中，flat() 方法创建并返回一个新的数组，该数组包含与调用的数组相同的元素，只不过作为数组的任何元素都&quot;展平&quot;到返回的数组中。例如：</p>
 
-<pre><code class="language-javascript">[1, [2, 3]].flat()    // =&gt; [1, 2, 3]
+<pre class="line-numbers"><code class="language-javascript">[1, [2, 3]].flat()    // =&gt; [1, 2, 3]
 [1, [2, [3]]].flat()  // =&gt; [1, 2, [3]]
 </code></pre>
 
 <p>当调用时没有实参，flat() 将平展一个级别的嵌套。作为数组的原始数组的元素被展平，但这些数组的数组元素不会展平。如果要展平更多级别，需要传递数字给 flat()：</p>
 
-<pre><code class="language-javascript">let a = [1, [2, [3, [4]]]];
+<pre class="line-numbers"><code class="language-javascript">let a = [1, [2, [3, [4]]]];
 a.flat(1)   // =&gt; [1, 2, [3, [4]]]
 a.flat(2)   // =&gt; [1, 2, 3, [4]]
 a.flat(3)   // =&gt; [1, 2, 3, 4]
@@ -725,14 +727,14 @@ a.flat(4)   // =&gt; [1, 2, 3, 4]
 
 <p>flatMap() 方法的工作方式与 map() 方法（见“map()”）类似，只不过返回的数组会自动展平，就像传递到 flat()。也就是说，调用 a.flatMap(f) 与 a.map(f).flat()（但更高效）相同：</p>
 
-<pre><code class="language-javascript">let phrases = [&quot;hello world&quot;, &quot;the definitive guide&quot;];
+<pre class="line-numbers"><code class="language-javascript">let phrases = [&quot;hello world&quot;, &quot;the definitive guide&quot;];
 let words = phrases.flatMap(phrase =&gt; phrase.split(&quot; &quot;));
 words // =&gt; [&quot;hello&quot;, &quot;world&quot;, &quot;the&quot;, &quot;definitive&quot;, &quot;guide&quot;];
 </code></pre>
 
 <p>可以将 flatMap() 视为 map() 的泛化，它允许输入数组的每个元素映射到输出数组的多个元素。特别的是，flatMap() 允许将输入元素映射到空数组，该数组在平展后不输出到数组中：</p>
 
-<pre><code class="language-javascript">// Map non-negative numbers to their square roots
+<pre class="line-numbers"><code class="language-javascript">// Map non-negative numbers to their square roots
 [-2, -1, 1, 2].flatMap(x =&gt; x &lt; 0 ? [] : Math.sqrt(x)) // =&gt; [1, 2**0.5]
 </code></pre>
 
@@ -740,7 +742,7 @@ words // =&gt; [&quot;hello&quot;, &quot;world&quot;, &quot;the&quot;, &quot;def
 
 <p>concat() 方法创建并返回一个新数组，它的元素包括调用 concat() 的原始数组的元素和 concat() 的每个实参。如果这些实参中的任何一个自身是数组，则连接的是数组的元素，而非数组本身。但要注意，concat() 不会递归扁平化数组的数组。concat() 也不会修改调用的数组：</p>
 
-<pre><code class="language-javascript">let a = [1,2,3];
+<pre class="line-numbers"><code class="language-javascript">let a = [1,2,3];
 a.concat(4, 5)          // =&gt; [1,2,3,4,5]
 a.concat([4,5],[6,7])   // =&gt; [1,2,3,4,5,6,7]; arrays are flattened
 a.concat(4, [5,[6,7]])  // =&gt; [1,2,3,4,5,[6,7]]; but not nested arrays
@@ -753,7 +755,7 @@ a                       // =&gt; [1,2,3]; the original array is unmodified
 
 <p>push() 和 pop() 方法允许将数组当做栈来使用。push() 方法在数组的尾部添加一个或多个元素，并返回数组新的长度。pop() 方法则相反：它删除数组的最后一个元素，减小数组长度并返回它删除的值。注意，两个方法都修改并替换原始数组而非生成一个修改版的新数组。组合使用 push() 和 pop() 能够用 JavaScript 数组实现先进后出的栈。例如：</p>
 
-<pre><code class="language-javascript">let stack = [];       // stack == []
+<pre class="line-numbers"><code class="language-javascript">let stack = [];       // stack == []
 stack.push(1,2);      // stack == [1,2];
 stack.pop();          // stack == [1]; returns 2
 stack.push(3);        // stack == [1,3]
@@ -765,12 +767,12 @@ stack.pop();          // stack == []; returns 1
 
 <p>push() 方法不展平传入的数组，但如果想要将数组的元素全部压入另外一个数组，可以使用展开运算符（§8.3.4）来显示展开：</p>
 
-<pre><code class="language-javascript">a.push(...values);
+<pre class="line-numbers"><code class="language-javascript">a.push(...values);
 </code></pre>
 
 <p>unshift() 和 shift() 方法的行为非常类似于 push() 和 pop()，不一样的是前者是在数组的头部而非尾部进行元素的插入和删除操作。unshift() 在数组的头部添加一个或多个元素，并将已存在的元素移动到更高索引的位置来获得足够的空间，最后返回数组新的长度。shift() 删除数组的第一个元素并将其返回，然后把所有随后的元素下移一个位置来填补数组头部的空缺。可以使用 unshift() 和 shift() 实现栈，但它比使用 push() 和 pop() 的效率低，因为每次在数组头部添加或删除元素时，都需要向上或向下移动数组元素。但是，您可以使用 push() 在数组末尾添加元素并 shift() 从数组的头部删除它们来实现队列数据解构：</p>
 
-<pre><code class="language-javascript">let q = [];            // q == []
+<pre class="line-numbers"><code class="language-javascript">let q = [];            // q == []
 q.push(1,2);           // q == [1,2]
 q.shift();             // q == [2]; returns 1
 q.push(3)              // q == [2, 3]
@@ -780,7 +782,7 @@ q.shift()              // q == []; returns 3
 
 <p>unshift() 有一个特性是值得一提的，你可能会觉得它令人惊讶。将多个实参传入 unshift() 时，它们将一次全部插入，这意味着它们最终在数组中的顺序与一次插入一个实参的顺序时不同的：</p>
 
-<pre><code class="language-javascript">let a = [];            // a == []
+<pre class="line-numbers"><code class="language-javascript">let a = [];            // a == []
 a.unshift(1)           // a == [1]
 a.unshift(2)           // a == [2, 1]
 a = [];                // a == []
@@ -795,7 +797,7 @@ a.unshift(1,2)         // a == [1, 2]
 
 <p>slice() 方法返回指定数组的一个片段或子数组。它的两个实参分别指定了片段的开始和结束的位置。返回的数组包含第一个实参指定的位置到（但不包含）第二个实参指定的位置之间的所有数组元素。如果只指定一个实参，返回的数组将包含从开始位置到数组结尾的所有元素。如实参中出现负数，它表示相对于数组 length 的位置。例如，实参 -1 指定了最后一个元素，而 -2 指定了它前面的元素。注意，slice() 不会修改调用的数组。下面有一些示例：</p>
 
-<pre><code class="language-javascript">let a = [1,2,3,4,5];
+<pre class="line-numbers"><code class="language-javascript">let a = [1,2,3,4,5];
 a.slice(0,3);    // Returns [1,2,3]
 a.slice(3);      // Returns [4,5]
 a.slice(1,-1);   // Returns [2,3,4]
@@ -808,7 +810,7 @@ a.slice(-3,-2);  // Returns [3]
 
 <p>splice() 能够从数组中删除元素、插入元素到数组中或者同时完成这两种操作。在插入或删除点之后的数组元素会根据需要增加或减小它们的索引值，因此数组的其他部分仍然保持连续的。splice() 的第一个实参指定了插入和（或）删除的起始位置。第二个实参指定了应该从数组中删除的元素的个数。（注意这里是这两个方法的另外一个不同。slice() 的第二个实参是结束的位置。splice() 的第二个实参是长度。）如果省略第二个实参，从起始点开始到数组结尾的所有元素都将被删除。splice() 返回一个由删除元素组成的数组，或者如果没有删除元素就返回一个空数组。例如：</p>
 
-<pre><code class="language-javascript">let a = [1,2,3,4,5,6,7,8];
+<pre class="line-numbers"><code class="language-javascript">let a = [1,2,3,4,5,6,7,8];
 a.splice(4)    // =&gt; [5,6,7,8]; a is now [1,2,3,4]
 a.splice(1,2)  // =&gt; [2,3]; a is now [1,4]
 a.splice(1,1)  // =&gt; [4]; a is now [1]
@@ -816,7 +818,7 @@ a.splice(1,1)  // =&gt; [4]; a is now [1]
 
 <p>splice() 的前两个实参指定了需要删除的数组元素。紧随其后的任意个数的实参指定了需要插入到数组中的元素，从第一个实参指定的位置开始插入。例如：</p>
 
-<pre><code class="language-javascript">let a = [1,2,3,4,5];
+<pre class="line-numbers"><code class="language-javascript">let a = [1,2,3,4,5];
 a.splice(2,0,&quot;a&quot;,&quot;b&quot;)  // =&gt; []; a is now [1,2,&quot;a&quot;,&quot;b&quot;,3,4,5]
 a.splice(2,2,[1,2],3)  // =&gt; [&quot;a&quot;,&quot;b&quot;]; a is now [1,2,[1,2],3,3,4,5]
 </code></pre>
@@ -827,7 +829,7 @@ a.splice(2,2,[1,2],3)  // =&gt; [&quot;a&quot;,&quot;b&quot;]; a is now [1,2,[1,
 
 <p>fill() 方法将数组或数组片段的元素填充为指定值。它将对调用它的数组进行突变，并返回修改后的数组：</p>
 
-<pre><code class="language-javascript">let a = new Array(5);   // Start with no elements and length 5
+<pre class="line-numbers"><code class="language-javascript">let a = new Array(5);   // Start with no elements and length 5
 a.fill(0)               // =&gt; [0,0,0,0,0]; fill the array with zeros
 a.fill(9, 1)            // =&gt; [0,9,9,9,9]; fill with 9 starting at index 1
 a.fill(8, 2, -1)        // =&gt; [0,9,8,8,9]; fill with 8 at indexes 2, 3
@@ -839,7 +841,7 @@ a.fill(8, 2, -1)        // =&gt; [0,9,8,8,9]; fill with 8 at indexes 2, 3
 
 <p>copyWithin() 将数组的一个片段复制到数组中的新位置。它在适当的位置修改数组并返回修改后的数组，但不会更改数组的长度。第一个实参指定将第一个元素复制到的目标索引。第二个实参指定被复制的第一个元素的索引。如果省略此第二个实参，则使用 0。第三个实参指定被复制的元素片段的结尾。如果省略，则使用数组的长度。从开始索引到结束索引（但不包括结束索引）的元素将被复制。可以通过传递负数来指定相对于数组末尾的索引，就像 slice() 一样：</p>
 
-<pre><code class="language-javascript">let a = [1,2,3,4,5];
+<pre class="line-numbers"><code class="language-javascript">let a = [1,2,3,4,5];
 a.copyWithin(1)       // =&gt; [1,1,2,3,4]: copy array elements up one
 a.copyWithin(2, 3, 5) // =&gt; [1,2,3,4,4]: copy last 2 elements to index 2
 a.copyWithin(0, -2)   // =&gt; [4,4,3,4,4]: negative offsets work, too
@@ -855,7 +857,7 @@ a.copyWithin(0, -2)   // =&gt; [4,4,3,4,4]: negative offsets work, too
 
 <p>indexOf() 和 lastIndexOf() 在数组中搜索具有指定值的元素，并返回找到的第一个元素的索引，如果未找到，则返回 -1。indexOf() 从头到尾搜索数组，lastIndexOf() 从尾到头搜索：</p>
 
-<pre><code class="language-javascript">let a = [0,1,2,1,0];
+<pre class="line-numbers"><code class="language-javascript">let a = [0,1,2,1,0];
 a.indexOf(1)       // =&gt; 1: a[1] is 1
 a.lastIndexOf(1)   // =&gt; 3: a[3] is 1
 a.indexOf(3)       // =&gt; -1: no element has value 3
@@ -867,7 +869,7 @@ a.indexOf(3)       // =&gt; -1: no element has value 3
 
 <p>以下函数在数组中搜索指定的值，并返回所有匹配索引的数组。这演示了如何使用 indexOf() 的第二个参数来查找第一个参数之外的匹配项。</p>
 
-<pre><code class="language-javascript">// Find all occurrences of a value x in an array a and return an array
+<pre class="line-numbers"><code class="language-javascript">// Find all occurrences of a value x in an array a and return an array
 // of matching indexes
 function findall(a, x) {
     let results = [],            // The array of indexes we&#39;ll return
@@ -891,7 +893,7 @@ function findall(a, x) {
 
 <p>includes() 方法在一个重要方面与 indexOf() 方法略有不同。indexOf() 与 === 运算符使用相同的算法测试相等性，并且这个相等算法认为非数字值与所有其他值（包括自身）不同。includes() 使用略有不同的相等算法，它认为 NaN 等于自身。这意味着 indexOf() 不会检测数组中的 NaN 值，但 includes() 可以：</p>
 
-<pre><code class="language-javascript">let a = [1,true,3,NaN];
+<pre class="line-numbers"><code class="language-javascript">let a = [1,true,3,NaN];
 a.includes(true)            // =&gt; true
 a.includes(2)               // =&gt; false
 a.includes(NaN)             // =&gt; true
@@ -902,7 +904,7 @@ a.indexOf(NaN)              // =&gt; -1; indexOf can&#39;t find NaN
 
 <p>sort() 对数组的元素直接进行排序，并返回排序后的数组。当调用 sort() 时，它会按字母顺序对数组元素进行排序（如有必要，暂时将它们转换为字符串以执行比较）：</p>
 
-<pre><code class="language-javascript">let a = [&quot;banana&quot;, &quot;cherry&quot;, &quot;apple&quot;];
+<pre class="line-numbers"><code class="language-javascript">let a = [&quot;banana&quot;, &quot;cherry&quot;, &quot;apple&quot;];
 a.sort(); // a == [&quot;apple&quot;, &quot;banana&quot;, &quot;cherry&quot;]
 </code></pre>
 
@@ -910,7 +912,7 @@ a.sort(); // a == [&quot;apple&quot;, &quot;banana&quot;, &quot;cherry&quot;]
 
 <p>若要将数组按字母顺序以外的顺序排序，必须将比较函数作为实参传递给 sort()。该函数决定了它的两个实参在排好序的数组中的先后顺序。假设第一个实参应该在前，比较函数应该返回一个小于 0 的数值。反之，假设第一个参数应该在后，函数应该返回一个大于 0 的数值。并且，假设两个值相等（也就是说，它们的顺序无关紧要），函数应该返回 0。例如，用数值大小而非字母表顺序进行数组排序，代码如下：</p>
 
-<pre><code class="language-javascript">let a = [33, 4, 1111, 222];
+<pre class="line-numbers"><code class="language-javascript">let a = [33, 4, 1111, 222];
 a.sort();               // a == [1111, 222, 33, 4]; alphabetical order
 a.sort(function(a,b) {  // Pass a comparator function
     return a-b;         // Returns &lt; 0, 0, or &gt; 0, depending on order
@@ -920,7 +922,7 @@ a.sort((a,b) =&gt; b-a);   // a == [1111, 222, 33, 4]; reverse numerical order
 
 <p>另外一个数组元素排序的例子，也许需要对一个字符串数组执行不区分大小写的字母表排序，比较函数首先将实参都转化为小写字符串（使用 toLowerCase() 方法），再开始比较：</p>
 
-<pre><code class="language-javascript">let a = [&quot;ant&quot;, &quot;Bug&quot;, &quot;cat&quot;, &quot;Dog&quot;];
+<pre class="line-numbers"><code class="language-javascript">let a = [&quot;ant&quot;, &quot;Bug&quot;, &quot;cat&quot;, &quot;Dog&quot;];
 a.sort();    // a == [&quot;Bug&quot;,&quot;Dog&quot;,&quot;ant&quot;,&quot;cat&quot;]; case-sensitive sort
 a.sort(function(s,t) {
     let a = s.toLowerCase();
@@ -935,7 +937,7 @@ a.sort(function(s,t) {
 
 <p>reverse() 方法反转数组中元素的顺序并返回反转后的数组。它直接在数组中操作，换一种说法，它不创建一个新的数组，它不创建一个新的带有排序后的元素的数组，而是直接在已存在的数组中进行排序。</p>
 
-<pre><code class="language-javascript">let a = [1,2,3];
+<pre class="line-numbers"><code class="language-javascript">let a = [1,2,3];
 a.reverse();   // a == [3,2,1]
 </code></pre>
 
@@ -945,7 +947,7 @@ a.reverse();   // a == [3,2,1]
 
 <p>join() 方法将数组的所有元素转换为字符串并连接它们，返回生成的字符串。可以指定一个可选字符串来分隔生成的字符串中的元素。如果未指定分隔符字符串，则使用逗号：</p>
 
-<pre><code class="language-javascript">let a = [1, 2, 3];
+<pre class="line-numbers"><code class="language-javascript">let a = [1, 2, 3];
 a.join()               // =&gt; &quot;1,2,3&quot;
 a.join(&quot; &quot;)            // =&gt; &quot;1 2 3&quot;
 a.join(&quot;&quot;)             // =&gt; &quot;123&quot;
@@ -957,7 +959,7 @@ b.join(&quot;-&quot;)            // =&gt; &quot;---------&quot;: a string of 9 h
 
 <p>数组与所有 JavaScript 对象一样，具有 toString() 方法。对于数组，此方法的工作方式与没有参数的 join() 方法相同：</p>
 
-<pre><code class="language-javascript">[1,2,3].toString()          // =&gt; &quot;1,2,3&quot;
+<pre class="line-numbers"><code class="language-javascript">[1,2,3].toString()          // =&gt; &quot;1,2,3&quot;
 [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;].toString()  // =&gt; &quot;a,b,c&quot;
 [1, [2,&quot;c&quot;]].toString()     // =&gt; &quot;1,2,c&quot;
 </code></pre>
@@ -972,7 +974,7 @@ b.join(&quot;-&quot;)            // =&gt; &quot;---------&quot;: a string of 9 h
 
 <p>另外一个静态数组方法是 Array.isArray()，用来判断一个未知值是否是数组：</p>
 
-<pre><code class="language-javascript">Array.isArray([])     // =&gt; true
+<pre class="line-numbers"><code class="language-javascript">Array.isArray([])     // =&gt; true
 Array.isArray({})     // =&gt; false
 </code></pre>
 
@@ -993,7 +995,7 @@ Array.isArray({})     // =&gt; false
 
 <p>以下代码为一个常规对象增加了一些属性使其变成类数组对象，然后遍历生成的伪数组的“元素”：</p>
 
-<pre><code class="language-javascript">let a = {};  // Start with a regular empty object
+<pre class="line-numbers"><code class="language-javascript">let a = {};  // Start with a regular empty object
 
 // Add properties to make it &quot;array-like&quot;
 let i = 0;
@@ -1012,7 +1014,7 @@ for(let j = 0; j &lt; a.length; j++) {
 
 <p>在客户端 JavaScript 中，很多作用于 HTML documents 的方法（例如 document.querySelectorAll()）返回类数组对象。下面这个函数可能会用于测试对象是否可以用作类数组：</p>
 
-<pre><code class="language-javascript">// Determine if o is an array-like object.
+<pre class="line-numbers"><code class="language-javascript">// Determine if o is an array-like object.
 // Strings and functions have numeric length properties, but are
 // excluded by the typeof test. In client-side JavaScript, DOM text
 // nodes have a numeric length property, and may need to be excluded
@@ -1035,7 +1037,7 @@ function isArrayLike(o) {
 
 <p>大多数 JavaScript 数组方法都特意定义为泛型，以便它们在应用于除数组之外的类数组可以正常工作。由于类数组对象不会从 Array.prototype 继承，因此不能直接在它们上调用数组方法。但是，可以使用 Function.call 方法间接调用它们（详情请参阅 §8.7.4）：</p>
 
-<pre><code class="language-javascript">let a = {&quot;0&quot;: &quot;a&quot;, &quot;1&quot;: &quot;b&quot;, &quot;2&quot;: &quot;c&quot;, length: 3}; // An array-like object
+<pre class="line-numbers"><code class="language-javascript">let a = {&quot;0&quot;: &quot;a&quot;, &quot;1&quot;: &quot;b&quot;, &quot;2&quot;: &quot;c&quot;, length: 3}; // An array-like object
 Array.prototype.join.call(a, &quot;+&quot;)                  // =&gt; &quot;a+b+c&quot;
 Array.prototype.map.call(a, x =&gt; x.toUpperCase())  // =&gt; [&quot;A&quot;,&quot;B&quot;,&quot;C&quot;]
 Array.prototype.slice.call(a, 0)   // =&gt; [&quot;a&quot;,&quot;b&quot;,&quot;c&quot;]: true array copy
@@ -1048,7 +1050,7 @@ Array.from(a)                      // =&gt; [&quot;a&quot;,&quot;b&quot;,&quot;c
 
 <p>JavaScript 字符串的行为类似于 UTF-16 Unicode 字符的只读数组。可以使用方括号替代 charAt() 方法访问单个字符：</p>
 
-<pre><code class="language-javascript">let s = &quot;test&quot;;
+<pre class="line-numbers"><code class="language-javascript">let s = &quot;test&quot;;
 s.charAt(0)    // =&gt; &quot;t&quot;
 s[1]           // =&gt; &quot;e&quot;
 </code></pre>
@@ -1057,7 +1059,7 @@ s[1]           // =&gt; &quot;e&quot;
 
 <p>可索引字符串的主要好处是，我们可以用方括号替换对 charAt() 的调用，方括号更简洁、更可读，而且可能更高效。但是，字符串的行为类似于数组，也意味着我们可以对它们应用泛型数组方法。例如：</p>
 
-<pre><code class="language-javascript">Array.prototype.join.call(&quot;JavaScript&quot;, &quot; &quot;)  // =&gt; &quot;J a v a S c r i p t&quot;
+<pre class="line-numbers"><code class="language-javascript">Array.prototype.join.call(&quot;JavaScript&quot;, &quot; &quot;)  // =&gt; &quot;J a v a S c r i p t&quot;
 </code></pre>
 
 <p>请记住，字符串是不可变值，因此当字符串被视为数组时，它们是只读数组。数组方法 push()、sort()、reverse() 和 splice() 直接修改数组，它们不能处理字符串。但是，尝试使用数组方法修改字符串不会引发异常：它只是静默失败。</p>
@@ -1117,6 +1119,10 @@ s[1]           // =&gt; &quot;e&quot;
                   <ul id="side-nav" class="side-nav">
                     
                     <li class="side-title"><span>HomeAssistant</span></li>
+                    
+                    <li>
+                      <a title="梅林配置" href="16211303812539.html">梅林配置</a>
+                    </li>
                     
                     <li>
                       <a title="Ubuntu 20.04Lts 安装 HA" href="16201149334405.html">Ubuntu 20.04Lts 安装 HA</a>

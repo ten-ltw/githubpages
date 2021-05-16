@@ -45,6 +45,8 @@
           <li class="divider"></li>
           <li><label>HomeAssistant</label></li>
           
+          <li><a title="梅林配置" href="16211303812539.html">梅林配置</a></li>
+          
           <li><a title="Ubuntu 20.04Lts 安装 HA" href="16201149334405.html">Ubuntu 20.04Lts 安装 HA</a></li>
           
           <li><a title="Windows10 安装 HomeAssistant" href="16200327308578.html">Windows10 安装 HomeAssistant</a></li>
@@ -118,7 +120,7 @@
     <time class="article-date" datetime="2020-12-24T21:57:44+08:00">发布于2020/12/24</time>
     <p>undefined 是一个变量，它有可能被篡改，所以使用void（0）来代替他，但是在做实验的时候发现虽然给它赋值不报错，取值时候 undefined 却并没有改变。</p>
 
-<pre><code class="language-javascript">    undefined = 0
+<pre class="line-numbers"><code class="language-javascript">    undefined = 0
     // 0
     undefined
     // undefined
@@ -130,7 +132,7 @@
 
 <p>别的语言一般为块级作用域，JavaScript 取而代之使用了函数作用域：变量在声明它们的函数体以及这个函数体嵌套的任意函数体内都是有定义的。</p>
 
-<pre><code class="language-javascript">    var a = function test(o){
+<pre class="line-numbers"><code class="language-javascript">    var a = function test(o){
         var i = 0;                          // i在整个函数体内均是有定义的
         if(typeof o == &quot;object&quot;){
             var j = 4;                      // j在函数体内是有定义的，不仅仅是在这个代码段内
@@ -146,7 +148,7 @@
 
 <p>JavaScript 的这个特性被非正式地称为声明提前（hoisting），即 JavaScript 函数里声明的所有变量（但不涉及赋值）都被“提前”至函数体的顶部。</p>
 
-<pre><code class="language-javascript">    var a = &#39;1&#39;;
+<pre class="line-numbers"><code class="language-javascript">    var a = &#39;1&#39;;
     function f(){
         console.log(a);
         var a = &#39;2&#39;;
@@ -160,7 +162,7 @@
 
 <p>ES6 弥补了这这个概念，追加了 let 和 const，也就有了 {} 块作用域的概念，const 用来声明常量，这个就不提了，用上面的例子感受一下 let 和 var 的区别。</p>
 
-<pre><code class="language-javascript">    var a = function test(o){
+<pre class="line-numbers"><code class="language-javascript">    var a = function test(o){
         var i = 0;                          // i在整个函数体内均是有定义的
         if(typeof o == &quot;object&quot;){
             let j = 4;                      // j在if块内是有定义的
@@ -181,7 +183,7 @@
 
 <p>当声明一个 JavaScript 全局变量时，实际上是定义了全局对象的一个属性。当使用 var 声明一个变量时，创建的这个属性是不可配置的，无法通过 delete 运算符删除。</p>
 
-<pre><code class="language-javascript">    test =1
+<pre class="line-numbers"><code class="language-javascript">    test =1
     // 1
     window.test
     // 1
@@ -202,7 +204,7 @@
 <p>可以看到当定义一个全局变量的时候他变成了 window 的属性。<br/>
 JavaScript 可以允许使用 this 关键字来引用全局对象，但是不能引用局部变量中存放的对象。</p>
 
-<pre><code class="language-javascript">    this.test
+<pre class="line-numbers"><code class="language-javascript">    this.test
     // 1
 </code></pre>
 
@@ -210,7 +212,7 @@ JavaScript 可以允许使用 this 关键字来引用全局对象，但是不能
 
 <p>undefined 明明是个变量为什么赋值后无法使用呢。任何地方都可以直接使用 undefined，那他是一个全局变量一个全局的属性，事实也果然如此。</p>
 
-<pre><code class="language-javascript">    window.undefined == undefined
+<pre class="line-numbers"><code class="language-javascript">    window.undefined == undefined
     // true
 </code></pre>
 
@@ -234,7 +236,7 @@ JavaScript 可以允许使用 this 关键字来引用全局对象，但是不能
 </ul></li>
 </ul>
 
-<pre><code class="language-javascript">    console.log(Object.getOwnPropertyDescriptor(window,&#39;undefined&#39;));
+<pre class="line-numbers"><code class="language-javascript">    console.log(Object.getOwnPropertyDescriptor(window,&#39;undefined&#39;));
     // configurable: false
     // enumerable: false
     // value: undefined
@@ -243,7 +245,7 @@ JavaScript 可以允许使用 this 关键字来引用全局对象，但是不能
 
 <p>writable：false，就是这个原因 undefined 虽然是个全局变量，但是我们赋值之后他并没有被改变。那为什么还需要用 void(0) 来代替 undefined 呢？结合上面的函数作用域再做一个实验。</p>
 
-<pre><code class="language-javascript">    function test() {
+<pre class="line-numbers"><code class="language-javascript">    function test() {
         var undefined = 100; 
         console.log(undefined);
         var obj = {a : undefined}; 
@@ -259,7 +261,7 @@ JavaScript 可以允许使用 this 关键字来引用全局对象，但是不能
 
 <p>在函数作用域中，undefined 被从声明并赋值为 100，无论是直接 console 它自己还是去查看 undefined 属性特性都能看出，undefined 变量被修改了。这也就说在函数作用域内 undefined 可以被修改。</p>
 
-<pre><code class="language-javascript">    function test() {
+<pre class="line-numbers"><code class="language-javascript">    function test() {
         const undefined = 100; 
         console.log(undefined);
         const obj = {a : undefined}; 
@@ -333,7 +335,7 @@ JavaScript 可以允许使用 this 关键字来引用全局对象，但是不能
 
 <p>作用域链给我的感觉类似原型链，将函数的上下文构成了链表的形式，而方法执行时一层一层往外找，所以为了方便链表从上到下查找属性，所以有了声明提前，链表最顶端为嵌套函数的最里层，链表最底端则是全局变量对象。</p>
 
-<pre><code class="language-javascript">    function test(){
+<pre class="line-numbers"><code class="language-javascript">    function test(){
         var fun1,fun2;
         for(var i=0;i&lt;2;i++){
             if(i === 0){
@@ -401,6 +403,10 @@ JavaScript 可以允许使用 this 关键字来引用全局对象，但是不能
                   <ul id="side-nav" class="side-nav">
                     
                     <li class="side-title"><span>HomeAssistant</span></li>
+                    
+                    <li>
+                      <a title="梅林配置" href="16211303812539.html">梅林配置</a>
+                    </li>
                     
                     <li>
                       <a title="Ubuntu 20.04Lts 安装 HA" href="16201149334405.html">Ubuntu 20.04Lts 安装 HA</a>
