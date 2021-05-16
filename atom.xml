@@ -4,7 +4,7 @@
   <title><![CDATA[十]]></title>
   <link href="2019919.xyz/atom.xml" rel="self"/>
   <link href="2019919.xyz/"/>
-  <updated>2021-05-16T19:32:24+08:00</updated>
+  <updated>2021-05-16T20:34:09+08:00</updated>
   <id>2019919.xyz/</id>
   <author>
     <name><![CDATA[]]></name>
@@ -526,7 +526,7 @@ phone_taozi:
 
 <h3 id="toc_7">自动运行</h3>
 
-<p><code>sudo nano -w /etc/systemd/system/home-assistant@用户名.service</code></p>
+<p><code>sudo vim -w /etc/systemd/system/home-assistant@用户名.service</code></p>
 
 <pre class="line-numbers"><code class="language-text">[Unit]
 Description=Home Assistant
